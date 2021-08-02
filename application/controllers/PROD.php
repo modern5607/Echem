@@ -1,0 +1,98 @@
+<?php
+defined('BASEPATH') or exit('No direct script access allowed');
+
+class PROD extends CI_Controller
+{
+
+	public $data;
+
+	public function __construct()
+	{
+		parent::__construct();
+		date_default_timezone_set('Asia/Seoul');
+		$this->data['pos'] = $this->uri->segment(1);
+		$this->data['subpos'] = $this->uri->segment(2);
+
+		$this->load->helper('test');
+		$this->load->model(array('mif_model', 'sys_model'));
+
+		$this->data['siteTitle'] = $this->config->item('site_title');
+		$this->data['menuLevel'] = $this->sys_model->menu_level();
+	}
+
+	public function _remap($method, $params = array())
+	{
+		if ($this->input->is_ajax_request()) {
+			if (method_exists($this, $method)) {
+				call_user_func_array(array($this, $method), $params);
+			}
+		} else { //ajax가 아니면
+
+			if (method_exists($this, $method)) {
+
+				$user_id = $this->session->userdata('user_id');
+				if (isset($user_id) && $user_id != "") {
+
+					$this->load->view('/layout/header', $this->data);
+					call_user_func_array(array($this, $method), $params);
+					$this->load->view('/layout/tail');
+				} else {
+
+					alert('로그인이 필요합니다.', base_url('REG/login'));
+				}
+			} else {
+				show_404();
+			}
+		}
+	}
+
+	// 	작업지시등록
+	public function workorder()
+	{
+		$data['title']='작업지시등록';	
+		return $this->load->view('main100', $data);
+	}	
+
+	// 공정별 작업지시
+	public function pworkorder()
+	{
+		$data['title']='공정별 작업지시';	
+		return $this->load->view('main100', $data);
+	}
+	
+	// 원재료 투입 입력
+	public function matinput()
+	{
+		$data['title']='원재료 투입 입력';	
+		return $this->load->view('main100', $data);
+	}
+
+	// 공정별 수율정보
+	public function pharvest()
+	{
+		$data['title']='공정별 수율정보';	
+		return $this->load->view('main100', $data);
+	}
+
+	// 공정별 생산내역
+	public function pprodcur()
+	{
+		$data['title']='공정별 생산내역';	
+		return $this->load->view('main100', $data);
+	}
+
+	// 기간별 생산실적
+	public function dprodperf()
+	{
+		$data['title']='기간별 생산실적';	
+		return $this->load->view('main100', $data);
+	}
+
+	// 생산 모니터링
+	public function prodmonitor()
+	{
+		$data['title']='생산 모니터링';	
+		return $this->load->view('main100', $data);
+	}
+
+}
