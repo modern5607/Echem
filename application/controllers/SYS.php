@@ -9,6 +9,7 @@ class SYS extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
+		date_default_timezone_set('Asia/Seoul');
 
 		$this->data['pos'] = $this->uri->segment(1);
 		$this->data['subpos'] = $this->uri->segment(2);
@@ -121,6 +122,170 @@ class SYS extends CI_Controller
 		echo $data;
 	}
 
+	public function register()
+	{
+		$data['title'] = "사용자 등록";
+		$this->load->view('/main100', $data);
+	}
+
+	//사용자등록
+	public function ajax_register()
+	{
+		$data['str'] = array(); //검색어관련
+		$data['str']['mid'] = trim($this->input->post('mid')); //MEMBER ID
+		$data['str']['mname'] = trim($this->input->post('mname')); //MEMBER ID
+		$data['str']['level'] = $this->input->post('level'); //LEVEL
+		
+		$params['ID'] = "";
+		$params['NAME'] = "";
+		$params['LEVEL'] = "";
+
+		if(!empty($data['str']['mid'])){
+			$params['ID'] = $data['str']['mid'];
+		}
+		if(!empty($data['str']['mname'])){
+			$params['NAME'] = $data['str']['mname'];
+		}
+		if(!empty($data['str']['level'])){
+			$params['LEVEL'] = $data['str']['level'];
+		}
+
+
+		$data['perpage'] = ($this->input->post('perpage') != "") ? $this->input->post('perpage') : 20;
+		//PAGINATION
+		$config['per_page'] = $data['perpage'];
+		$config['page_query_string'] = true;
+		$config['query_string_segment'] = "pageNum";
+		$config['reuse_query_string'] = TRUE;
+
+		$pageNum = $this->input->post('pageNum') > '' ? $this->input->post('pageNum') : 0;
+		//$start = $config['per_page'] * ($pageNum - 1);
+
+		$start = $pageNum;
+		$data['pageNum'] = $start;
+
+		$user_id = $this->session->userdata('user_id');
+		$this->data['userName'] = $this->session->userdata('user_name');
+
+		$data['List'] = $this->sys_model->register_list($params, $start, $config['per_page']);
+		// echo var_dump($data['List']);
+		$this->data['cut'] = $this->sys_model->register_cut($params);
+
+
+
+		/* pagenation start */
+		$this->load->library("pagination");
+		$config['base_url'] = base_url(uri_string());
+		$config['total_rows'] = $this->data['cut'];
+		$config['full_tag_open'] = "<div>";
+		$config['full_tag_close'] = '</div>';
+
+		$this->pagination->initialize($config);
+		$this->data['pagenation'] = $this->pagination->create_links();
+
+
+		$this->load->view('/sys/ajax_register', $data);
+	}
+
+	//사용자 등록 팝업
+	public function memberinfo_form()
+	{
+		$mode = $this->input->post("mode");
+		$idx  = $this->input->post("idx");
+
+		$data = array();
+		if(!empty($idx)){
+			$data['Info'] = $this->sys_model->get_member_info($idx);
+		}
+		
+		$this->load->view('/sys/member_form',$data);
+	}
+	
+	public function chk_memberid()
+	{
+		$id = $this->input->post("id");
+		$data = $this->sys_model->chk_memberid($id);
+		echo json_encode($data);
+		
+	}
+
+	
+	/* 회원가입 */
+	public function member_formUpdate()
+	{
+		$IDX = "";
+		$dateTime = date("Y-m-d H:i:s",time());
+		if(!empty($this->input->post("mod"))){ //수정인경우
+			
+			$params = array(
+				
+				'NAME'     => trim($this->input->post("NAME")),
+				'NO'       => trim($this->input->post("NO")),
+				'FIRSTDAY' => trim($this->input->post("FIRSTDAY")),
+				'LEVEL'    => $this->input->post("LEVEL"),
+				'STATE'    => $this->input->post("STATE"),
+				'PART'     => trim($this->input->post("PART")),
+				'TEL'      => trim($this->input->post("TEL")),
+				'EMAIL'      => trim($this->input->post("EMAIL")),
+				'HP'       => trim($this->input->post("HP")),
+				'BLOOD'    => trim($this->input->post("BLOOD")),
+				'SCHOOL'   => trim($this->input->post("SCHOOL")),
+				'FAMILY'   => trim($this->input->post("FAMILY")),
+				'EXPERIENCE' => trim($this->input->post("EXPERIENCE")),
+				'LICENSE'  => trim($this->input->post("LICENSE")),
+				'ARMY'     => trim($this->input->post("ARMY")),
+				'IP'       => trim($this->input->post("IP")),
+				'REGDATE'  => trim($this->input->post("REGDATE")),
+				'UPDATE_ID'=> $this->session->userdata('user_name'),
+				'UPDATE_DATE' => $dateTime
+			);
+			
+			if(!empty($this->input->post("PWD"))){
+				$params['PWD'] = password_hash(trim($this->input->post("PWD")),PASSWORD_BCRYPT);
+			}
+
+			$IDX = $this->input->post("IDX");
+			$text = "수정";
+		
+		}else{
+			$params = array(
+				'ID'       => trim($this->input->post("ID")),
+				'PWD'      => trim($this->input->post("PWD")),
+				'NAME'     => trim($this->input->post("NAME")),
+				'NO'       => trim($this->input->post("NO")),
+				'FIRSTDAY' => trim($this->input->post("FIRSTDAY")),
+				'LEVEL'    => $this->input->post("LEVEL"),
+				'STATE'    => $this->input->post("STATE"),
+				'PART'     => trim($this->input->post("PART")),
+				'TEL'      => trim($this->input->post("TEL")),
+				'EMAIL'      => trim($this->input->post("EMAIL")),
+				'HP'       => trim($this->input->post("HP")),
+				'BLOOD'    => trim($this->input->post("BLOOD")),
+				'SCHOOL'   => trim($this->input->post("SCHOOL")),
+				'FAMILY'   => trim($this->input->post("FAMILY")),
+				'EXPERIENCE' => trim($this->input->post("EXPERIENCE")),
+				'LICENSE'  => trim($this->input->post("LICENSE")),
+				'ARMY'     => trim($this->input->post("ARMY")),
+				'IP'       => trim($this->input->post("IP")),
+				'REGDATE'  => trim($this->input->post("REGDATE")),
+				'PWD'      => password_hash(trim($this->input->post("PWD")),PASSWORD_BCRYPT),
+				'INSERT_ID' => $this->session->userdata('user_name'),
+				'INSERT_DATE' => $dateTime
+			);
+			$text = "등록";
+		}
+		
+		
+
+		$data = $this->sys_model->member_formupdate($params,$IDX);
+		
+		if($data != ""){
+			$msg=$text."되었습니다";
+			echo json_encode($msg);
+		}
+
+	}
+	
 
 	//level empty
 	public function level($idx = "")

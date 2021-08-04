@@ -172,6 +172,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                             시스템관리</a>
                                         <ul class="menu02" <?= ($this->data['pos'] == "SYS") ? "style='display:block'" : ""; ?>>
                                             <li><a href="<?= base_url('SYS/menu') ?>" class="<?= ($this->data['subpos'] == 'menu') ? "on" : ""; ?>">메뉴등록</a></li>
+                                            <li><a href="<?= base_url('SYS/register') ?>" class="<?= ($this->data['subpos'] == 'register') ? "on" : ""; ?>">사용자 등록</a></li>
                                             <li><a href="<?= base_url('SYS/level') ?>" class="<?= ($this->data['subpos'] == 'level') ? "on" : ""; ?>">사용자 권한등록</a></li>
                                             <li><a href="<?= base_url('SYS/userlog') ?>" class="<?= ($this->data['subpos'] == 'userlog') ? "on" : ""; ?>">접속기록</a></li>
                                             <li><a href="<?= base_url('SYS/version') ?>" class="<?= ($this->data['subpos'] == 'version') ? "on" : ""; ?>">버전관리</a></li>

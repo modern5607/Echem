@@ -502,6 +502,7 @@ class MDM extends CI_Controller
 
 	// 	$this->load->view('/mdm/member_form', $data);
 	// }
+	
 	/* 회원가입 */
 	public function member_ins_up()
 	{
