@@ -220,6 +220,9 @@ table td.right{text-align:right;}
 .tbl-write01 table th .re{color:#f00; position:absolute; top:5px; right:10px;}
 .tbl-write01 table th .re:after{content:"*"; font-size:16px; font-weight:600;}
 
+.tbl-content table th .re{color:#f00;  top:5px; right:10px;}
+.tbl-content table th .re:after{content:"*"; font-size:16px; font-weight:600;}
+
 .tbl-write01 table th:last-child { border-right:0; }
 .tbl-write01 table td:last-child { border-right:0; }
 

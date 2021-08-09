@@ -60,16 +60,16 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <table class="none_border" cellpadding="0" cellspacing="0" border="0" width="100%">
                         <tbody>
                             <tr>
-                                <th>회원아이디</th>
+                                <th>회원아이디<span class="re"></span></th>
                                 <td colspan="5">
                                     <input style="width:130px" type="text" name="ID" id="ID" value="<?= isset($Info) ? $Info->ID : ""; ?>" <?= isset($Info) ? "readonly" : ""; ?> class="form_input">
                                     <p class="chk_msg"></p>
                                 </td>
                             </tr>
                             <tr>
-                                <th>비밀번호</th>
+                                <th>비밀번호<span class="re"></span></th>
                                 <td><input type="password" name="PWD" id="PWD" value="" class="form_input"></td>
-                                <th>비밀번호확인</th>
+                                <th>비밀번호확인<span class="re"></span></th>
                                 <td><input type="password" name="PWD_CHK" id="PWD_CHK" value="" class="form_input"></td>
                             </tr>
                             <tr>
