@@ -291,6 +291,7 @@ class MDM extends CI_Controller
 	{
 		//모델
 		$data['list']=$this->mdm_model->ajax_component();
+		// echo var_dump($data['list']);
 
 		//뷰
 		$this->load->view('mdm/ajax_component', $data);

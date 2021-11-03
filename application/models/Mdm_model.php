@@ -90,6 +90,15 @@ class Mdm_model extends CI_Model
 		return $query->result();		
 	}
 
+	public function ajax_component()
+	{
+		$sql=<<<SQL
+			SELECT '1' AS COL1,'2' AS COL2, '3' AS COL3  FROM DUAL;
+SQL;		
+		$query = $this->db->query($sql);
+		return $query->result();
+	}
+
 	//업체관리 리스트
 	public function biz_list($params,$start=0,$limit=20)
 	{
@@ -521,5 +530,31 @@ SQL;
         }else{
             return FALSE;
         }
+	}
+	public function ajax_bizcur()
+	{
+		$sql=<<<SQL
+			SELECT '1' AS COL1,'2' AS COL2, '3' AS COL3  FROM DUAL;
+SQL;		
+		$query = $this->db->query($sql);
+		return $query->result();
+	}
+	
+	public function ajax_person()
+	{
+		$sql=<<<SQL
+			SELECT '1' AS COL1,'2' AS COL2, '3' AS COL3  FROM DUAL;
+SQL;		
+		$query = $this->db->query($sql);
+		return $query->result();
+	}
+
+	public function ajax_personcur()
+	{
+		$sql=<<<SQL
+			SELECT '1' AS COL1,'2' AS COL2, '3' AS COL3  FROM DUAL;
+SQL;		
+		$query = $this->db->query($sql);
+		return $query->result();
 	}
 }
