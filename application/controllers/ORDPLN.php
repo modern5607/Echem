@@ -14,7 +14,7 @@ class ORDPLN extends CI_Controller
 		$this->data['subpos'] = $this->uri->segment(2);
 
 		$this->load->helper('test');
-		$this->load->model(array('mif_model', 'sys_model'));
+		$this->load->model(array('mif_model', 'sys_model','ordpln_model'));
 
 		$this->data['siteTitle'] = $this->config->item('site_title');
 		$this->data['menuLevel'] = $this->sys_model->menu_level();
@@ -52,11 +52,27 @@ class ORDPLN extends CI_Controller
 		$data['title']='주문등록';
 		return $this->load->view('main100', $data);
 	}
+	public function ajax_order()
+	{
+		//모델
+		$data['list']=$this->ordpln_model->ajax_order();
+
+		//뷰
+		$this->load->view('mdm/ajax_order', $data);
+	}
 	// 주문현황
 	public function ordercur()
 	{
 		$data['title']='주문현황';
 		return $this->load->view('main100', $data);
+	}
+	public function ajax_ordercur()
+	{
+		//모델
+		$data['list']=$this->ordpln_model->ajax_ordercur();
+
+		//뷰
+		$this->load->view('mdm/ajax_ordercur', $data);
 	}
 	// 주문대비 진행현황
 	public function orderprocess()
@@ -64,16 +80,40 @@ class ORDPLN extends CI_Controller
 		$data['title']='주문대비 진행현황';
 		return $this->load->view('main100', $data);
 	}
+	public function ajax_orderprocess()
+	{
+		//모델
+		$data['list']=$this->ordpln_model->ajax_orderprocess();
+
+		//뷰
+		$this->load->view('mdm/ajax_orderprocess', $data);
+	}
 	// 생산계획 등록
 	public function prodpln()
 	{
 		$data['title']='생산계획 등록';
 		return $this->load->view('main100', $data);
 	}
+	public function ajax_prodpln()
+	{
+		//모델
+		$data['list']=$this->ordpln_model->ajax_prodpln();
+
+		//뷰
+		$this->load->view('mdm/ajax_prodpln', $data);
+	}
 	// 생산계획 조회
 	public function prodplncur()
 	{
 		$data['title']='생산계획 조회';
 		return $this->load->view('main100', $data);
+	}
+	public function ajax_prodplncur()
+	{
+		//모델
+		$data['list']=$this->ordpln_model->ajax_prodplncur();
+
+		//뷰
+		$this->load->view('mdm/ajax_prodplncur', $data);
 	}
 }

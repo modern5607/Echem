@@ -213,13 +213,96 @@ class MDM extends CI_Controller
 		echo json_encode($data);
 	}
 
-	//업체관리
+	//공통코드
+	public function code()
+	{
+		$data['title'] = "공통코드등록";
+
+		$this->load->view('/main50', $data);
+	}
+
+	public function head_code()
+	{
+		$data['str'] = array(); //검색어관련
+		$data['str']['code'] = $this->input->post('h_code');
+		$data['str']['name'] = $this->input->post('h_name');
+		$data['str']['use'] = $this->input->post('h_use');
+
+		$params['CODE'] = "";
+		$params['NAME'] = "";
+		$params['USE'] = "";
+
+		if (!empty($data['str']['code']))
+			$params['CODE'] = $data['str']['code'];
+
+		if (!empty($data['str']['name']))
+			$params['NAME'] = $data['str']['name'];
+
+		if (!empty($data['str']['use']))
+			$params['USE'] = $data['str']['use'];
+
+		$data['List']   = $this->mdm_model->get_cocdHead_list($params);
+
+
+		$this->load->view('/mdm/head_code', $data);
+	}
+
+	public function detail_code()
+	{
+		$hidx = $this->input->post('hidx');
+
+		$data['str'] = array(); //검색어관련
+		$data['str']['code'] = $this->input->post('d_code');
+		$data['str']['name'] = $this->input->post('d_name');
+		$data['str']['use'] = $this->input->post('d_use');
+		$data['str']['hidx'] = $hidx;
+		$data['hidx'] = $hidx;
+
+		$params['D_CODE'] = "";
+		$params['D_NAME'] = "";
+		$params['D_USE'] = "";
+
+		$data['de_show_chk'] = ($hidx != "") ? true : false;
+
+
+		if (!empty($data['str']['code']))
+			$params['D_CODE'] = $data['str']['code'];
+
+		if (!empty($data['str']['name']))
+			$params['D_NAME'] = $data['str']['name'];
+
+		if (!empty($data['str']['use']))
+			$params['D_USE'] = $data['str']['use'];
+
+
+		$data['List'] = $this->mdm_model->get_cocdDetail_list($hidx, $params);
+
+		return $this->load->view('/mdm/detail_code', $data);
+	}
+
+	// 품목등록
+	public function component()
+	{
+		$data['title'] = '품목등록';
+		$this->load->view('main100', $data);
+	}
+
+	public function ajax_component()
+	{
+		//모델
+		$data['list']=$this->mdm_model->ajax_component();
+
+		//뷰
+		$this->load->view('mdm/ajax_component', $data);
+	}
+
+	//업체등록
 	public function biz()
 	{
 		$data['title'] = "업체등록";
 		$this->load->view('/main100', $data);
 	}
-	//업체관리 리스트
+	//업체등록 리스트
 	public function ajax_biz()
 	{
 		$data['str'] = array(); //검색어관련
@@ -327,85 +410,19 @@ class MDM extends CI_Controller
 		}
 	}
 
-	//공통코드
-	public function code()
-	{
-		$data['title'] = "공통코드등록";
-
-		$this->load->view('/main50', $data);
-	}
-
-	public function head_code()
-	{
-		$data['str'] = array(); //검색어관련
-		$data['str']['code'] = $this->input->post('h_code');
-		$data['str']['name'] = $this->input->post('h_name');
-		$data['str']['use'] = $this->input->post('h_use');
-
-		$params['CODE'] = "";
-		$params['NAME'] = "";
-		$params['USE'] = "";
-
-		if (!empty($data['str']['code']))
-			$params['CODE'] = $data['str']['code'];
-
-		if (!empty($data['str']['name']))
-			$params['NAME'] = $data['str']['name'];
-
-		if (!empty($data['str']['use']))
-			$params['USE'] = $data['str']['use'];
-
-		$data['List']   = $this->mdm_model->get_cocdHead_list($params);
-
-
-		$this->load->view('/mdm/head_code', $data);
-	}
-
-	public function detail_code()
-	{
-		$hidx = $this->input->post('hidx');
-
-		$data['str'] = array(); //검색어관련
-		$data['str']['code'] = $this->input->post('d_code');
-		$data['str']['name'] = $this->input->post('d_name');
-		$data['str']['use'] = $this->input->post('d_use');
-		$data['str']['hidx'] = $hidx;
-		$data['hidx'] = $hidx;
-
-		$params['D_CODE'] = "";
-		$params['D_NAME'] = "";
-		$params['D_USE'] = "";
-
-		$data['de_show_chk'] = ($hidx != "") ? true : false;
-
-
-		if (!empty($data['str']['code']))
-			$params['D_CODE'] = $data['str']['code'];
-
-		if (!empty($data['str']['name']))
-			$params['D_NAME'] = $data['str']['name'];
-
-		if (!empty($data['str']['use']))
-			$params['D_USE'] = $data['str']['use'];
-
-
-		$data['List'] = $this->mdm_model->get_cocdDetail_list($hidx, $params);
-
-		return $this->load->view('/mdm/detail_code', $data);
-	}
-
-	// 품목등록
-	public function component()
-	{
-		$data['title'] = '품목등록';
-		$this->load->view('main100', $data);
-	}
-
 	// 업체현황
 	public function bizcur()
 	{
 		$data['title'] = '업체현황';
 		$this->load->view('main100', $data);
+	}
+	public function ajax_bizcur()
+	{
+		//모델
+		$data['list']=$this->mdm_model->ajax_bizcur();
+
+		//뷰
+		$this->load->view('mdm/ajax_bizcur', $data);
 	}
 
 	// 인사정보등록
@@ -414,12 +431,30 @@ class MDM extends CI_Controller
 		$data['title'] = '인사정보등록';
 		$this->load->view('main100', $data);
 	}
+	public function ajax_person()
+	{
+		//모델
+		$data['list']=$this->mdm_model->ajax_person();
+
+		//뷰
+		$this->load->view('mdm/ajax_person', $data);
+	}
 
 	// 인사정보현황
 	public function personcur()
 	{
 		$data['title'] = '인사정보현황';
 		$this->load->view('main100', $data);
+	}
+
+	// 인사정보현황 리스트
+	public function ajax_personcur()
+	{
+		//모델
+		$data['list']=$this->mdm_model->ajax_personcur();
+
+		//뷰
+		$this->load->view('mdm/ajax_personcur', $data);
 	}
 
 

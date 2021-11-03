@@ -14,7 +14,7 @@ class PURCHASE extends CI_Controller
 		$this->data['subpos'] = $this->uri->segment(2);
 
 		$this->load->helper('test');
-		$this->load->model(array('mif_model', 'sys_model'));
+		$this->load->model(array('mif_model', 'sys_model','pur_model'));
 
 		$this->data['siteTitle'] = $this->config->item('site_title');
 		$this->data['menuLevel'] = $this->sys_model->menu_level();
@@ -53,6 +53,15 @@ class PURCHASE extends CI_Controller
 		return $this->load->view('main100', $data);
 	}
 
+	public function ajax_matorder()
+	{
+		//모델
+		$data['list']=$this->pur_model->ajax_matorder();
+
+		//뷰
+		$this->load->view('purchase/ajax_matorder', $data);
+	}
+
 
 	// 	입고등록
 	public function enter()
@@ -60,6 +69,15 @@ class PURCHASE extends CI_Controller
 		$data['title']='입고등록';
 		return $this->load->view('main100', $data);
 	}
+	public function ajax_enter()
+	{
+		//모델
+		$data['list']=$this->pur_model->ajax_enter();
+
+		//뷰
+		$this->load->view('purchase/ajax_enter', $data);
+	}
+
 	// 발주대비 입고현황
 	public function orderenter()
 	{
@@ -67,11 +85,28 @@ class PURCHASE extends CI_Controller
 		return $this->load->view('main100', $data);
 	}
 
+	public function ajax_orderenter()
+	{
+		//모델
+		$data['list']=$this->pur_model->ajax_orderenter();
+
+		//뷰
+		$this->load->view('purchase/ajax_orderenter', $data);
+	}
+
 	// 기간별 발주현황
 	public function denter()
 	{
 		$data['title']='기간별 발주현황';
 		return $this->load->view('main100', $data);
+	}
+	public function ajax_denter()
+	{
+		//모델
+		$data['list']=$this->pur_model->ajax_denter();
+
+		//뷰
+		$this->load->view('purchase/ajax_denter', $data);
 	}
 	
 }

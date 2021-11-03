@@ -6,12 +6,13 @@ class Reg_model extends CI_Model {
 	public function __construct()
 	{
 			parent::__construct();
+			date_default_timezone_set('Asia/Seoul');
+
 	}
 
 
 	public function set_log_end($idx)
 	{
-		date_default_timezone_set('Asia/Seoul');
 		$datetime = date("Y-m-d H:i:s",time());
 		$this->db->set("EDATE",$datetime);
 		$this->db->set("STATUS","off");

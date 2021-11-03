@@ -14,7 +14,7 @@ class PROD extends CI_Controller
 		$this->data['subpos'] = $this->uri->segment(2);
 
 		$this->load->helper('test');
-		$this->load->model(array('mif_model', 'sys_model'));
+		$this->load->model(array('mif_model', 'sys_model','prod_model'));
 
 		$this->data['siteTitle'] = $this->config->item('site_title');
 		$this->data['menuLevel'] = $this->sys_model->menu_level();
@@ -52,6 +52,14 @@ class PROD extends CI_Controller
 		$data['title']='작업지시등록';	
 		return $this->load->view('main100', $data);
 	}	
+	public function ajax_workorder()
+	{
+		//모델
+		$data['list']=$this->prod_model->ajax_workorder();
+
+		//뷰
+		$this->load->view('prod/ajax_workorder', $data);
+	}
 
 	// 공정별 작업지시
 	public function pworkorder()
@@ -59,12 +67,28 @@ class PROD extends CI_Controller
 		$data['title']='공정별 작업지시';	
 		return $this->load->view('main100', $data);
 	}
-	
+	public function ajax_pworkorder()
+	{
+		//모델
+		$data['list']=$this->prod_model->ajax_pworkorder();
+
+		//뷰
+		$this->load->view('prod/ajax_pworkorder', $data);
+	}
+
 	// 원재료 투입 입력
 	public function matinput()
 	{
 		$data['title']='원재료 투입 입력';	
 		return $this->load->view('main100', $data);
+	}
+	public function ajax_matinput()
+	{
+		//모델
+		$data['list']=$this->prod_model->ajax_matinput();
+
+		//뷰
+		$this->load->view('prod/ajax_matinput', $data);
 	}
 
 	// 공정별 수율정보
@@ -73,12 +97,28 @@ class PROD extends CI_Controller
 		$data['title']='공정별 수율정보';	
 		return $this->load->view('main100', $data);
 	}
+	public function ajax_pharvest()
+	{
+		//모델
+		$data['list']=$this->prod_model->ajax_pharvest();
+
+		//뷰
+		$this->load->view('prod/ajax_pharvest', $data);
+	}
 
 	// 공정별 생산내역
 	public function pprodcur()
 	{
 		$data['title']='공정별 생산내역';	
 		return $this->load->view('main100', $data);
+	}
+	public function ajax_pprodcur()
+	{
+		//모델
+		$data['list']=$this->prod_model->ajax_pprodcur();
+
+		//뷰
+		$this->load->view('prod/ajax_pprodcur', $data);
 	}
 
 	// 기간별 생산실적
@@ -87,12 +127,28 @@ class PROD extends CI_Controller
 		$data['title']='기간별 생산실적';	
 		return $this->load->view('main100', $data);
 	}
+	public function ajax_dprodperf()
+	{
+		//모델
+		$data['list']=$this->prod_model->ajax_dprodperf();
+
+		//뷰
+		$this->load->view('prod/ajax_dprodperf', $data);
+	}
 
 	// 생산 모니터링
 	public function prodmonitor()
 	{
 		$data['title']='생산 모니터링';	
 		return $this->load->view('main100', $data);
+	}
+	public function ajax_prodmonitor()
+	{
+		//모델
+		$data['list']=$this->prod_model->ajax_prodmonitor();
+
+		//뷰
+		$this->load->view('prod/ajax_prodmonitor', $data);
 	}
 
 }
