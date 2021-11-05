@@ -10,6 +10,95 @@ class Prod_model extends CI_Model
 
 	}
 
+	public function ajax_workorder()
+	{
+		$sql = <<<SQL
+		SELECT
+			'1' AS COL1,
+			'2' AS COL2,
+			'2' AS COL3 
+		FROM DUAL;
+SQL;
+		$query = $this->db->query($sql);
+		// echo $this->db->Last_query();
+		return $query->result();
+	}
 
+	public function ajax_pworkorder()
+	{
+		$sql = <<<SQL
+		SELECT
+			'1' AS COL1,
+			'2' AS COL2,
+			'2' AS COL3 
+		FROM DUAL;
+SQL;
+		$query = $this->db->query($sql);
+		return $query->result();
+	}
 
+	public function ajax_matinput()
+	{
+		$sql = <<<SQL
+		SELECT
+			'1' AS COL1,
+			'2' AS COL2,
+			'2' AS COL3 
+		FROM DUAL;
+SQL;
+		$query = $this->db->query($sql);
+		return $query->result();	
+	}
+
+	public function ajax_pharvest()
+	{
+		$sql = <<<SQL
+		SELECT
+			'1' AS COL1,
+			'2' AS COL2,
+			'2' AS COL3 
+		FROM DUAL;
+SQL;
+		$query = $this->db->query($sql);
+		return $query->result();
+	}
+
+	public function ajax_pprodcur()
+	{
+		$sql = <<<SQL
+		SELECT
+			'1' AS COL1,
+			'2' AS COL2,
+			'2' AS COL3 
+		FROM DUAL;
+SQL;
+		$query = $this->db->query($sql);
+		return $query->result();
+	}
+
+	public function ajax_dprodperf()
+	{
+		$sql = <<<SQL
+		SELECT
+			'1' AS COL1,
+			'2' AS COL2,
+			'2' AS COL3 
+		FROM DUAL;
+SQL;
+		$query = $this->db->query($sql);
+		return $query->result();
+	}
+
+	public function ajax_prodmonitor()
+	{
+		$sql = <<<SQL
+		SELECT
+			'1' AS COL1,
+			'2' AS COL2,
+			'2' AS COL3 
+		FROM DUAL;
+SQL;
+		$query = $this->db->query($sql);
+		return $query->result();	
+	}
 }
