@@ -42,8 +42,6 @@ option{padding:4px 0;}
 
 
 
-
-
 .back {background: #ddd; width: 100px; height: 40px; border: 0; cursor: pointer;}
 .back:hover { background: #bbb; }
 .blue_btn {background: rgb(39, 73, 146); color: #fff; width: 100px; height: 40px; border: 0; cursor: pointer;}
@@ -199,4 +197,33 @@ body {
 } 
 ::-webkit-scrollbar-thumb {
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+}
+
+
+
+
+.body_cont_float2 .btn_right{border:none;}
+.register_form_5 { padding: 25px; max-height:700px; overflow-y:auto;}
+.form_input5 {padding:7px 8px;}
+.input_5{width:350px;  font-size:20px; border:none; margin:7px; height:35px;}
+
+.form_5 table tr th { text-align: left; background: #3b4d73; color:#fff; padding: 0 10px; font-size:16px; width:180px}
+.form_5 table tr td { background: #eee;}
+
+span.btni_5{margin-top:20px; padding:10px 16px; background:rgb(39, 73, 146); color:#fff; font-size:24px; /*border:1px solid #ddd;*/ cursor:pointer;
+position: relative; right:calc(50% - 40px);
+}
+#pop_container .info_content h2.tableth2 {
+  font-size: 32px;
+  padding: 10px 15px;
+  background-color: rgb(68, 104, 180);
+  color: #fff;
+  text-align: center;
+  line-height:40px;
+}
+#pop_container .info_content span.close {
+  float: right;
+  cursor: pointer;
+  color: #fff;
+  opacity: unset;
 }

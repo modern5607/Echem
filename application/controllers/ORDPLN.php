@@ -50,7 +50,7 @@ class ORDPLN extends CI_Controller
 	public function order()
 	{
 		$data['title']='주문등록';
-		return $this->load->view('main30', $data);
+		return $this->load->view('main50', $data);
 	}
 	public function ajax_order()
 	{
@@ -115,29 +115,7 @@ class ORDPLN extends CI_Controller
 			$params['EDATE'] = $data['str']['edate'];
 		}
 
-
-		$data['perpage'] = ($this->input->post('perpage') != "") ? $this->input->post('perpage') : 20;
-		//PAGINATION
-		$config['per_page'] = $data['perpage'];
-		$config['page_query_string'] = true;
-		$config['query_string_segment'] = "pageNum";
-		$config['reuse_query_string'] = TRUE;
-		$pageNum = $this->input->post('pageNum') > '' ? $this->input->post('pageNum') : 0;
-		$data['pageNum'] =  $pageNum;
-
-		//list
-		$data['list']=$this->ordpln_model->ordpln_dual($params, $pageNum, $config['per_page']);
-		$this->data['cnt'] = $this->ordpln_model->ordpln_cut($params);
-
-
-		/* pagenation start */
-		$this->load->library("pagination");
-		$config['base_url'] = base_url(uri_string());
-		$config['total_rows'] = $this->data['cnt'];
-		$config['full_tag_open'] = "<div>";
-		$config['full_tag_close'] = '</div>';
-		$this->pagination->initialize($config);
-		$this->data['pagenation'] = $this->pagination->create_links();
+		$data['list']=$this->ordpln_model->ordpln_dual($params);
 
 
 		$this->load->view('/ordpln/detail_order', $data);
@@ -183,11 +161,141 @@ class ORDPLN extends CI_Controller
 	}
 	public function ajax_prodpln()
 	{
-		//모델
-		$data['list']=$this->ordpln_model->ajax_prodpln();
+		$prefs = array(
+			'start_day'    => 'sunday',
+			'month_type'   => 'short',
+			'day_type'     => 'short',
+			'show_next_prev'  => true,
+			'show_other_days' => false,
+			'next_prev_url'   => base_url('ORDPLN/ajax_prodpln/')
+		);
 
-		//뷰
-		$this->load->view('mdm/ajax_prodpln', $data);
+		// $year = (!empty($this->uri->segment(3))) ? $this->uri->segment(3) : date("Y", time());
+		// $month = (!empty($this->uri->segment(4))) ? $this->uri->segment(4) : date("m", time());
+
+		$year = empty($this->input->post("year")) ? date("Y", time()) : $this->input->post("year");
+		$month = empty($this->input->post("month")) ? date("m", time()) : $this->input->post("month");
+
+		$prev_month = date("Y-m", strtotime('-1 month', strtotime($year . '-' . $month . '-01')));
+		$next_month = date("Y-m", strtotime('+1 month', strtotime($year . '-' . $month . '-01')));
+
+
+		$prefs['template'] = '
+
+			{table_open}<table border="0" cellpadding="0" cellspacing="3" id="calendar">{/table_open}
+
+			{heading_row_start}<tr class="headset">{/heading_row_start}
+
+			{heading_previous_cell}
+			<th>
+				<a href="#" data-date="' . $prev_month . '" class="moveBtn btn">이전달</a>
+			</th>
+			{/heading_previous_cell}
+
+			{heading_title_cell}<th colspan="{colspan}" style="font-size:18px">' . $year . "년 - " . $month . "월" . '</th>{/heading_title_cell}
+			
+			{heading_next_cell}
+			<th>
+				<a href="#" data-date="' . $next_month . '" class="moveBtn btn">다음달</a>
+			</th>
+			{/heading_next_cell}
+
+			{heading_row_end}</tr>{/heading_row_end}
+
+			{week_row_start}<tr class="week">{/week_row_start}
+			{week_row_class_start}<td class="{week_class}">{/week_row_class_start}
+			{week_day_cell}{week_day}{/week_day_cell}
+			{week_row_class_end}</td>{/week_row_class_end}
+			{week_row_end}</tr>{/week_row_end}
+
+			{cal_row_start}<tr>{/cal_row_start}
+			{cal_cell_start}<td>{/cal_cell_start}
+			{cal_cell_start_today}<td>{/cal_cell_start_today}
+			{cal_cell_start_other}<td class="other-month">{/cal_cell_start_other}
+
+			{cal_cell_content}
+				<div class="xday" data-date="' . $year . '-' . $month . '-{day}">
+					{day}
+					<div class="cont">{content}</div>
+				</div>
+			{/cal_cell_content}
+
+			{cal_cell_content_today}
+				<div class="xday highlight"  data-date="' . $year . '-' . $month . '-{day}">
+					{day}
+					<div class="cont">{content}</div>
+				</div>
+			{/cal_cell_content_today}
+
+			{cal_cell_no_content}
+			
+				<div class="xday" data-date="' . $year . '-' . $month . '-{day}">{day}</div>
+			
+			{/cal_cell_no_content}
+
+			{cal_cell_no_content_today}
+				<div class="xday highlight" data-date="' . $year . '-' . $month . '-{day}">{day}</div>
+			{/cal_cell_no_content_today}
+
+			{cal_cell_blank}&nbsp;{/cal_cell_blank}
+
+			{cal_cell_other}{day}{cal_cel_other}
+
+			{cal_cell_end}</td>{/cal_cell_end}
+			{cal_cell_end_today}</td>{/cal_cell_end_today}
+			{cal_cell_end_other}</td>{/cal_cell_end_other}
+			{cal_row_end}</tr>{/cal_row_end}
+
+			{table_close}</table>{/table_close}
+	';
+
+		$this->load->library('calendar', $prefs);
+
+		$info = $this->ordpln_model->calendar_list($year, $month);
+		// echo var_dump($info);
+		$contArray = array();
+		$prev_d = '';
+		$d = '';
+		$i = 0;
+		$total_count = 0;
+		foreach ($info as $ndate) 
+		{
+			$d = explode("-", $ndate->PLN_DATE)[2];
+			if ($prev_d == $d) 
+			{
+				if ($i >=3) {
+					$total_count += $ndate->COUNT;
+					continue;
+				}
+				else
+					$i++;
+			} 
+			else if($prev_d != $d)
+			{
+				
+				if ($i >=3 && $total_count>0) {
+					$contArray[$prev_d] .= "외 " . $total_count . "건";
+					$i = 0;
+					$total_count=0;
+				}
+				else
+					$i = 0;
+			}
+			
+			if (isset($contArray[$d])) 
+				$contArray[$d] .= $ndate->POR_NO . " " . $ndate->COUNT . "건<br>";
+			else 
+				$contArray[$d] = $ndate->POR_NO . " " . $ndate->COUNT . "건<br>";
+			
+			
+
+
+			$prev_d = $d;
+		}
+		// echo var_dump($contArray);
+		$data['calendar'] = $this->calendar->generate($year, $month, $contArray);
+
+		return $this->load->view('ordpln/ajax_prodpln', $data);
 	}
 
 

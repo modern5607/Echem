@@ -117,7 +117,6 @@ i { vertical-align: middle; }
 .xm_box h2{border-right:1px solid #ddd; float:left; padding-right:10px; min-width:80px; height:100%; vertical-align:middle;}
 .xm_box > div{float:left; margin-left:10px;}
 .mheader{position:fixed; z-index:1; width:100%;}
-.mbody{padding-top:50px;}
 
 
 
@@ -326,7 +325,7 @@ input:disabled{ background:rgb(224, 223, 223); }
 #pop_container .info_content{position:fixed; top:-50%; left:50%; height:90%; transform:translate(-50%, -50%); background:#fff;}
 #pop_container .info_content h2{font-size:1.2em; line-height:24px; padding:10px 15px; background-color: rgb(59, 77, 115); color: #fff;}
 #pop_container .info_content span.close{float:right; cursor:pointer; color:#fff; opacity:unset;}
-#pop_container .ajaxContent{height:100%; width:35vw; min-width:580px;}
+#pop_container .ajaxContent{height:100%; min-width:580px;}
 
 
 #loading{display:block; text-align:center; display:none;}
