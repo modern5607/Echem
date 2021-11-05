@@ -57,7 +57,7 @@ class PURCHASE extends CI_Controller
 	{
 		//모델
 		$data['list']=$this->pur_model->ajax_matorder();
-
+		//echo var_dump($data['list']);
 		//뷰
 		$this->load->view('purchase/ajax_matorder', $data);
 	}

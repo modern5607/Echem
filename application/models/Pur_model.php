@@ -11,5 +11,59 @@ class Pur_model extends CI_Model
 	}
 
 
+	public function ajax_matorder()
+	{
+		$sql=<<<SQL
+			SELECT 
+				'1' AS COL1,
+				'2' AS COL2,
+				'3' AS COL3
+			FROM DUAL;
+SQL;
+		$query = $this->db->query($sql);
+		//echo var_dump($query->result());
+		return $query->result();
+	}
 
+	public function ajax_enter()
+	{
+		$sql=<<<SQL
+			SELECT 
+				'1' AS COL1,
+				'2' AS COL2,
+				'3' AS COL3
+			FROM DUAL;
+SQL;
+		$query = $this->db->query($sql);
+		//echo var_dump($query->result());
+		return $query->result();
+	}
+	
+	public function ajax_orderenter()
+	{
+		$sql=<<<SQL
+			SELECT 
+				'1' AS COL1,
+				'2' AS COL2,
+				'3' AS COL3
+			FROM DUAL;
+SQL;
+		$query = $this->db->query($sql);
+		//echo var_dump($query->result());
+		return $query->result();
+	}
+
+	public function ajax_denter()
+	{
+		$sql=<<<SQL
+			SELECT 
+				'1' AS COL1,
+				'2' AS COL2,
+				'3' AS COL3
+			FROM DUAL;
+SQL;
+		$query = $this->db->query($sql);
+		//echo var_dump($query->result());
+		return $query->result();
+	}
 }
