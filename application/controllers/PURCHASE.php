@@ -50,16 +50,24 @@ class PURCHASE extends CI_Controller
 	public function matorder()
 	{
 		$data['title']='원자재 발주등록';
-		return $this->load->view('main100', $data);
+		return $this->load->view('main50', $data);
 	}
 
-	public function ajax_matorder()
+	public function head_matorder()
 	{
 		//모델
-		$data['list']=$this->pur_model->ajax_matorder();
-		//echo var_dump($data['list']);
+		$data['list']=$this->pur_model->head_matorder();
+
 		//뷰
-		$this->load->view('purchase/ajax_matorder', $data);
+		$this->load->view('purchase/head_matorder', $data);
+	}
+	public function detail_matorder()
+	{
+		//모델
+		$data['list']='';//$this->pur_model->detail_matorder();
+
+		//뷰
+		$this->load->view('purchase/detail_matorder', $data);
 	}
 
 

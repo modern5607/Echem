@@ -10,6 +10,15 @@ class Pur_model extends CI_Model
 
 	}
 
+	public function head_matorder()
+	{
+		$sql=<<<SQL
+			SELECT '1' AS COL1,'2' AS COL2, '3' AS COL3  FROM DUAL;
+SQL;		
+		$query = $this->db->query($sql);
+		return $query->result();
+	}
+
 
 	public function ajax_matorder()
 	{
