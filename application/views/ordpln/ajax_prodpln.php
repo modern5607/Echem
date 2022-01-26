@@ -80,7 +80,7 @@ $(".xday").on("click", function() {
     }, 500);
 
     $.ajax({
-        url: "<?php echo base_url('MDM/calendar_form')?>",
+        url: "<?php echo base_url('ORDPLN/calendar_form')?>",
         type: "post",
         dataType: "html",
         data: {
@@ -99,7 +99,6 @@ $(document).on("click", "h2 > span.close", function() {
     $(".ajaxContent").html('');
     $("#pop_container").fadeOut();
     $(".info_content").css("top", "-50%");
-    location.reload();
 
 });
 </script>

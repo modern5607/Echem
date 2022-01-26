@@ -76,32 +76,11 @@ SQL;
 	public function calendarInfo_list($date)
 	{
 		$sql=<<<SQL
-			SELECT POR_NO,POR_SEQ,MCCSDESC,GJ
-			FROM
-			(
-				SELECT *,"절단" AS GJ FROM T_ACTPLN WHERE PROC_PLN='{$date}'
-				UNION
-				SELECT *,"취부" AS GJ FROM T_ACTPLN WHERE ASSE_PLN='{$date}'
-				UNION
-				SELECT *,"용접" AS GJ FROM T_ACTPLN WHERE WELD_PLN='{$date}'
-				UNION
-				SELECT *,"사상" AS GJ FROM T_ACTPLN WHERE MRO_PLN='{$date}'
-				UNION
-				SELECT *,"제작검사" AS GJ FROM T_ACTPLN WHERE INRQDA='{$date}'
-				UNION
-				SELECT *,"PK검사" AS GJ FROM T_ACTPLN WHERE PKQDA='{$date}'
-				UNION
-				SELECT *,"배송계획" AS GJ FROM T_ACTPLN WHERE TRNDDA='{$date}'
-			) AS A
-			ORDER BY POR_NO,POR_SEQ
+			SELECT 1 as POR_NO,2 as POR_SEQ, 3 as MCCSDESC,4 as GJ
+			FROM DUAL
 SQL;
 		$query=$this->db->query($sql);
-		// echo nl2br($this->db->last_query());
-		// echo var_dump($query->result());
 		return $query->result();
-
-		// $query = $this->db->where("WORK_DATE", $date)->get("T_WORKCAL");
-		// return $query->row();
 	}
 
 	public function calendar_up($params)

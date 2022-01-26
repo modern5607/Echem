@@ -29,11 +29,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 </tr>
                 <tr>
                     <th>납기요청일</th>
-                    <td><input type="text" class="form_input input_100" autocomplete="off" value='' name=""></td>
+                    <td><input type="text" class="form_input input_100 calendar" autocomplete="off" value='<?= date('Y-m-d') ?>' name=""></td>
                         
-                    
                     <th>납기예정일</th>
-                    <td><input type="text" class="form_input input_100" autocomplete="off" value='' name=""></td>
+                    <td><input type="text" class="form_input input_100 calendar" autocomplete="off" value='<?= date('Y-m-d') ?>' name=""></td>
                 </tr>
                 <tr>
                     <th>거래처</th>
@@ -46,7 +45,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <th>등록일</th>
                     <td><input type="text" class="form_input input_100" autocomplete="off" value='' name=""></td>
 
-                    <th>등로 ID</th>
+                    <th>등록 ID</th>
                     <td><input type="text" class="form_input input_100" autocomplete="off" value='' name=""></td>
                 </tr>
             </thead>

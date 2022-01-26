@@ -297,6 +297,16 @@ class ORDPLN extends CI_Controller
 
 		return $this->load->view('ordpln/ajax_prodpln', $data);
 	}
+	public function calendar_form()
+	{
+		$data['title'] = "생산계획";
+		$data['setDate'] = $this->input->post("xdate");
+		$data['List'] = $this->ordpln_model->calendarInfo_list($data['setDate']);
+		// echo var_dump($data['List']);
+
+		$this->load->view('ordpln/calendar_form', $data);
+	}
+
 
 
 
