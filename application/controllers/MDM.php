@@ -281,20 +281,98 @@ class MDM extends CI_Controller
 	}
 
 	// 품목등록
-	public function component()
+	public function items()
 	{
 		$data['title'] = '품목등록';
 		$this->load->view('main100', $data);
 	}
 
-	public function ajax_component()
+	public function ajax_items()
 	{
+		$data['str']['ITEM_NAME'] = $this->input->post("ITEM_NAME");
+		$data['str']['USEYN'] = $this->input->post("USEYN");
+
+		$params['ITEM_NAME'] = isset($data['str']['ITEM_NAME'])?$data['str']['ITEM_NAME']:"";
+		$params['USEYN'] = isset($data['str']['USEYN'])?$data['str']['USEYN']:"";
+
+
+		$data['perpage'] = ($this->input->post('perpage') != "") ? $this->input->post('perpage') : 15;
+		//PAGINATION
+		$config['per_page'] = $data['perpage'];
+		$config['page_query_string'] = true;
+		$config['query_string_segment'] = "pageNum";
+		$config['reuse_query_string'] = TRUE;
+
+		$pageNum = $this->input->post('pageNum') > '' ? $this->input->post('pageNum') : 0;
+		//$start = $config['per_page'] * ($pageNum - 1);
+
+		$start = $pageNum;
+		$data['pageNum'] = $start;
+
 		//모델
-		$data['list']=$this->mdm_model->ajax_component();
-		// echo var_dump($data['list']);
+		$data['list']=$this->mdm_model->ajax_items($params,$start,$config['per_page']);
+		$this->data['cut']=$this->mdm_model->ajax_items_cut($params);
+		// echo var_dump($this->data['cut']);
+
+
+		/* pagenation start */
+		$this->load->library("pagination");
+		$config['base_url'] = base_url(uri_string());
+		$config['total_rows'] = $this->data['cut'];
+		$config['full_tag_open'] = "<div>";
+		$config['full_tag_close'] = '</div>';
+
+		$this->pagination->initialize($config);
+		$this->data['pagenation'] = $this->pagination->create_links();
+
 
 		//뷰
-		$this->load->view('mdm/ajax_component', $data);
+		$this->load->view('mdm/ajax_items', $data);
+	}
+	
+	public function items_form()
+	{
+		$data['mode'] = $this->input->post("mode");
+		$data['idx'] = $this->input->post("idx");
+		
+		
+		$data['UNIT'] = $this->mdm_model->get_selectInfo("tch.CODE","UNIT");
+		// echo var_dump($data['UNIT']);
+
+		if($data['mode'] == "mod")
+		{
+			$data['List'] = $this->mdm_model->get_items($data['idx']);
+
+			// echo var_dump($data['List']);
+		}
+		
+		
+		return $this->load->view('mdm/items_form', $data);
+	}
+
+	public function item_update()
+	{
+		$data['mode'] = $this->input->post("mod");
+		$data['IDX'] = $this->input->post("idx");
+		$data['ITEM_NAME'] = $this->input->post("ITEM_NAME");
+		$data['UNIT'] = $this->input->post("UNIT");
+		$data['USE_YN'] = $this->input->post("USE_YN");
+
+		$params['IDX'] = $data['IDX'];
+		$params['ITEM_NAME'] = $data['ITEM_NAME'];
+		$params['UNIT'] = $data['UNIT'];
+		$params['USE_YN'] = $data['USE_YN'];
+		$params['ID'] = $this->session->userdata('user_id');
+
+
+
+		if($data['mode'] == "add")
+			$data['result'] = $this->mdm_model->set_item($params);
+		else if($data['mode']=="mod")
+			$data['result'] = $this->mdm_model->update_item($params);
+
+		// echo var_dump($data);
+		echo $data['result'];
 	}
 
 	//업체등록
@@ -359,19 +437,24 @@ class MDM extends CI_Controller
 	/* 업체등록 호출 */
 	public function biz_form()
 	{
+		$data['str']['title'] = "업체등록";
+		$data['str']['mode'] = $this->input->post("mode");
+		$data['str']['IDX'] = $this->input->post("IDX");
+
+
 		$params['title'] = "업체등록";
 		$params['mod'] = 0;
 
-		$params['List'] = $this->sys_model->get_selectInfo('tcd.H_IDX',33); 
-
-		if ($_POST['mode'] == "mod") {
-			$params['title'] .= " - 수정";
-			$data = $this->mdm_model->biz_form_list($_POST['IDX']);
-			$params['data'] = $data;
-			$params['mod'] = 1;
+		$data['BIZGB'] = $this->sys_model->get_selectInfo('tch.CODE',"BizType"); 
+		// echo var_dump($data['BIZGB']);
+		if ($data['str']['mode'] == "mod") {
+			$data['str']['title'] .= " - 수정";
+			$data['info'] = $this->mdm_model->biz_form_list($data['str']['IDX']);
+			// echo var_dump($data['info']);
+			// $params['mod'] = 1;
 		}
 
-		return $this->load->view('/mdm/biz_form', $params);
+		return $this->load->view('/mdm/biz_form', $data);
 	}
 	/* 닉네임 중복 체크 */
 	public function biz_nameChk()
@@ -419,44 +502,92 @@ class MDM extends CI_Controller
 	}
 	public function ajax_bizcur()
 	{
+		$data['str'] = array(); //검색어관련
+		$data['str']['custnm'] = trim((string)$this->input->post('custnm'));
+		$data['str']['address'] = trim((string)$this->input->post('address'));
+		$data['str']['useyn'] = ($this->input->post('useyn'))?$this->input->post('useyn'):'Y' ;
+
+		$params['CUST_NM'] = "";
+		$params['ADDRESS'] = "";
+		$params['USEYN'] = "";
+
+		if (!empty($data['str']['custnm'])) { $params['CUST_NM'] = $data['str']['custnm']; }
+		if (!empty($data['str']['address'])) { $params['ADDRESS'] = $data['str']['address']; }
+		if (!empty($data['str']['useyn'])) { $params['USEYN'] = $data['str']['useyn']; }
+
+
+		$data['perpage'] = ($this->input->post('perpage') != "") ? $this->input->post('perpage') : 20;
+		//PAGINATION
+		$config['per_page'] = $data['perpage'];
+		$config['page_query_string'] = true;
+		$config['query_string_segment'] = "pageNum";
+		$config['reuse_query_string'] = TRUE;
+
+		$pageNum = $this->input->post('pageNum') > '' ? $this->input->post('pageNum') : 0;
+		//$start = $config['per_page'] * ($pageNum - 1);
+
+		$start = $pageNum;
+		$data['pageNum'] = $start;
+
+		$user_id = $this->session->userdata('user_id');
+		$this->data['userName'] = $this->session->userdata('user_name');
+
+		// $data['list']=$this->mdm_model->ajax_bizcur($params, $start, $config['per_page']);
 		//모델
-		$data['list']=$this->mdm_model->ajax_bizcur();
+		$data['bizList']   = $this->mdm_model->biz_list($params, $start, $config['per_page']);
+		$this->data['cut'] = $this->mdm_model->biz_cut($params);
+
+		// $data['SJGB']   = $this->mdm_model->get_selectInfo("tch.CODE","SJGB");
+		// echo var_dump($data['SJGB']);
+
+
+		/* pagenation start */
+		$this->load->library("pagination");
+		$config['base_url'] = base_url(uri_string());
+		$config['total_rows'] = $this->data['cut'];
+		$config['full_tag_open'] = "<div>";
+		$config['full_tag_close'] = '</div>';
+
+		$this->pagination->initialize($config);
+		$this->data['pagenation'] = $this->pagination->create_links();
+		
+		
 
 		//뷰
 		$this->load->view('mdm/ajax_bizcur', $data);
 	}
 
-	// 인사정보등록
-	public function person()
-	{
-		$data['title'] = '인사정보등록';
-		$this->load->view('main100', $data);
-	}
-	public function ajax_person()
-	{
-		//모델
-		$data['list']=$this->mdm_model->ajax_person();
+	// // 인사정보등록
+	// public function person()
+	// {
+	// 	$data['title'] = '인사정보등록';
+	// 	$this->load->view('main100', $data);
+	// }
+	// public function ajax_person()
+	// {
+	// 	//모델
+	// 	$data['list']=$this->mdm_model->ajax_person();
 
-		//뷰
-		$this->load->view('mdm/ajax_person', $data);
-	}
+	// 	//뷰
+	// 	$this->load->view('mdm/ajax_person', $data);
+	// }
 
-	// 인사정보현황
-	public function personcur()
-	{
-		$data['title'] = '인사정보현황';
-		$this->load->view('main100', $data);
-	}
+	// // 인사정보현황
+	// public function personcur()
+	// {
+	// 	$data['title'] = '인사정보현황';
+	// 	$this->load->view('main100', $data);
+	// }
 
-	// 인사정보현황 리스트
-	public function ajax_personcur()
-	{
-		//모델
-		$data['list']=$this->mdm_model->ajax_personcur();
+	// // 인사정보현황 리스트
+	// public function ajax_personcur()
+	// {
+	// 	//모델
+	// 	$data['list']=$this->mdm_model->ajax_personcur();
 
-		//뷰
-		$this->load->view('mdm/ajax_personcur', $data);
-	}
+	// 	//뷰
+	// 	$this->load->view('mdm/ajax_personcur', $data);
+	// }
 
 
 	// //작업자 등록

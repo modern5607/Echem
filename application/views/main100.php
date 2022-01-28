@@ -14,8 +14,6 @@
 
 
 <script>
-
-
     var formData = '';
     var page = 0;
     var limit = 0;
@@ -33,7 +31,7 @@
         }
 
         $.ajax({
-            url: "<?= (empty($pos) && empty($subpos))?base_url("/MDM/ajax_calendar") : base_url('/' . $pos . '/ajax_' . $subpos . '/') ?>",
+            url: "<?= (empty($pos) && empty($subpos)) ? base_url("/MDM/ajax_calendar") : base_url('/' . $pos . '/ajax_' . $subpos . '/') ?>",
             type: "post",
             data: formData,
             dataType: "html",
@@ -123,5 +121,4 @@
             }
         });
     });
-    
 </script>
