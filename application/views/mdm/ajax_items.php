@@ -32,10 +32,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
 				<thead>
 					<tr>
 						<th style="width: 50px;">No</th>
-						<th>1</th>
-						<th>2</th>
-						<th>3</th>
+						<th>품명</th>
+						<th>단위</th>
 						<th></th>
+						<th>비고</th>
 					</tr>
 				</thead>
 				<tbody>
