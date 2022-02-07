@@ -152,6 +152,29 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                             </ul>
                                         </li>
                                     <?php   }
+                                    if ($row->MENU_CODE == "PRODMON" && $_SESSION['user_level'] >= $row->MENU_LEVEL) {
+                                        ?>
+                                        <li class="menu01_li">
+                                            <a href="<?= base_url('PRODMON/prodmonoff') ?>" class="menu_a <?= ($this->data['pos'] == "PRODMON") ? "on" : ""; ?>">
+                                                <i class="material-icons">add_business</i>모니터링</a>
+                                            <ul class="menu02" <?= ($this->data['pos'] == "PRODMON") ? "style='display:block'" : ""; ?>>
+                                                <li><a href="<?= base_url('PRODMON/prodmonoff') ?>" class="<?= ($this->data['subpos'] == 'prodmonoff') ? "on" : ""; ?>">생산현황 모니터 - 사무동</a></li>
+                                                <li><a href="<?= base_url('PRODMON/prodmonfac') ?>" class="<?= ($this->data['subpos'] == 'prodmonfac') ? "on" : ""; ?>">생산현황 모니터 - 공장동</a></li>
+                                                
+                                            </ul>
+                                        </li>
+                                    <?php   }
+                                    if ($row->MENU_CODE == "SENSOR" && $_SESSION['user_level'] >= $row->MENU_LEVEL) {
+                                        ?>
+                                        <li class="menu01_li">
+                                            <a href="<?= base_url('SENSOR/senprod') ?>" class="menu_a <?= ($this->data['pos'] == "SENSOR") ? "on" : ""; ?>">
+                                                <i class="material-icons">add_business</i>Sensor - 모니터링</a>
+                                            <ul class="menu02" <?= ($this->data['pos'] == "SENSOR") ? "style='display:block'" : ""; ?>>
+                                                <li><a href="<?= base_url('SENSOR/senprod') ?>" class="<?= ($this->data['subpos'] == 'senprod') ? "on" : ""; ?>">Sensor 모니터링(생산현장용)</a></li>
+                                                <li><a href="<?= base_url('SENSOR/senadmin') ?>" class="<?= ($this->data['subpos'] == 'senadmin') ? "on" : ""; ?>">Sensor 모니터링(관리자용)</a></li>
+                                            </ul>
+                                        </li>
+                                    <?php   }
                                 if ($row->MENU_CODE == "QUAL" && $_SESSION['user_level'] >= $row->MENU_LEVEL) {
                                     ?>
                                         <li class="menu01_li">
