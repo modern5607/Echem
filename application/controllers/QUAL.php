@@ -60,6 +60,8 @@ class QUAL extends CI_Controller
 		//뷰
 		$this->load->view('qual/ajax_qexam', $data);
 	}
+
+
 	// 실적대비 불량률
 	public function perfpoor()
 	{
@@ -74,6 +76,8 @@ class QUAL extends CI_Controller
 		//뷰
 		$this->load->view('qual/ajax_perfpoor', $data);
 	}
+
+
 	// 품질이력
 	public function qualitycur()
 	{
@@ -88,6 +92,8 @@ class QUAL extends CI_Controller
 		//뷰
 		$this->load->view('qual/ajax_qualitycur', $data);
 	}
+
+	
 	// 불량분석
 	public function pooranal()
 	{

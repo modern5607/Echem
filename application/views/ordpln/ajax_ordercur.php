@@ -14,28 +14,32 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		}
 	};
 </style>
-
 <header>
-	<div class="searchDiv">
-		<form id="headForm">
-			<label>일자</label>
-			<input type="text" name="sdate" class="calendar" size="11" value="<?php echo $str['sdate']; ?>" placeholder="<?= date("Y-m-d") ?>" /> ~
-			<input type="text" name="edate" class="calendar" size="11" value="<?php echo $str['edate']; ?>" placeholder="<?= date("Y-m-d") ?>" />
+	<div class="searchBoxxx" style="margin-bottom:20px; padding:15px; border:1px solid #ddd;">
+		<form id="ajaxForm">
+			
+            <label>일자</label>
+                <input type="text" name="sdate" class="calendar" size="11" value="<?php echo $str['sdate']; ?>" placeholder="<?= date("Y-m-d") ?>" /> ~
+                <input type="text" name="edate" class="calendar" size="11" value="<?php echo $str['edate']; ?>" placeholder="<?= date("Y-m-d") ?>" />
 
-			<button type="button" class="search_submit head_search"><i class="material-icons">search</i></button>
+			<button type="button" class="search_submit ajax_search"><i class="material-icons">search</i></button>
 		</form>
 	</div>
+	<!-- <span class="btn add add_head"><i class="material-icons">add</i>추가</span> -->
 </header>
 
 <div class="tbl-content">
 	<table cellpadding="0" cellspacing="0" border="0" width="100%">
 		<thead>
 			<tr>
-				<th style="width:10%">NO</th>
-				<th>수주일</th>
-				<th>수주명</th>
-				<th>수량(T)</th>
-				<th>거래처</th>
+				<th style="width:5%;">NO</th>
+				<th style="width:10%;">수주일</th>
+				<th style="width:10%;">수주명</th>
+				<th style="width:10%;">수량(T)</th>
+				<th style="width:10%;">거래처</th>
+				<th style="width:10%;">거래처 당담자</th>
+				<th style="width:10%;">납기예정일</th>
+				<th style="width:%;">수주 세부사항</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -47,9 +51,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
 					<tr class="headLink">
 						<td class="cen"><?= $no ?></td>
 						<td class="cen"><?= $row->ACT_DATE ?></td>
-						<td class="link_s1" data-idx="<?= $row->IDX ?>"><?= $row->ACT_NAME ?></td>
+						<td><?= $row->ACT_NAME ?></td>
 						<td class="right"><?= number_format($row->QTY,1) ?></td>
 						<td><?= $row->BIZ_IDX ?></td>
+						<td><?= $row->BIZ_NAME ?></td>
+						<td class="cen"><?= $row->DEL_DATE ?></td>
+						<td><?= $row->REMARK ?></td>
 					</tr>
 				<?php
 				}
@@ -65,7 +72,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 	</table>
 </div>
 
-<div class="pagination2">
+<div class="pagination">
 	<?php
 	if ($this->data['cnt'] > 20) {
 	?>
@@ -98,33 +105,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 
 <script>
-	$(document).off("click", ".link_s1");
-	$(document).on("click", ".link_s1", function() {
-		$(".headLink").removeClass("over");
-		$(this).parent().addClass("over");
-
-		var idx = $(this).data("idx");
-		detailData = new FormData();
-		detailData.append('idx', idx);
-
-		$.ajax({
-			url: "<?= base_url('/ORDPLN/detail_order/') ?>",
-			type: "post",
-			data: detailData,
-			dataType: "html",
-			cache: false,
-			contentType: false,
-			processData: false,
-			success: function(data) {
-				$("#ajax_detail_container").html(data);
-			}
-		});
-	});
-
-
-
-
-
 	//달력
 	$(".calendar").datetimepicker({
 		format: 'Y-m-d',

@@ -10,69 +10,86 @@ class Pur_model extends CI_Model
 
 	}
 
-	public function head_matorder()
+
+
+
+	// 구매관리 - 원자재 리스트
+	public function component_list($params)
 	{
-		$sql=<<<SQL
-			SELECT '1' AS COL1,'2' AS COL2, '3' AS COL3  FROM DUAL;
-SQL;		
-		$query = $this->db->query($sql);
+		if (!empty($params['END_CHK']) && $params['END_CHK'] != "") {
+			$this->db->where("END_YN", $params['END_CHK']);
+		}
+		if ((!empty($params['SDATE']) && $params['SDATE'] != "") && (!empty($params['EDATE']) && $params['EDATE'] != "")) {
+			$this->db->where("ACT_DATE BETWEEN '{$params['SDATE']}' AND '{$params['EDATE']}'");
+		}
+		$this->db->order_by('ACT_DATE', 'DESC');
+		$query = $this->db->get("T_COMPONENT");
+// echo $this->db->last_query();
 		return $query->result();
 	}
 
+	// 구매관리 - 원자재 발주등록
+	public function component_head_insert($params)
+	{
+		$datetime = date("Y-m-d H:i:s", time());
+		$username = $this->session->userdata('user_name');
 
-	public function ajax_matorder()
-	{
-		$sql=<<<SQL
-			SELECT 
-				'1' AS COL1,
-				'2' AS COL2,
-				'3' AS COL3
-			FROM DUAL;
+		$sql = <<<SQL
+		INSERT T_COMPONENT
+			SET
+			ACT_DATE   	= '{$params['ACT_DATE']}',
+			QTY 		= '{$params['QTY']}',
+			UNIT     	= '{$params['UNIT']}',
+			DEL_DATE    = '{$params['DEL_DATE']}',	
+			REMARK    	= '{$params['REMARK']}',
+			END_YN    	= 'N',
+			INSERT_ID   = '{$username}',
+			INSERT_DATE = '{$datetime}'
 SQL;
-		$query = $this->db->query($sql);
-		//echo var_dump($query->result());
-		return $query->result();
-	}
-
-	public function ajax_enter()
-	{
-		$sql=<<<SQL
-			SELECT 
-				'1' AS COL1,
-				'2' AS COL2,
-				'3' AS COL3
-			FROM DUAL;
-SQL;
-		$query = $this->db->query($sql);
-		//echo var_dump($query->result());
-		return $query->result();
-	}
-	
-	public function ajax_orderenter()
-	{
-		$sql=<<<SQL
-			SELECT 
-				'1' AS COL1,
-				'2' AS COL2,
-				'3' AS COL3
-			FROM DUAL;
-SQL;
-		$query = $this->db->query($sql);
-		//echo var_dump($query->result());
-		return $query->result();
+		$this->db->query($sql);
+		
+		return $this->db->affected_rows();
 	}
 
-	public function ajax_denter()
+	// 구매관리 - 원자재 발주 삭제
+	public function del_component($idx)
 	{
-		$sql=<<<SQL
-			SELECT 
-				'1' AS COL1,
-				'2' AS COL2,
-				'3' AS COL3
-			FROM DUAL;
-SQL;
-		$query = $this->db->query($sql);
-		//echo var_dump($query->result());
-		return $query->result();
+		$this->db->trans_start();
+			$this->db->where("IDX", $idx);
+			$this->db->delete("T_COMPONENT");
+		$this->db->trans_complete();
+
+		$data = 0;
+		if ($this->db->trans_status() !== FALSE) {
+			$data = 1;
+		}
+
+		return $data;
 	}
+
+	// 구매관리 - 원자재 입고
+	public function end_component($params)
+	{
+		$datetime = date("Y-m-d H:i:s", time());
+		$username = $this->session->userdata('user_name');
+
+		$this->db->trans_start();
+			$this->db->set("END_YN", "Y");
+			$this->db->set("END_DATE", $datetime);
+			$this->db->set("UPDATE_DATE", $datetime);
+			$this->db->set("UPDATE_ID", $username);
+			$this->db->set("QTY2", $params['QTY']);
+			$this->db->set("REMARK2", $params['REMARK']);
+			$this->db->where("IDX", $params['IDX']);
+			$this->db->update("T_COMPONENT");
+		$this->db->trans_complete();
+// echo $this->db->last_query();
+		$data = 0;
+		if ($this->db->trans_status() !== FALSE) {
+			$data = 1;
+		}
+
+		return $data;
+	}
+
 }

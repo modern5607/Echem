@@ -1,70 +1,68 @@
-<?php
-defined('BASEPATH') or exit('No direct script access allowed');
-?>
+<header>
+	<div class="searchBoxxx" style="margin-bottom:20px; padding:15px; border:1px solid #ddd;">
+		<form id="ajaxForm">
+			<label for="sdate">발주등록일</label>
+				<input type="text" name="sdate" class="sdate calendar"
+					value="<?= (!empty($str['sdate']) && $str['sdate'] != "")?$str['sdate']:date("Y-m-d",strtotime("-1 month", time()));?>"
+					size="12" /> ~
 
-<style>
-	.ui-datepicker-calendar {
-		display: none;
-	}
-</style>
+				<input type="text" name="edate" class="edate calendar"
+					value="<?= (!empty($str['edate']) && $str['edate'] != "")?$str['edate']:date("Y-m-d");?>"
+					size="12" />
+			
+			<button type="button" class="search_submit ajax_search"><i class="material-icons">search</i></button>
+		</form>
+	</div>
+	<!-- <span class="btn add add_head"><i class="material-icons">add</i>추가</span> -->
+</header>
 
-<div class="bdcont_100">
-	<header>
-		<div class="searchDiv">
-			<form id="ajaxForm">
-				
-			</form>
-		</div>
-	</header>
+<div id="cocdHead" class="tbl-content">
+	<table cellpadding="0" cellspacing="0" border="0" width="100%">
+		<thead>
+			<tr>
+				<th style="width:5%;">No</th>
+				<th style="width:10%;">발주등록일</th>
+				<th style="width:10%;">발주 수량</th>
+				<th style="width:10%;">단위</th>
+				<th style="width:20%;">비고</th>
+				<th style="width:10%;">입고 수량</th>
+				<th style="width:20%;">입고 특이사항</th>
+				<th style="width:10%;">입고일</th>
+				<th style="width:5%;">완료여부</th>
+			</tr>
+		</thead>
+		<tbody>
 
-	<div class="tbl-content">
-		<table cellpadding="0" cellspacing="0" border="0" width="100%" id="excel">
-			<thead>
-				<tr>
-					<th>순번</th>
-					<th>1</th>
-					<th>2</th>
-					<th>3</th>
+			<?php
+			foreach ($list as $i => $row) {
+                $num = $i+1;
+			?>
+				<tr class="pocbox">
+					<td class="cen"><?=$num?></td>
+					<td class="cen"><?= $row->ACT_DATE ?></td>
+					<td class="right"><?= number_format($row->QTY) ?></td>
+					<td class="cen"><?= $row->UNIT ?></td>
+					<td><?= $row->REMARK ?></td>
+					<td class="right"><?= number_format($row->QTY2) ?></td>
+					<td><?= $row->REMARK2 ?></td>
+					<td class="cen"><?= $row->END_DATE ?></td>
+					<td class="cen"><?= $row->END_YN ?></td>
 				</tr>
-			</thead>
-			<tbody>
-				<?php
-				if (!empty($list)) {
-					foreach ($list as $i => $row) {
-                        $num=$i+1;
-				?>
-						<tr>
-							<td><?= $num?> </td>
-							<td><?= $row->COL1?></td>
-							<td><?= $row->COL2?> </td>
-							<td><?= $row->COL3?> </td>
-						</tr>
-					<?php
-					}
-				} else {
-					?>
-					<tr>
-						<td colspan="15" class="list_none">월간 실행계획이 없습니다.</td>
-					</tr>
-				<?php
-				}
-				?>
-			</tbody>
-		</table>
-	</div>
 
+			<?php
+			}
+			?>
+		</tbody>
+	</table>
 </div>
 
 
-<div id="pop_container">
+<script>
+//제이쿼리 수신일 입력창 누르면 달력 출력
+$(".calendar").datetimepicker({
+    format: 'Y-m-d',
+    timepicker: false,
+    lang: 'ko-KR'
+});
 
-	<div class="info_content" style="height:auto;">
-		<div class="ajaxContent">
-
-			<!-- 데이터 -->
-
-		</div>
-	</div>
-
-</div>
-
+</script>

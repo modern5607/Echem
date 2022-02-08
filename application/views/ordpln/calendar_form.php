@@ -16,23 +16,17 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			<table class="nhover" style="width:100%">
 				<thead>
 					<tr>
-						<th class="" style="width: 80px;">날자</th>
-						<th class="cen" style="width: 80px;">수주정보</th>
-						<th>수량</th>
+						<th>날자</th>
+						<th>생산예정량</th>
+						<th>비고</th>
 					</tr>
 				</thead>
 				<tbody>
-					<?php if (!empty($List)) {
-						foreach ($List as $row) { ?>
-							<tr>
-								<td class="cen"><input type="text"></td>
-								<td class="cen"><input type="text"></td>
-								<td class="cen"><input type="text"></td>
-							</tr>
-					<?php }
-					} ?>
-
-
+					<tr>
+						<td class="cen"><input name="date" type="text" value="<?= $setDate ?>"></td>
+						<td class="cen"><input name="qty" type="text" value="<?= !empty($List)?round($List[0]->QTY,2):'' ?>"></td>
+						<td class="cen"><input name="remark" type="text" value="<?= !empty($List)?$List[0]->REMARK:'' ?>"></td>
+					</tr>
 				</tbody>
 			</table>
 		</fieldset>
@@ -47,3 +41,30 @@ defined('BASEPATH') or exit('No direct script access allowed');
 	</form>
 
 </div>
+
+<script>
+	$(".submitBtn").click(function (){
+    var date = $("input[name='date']").val();
+    var qty = $("input[name='qty']").val();
+    var remark = $("input[name='remark']").val();
+
+    // console.log(year + month);
+
+    $.ajax({
+        type: "post",
+        url: "<?= base_url('ORDPLN/calendar_update')?>",
+        data: {
+            remark:remark,
+            qty:qty,
+            date:date,
+			gb: 'ORD'
+        },
+        dataType: "html",
+        success: function (data) {
+			location.reload();
+        }
+    });
+
+});
+
+</script>

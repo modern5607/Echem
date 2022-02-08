@@ -92,7 +92,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                             <li><a href="<?= base_url('PURCHASE/matorder') ?>" class="<?= ($this->data['subpos'] == 'matorder') ? "on" : ""; ?>">원자재 발주등록</a></li>
                                             <li><a href="<?= base_url('PURCHASE/enter') ?>" class="<?= ($this->data['subpos'] == 'enter') ? "on" : ""; ?>">입고등록</a></li>
                                             <li><a href="<?= base_url('PURCHASE/orderenter') ?>" class="<?= ($this->data['subpos'] == 'orderenter') ? "on" : ""; ?>">발주대비 입고현황</a></li>
-                                            <li><a href="<?= base_url('PURCHASE/denter') ?>" class="<?= ($this->data['subpos'] == 'denter') ? "on" : ""; ?>">기간별 발주현황</a></li>
                                         </ul>
                                     </li>
                                 <?php   }
@@ -106,7 +105,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                 <li><a href="<?= base_url('ORDPLN/ordercur') ?>" class="<?= ($this->data['subpos'] == 'ordercur') ? "on" : ""; ?>">주문현황</a></li>
                                                 <li><a href="<?= base_url('ORDPLN/orderprocess') ?>" class="<?= ($this->data['subpos'] == 'orderprocess') ? "on" : ""; ?>">주문대비 진행현황</a></li>
                                                 <li><a href="<?= base_url('ORDPLN/prodpln') ?>" class="<?= ($this->data['subpos'] == 'prodpln') ? "on" : ""; ?>">생산계획 등록</a></li>
-                                                <li><a href="<?= base_url('ORDPLN/prodplncur') ?>" class="<?= ($this->data['subpos'] == 'prodplncur') ? "on" : ""; ?>">생산계획 조회</a></li>
+                                                <!-- <li><a href="<?= base_url('ORDPLN/prodplncur') ?>" class="<?= ($this->data['subpos'] == 'prodplncur') ? "on" : ""; ?>">생산계획 조회</a></li> -->
                                             </ul>
                                         </li>
                                     <?php   }
@@ -175,7 +174,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                             <li><a href="<?= base_url('SYS/register') ?>" class="<?= ($this->data['subpos'] == 'register') ? "on" : ""; ?>">사용자 등록</a></li>
                                             <li><a href="<?= base_url('SYS/level') ?>" class="<?= ($this->data['subpos'] == 'level') ? "on" : ""; ?>">사용자 권한등록</a></li>
                                             <li><a href="<?= base_url('SYS/userlog') ?>" class="<?= ($this->data['subpos'] == 'userlog') ? "on" : ""; ?>">접속기록</a></li>
-                                            <li><a href="<?= base_url('SYS/version') ?>" class="<?= ($this->data['subpos'] == 'version') ? "on" : ""; ?>">버전관리</a></li>
+                                        <!-- <li><a href="<?= base_url('SYS/version') ?>" class="<?= ($this->data['subpos'] == 'version') ? "on" : ""; ?>">버전관리</a></li> -->
 
                                         </ul>
                                     </li>

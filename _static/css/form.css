@@ -4,7 +4,7 @@
 .register_form { padding: 10px;}
 
 
-.form_input { border: 1px solid #ddd; padding:7px 8px;}
+.form_input { border: 1px solid #ddd; padding:7px 8px !important;}
 .form_select { border: 1px solid #ddd; padding:3px 8px;}
 
 
@@ -16,7 +16,7 @@
 .register_form .bcont{text-align:center; margin:15px 0;}
 
 .input01 { width: 40%; }
-.input_100 { width: 100%; }
+.input_100 { width: 100% !important; }
 .input_call { width: 27%; }
 
 

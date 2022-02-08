@@ -5,15 +5,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 <style>
 #calendar{ width:100%; height:100%;}
-#calendar tbody td{background:#f8f8f8; vertical-align:top; width:14.285%; height: 90px; text-align:left; padding:5px;}
+#calendar tbody td{background:#f8f8f8; vertical-align:top; width:14.285%; height: 100px; text-align:left; padding:5px;}
 #calendar tbody tr.week td{height:40px; padding:0px; line-height:40px; text-align:center; background:#ddd;}
 .other-month{color:#999;}
-.highlight{font-weight:600;}
 .moveBtn{ background:#fb7c7c; padding:5px 10px; }
 .headset th{padding-bottom:20px;}
 .headset a{color:#fff}
 
-.xday{cursor:pointer;}
+.xday{cursor:pointer; height:100%;}
+.calendarText, .week{font-weight:bold; font-size:1.2em;}
 #calendar tbody tr.week td.sun{background:#fb7c7c; color:#fff;}
 #calendar tbody tr.week td.sat{background:#aab7dc; color:#fff;}
 
@@ -45,8 +45,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 </div>
 
-
 <script>
+ 
 
 $(".btn").click(function (){
     var date = $(this).data("date");
@@ -57,7 +57,7 @@ $(".btn").click(function (){
 
     $.ajax({
         type: "post",
-        url: "<?= base_url('MDM/ajax_calendar')?>",
+        url: "<?= base_url('ORDPLN/ajax_prodpln')?>",
         data: {
             year:year,
             month:month

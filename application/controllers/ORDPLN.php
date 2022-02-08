@@ -104,22 +104,80 @@ class ORDPLN extends CI_Controller
 		$data['str'] = array(); //검색어관련
 		$data['str']['sdate'] = $this->input->post('sdate'); //시작일자
 		$data['str']['edate'] = $this->input->post('edate'); //끝일자
+		$data['str']['idx'] = $this->input->post('idx'); //끝일자
 
 		$params['SDATE'] = "";
 		$params['EDATE'] = "";
+		$params['IDX'] = "";
 
-		if (!empty($data['str']['sdate'])) {
-			$params['SDATE'] = $data['str']['sdate'];
-		}
-		if (!empty($data['str']['edate'])) {
-			$params['EDATE'] = $data['str']['edate'];
-		}
+		if (!empty($data['str']['sdate'])) { $params['SDATE'] = $data['str']['sdate']; }
+		if (!empty($data['str']['edate'])) { $params['EDATE'] = $data['str']['edate']; }
+		if (!empty($data['str']['idx'])) { $params['IDX'] = $data['str']['idx']; }
 
 		$data['list']=$this->ordpln_model->ordpln_dual($params);
 
 
 		$this->load->view('/ordpln/detail_order', $data);
 	}
+
+	public function order_insert()
+	{
+		$params['ACT_NAME'] = $this->input->post("ACTNM");
+		$params['ACT_DATE'] = $this->input->post("ADATE");
+		$params['QTY'] = $this->input->post("QTY");
+		$params['DEL_DATE'] = $this->input->post("DDATE");
+		$params['REMARK'] = $this->input->post("REMARK");
+		$params['BIZ_NAME'] = $this->input->post("BIZNM");
+		$params['BIZ_IDX'] = $this->input->post("BIZ");
+
+
+		$num = $this->ordpln_model->order_insert($params);
+
+		if ($num > 0) {
+			$data['status'] = "ok";
+			$data['msg'] = "주문이 등록되었습니다.";
+		} else {
+			$data['status'] = "";
+			$data['msg'] = "주문 등록에 실패했습니다. 관리자에게 문의하세요";
+		}
+
+		echo json_encode($data);
+	}
+	public function del_order()
+	{
+		$idx = $this->input->get("idx");
+		$num = $this->ordpln_model->del_order($idx);
+
+		if ($num > 0) {
+			$data['status'] = "ok";
+			$data['msg'] = "삭제되었습니다.";
+		} else {
+			$data['status'] = "no";
+			$data['msg'] = "삭제에 실패했습니다. 관리자에게 문의하세요";
+		}
+
+		echo json_encode($data);
+	}
+	public function update_order()
+	{
+		$params['ACT_NAME'] = $this->input->post("ACTNM");
+		$params['ACT_DATE'] = $this->input->post("ADATE");
+		$params['QTY'] = $this->input->post("QTY");
+		$params['DEL_DATE'] = $this->input->post("DDATE");
+		$params['REMARK'] = $this->input->post("REMARK");
+		$params['BIZ_NAME'] = $this->input->post("BIZNM");
+		$params['BIZ_IDX'] = $this->input->post("BIZ");
+		$params['IDX'] = $this->input->post("IDX");
+			
+		$data = $this->ordpln_model->update_order($params);
+
+		echo json_encode($data);
+	}
+
+
+
+
+
 
 
 	// 주문현황
@@ -130,12 +188,45 @@ class ORDPLN extends CI_Controller
 	}
 	public function ajax_ordercur()
 	{
-		//모델
-		$data['list']=$this->ordpln_model->ajax_ordercur();
+		$data['str'] = array(); //검색어관련
+		$data['str']['sdate'] = $this->input->post('sdate'); //시작일자
+		$data['str']['edate'] = $this->input->post('edate'); //끝일자
+
+		$params['SDATE'] = "";
+		$params['EDATE'] = "";
+
+		if (!empty($data['str']['sdate'])) { $params['SDATE'] = $data['str']['sdate']; }
+		if (!empty($data['str']['edate'])) { $params['EDATE'] = $data['str']['edate']; }
+
+
+		$data['perpage'] = ($this->input->post('perpage') != "") ? $this->input->post('perpage') : 20;
+		//PAGINATION
+		$config['per_page'] = $data['perpage'];
+		$config['page_query_string'] = true;
+		$config['query_string_segment'] = "pageNum";
+		$config['reuse_query_string'] = TRUE;
+		$pageNum = $this->input->post('pageNum') > '' ? $this->input->post('pageNum') : 0;
+		$data['pageNum'] =  $pageNum;
+
+		//list
+		$data['list']=$this->ordpln_model->ordpln_dual($params, $pageNum, $config['per_page']);
+		$this->data['cnt'] = $this->ordpln_model->ordpln_cut($params);
+
+
+		/* pagenation start */
+		$this->load->library("pagination");
+		$config['base_url'] = base_url(uri_string());
+		$config['total_rows'] = $this->data['cnt'];
+		$config['full_tag_open'] = "<div>";
+		$config['full_tag_close'] = '</div>';
+		$this->pagination->initialize($config);
+		$this->data['pagenation'] = $this->pagination->create_links();
 
 		//뷰
 		$this->load->view('ordpln/ajax_ordercur', $data);
 	}
+
+
 	// 주문대비 진행현황
 	public function orderprocess()
 	{
@@ -144,8 +235,39 @@ class ORDPLN extends CI_Controller
 	}
 	public function ajax_orderprocess()
 	{
-		//모델
-		$data['list']=$this->ordpln_model->ajax_orderprocess();
+		$data['str'] = array(); //검색어관련
+		$data['str']['sdate'] = $this->input->post('sdate'); //시작일자
+		$data['str']['edate'] = $this->input->post('edate'); //끝일자
+
+		$params['SDATE'] = "";
+		$params['EDATE'] = "";
+
+		if (!empty($data['str']['sdate'])) { $params['SDATE'] = $data['str']['sdate']; }
+		if (!empty($data['str']['edate'])) { $params['EDATE'] = $data['str']['edate']; }
+
+
+		$data['perpage'] = ($this->input->post('perpage') != "") ? $this->input->post('perpage') : 20;
+		//PAGINATION
+		$config['per_page'] = $data['perpage'];
+		$config['page_query_string'] = true;
+		$config['query_string_segment'] = "pageNum";
+		$config['reuse_query_string'] = TRUE;
+		$pageNum = $this->input->post('pageNum') > '' ? $this->input->post('pageNum') : 0;
+		$data['pageNum'] =  $pageNum;
+
+		//list
+		$data['list']=$this->ordpln_model->ordpln_dual($params, $pageNum, $config['per_page']);
+		$this->data['cnt'] = $this->ordpln_model->ordpln_cut($params);
+
+
+		/* pagenation start */
+		$this->load->library("pagination");
+		$config['base_url'] = base_url(uri_string());
+		$config['total_rows'] = $this->data['cnt'];
+		$config['full_tag_open'] = "<div>";
+		$config['full_tag_close'] = '</div>';
+		$this->pagination->initialize($config);
+		$this->data['pagenation'] = $this->pagination->create_links();
 
 		//뷰
 		$this->load->view('ordpln/ajax_orderprocess', $data);
@@ -215,26 +337,29 @@ class ORDPLN extends CI_Controller
 
 			{cal_cell_content}
 				<div class="xday" data-date="' . $year . '-' . $month . '-{day}">
-					{day}
+					<p class="calendarText">{day}</p>
 					<div class="cont">{content}</div>
 				</div>
 			{/cal_cell_content}
 
 			{cal_cell_content_today}
-				<div class="xday highlight"  data-date="' . $year . '-' . $month . '-{day}">
-					{day}
+				<div class="xday"  data-date="' . $year . '-' . $month . '-{day}">
+					<p class="calendarText">{day}</p>
 					<div class="cont">{content}</div>
 				</div>
 			{/cal_cell_content_today}
 
 			{cal_cell_no_content}
 			
-				<div class="xday" data-date="' . $year . '-' . $month . '-{day}">{day}</div>
+				<div class="xday" data-date="' . $year . '-' . $month . '-{day}">
+					<p class="calendarText">{day}</p>
+					<div id="{day}"></div>
+				</div>
 			
 			{/cal_cell_no_content}
 
 			{cal_cell_no_content_today}
-				<div class="xday highlight" data-date="' . $year . '-' . $month . '-{day}">{day}</div>
+				<div class="xday" data-date="' . $year . '-' . $month . '-{day}">{day}</div>
 			{/cal_cell_no_content_today}
 
 			{cal_cell_blank}&nbsp;{/cal_cell_blank}
@@ -250,6 +375,7 @@ class ORDPLN extends CI_Controller
 	';
 
 		$this->load->library('calendar', $prefs);
+		
 
 		$info = $this->ordpln_model->calendar_list($year, $month);
 		// echo var_dump($info);
@@ -292,7 +418,16 @@ class ORDPLN extends CI_Controller
 
 			$prev_d = $d;
 		}
-		// echo var_dump($contArray);
+
+		// 캘린더 내용
+		$List = $this->ordpln_model->calendarInfo_list($year, $month);
+		if (!empty($List)) { 
+			foreach ($List as $i => $row) {
+				$contArray[$row->DAY] = '생산예정량 : '.round($row->QTY,2) . ' (t)<br>' . $row->REMARK;
+			}
+		} 
+
+
 		$data['calendar'] = $this->calendar->generate($year, $month, $contArray);
 
 		return $this->load->view('ordpln/ajax_prodpln', $data);
@@ -301,16 +436,32 @@ class ORDPLN extends CI_Controller
 	{
 		$data['title'] = "생산계획";
 		$data['setDate'] = $this->input->post("xdate");
-		$data['List'] = $this->ordpln_model->calendarInfo_list($data['setDate']);
+		$year = substr($data['setDate'], 0, 4);
+		$month = substr($data['setDate'], 5, 2);
+		$day = substr($data['setDate'], 8, 2);
+
+		$data['List'] = $this->ordpln_model->calendarInfo_list($year,$month,$day);
 		// echo var_dump($data['List']);
 
 		$this->load->view('ordpln/calendar_form', $data);
 	}
 
+	public function calendar_update()
+	{
+		$params['DATE'] = $this->input->post("date");
+		$params['QTY'] = $this->input->post("qty");
+		$params['REMARK'] = $this->input->post("remark");
+		$params['GB'] = $this->input->post("gb");
+			
+		$data = $this->ordpln_model->calendar_update($params);
+
+		echo json_encode($data);
+	}
 
 
 
-	// 생산계획 조회
+
+	// 생산계획 조회 삭제?
 	public function prodplncur()
 	{
 		$data['title']='생산계획 조회';

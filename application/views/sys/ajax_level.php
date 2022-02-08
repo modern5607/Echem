@@ -83,46 +83,30 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			<table cellpadding="0" cellspacing="0" border="0" width="100%">
 				<thead>
 					<tr>
-						<th>아이디</th>
-						<th style="position:relative">권한
-							<div id="poplv">
-								<i class="material-icons whatlv" style="color:#fff">close</i>
-								<h2>권한레벨</h2>
-								<h3>다음 레벨부터 페이지에 접속할 수 있습니다.</h3>
-								<p>1레벨: SMT생산관리, 조립생산관리</p>
-								<p>2레벨: 주문/계획, 재고/수불관리, 자재관리</p>
-								<p>3레벨: 기준정보, BOM, 시스템관리, KPI</p>
-							</div>
-							<i class="material-icons whatlv">help_outline</i>
-						</th>
-						<th>이름</th>
-						<th>부서</th>
-						<th>직급</th>
-						<th>전화</th>
-						<th>휴대폰</th>
-						<th>이메일</th>
-						<th>입사일</th>
-						<th>상태</th>
+						<th style="width: 15%;">아이디</th>
+						<th style="width: 15%;">이름</th>
+						<th style="width: 10%;">권한</th>
+						<th style="width: 17%;">전화</th>
+						<th style="width: 17%;">휴대폰</th>
+						<th style="width: 18%;">이메일</th>
+						<th style="width: 8%;">상태</th>
 					</tr>
 				</thead>
 				<tbody>
 					<?php foreach ($List as $i => $row) { ?>
 						<tr>
 							<td><?php echo $row->ID; ?></td>
-							<td class="cen" style="padding:4px 10px">
-								<select name="LEVEL" data-idx="<?php echo $row->IDX; ?>" style="padding:1px 10px; border:1px solid #ddd;">
+							<td><?php echo $row->NAME; ?></td>
+							<td class="cen">
+								<select name="LEVEL" data-idx="<?php echo $row->IDX; ?>"style="padding:3px 10px; border:1px solid #ddd;">
 									<option value="1" <?php echo ($row->LEVEL == 1)?"selected":"";?>>일반</option>
 									<option value="2" <?php echo ($row->LEVEL == 2)?"selected":"";?>>관리자</option>
 								</select>
 							</td>
-							<td class="cen"><?php echo $row->NAME; ?></td>
-							<td class="cen"><?php echo $row->PART; ?></td>
-							<td class="cen"><?php echo $row->GRADE; ?></td>
 							<td class="cen"><?php echo $row->TEL; ?></td>
 							<td class="cen"><?php echo $row->HP; ?></td>
 							<td><?php echo $row->EMAIL; ?></td>
-							<td class="cen"><?php echo $row->FIRSTDAY; ?></td>
-							<td class="cen"><?php echo ($row->STATE == 1) ? "사용" : "사용안함"; ?></td>
+							<td class="cen"><?php echo ($row->STATE == 'Y') ? "사용" : "사용안함"; ?></td>
 						</tr>
 
 

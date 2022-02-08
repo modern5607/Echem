@@ -50,25 +50,90 @@ class PURCHASE extends CI_Controller
 	public function matorder()
 	{
 		$data['title']='원자재 발주등록';
-		return $this->load->view('main50', $data);
+		return $this->load->view('main100', $data);
 	}
 
-	public function head_matorder()
+	public function ajax_matorder()
 	{
+		$data['str'] = array(); //검색어관련
+
+		$data['str']['sdate'] = $this->input->post('sdate');
+		$data['str']['edate'] = $this->input->post('edate');
+
+		$params['SDATE'] = date("Y-m-d", strtotime("-1 month", time()) );
+		$params['EDATE'] = date("Y-m-d");
+		$params['END_CHK'] = '';
+
+		$data['qstr'] = "?P";
+
+		if (!empty($data['str']['sdate'])) {
+			$params['SDATE'] = $data['str']['sdate'];
+			$data['qstr'] .= "&sdate=" . $data['str']['sdate'];
+		}
+
+		if (!empty($data['str']['edate'])) {
+			$params['EDATE'] = $data['str']['edate'];
+			$data['qstr'] .= "&edate=" . $data['str']['edate'];
+		}
+		
+		
+		
 		//모델
-		$data['list']=$this->pur_model->head_matorder();
+		$data['list']=$this->pur_model->component_list($params);
 
 		//뷰
-		$this->load->view('purchase/head_matorder', $data);
+		$this->load->view('purchase/ajax_matorder', $data);
 	}
-	public function detail_matorder()
-	{
-		//모델
-		$data['list']='';//$this->pur_model->detail_matorder();
 
-		//뷰
-		$this->load->view('purchase/detail_matorder', $data);
+	public function component_head_insert()
+	{
+		$params['ACT_DATE'] = $this->input->post("ADATE");
+		$params['QTY'] = $this->input->post("QTY");
+		$params['UNIT'] = $this->input->post("UNIT");
+		$params['DEL_DATE'] = $this->input->post("DDATE");
+		$params['REMARK'] = $this->input->post("REMARK");
+			
+
+		$num = $this->pur_model->component_head_insert($params);
+
+		if ($num > 0) {
+			$data['status'] = "ok";
+			$data['msg'] = "실적이 등록되었습니다.";
+		} else {
+			$data['status'] = "";
+			$data['msg'] = "실적 등록에 실패했습니다. 관리자에게 문의하세요";
+		}
+
+		echo json_encode($data);
 	}
+	public function del_component()
+	{
+		$idx = $this->input->get("idx");
+		$num = $this->pur_model->del_component($idx);
+
+		if ($num > 0) {
+			$data['status'] = "ok";
+			$data['msg'] = "삭제되었습니다.";
+		} else {
+			$data['status'] = "no";
+			$data['msg'] = "삭제에 실패했습니다. 관리자에게 문의하세요";
+		}
+
+		echo json_encode($data);
+	}
+	public function end_component()
+	{
+		$params['QTY'] = $this->input->post("QTY");
+		$params['REMARK'] = $this->input->post("REMARK");
+		$params['IDX'] = $this->input->post("IDX");
+			
+		$data = $this->pur_model->end_component($params);
+
+		echo json_encode($data);
+	}
+
+
+
 
 
 	// 	입고등록
@@ -79,8 +144,29 @@ class PURCHASE extends CI_Controller
 	}
 	public function ajax_enter()
 	{
+		$data['str'] = array(); //검색어관련
+
+		$data['str']['sdate'] = $this->input->post('sdate');
+		$data['str']['edate'] = $this->input->post('edate');
+
+		$params['SDATE'] = date("Y-m-d", strtotime("-1 month", time()) );
+		$params['EDATE'] = date("Y-m-d");
+		$params['END_CHK'] = 'N';
+
+		$data['qstr'] = "?P";
+
+		if (!empty($data['str']['sdate'])) {
+			$params['SDATE'] = $data['str']['sdate'];
+			$data['qstr'] .= "&sdate=" . $data['str']['sdate'];
+		}
+
+		if (!empty($data['str']['edate'])) {
+			$params['EDATE'] = $data['str']['edate'];
+			$data['qstr'] .= "&edate=" . $data['str']['edate'];
+		}
+		
 		//모델
-		$data['list']=$this->pur_model->ajax_enter();
+		$data['list']=$this->pur_model->component_list($params);
 
 		//뷰
 		$this->load->view('purchase/ajax_enter', $data);
@@ -95,26 +181,33 @@ class PURCHASE extends CI_Controller
 
 	public function ajax_orderenter()
 	{
+		$data['str'] = array(); //검색어관련
+
+		$data['str']['sdate'] = $this->input->post('sdate');
+		$data['str']['edate'] = $this->input->post('edate');
+
+		$params['SDATE'] = date("Y-m-d", strtotime("-1 month", time()) );
+		$params['EDATE'] = date("Y-m-d");
+		$params['END_CHK'] = '';
+
+		$data['qstr'] = "?P";
+
+		if (!empty($data['str']['sdate'])) {
+			$params['SDATE'] = $data['str']['sdate'];
+			$data['qstr'] .= "&sdate=" . $data['str']['sdate'];
+		}
+
+		if (!empty($data['str']['edate'])) {
+			$params['EDATE'] = $data['str']['edate'];
+			$data['qstr'] .= "&edate=" . $data['str']['edate'];
+		}
+
+		
 		//모델
-		$data['list']=$this->pur_model->ajax_orderenter();
+		$data['list']=$this->pur_model->component_list($params);
 
 		//뷰
 		$this->load->view('purchase/ajax_orderenter', $data);
-	}
-
-	// 기간별 발주현황
-	public function denter()
-	{
-		$data['title']='기간별 발주현황';
-		return $this->load->view('main100', $data);
-	}
-	public function ajax_denter()
-	{
-		//모델
-		$data['list']=$this->pur_model->ajax_denter();
-
-		//뷰
-		$this->load->view('purchase/ajax_denter', $data);
 	}
 	
 }

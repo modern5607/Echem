@@ -394,7 +394,9 @@ button.btn{border: none;
 .pageChk{background:rgb(83, 83, 139); color:#eee}
 
 /* .pagination{right:0; display: flex; justify-content: space-between; flex-direction: row-reverse; width: 100%; } */
-.pagination{ position: absolute; right:0; display: flex; justify-content: space-between; flex-direction: row-reverse; width: 100%; padding: 10px 50px; }
+#ajax_head_container{position: relative;}
+.pagination{ position: absolute; right:0; display: flex; justify-content: space-between; flex-direction: row-reverse; width: 100%; padding: 10px 40px; }
+.pagination2{ position: absolute; right:0; display: flex; justify-content: space-between; flex-direction: row-reverse; width: 100%; padding: 10px 0px; }
 .noflex{ display:contents ; }
 
 /* 검색박스 */

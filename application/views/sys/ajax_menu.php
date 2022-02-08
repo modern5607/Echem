@@ -93,8 +93,8 @@ $("select[name='LEVEL']").on("change",function(){
 	var idx = $(this).data("idx");
 	$.post("<?php echo base_url('SYS/menu_up') ?>",{sqty:sqty,idx:idx},function(data){
 		if(data > 0){
-			alert("권한등급이 변경되었습니다");
-			load();
+			// alert("권한등급이 변경되었습니다");
+			// load();
 		}
 	});
 });
