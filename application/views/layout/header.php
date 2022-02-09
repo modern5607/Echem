@@ -74,11 +74,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <ul class="menu02" <?= ($this->data['pos'] == "MDM") ? "style='display:block'" : ""; ?>>
                                             <!-- <li><a href="<?= base_url('MDM/calendar') ?>" class="<?= ($this->data['subpos'] == 'calendar') ? "on" : ""; ?>">Work Calendar</a></li> -->
                                             <li><a href="<?= base_url('MDM/code') ?>" class="<?= ($this->data['subpos'] == "code") ? "on" : ""; ?>">공통코드등록</a></li>
-                                            <li><a href="<?= base_url('MDM/component') ?>" class="<?= ($this->data['subpos'] == "component") ? "on" : ""; ?>">품목등록</a></li>
+                                            <li><a href="<?= base_url('MDM/items') ?>" class="<?= ($this->data['subpos'] == "items") ? "on" : ""; ?>">품목등록</a></li>
                                             <li><a href="<?= base_url('MDM/biz') ?>" class="<?= ($this->data['subpos'] == "biz") ? "on" : ""; ?>">업체등록</a></li>
                                             <li><a href="<?= base_url('MDM/bizcur') ?>" class="<?= ($this->data['subpos'] == "bizcur") ? "on" : ""; ?>">업체현황</a></li>
-                                            <li><a href="<?= base_url('MDM/person') ?>" class="<?= ($this->data['subpos'] == "person") ? "on" : ""; ?>">인사정보등록</a></li>
-                                            <li><a href="<?= base_url('MDM/personcur') ?>" class="<?= ($this->data['subpos'] == "personcur") ? "on" : ""; ?>">인사정보현황</a></li>
+                                            <!-- <li><a href="<?= base_url('MDM/person') ?>" class="<?= ($this->data['subpos'] == "person") ? "on" : ""; ?>">인사정보등록</a></li>
+                                            <li><a href="<?= base_url('MDM/personcur') ?>" class="<?= ($this->data['subpos'] == "personcur") ? "on" : ""; ?>">인사정보현황</a></li> -->
                                             <!-- <li><a href="<?= base_url('MDM/member') ?>" class="<?= ($this->data['subpos'] == "member") ? "on" : ""; ?>">작업자등록</a></li> -->
                                         </ul>
                                     </li>
@@ -148,6 +148,29 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                 <li><a href="<?= base_url('STOCK/dbrelease') ?>" class="<?= ($this->data['subpos'] == 'dbrelease') ? "on" : ""; ?>">기간별/업체별 출고내역</a></li>
                                                 <li><a href="<?= base_url('STOCK/claim') ?>" class="<?= ($this->data['subpos'] == 'claim') ? "on" : ""; ?>">클래임 등록</a></li>
                                                 <li><a href="<?= base_url('STOCK/claimcur') ?>" class="<?= ($this->data['subpos'] == 'claimcur') ? "on" : ""; ?>">클래임 내역 조회</a></li>
+                                            </ul>
+                                        </li>
+                                    <?php   }
+                                    if ($row->MENU_CODE == "PRODMON" && $_SESSION['user_level'] >= $row->MENU_LEVEL) {
+                                        ?>
+                                        <li class="menu01_li">
+                                            <a href="<?= base_url('PRODMON/prodmonoff') ?>" class="menu_a <?= ($this->data['pos'] == "PRODMON") ? "on" : ""; ?>">
+                                                <i class="material-icons">add_business</i>모니터링</a>
+                                            <ul class="menu02" <?= ($this->data['pos'] == "PRODMON") ? "style='display:block'" : ""; ?>>
+                                                <li><a href="<?= base_url('PRODMON/prodmonoff') ?>" class="<?= ($this->data['subpos'] == 'prodmonoff') ? "on" : ""; ?>">생산현황 모니터 - 사무동</a></li>
+                                                <li><a href="<?= base_url('PRODMON/prodmonfac') ?>" class="<?= ($this->data['subpos'] == 'prodmonfac') ? "on" : ""; ?>">생산현황 모니터 - 공장동</a></li>
+                                                
+                                            </ul>
+                                        </li>
+                                    <?php   }
+                                    if ($row->MENU_CODE == "SENSOR" && $_SESSION['user_level'] >= $row->MENU_LEVEL) {
+                                        ?>
+                                        <li class="menu01_li">
+                                            <a href="<?= base_url('SENSOR/senprod') ?>" class="menu_a <?= ($this->data['pos'] == "SENSOR") ? "on" : ""; ?>">
+                                                <i class="material-icons">add_business</i>Sensor - 모니터링</a>
+                                            <ul class="menu02" <?= ($this->data['pos'] == "SENSOR") ? "style='display:block'" : ""; ?>>
+                                                <li><a href="<?= base_url('SENSOR/senprod') ?>" class="<?= ($this->data['subpos'] == 'senprod') ? "on" : ""; ?>">Sensor 모니터링(생산현장용)</a></li>
+                                                <li><a href="<?= base_url('SENSOR/senadmin') ?>" class="<?= ($this->data['subpos'] == 'senadmin') ? "on" : ""; ?>">Sensor 모니터링(관리자용)</a></li>
                                             </ul>
                                         </li>
                                     <?php   }

@@ -90,13 +90,85 @@ class Mdm_model extends CI_Model
 		return $query->result();		
 	}
 
-	public function ajax_component()
+	public function ajax_items($params,$start=0,$limit=15)
 	{
+		$where='';
+
+		if($params['ITEM_NAME']!="" && isset($params['ITEM_NAME']))
+			$where.="AND ITEM_NAME LIKE '%{$params['ITEM_NAME']}%'";
+
+		if($params['USEYN']!="" && isset($params['USEYN']))
+			$where.="AND USE_YN ='{$params['USEYN']}'";
+
 		$sql=<<<SQL
-			SELECT '1' AS COL1,'2' AS COL2, '3' AS COL3  FROM DUAL;
+			SELECT *
+			FROM T_ITEMS
+			WHERE
+			1
+			{$where}
+			LIMIT {$start},{$limit}
+
 SQL;		
 		$query = $this->db->query($sql);
+		echo $this->db->last_query();
 		return $query->result();
+	}
+
+	public function ajax_items_cut($params)
+	{
+		$where='';
+
+		if($params['ITEM_NAME']!="" && isset($params['ITEM_NAME']))
+			$where.="AND ITEM_NAME = '{$params['ITEM_NAME']}'";
+
+		$sql=<<<SQL
+			SELECT *
+			FROM T_ITEMS
+			WHERE
+			1
+			{$where}
+
+SQL;		
+		$query = $this->db->query($sql);
+		// echo $this->db->last_query();
+		return $query->num_rows();
+	}
+
+	public function get_items($idx)
+	{
+		$sql=<<<SQL
+			SELECT * FROM T_ITEMS WHERE IDX = '{$idx}'
+
+SQL;
+$query = $this->db->query($sql);
+		// echo $this->db->last_query();
+		return $query->row();
+	}
+
+	public function set_item($params)
+	{
+		$sql = <<<SQL
+			INSERT INTO T_ITEMS (ITEM_NAME,UNIT,USE_YN,INSERT_ID,INSERT_DATE) 
+			VALUES('{$params['ITEM_NAME']}','{$params['UNIT']}','{$params['USE_YN']}','{$params['ID']}',now());
+SQL;
+
+		$query = $this->db->query($sql);
+
+		return $this->db->affected_rows();
+	}
+
+	public function update_item($params)
+	{
+		$sql=<<<SQL
+			UPDATE T_ITEMS
+			SET 
+			ITEM_NAME = "{$params['ITEM_NAME']}",
+			UNIT = "{$params['UNIT']}",
+			USE_YN = "{$params['USE_YN']}"
+			WHERE IDX = '{$params['IDX']}'
+SQL;
+		$query = $this->db->query($sql);
+		return $this->db->affected_rows();
 	}
 
 	//업체관리 리스트
@@ -114,7 +186,7 @@ SQL;
 
 		$this->db->limit($limit,$start);
 		$res = $this->db->get("T_BIZ");
-		// echo $this->db->last_query();
+		echo $this->db->last_query();
 		return $res->result();
 	}
 	public function biz_cut($params)
@@ -137,6 +209,7 @@ SQL;
 	{
 		$res = $this->db->where("IDX", $idx)
 			->get("T_BIZ");
+			echo $this->db->last_query();
 		return $res->row();
 	}
 	//아이디 생성 중복 체크

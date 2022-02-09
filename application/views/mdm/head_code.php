@@ -50,11 +50,7 @@
 
 <script>
 	$(document).off("click", ".link_s1");
-
-
 	$(document).on("click", ".link_s1", function() {
-
-
 
 		var hidx = $(this).data("idx");
 		console.log(hidx);

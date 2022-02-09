@@ -433,14 +433,12 @@ $config['standardize_newlines'] = FALSE;
 | Global XSS Filtering
 |--------------------------------------------------------------------------
 |
-| Determines whether the XSS filter is always active when GET, POST or
-| COOKIE data is encountered
+| GET, POST 또는 COOKIE 데이터가 발생할 때 XSS 필터가 항상 활성인지 여부를 결정합니다.
 |
-| WARNING: This feature is DEPRECATED and currently available only
-|          for backwards compatibility purposes!
+| 경고: 이 기능은 더 이상 사용되지 않으며 현재 이전 버전과의 호환성을 위해서만 사용할 수 있습니다!
 |
 */
-$config['global_xss_filtering'] = FALSE;
+$config['global_xss_filtering'] = TRUE;
 
 /*
 |--------------------------------------------------------------------------

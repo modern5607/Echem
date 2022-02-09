@@ -183,6 +183,8 @@ i { vertical-align: middle; }
 table td.cen{text-align:center;}
 table td.left{text-align:left;}
 table td.right{text-align:right;}
+.left {text-align: left;}
+.right {text-align: right;}
 
 /* 11 */
 #left_sbox{padding:0; margin:0; list-style:none; display:block; border:1px solid #ddd; overflow:hidden;}
@@ -408,7 +410,7 @@ button.btn{border: none;
 .formDiv .inform{ padding: 10px 24px}
 
 /* 중요사항 * 체크표시 */
-.res:after{color:#f00; content:"*"; font-size:16px; font-weight:600;position: absolute;}
+.res:after{color:#f00; content:"*"; font-size:16px; font-weight:600;}
 /* 검사신청페이지(TSK/test) 검사 신청,취소 아이콘 */
 .test-icon{background: none;border: none;font-size: 12px; transition: all .3s; padding:1px 3px; margin-bottom:5px;}
 .test-icon i{font-size:20px;}
