@@ -115,6 +115,7 @@ class ORDPLN extends CI_Controller
 		if (!empty($data['str']['idx'])) { $params['IDX'] = $data['str']['idx']; }
 
 		$data['list']=$this->ordpln_model->ordpln_dual($params);
+		$data['BIZ']=$this->sys_model->biz_list('EXPORT');
 
 
 		$this->load->view('/ordpln/detail_order', $data);

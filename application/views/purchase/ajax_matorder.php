@@ -40,8 +40,11 @@
 				<td><input type="number" min="0" name="QTY" id="QTY" value="" class="form_input input_100" style="width:100%;"></td>
 
 				<td>
-					<select name="UNIT" id="UNIT" style="width:100%;">
+					<select name="UNIT" id="UNIT"class="form_input input_100">
 						<option value="">공통코드</option>
+						<?php foreach ($cocd as $row) { ?>
+							<option value="<?php echo $row->D_NAME ?>"><?php echo $row->D_NAME; ?></option>
+						<?php } ?>
 					</select>
 				</td>
 
@@ -61,7 +64,7 @@
 				<tr class="pocbox">
 					<td class="cen"><?=$num?></td>
 					<td class="cen"><?= $row->ACT_DATE ?></td>
-					<td class="right"><?= number_format($row->QTY) ?></td>
+					<td class="right"><?= round($row->QTY,2) ?></td>
 					<td class="cen"><?= $row->UNIT ?></td>
 					<td class="cen"><?= $row->DEL_DATE ?></td>
 					<td><?= $row->REMARK ?></td>
@@ -92,9 +95,14 @@ $(".submitBtn").on("click",function(){
 var formData = new FormData();
 formData.append("QTY", $("input[name='QTY']").val());   
 formData.append("ADATE", $("input[name='ADATE']").val());   
-formData.append("UNIT", $("input[name='UNIT']").val());
+formData.append("UNIT", $("select[name='UNIT']").val());
 formData.append("DDATE", $("input[name='DDATE']").val());
 formData.append("REMARK", $("input[name='REMARK']").val());
+
+// FormData의 값 확인
+for (var pair of formData.entries()) {
+  console.log(pair[0]+ ', ' + pair[1]);
+}
 
 if($("input[name='QTY']").val() == ""){
 	alert("출고수량 입력하세요.");

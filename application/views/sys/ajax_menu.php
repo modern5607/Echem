@@ -31,9 +31,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<table cellpadding="0" cellspacing="0" border="0" width="100%">
 				<thead>
 					<tr>
-						<th>메뉴 이름</th>
-						<th>메뉴 코드</th>
-						<th>권한</th>
+						<th style="width:33%">메뉴 이름</th>
+						<th style="width:33%">메뉴 코드</th>
+						<th style="width:33%">권한</th>
 					</tr>
 				</thead>
 				<tbody>

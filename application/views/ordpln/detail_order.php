@@ -58,7 +58,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <th>거래처</th>
                     <td>
                         <select name="BIZ" id="BIZ" class="form_input input_100">
-                            <option value="0">공통코드</option>
+                            <option value="">거래처</option>
+                            <?php foreach ($BIZ as $row) { ?>
+                                <option value="<?php echo $row->IDX ?>" <?php echo ($biz == $row->IDX) ? "selected" : ""; ?>><?php echo $row->CUST_NM; ?></option>
+                            <?php } ?>
                         </select>
                     </td>
 

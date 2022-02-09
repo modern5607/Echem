@@ -80,6 +80,7 @@ class PURCHASE extends CI_Controller
 		
 		//모델
 		$data['list']=$this->pur_model->component_list($params);
+		$data['cocd']= $this->sys_model->get_selectInfo("tch.CODE","UNIT");
 
 		//뷰
 		$this->load->view('purchase/ajax_matorder', $data);

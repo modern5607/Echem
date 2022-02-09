@@ -49,7 +49,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 						<td class="cen"><?= $row->ACT_DATE ?></td>
 						<td class="link_s1" data-idx="<?= $row->IDX ?>"><?= $row->ACT_NAME ?></td>
 						<td class="right"><?= number_format($row->QTY,1) ?></td>
-						<td><?= $row->BIZ_IDX ?></td>
+						<td><?= $row->CUST_NM ?></td>
 					</tr>
 				<?php
 				}

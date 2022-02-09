@@ -274,7 +274,7 @@ SQL;
 		$this->db->where("USE_YN", "Y");
 		$this->db->where("CUST_TYPE", $type);
 		$query = $this->db->get("T_BIZ");
-		//echo $this->db->last_query();
+		// echo $this->db->last_query();
 		return $query->result();
 	}
 

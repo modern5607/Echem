@@ -17,13 +17,15 @@ class Ordpln_model extends CI_Model
 			$this->db->where("ACT_DATE BETWEEN '{$params['SDATE']}' AND '{$params['EDATE']}'");
 		}
 		if (!empty($params['IDX']) && $params['IDX'] != "") {
-			$this->db->where("IDX", $params['IDX']);
+			$this->db->where("A.IDX", $params['IDX']);
 		}
 
 
-		$this->db->limit($limit, $start);
+		$this->db->select("A.*, B.CUST_NM");
+		$this->db->join("T_BIZ as B", "B.IDX = A.BIZ_IDX");
 		$this->db->order_by('ACT_DATE', 'DESC');
-		$query = $this->db->get("T_ACT");
+		$this->db->limit($limit, $start);
+		$query = $this->db->get("T_ACT as A");
 // echo $this->db->last_query();
 		return $query->result();
 	}
