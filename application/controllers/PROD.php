@@ -54,11 +54,27 @@ class PROD extends CI_Controller
 	}	
 	public function ajax_workorder()
 	{
+		$data['str']['sdate'] = $this->input->post("sdate");
+		$data['str']['edate'] = $this->input->post("edate");
+
+
 		//모델
 		$data['list']=$this->prod_model->ajax_workorder();
 
 		//뷰
 		$this->load->view('prod/ajax_workorder', $data);
+	}
+
+	public function order_form()
+	{
+		
+		$params1['END_YN'] = 'N';
+		$data['ACT'] = $this->prod_model->get_act($params1);
+		// echo var_dump($data['ACT']);
+
+		$data['COMPONENT'] = $this->prod_model->get_component();
+
+		return $this->load->view('prod/order_form',$data);
 	}
 
 	// 공정별 작업지시
@@ -67,6 +83,35 @@ class PROD extends CI_Controller
 		$data['title']='공정별 작업지시';	
 		return $this->load->view('main100', $data);
 	}
+
+	public function act_idx()
+	{
+		$idx = $this->input->post("idx");
+		$data['info'] = $this->prod_model->act_idx($idx);
+		$data['status'] = "ok";
+		// echo var_dump($data);
+		echo json_encode($data);
+
+	}
+
+	public function add_order()
+	{
+		$data['ACT_IDX']=$this->input->post("ACT");
+		$data['ORDER_DATE']=$this->input->post("ORDER_DATE");
+		$data['COMPONENT_IDX']=$this->input->post("COMPONENT");
+		$data['ORDER_QTY']=$this->input->post("ORDER_QTY");
+
+		$params['ACT_IDX'] = 		$data['ACT_IDX'];
+		$params['ORDER_DATE'] = 	$data['ORDER_DATE'];
+		$params['COMPONENT_IDX'] = 	$data['COMPONENT_IDX'];
+		$params['ORDER_QTY'] = 		$data['ORDER_QTY'];
+		$params['INSERT_ID'] = 		$this->session->userdata('user_id');
+
+
+		echo var_dump($data);
+		$data['result'] = $this->prod_model->add_order($params);
+	}
+
 	public function ajax_pworkorder()
 	{
 		//모델
