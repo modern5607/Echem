@@ -89,6 +89,8 @@ class STOCK extends CI_Controller
 		//뷰
 		$this->load->view('stock/ajax_stockchange', $data);
 	}
+
+
 	// 출고등록
 	public function release()
 	{
@@ -97,12 +99,65 @@ class STOCK extends CI_Controller
 	}
 	public function ajax_release()
 	{
-		//모델
-		$data['list']=$this->stock_model->ajax_release();
+		$data['str'] = array(); //검색어관련
+		$data['str']['sdate'] = $this->input->post('sdate'); //시작일자
+		$data['str']['edate'] = $this->input->post('edate'); //끝일자
+		$data['str']['biz'] = $this->input->post('biz'); //거래처
+
+		$params['SDATE'] = "";
+		$params['EDATE'] = "";
+		$params['ENDYN'] = "N";
+		$params['BIZ'] = "";
+
+		if (!empty($data['str']['sdate'])) { $params['SDATE'] = $data['str']['sdate']; }
+		if (!empty($data['str']['edate'])) { $params['EDATE'] = $data['str']['edate']; }
+		if (!empty($data['str']['biz'])) { $params['BIZ'] = $data['str']['biz']; }
+
+
+		$data['perpage'] = ($this->input->post('perpage') != "") ? $this->input->post('perpage') : 15;
+		//PAGINATION
+		$config['per_page'] = $data['perpage'];
+		$config['page_query_string'] = true;
+		$config['query_string_segment'] = "pageNum";
+		$config['reuse_query_string'] = TRUE;
+		$pageNum = $this->input->post('pageNum') > '' ? $this->input->post('pageNum') : 0;
+		$data['pageNum'] =  $pageNum;
+
+		//list
+		$data['list']=$this->stock_model->ajax_act($params, $pageNum, $config['per_page']);
+		$this->data['cnt'] = $this->stock_model->act_cut($params);
+		$data['SHIP']=$this->sys_model->get_selectInfo("tch.CODE","SHIP");
+		$data['BIZ']=$this->sys_model->biz_list('EXPORT');
+
+
+		/* pagenation start */
+		$this->load->library("pagination");
+		$config['base_url'] = base_url(uri_string());
+		$config['total_rows'] = $this->data['cnt'];
+		$config['full_tag_open'] = "<div>";
+		$config['full_tag_close'] = '</div>';
+		$this->pagination->initialize($config);
+		$this->data['pagenation'] = $this->pagination->create_links();
 
 		//뷰
 		$this->load->view('stock/ajax_release', $data);
 	}
+	public function release_update()
+	{
+		$params['IDX'] = $this->input->post("IDX");
+		$params['SHIP'] = $this->input->post("SHIP");
+		$params['EDATE'] = $this->input->post("EDATE");
+		$params['BQTY'] = $this->input->post("BQTY");
+		$params['REMARK'] = $this->input->post("REMARK");
+		$params['CLAIM'] = $this->input->post("CLAIM");
+		$params['CDATE'] = $this->input->post("CDATE");
+			
+		$data = $this->stock_model->release_update($params);
+
+		echo json_encode($data);
+	}
+
+
 	// 기간별/업체별 출고내역
 	public function dbrelease()
 	{
@@ -111,12 +166,51 @@ class STOCK extends CI_Controller
 	}
 	public function ajax_dbrelease()
 	{
-		//모델
-		$data['list']=$this->stock_model->ajax_dbrelease();
+		$data['str'] = array(); //검색어관련
+		$data['str']['sdate'] = $this->input->post('sdate'); //시작일자
+		$data['str']['edate'] = $this->input->post('edate'); //끝일자
+		$data['str']['biz'] = $this->input->post('biz'); //거래처
+
+		$params['SDATE'] = "";
+		$params['EDATE'] = "";
+		$params['ENDYN'] = "Y";
+		$params['BIZ'] = "";
+
+		if (!empty($data['str']['sdate'])) { $params['SDATE'] = $data['str']['sdate']; }
+		if (!empty($data['str']['edate'])) { $params['EDATE'] = $data['str']['edate']; }
+		if (!empty($data['str']['biz'])) { $params['BIZ'] = $data['str']['biz']; }
+
+
+		$data['perpage'] = ($this->input->post('perpage') != "") ? $this->input->post('perpage') : 20;
+		//PAGINATION
+		$config['per_page'] = $data['perpage'];
+		$config['page_query_string'] = true;
+		$config['query_string_segment'] = "pageNum";
+		$config['reuse_query_string'] = TRUE;
+		$pageNum = $this->input->post('pageNum') > '' ? $this->input->post('pageNum') : 0;
+		$data['pageNum'] =  $pageNum;
+
+		//list
+		$data['list']=$this->stock_model->ajax_act($params, $pageNum, $config['per_page']);
+		$this->data['cnt'] = $this->stock_model->act_cut($params);
+		$data['SHIP']=$this->sys_model->get_selectInfo("tch.CODE","SHIP");
+		$data['BIZ']=$this->sys_model->biz_list('EXPORT');
+
+
+		/* pagenation start */
+		$this->load->library("pagination");
+		$config['base_url'] = base_url(uri_string());
+		$config['total_rows'] = $this->data['cnt'];
+		$config['full_tag_open'] = "<div>";
+		$config['full_tag_close'] = '</div>';
+		$this->pagination->initialize($config);
+		$this->data['pagenation'] = $this->pagination->create_links();
 
 		//뷰
 		$this->load->view('stock/ajax_dbrelease', $data);
 	}
+
+
 	// 클래임 등록
 	public function claim()
 	{
@@ -125,12 +219,52 @@ class STOCK extends CI_Controller
 	}
 	public function ajax_claim()
 	{
-		//모델
-		$data['list']=$this->stock_model->ajax_claim();
+		$data['str'] = array(); //검색어관련
+		$data['str']['sdate'] = $this->input->post('sdate'); //시작일자
+		$data['str']['edate'] = $this->input->post('edate'); //끝일자
+		$data['str']['biz'] = $this->input->post('biz'); //거래처
+
+		$params['SDATE'] = "";
+		$params['EDATE'] = "";
+		$params['ENDYN'] = "Y";
+		$params['BIZ'] = "";
+		$params['CLAIM'] = "1";
+
+		if (!empty($data['str']['sdate'])) { $params['SDATE'] = $data['str']['sdate']; }
+		if (!empty($data['str']['edate'])) { $params['EDATE'] = $data['str']['edate']; }
+		if (!empty($data['str']['biz'])) { $params['BIZ'] = $data['str']['biz']; }
+
+
+		$data['perpage'] = ($this->input->post('perpage') != "") ? $this->input->post('perpage') : 20;
+		//PAGINATION
+		$config['per_page'] = $data['perpage'];
+		$config['page_query_string'] = true;
+		$config['query_string_segment'] = "pageNum";
+		$config['reuse_query_string'] = TRUE;
+		$pageNum = $this->input->post('pageNum') > '' ? $this->input->post('pageNum') : 0;
+		$data['pageNum'] =  $pageNum;
+
+		//list
+		$data['list']=$this->stock_model->ajax_act($params, $pageNum, $config['per_page']);
+		$this->data['cnt'] = $this->stock_model->act_cut($params);
+		$data['SHIP']=$this->sys_model->get_selectInfo("tch.CODE","SHIP");
+		$data['BIZ']=$this->sys_model->biz_list('EXPORT');
+
+
+		/* pagenation start */
+		$this->load->library("pagination");
+		$config['base_url'] = base_url(uri_string());
+		$config['total_rows'] = $this->data['cnt'];
+		$config['full_tag_open'] = "<div>";
+		$config['full_tag_close'] = '</div>';
+		$this->pagination->initialize($config);
+		$this->data['pagenation'] = $this->pagination->create_links();
 
 		//뷰
 		$this->load->view('stock/ajax_claim', $data);
 	}
+
+
 	// 클래임 내역 조회
 	public function claimcur()
 	{
@@ -139,8 +273,46 @@ class STOCK extends CI_Controller
 	}
 	public function ajax_claimcur()
 	{
-		//모델
-		$data['list']=$this->stock_model->ajax_claimcur();
+				$data['str'] = array(); //검색어관련
+		$data['str']['sdate'] = $this->input->post('sdate'); //시작일자
+		$data['str']['edate'] = $this->input->post('edate'); //끝일자
+		$data['str']['biz'] = $this->input->post('biz'); //거래처
+
+		$params['SDATE'] = "";
+		$params['EDATE'] = "";
+		$params['ENDYN'] = "Y";
+		$params['BIZ'] = "";
+		$params['CLAIM'] = "2";
+
+		if (!empty($data['str']['sdate'])) { $params['SDATE'] = $data['str']['sdate']; }
+		if (!empty($data['str']['edate'])) { $params['EDATE'] = $data['str']['edate']; }
+		if (!empty($data['str']['biz'])) { $params['BIZ'] = $data['str']['biz']; }
+
+
+		$data['perpage'] = ($this->input->post('perpage') != "") ? $this->input->post('perpage') : 20;
+		//PAGINATION
+		$config['per_page'] = $data['perpage'];
+		$config['page_query_string'] = true;
+		$config['query_string_segment'] = "pageNum";
+		$config['reuse_query_string'] = TRUE;
+		$pageNum = $this->input->post('pageNum') > '' ? $this->input->post('pageNum') : 0;
+		$data['pageNum'] =  $pageNum;
+
+		//list
+		$data['list']=$this->stock_model->ajax_act($params, $pageNum, $config['per_page']);
+		$this->data['cnt'] = $this->stock_model->act_cut($params);
+		$data['SHIP']=$this->sys_model->get_selectInfo("tch.CODE","SHIP");
+		$data['BIZ']=$this->sys_model->biz_list('EXPORT');
+
+
+		/* pagenation start */
+		$this->load->library("pagination");
+		$config['base_url'] = base_url(uri_string());
+		$config['total_rows'] = $this->data['cnt'];
+		$config['full_tag_open'] = "<div>";
+		$config['full_tag_close'] = '</div>';
+		$this->pagination->initialize($config);
+		$this->data['pagenation'] = $this->pagination->create_links();
 
 		//뷰
 		$this->load->view('stock/ajax_claimcur', $data);

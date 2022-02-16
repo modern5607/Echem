@@ -23,9 +23,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					<thead>
 						<tr>
 							<th>No</th>
-							<th>1</th>
-							<th>2</th>
-							<th>3</th>
+							<th>실적일</th>
+							<th>실적량</th>
+							<th>검사일</th>
+							<th>불량수량</th>
+							<th>비고</th>
+							<th>불량률</th>
 						</tr>
 					</thead>
 					<tbody>

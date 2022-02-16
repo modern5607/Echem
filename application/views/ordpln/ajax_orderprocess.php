@@ -38,7 +38,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 				<th style="width:10%;">수량(T)</th>
 				<th style="width:10%;">거래처</th>
 				<th style="width:10%;">거래처 당담자</th>
-				<th style="width:10%;">납품일</th>
+				<th style="width:10%;">납기일</th>
 				<th style="width:15%;">배송방법</th>
 				<th style="width:%;">납품 특이사항</th>
 			</tr>

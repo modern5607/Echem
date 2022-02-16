@@ -41,11 +41,11 @@
 				<tr class="pocbox">
 					<td class="cen"><?=$num?></td>
 					<td class="cen"><?= $row->ACT_DATE ?></td>
-					<td class="right"><?= number_format($row->QTY) ?></td>
+					<td class="right"><?= round($row->QTY,2) ?></td>
 					<td class="cen"><?= $row->UNIT ?></td>
 					<td class="cen"><?= $row->DEL_DATE ?></td>
 					<td><?= $row->REMARK ?></td>
-					<td><input type="number" min="0" name="QTY" id="QTY" value="<?= $row->QTY ?>" class="form_input input_100" style="width:100%;"></td>	
+					<td><input type="number" min="0" name="QTY" id="QTY" value="<?= round($row->QTY,2) ?>" class="form_input input_100" style="width:100%;"></td>	
 					<td><input type="text" name="REMARK" id="REMARK" value="" class="form_input input_100" style="width:100%;"></td>
 					<td><input type="text" name="EDATE" class="calendar" size="15" autocomplete="off" value="<?= date("Y-m-d") ?>"
 						style="border: 1px solid #ddd; padding: 5px 7px; width:100%; background: white;" ></td>
