@@ -229,7 +229,12 @@ table td.right{text-align:right;}
 
 .gray{color:#999;}
 
+table:not(.nhover) tr.link_hover td{transition: all 0.3s;}
+table:not(.nhover) tr.link_hover:hover td{background: #ddd4d4;cursor: pointer;}
 
+
+/* table:not(.nhover) tbody tr:not(.nhover) td{ transition: all 0.3s;}
+table:not(.nhover) tbody tr:not(.nhover):hover td{ background:#ddd4d4; } */
 .link_s1{color:#194bff; cursor:pointer; font-weight:600;}
 .link_s2{color:#000000; cursor:pointer; font-weight:600;}
 .link_s2:hover td{background: #fffed0;}

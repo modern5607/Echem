@@ -21,7 +21,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 					<button type="button" class="search_submit ajax_search"><i class="material-icons">search</i></button>
 				</form>
 			</div>
-			<span class="btn print add_order"  style="padding:7px 11px;"><i class="material-icons">add</i>작업지시 등록</span>
+			<!-- <span class="btn print add_order"  style="padding:7px 11px;"><i class="material-icons">add</i>작업지시 등록</span> -->
 			<!-- <span class="btn print print_biz"><i class="material-icons">get_app</i>출력하기</span> -->
 		</header>
 		<div class="tbl-content">
@@ -29,9 +29,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
 				<thead>
 					<tr>
 						<th>NO</th>
-						<th>COL1</th>
-						<th>COL2</th>
-						<th>COL3</th>
+						<th>작업지시일</th>
+						<th>수주명</th>
+						<th>거래처</th>
+						<th>작업예정일</th>
+						<th>작업종료일</th>
+						<th>등록여부</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -39,11 +42,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
 					foreach ($list as $i => $row) {
 						$no = $pageNum + $i + 1;
 					?>
-						<tr>
+						<tr class="link_hover" data-idx="<?=$row->IDX?>" data-hidx="<?=$row->ACT_IDX?>">
 							<td class="cen"><?= $no; ?></td>
-							<td class="cen"><?= $row->COL1; ?></td>
-							<td class="cen"><?= $row->COL2; ?></td>
-							<td class="cen"><?= $row->COL3; ?></td>
+							<td class="cen"><?=(!empty($row->ORDER_DATE))?date("Y-m-d",strtotime($row->ORDER_DATE)):'' ?></td>
+							<td class="cen"><?= $row->ACT_NAME ?></td>
+							<td class="cen"><?= $row->BIZ_NAME ?></td>
+							<td class="cen"><?= (!empty($row->START_DATE))?date("Y-m-d",strtotime($row->START_DATE)):'' ?></td>
+							<td class="cen"><?= (!empty($row->END_DATE))?date("Y-m-d",strtotime($row->END_DATE)):'' ?></td>
+							<td class="cen"><?= $row->RAWINPUT?></td>
 						</tr>
 
 
@@ -94,6 +100,32 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 <script>
 $("input").attr("autocomplete", "off");
+
+$(".link_hover").click(function () { 
+	var idx = $(this).data("idx");
+	var hidx = $(this).data("hidx");
+
+	$.ajax({
+		url: "<?= base_url('PROD/detail_matinput') ?>",
+		type: "POST",
+		dataType: "HTML",
+		data: {
+			idx:idx,
+			hidx:hidx
+		},
+		success: function(data) {
+			$("#ajax_detail_container").empty();
+				$("#ajax_detail_container").html(data);
+		},
+		error: function(xhr, textStatus, errorThrown) {
+			alert(xhr);
+			alert(textStatus);
+			alert(errorThrown);
+		}
+	})
+
+});
+
 
 $(".add_order").on("click", function() {
 

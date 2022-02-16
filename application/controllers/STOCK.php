@@ -85,6 +85,7 @@ class STOCK extends CI_Controller
 	{
 		//모델
 		$data['list']=$this->stock_model->ajax_stockchange();
+		// echo var_dump($data['list']);
 
 		//뷰
 		$this->load->view('stock/ajax_stockchange', $data);

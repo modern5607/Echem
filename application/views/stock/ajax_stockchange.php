@@ -22,10 +22,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				<table cellpadding="0" cellspacing="0" border="0" width="100%">
 					<thead>
 						<tr>
-							<th>No</th>
-							<th>1</th>
-							<th>2</th>
-							<th>3</th>
+							<th style="width: 50px;">No</th>
+							<th>품목명</th>
+							<th class="cen" style="width: 8%;">구분</th>
+							<th style="width: 10%;">현재재고</th>
+							<th style="width: 10%;">수정재고</th>
+							<th style="width: 5%;"></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -34,12 +36,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					foreach($list as $i=>$row){
 						$no = $i+1;
 					?>
-
 						<tr>
-							<td><?php echo $no;?></td>
-							<td><?= $row->COL1?></td>
-							<td><?= $row->COL2?></td>
-							<td><?= $row->COL3?></td>
+							<td class="cen"><?= $no?></td>
+							<td><?= $row->ITEM_NAME?></td>
+							<td><?= ''?></td>
+							<td class="right"><?= isset($row->STOCK)?$row->STOCK:"0"?></td>
+							<td><input type="number" class="input_100"></td>
+							<td class="cen"><span type="button" class="submitBtn btn" style="background-color: white;" data-idx="<?=$row->IDX?>">수정</span></td>
 						</tr>
 
 					<?php
@@ -72,3 +75,4 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	</div>
 
 </div>
+
