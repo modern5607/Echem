@@ -13,7 +13,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 	<div class="">
 		<header>
 			<div class="searchDiv">
-				<form id="ajaxForm">
+				<form id="headForm">
 					<label>수주일</label>
 					<input type="text" name="sdate" value="<?= $str['sdate']; ?>" class="calendar"  /> ~ 
 					<input type="text" name="edate" value="<?= $str['edate']; ?>" class="calendar" />
@@ -104,8 +104,12 @@ $(".link_hover").click(function () {
 	var idx = $(this).data("idx");
 	var hidx = $(this).data("hidx");
 
+	$(".link_hover").removeClass("over");
+	$(this).addClass("over");
+
+
 	$.ajax({
-		url: "<?= base_url('PROD/detail_matinput') ?>",
+		url: "<?= base_url('PROD/detail_pprodcur') ?>",
 		type: "POST",
 		dataType: "HTML",
 		data: {

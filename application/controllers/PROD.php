@@ -75,7 +75,7 @@ class PROD extends CI_Controller
 		//=====================================
 
 		//모델
-		$data['list'] = $this->prod_model->ajax_workorder($params);
+		$data['list'] = $this->prod_model->head_workorder($params);
 		$this->data['cut'] = 0; //$this->prod_model->ajax_workorder();
 
 		//=====================================
@@ -253,7 +253,7 @@ class PROD extends CI_Controller
 				$data['str']['mode']="new";
 		}
 		
-		echo $data['str']['mode'];
+		// echo $data['str']['mode'];
 		$this->load->view('prod/detail_pworkorder', $data);
 	}
 
@@ -376,7 +376,7 @@ class PROD extends CI_Controller
 				$data['str']['mode']="new";
 		}
 		
-		echo $data['str']['mode'];
+		// echo $data['str']['mode'];
 
 
 		$this->load->view('prod/detail_matinput', $data);
@@ -433,7 +433,7 @@ class PROD extends CI_Controller
 		$data['pageNum'] = $start;
 		//=====================================
 
-		$data['list'] = $this->prod_model->ajax_pharvest($params);
+		$data['list'] = $this->prod_model->head_pharvest($params);
 		$this->data['cut'] = 0; //$this->prod_model->ajax_workorder();
 
 		//=====================================
@@ -448,7 +448,7 @@ class PROD extends CI_Controller
 		$this->data['pagenation'] = $this->pagination->create_links();
 
 		//뷰
-		$this->load->view('prod/ajax_pharvest', $data);
+		$this->load->view('prod/head_pharvest', $data);
 	}
 
 	public function detail_pharvest()
@@ -463,7 +463,7 @@ class PROD extends CI_Controller
 
 		if(!empty($data['idx'])&&!empty($data['hidx']))
 		{
-			$data['info'] = $this->prod_model->detail_matinput($params);
+			$data['info'] = $this->prod_model->detail_pharvest($params);
 
 			if($data['info']->EACHORDER == "Y")
 				$data['str']['mode']="mod";
@@ -502,7 +502,7 @@ class PROD extends CI_Controller
 		$data['pageNum'] = $start;
 		//=====================================
 
-		$data['list'] = $this->prod_model->ajax_pprodcur($params);
+		$data['list'] = $this->prod_model->head_pprodcur($params);
 		$this->data['cut'] = 0; //$this->prod_model->ajax_workorder();
 
 		//=====================================

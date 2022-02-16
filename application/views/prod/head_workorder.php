@@ -13,12 +13,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
 	<div class="">
 		<header>
 			<div class="searchDiv">
-				<form id="ajaxForm">
+				<form id="headForm">
 					<label>수주일</label>
 					<input type="text" name="sdate" value="<?= $str['sdate']; ?>" class="calendar"  /> ~ 
 					<input type="text" name="edate" value="<?= $str['edate']; ?>" class="calendar" />
 					
-					<button type="button" class="search_submit ajax_search"><i class="material-icons">search</i></button>
+					<button type="button" class="search_submit head_search"><i class="material-icons">search</i></button>
 				</form>
 			</div>
 			<!-- <span class="btn print add_order"  style="padding:7px 11px;"><i class="material-icons">add</i>작업지시 등록</span> -->
@@ -103,6 +103,8 @@ $(".link_hover").click(function () {
 	var idx = $(this).data("idx");
 	var hidx = $(this).data("hidx");
 
+	$(".link_hover").removeClass("over");
+			$(this).addClass("over");
 	$.ajax({
 		url: "<?= base_url('PROD/detail_workorder') ?>",
 		type: "POST",
@@ -112,8 +114,9 @@ $(".link_hover").click(function () {
 			hidx:hidx
 		},
 		success: function(data) {
+
 			$("#ajax_detail_container").empty();
-				$("#ajax_detail_container").html(data);
+			$("#ajax_detail_container").html(data);
 		},
 		error: function(xhr, textStatus, errorThrown) {
 			alert(xhr);
