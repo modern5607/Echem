@@ -34,7 +34,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 						<th style="width: 50px;">No</th>
 						<th>품명</th>
 						<th>단위</th>
-						<th></th>
+						<th>재고</th>
 						<th>비고</th>
 					</tr>
 				</thead>
@@ -48,7 +48,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 								<td class="cen"><?= $no; ?></td>
 								<td><?= $row->ITEM_NAME ?></td>
 								<td><?= $row->UNIT ?></td>
-								<td><?= $row->COL3 ?></td>
+								<td><?= $row->STOCK ?></td>
 								<td class="pHide cen" style="width: 70px;"><button type="button" class="mod item_mod" data-idx="<?= $row->IDX; ?>">수정</button></td>
 							</tr>
 

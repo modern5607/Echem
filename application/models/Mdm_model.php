@@ -106,6 +106,7 @@ class Mdm_model extends CI_Model
 			WHERE
 			1
 			{$where}
+			ORDER BY IDX DESC
 			LIMIT {$start},{$limit}
 
 SQL;		
@@ -148,8 +149,8 @@ $query = $this->db->query($sql);
 	public function set_item($params)
 	{
 		$sql = <<<SQL
-			INSERT INTO T_ITEMS (ITEM_NAME,UNIT,USE_YN,INSERT_ID,INSERT_DATE) 
-			VALUES('{$params['ITEM_NAME']}','{$params['UNIT']}','{$params['USE_YN']}','{$params['ID']}',now());
+			INSERT INTO T_ITEMS (ITEM_NAME,UNIT,STOCK,USE_YN,INSERT_ID,INSERT_DATE) 
+			VALUES('{$params['ITEM_NAME']}','{$params['UNIT']}',0,'{$params['USE_YN']}','{$params['ID']}',now());
 SQL;
 
 		$query = $this->db->query($sql);

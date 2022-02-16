@@ -26,12 +26,15 @@ SQL;
 		$query = $this->db->query($sql);
 		return $query->result();
 	}
+
+	//재고조정
 	public function ajax_stockchange()
 	{
 		$sql=<<<SQL
-			SELECT '1' AS COL1,'2' AS COL2, '3' AS COL3  FROM DUAL;
+			SELECT * FROM T_ITEMS
 SQL;		
 		$query = $this->db->query($sql);
+		echo $this->db->last_query();
 		return $query->result();
 	}
 
