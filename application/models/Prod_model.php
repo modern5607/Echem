@@ -9,12 +9,16 @@ class Prod_model extends CI_Model
 		date_default_timezone_set('Asia/Seoul');
 	}
 
-	public function ajax_workorder($params)
+	public function head_workorder($params)
 	{
+		$where='';
+		if($params['SDATE']!="" && $params['EDATE']!="")
+			$where.="AND ACT_DATE BETWEEN '{$params['SDATE']} 00:00:00' AND '{$params['EDATE']} 23:59:59'";
 
 		$sql = <<<SQL
 		SELECT
 			ACT.IDX ACT_IDX,
+			ACT.ACT_DATE,
 			O.IDX,
 			O.ORDER_DATE,
 			ACT.ACT_NAME,
@@ -25,9 +29,12 @@ class Prod_model extends CI_Model
 		FROM
 			T_ACT AS ACT
 			LEFT JOIN T_ORDER AS O ON O.ACT_IDX = ACT.IDX
+		WHERE
+		1
+		{$where}
 SQL;
 		$query = $this->db->query($sql);
-		// echo $this->db->Last_query();
+		echo $this->db->Last_query();
 		return $query->result();
 	}
 
@@ -58,7 +65,7 @@ SQL;
 SQL;
 
 			$query = $this->db->query($sql);
-			echo $this->db->last_query();
+			// echo $this->db->last_query();
 			return $query->row();
 
 		} else if(empty($params['IDX']))
@@ -77,7 +84,7 @@ SQL;
 SQL;
 
 			$query = $this->db->query($sql);
-			echo $this->db->last_query();
+			// echo $this->db->last_query();
 			return $query->row();
 		}
 	}
@@ -107,6 +114,11 @@ SQL;
 
 	public function head_pworkorder($params)
 	{
+		$where='';
+		if($params['SDATE']!="" && $params['EDATE']!="")
+			$where.="AND ACT_DATE BETWEEN '{$params['SDATE']} 00:00:00' AND '{$params['EDATE']} 23:59:59'";
+			
+
 		$sql = <<<SQL
 		SELECT
 			ACT.IDX ACT_IDX,
@@ -121,6 +133,9 @@ SQL;
 		FROM
 			T_ACT AS ACT
 			JOIN T_ORDER AS O ON O.ACT_IDX = ACT.IDX
+		WHERE
+		1
+		{$where}
 SQL;
 		$query = $this->db->query($sql);
 		// echo $this->db->Last_query();
@@ -159,7 +174,7 @@ SQL;
 SQL;
 
 			$query = $this->db->query($sql);
-			echo $this->db->last_query();
+			// echo $this->db->last_query();
 			return $query->row();
 
 		} else if(empty($params['IDX']))
@@ -178,7 +193,7 @@ SQL;
 SQL;
 
 			$query = $this->db->query($sql);
-			echo $this->db->last_query();
+			// echo $this->db->last_query();
 			return $query->row();
 		}
 	}
@@ -229,7 +244,7 @@ SQL;
 SQL;
 
 		$query = $this->db->query($sql);
-		echo $this->db->last_query();
+		// echo $this->db->last_query();
 		return $query->result();
 	}
 
@@ -241,12 +256,16 @@ SQL;
 
 SQL;
 		$query = $this->db->query($sql);
-		echo $this->db->last_query();
+		// echo $this->db->last_query();
 		return $query->result();
 	}
 
-	public function head_matinput()
+	public function head_matinput($params)
 	{
+		$where='';
+		if($params['SDATE']!="" && $params['EDATE']!="")
+			$where.="AND ACT_DATE BETWEEN '{$params['SDATE']} 00:00:00' AND '{$params['EDATE']} 23:59:59'";
+			
 		$sql = <<<SQL
 		SELECT
 			ACT.IDX ACT_IDX,
@@ -264,9 +283,10 @@ SQL;
 			JOIN T_ORDER AS O ON O.ACT_IDX = ACT.IDX
 		WHERE
 			EACHORDER = 'Y'
+			{$where}
 SQL;
 		$query = $this->db->query($sql);
-		echo $this->db->Last_query();
+		// echo $this->db->Last_query();
 		return $query->result();
 	}
 
@@ -301,7 +321,7 @@ SQL;
 SQL;
 
 			$query = $this->db->query($sql);
-			echo $this->db->last_query();
+			// echo $this->db->last_query();
 			return $query->row();
 
 		} else if(empty($params['IDX']))
@@ -320,7 +340,7 @@ SQL;
 SQL;
 
 			$query = $this->db->query($sql);
-			echo $this->db->last_query();
+			// echo $this->db->last_query();
 			return $query->row();
 		}
 
@@ -340,18 +360,12 @@ SQL;
 
 	}
 
-	public function head_pharvest()
+	public function head_pharvest($params)
 	{
-		
-	}
-
-	public function detail_pharvest()
-	{
-		
-	}
-
-	public function ajax_pprodcur()
-	{
+		$where='';
+		if($params['SDATE']!="" && $params['EDATE']!="")
+			$where.="AND ACT_DATE BETWEEN '{$params['SDATE']} 00:00:00' AND '{$params['EDATE']} 23:59:59'";
+			
 		$sql = <<<SQL
 		SELECT
 			ACT.IDX ACT_IDX,
@@ -369,9 +383,95 @@ SQL;
 			JOIN T_ORDER AS O ON O.ACT_IDX = ACT.IDX
 		WHERE
 			EACHORDER = 'Y'
+			{$where}
 SQL;
 		$query = $this->db->query($sql);
-		echo $this->db->Last_query();
+		// echo $this->db->Last_query();
+		return $query->result();
+	}
+
+	public function detail_pharvest($params)
+	{
+		if (!empty($params['IDX']) && !empty($params['ACT_IDX'])) 
+		{
+			$sql = <<<SQL
+			SELECT
+				O.IDX,
+				O.ACT_IDX,
+				O.ORDER_DATE,
+				A.ACT_NAME,
+				A.BIZ_NAME,
+				A.ACT_DATE,
+				A.DEL_DATE,
+				A.QTY,
+				O.START_DATE,
+				O.END_DATE,
+				O.RAW,
+				O.NA2CO3,
+				O.LICL,
+				O.NACL,
+				O.REMARK,
+				O.EACHORDER
+			FROM
+				T_ORDER O
+				LEFT JOIN T_ACT A ON A.IDX = O.ACT_IDX 
+			WHERE
+			A.IDX ={$params['ACT_IDX']}
+			AND O.IDX = {$params['IDX']}
+SQL;
+
+			$query = $this->db->query($sql);
+			// echo $this->db->last_query();
+			return $query->row();
+
+		} else if(empty($params['IDX']))
+		{
+			$sql = <<<SQL
+			SELECT
+				A.ACT_NAME,
+				A.BIZ_NAME,
+				A.ACT_DATE,
+				A.DEL_DATE,
+				A.QTY
+			FROM
+				T_ACT A 
+			WHERE
+			A.IDX ={$params['ACT_IDX']}
+SQL;
+
+			$query = $this->db->query($sql);
+			// echo $this->db->last_query();
+			return $query->row();
+		}
+	}
+
+	public function head_pprodcur($params)
+	{
+		$where='';
+		if($params['SDATE']!="" && $params['EDATE']!="")
+			$where.="AND ACT_DATE BETWEEN '{$params['SDATE']} 00:00:00' AND '{$params['EDATE']} 23:59:59'";
+			
+		$sql = <<<SQL
+		SELECT
+			ACT.IDX ACT_IDX,
+			O.IDX,
+			O.ORDER_DATE,
+			ACT.ACT_NAME,
+			ACT.BIZ_IDX,
+			ACT.BIZ_NAME,
+			O.START_DATE,
+			O.END_DATE,
+			EACHORDER,
+			RAWINPUT
+		FROM
+			T_ACT AS ACT
+			JOIN T_ORDER AS O ON O.ACT_IDX = ACT.IDX
+		WHERE
+			EACHORDER = 'Y'
+			{$where}
+SQL;
+		$query = $this->db->query($sql);
+		// echo $this->db->Last_query();
 		return $query->result();
 	}
 

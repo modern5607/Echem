@@ -105,6 +105,10 @@ $(".link_hover").click(function () {
 	var idx = $(this).data("idx");
 	var hidx = $(this).data("hidx");
 
+	$(".link_hover").removeClass("over");
+	$(this).addClass("over");
+
+
 	$.ajax({
 		url: "<?= base_url('PROD/detail_pworkorder') ?>",
 		type: "POST",

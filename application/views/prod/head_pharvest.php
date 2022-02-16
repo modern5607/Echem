@@ -34,7 +34,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 						<th>거래처</th>
 						<th>작업예정일</th>
 						<th>작업종료일</th>
-						<th>등록여부</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -49,7 +48,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 							<td class="cen"><?= $row->BIZ_NAME ?></td>
 							<td class="cen"><?= (!empty($row->START_DATE))?date("Y-m-d",strtotime($row->START_DATE)):'' ?></td>
 							<td class="cen"><?= (!empty($row->END_DATE))?date("Y-m-d",strtotime($row->END_DATE)):'' ?></td>
-							<td class="cen"><?= $row->RAWINPUT?></td>
+							
 						</tr>
 
 
@@ -104,13 +103,13 @@ $("input").attr("autocomplete", "off");
 $(".link_hover").click(function () { 
 	var idx = $(this).data("idx");
 	var hidx = $(this).data("hidx");
-	
-	$(".link_hover").removeClass("over");
+
+    $(".link_hover").removeClass("over");
 	$(this).addClass("over");
 
 
 	$.ajax({
-		url: "<?= base_url('PROD/detail_matinput') ?>",
+		url: "<?= base_url('PROD/detail_pharvest') ?>",
 		type: "POST",
 		dataType: "HTML",
 		data: {
