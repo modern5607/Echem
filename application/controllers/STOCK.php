@@ -51,16 +51,71 @@ class STOCK extends CI_Controller
 	public function package()
 	{
 		$data['title']='포장등록';
-		return $this->load->view('main100', $data);
+		return $this->load->view('main50', $data);
 	}
-	public function ajax_package()
+	public function head_package()
 	{
-		//모델
-		$data['list']=$this->stock_model->ajax_package();
+		$data['str'] = array(); //검색어관련
+		$data['str']['sdate'] = $this->input->post('sdate'); //시작일자
+		$data['str']['edate'] = $this->input->post('edate'); //끝일자
+
+		$params['SDATE'] = "";
+		$params['EDATE'] = "";
+
+		if (!empty($data['str']['sdate'])) { $params['SDATE'] = $data['str']['sdate']; }
+		if (!empty($data['str']['edate'])) { $params['EDATE'] = $data['str']['edate']; }
+
+
+		$data['perpage'] = ($this->input->post('perpage') != "") ? $this->input->post('perpage') : 20;
+		//PAGINATION
+		$config['per_page'] = $data['perpage'];
+		$config['page_query_string'] = true;
+		$config['query_string_segment'] = "pageNum";
+		$config['reuse_query_string'] = TRUE;
+		$pageNum = $this->input->post('pageNum') > '' ? $this->input->post('pageNum') : 0;
+		$data['pageNum'] =  $pageNum;
+
+		//list
+		$data['list']=$this->stock_model->ajax_act($params, $pageNum, $config['per_page']);
+		$this->data['cnt'] = $this->stock_model->act_cut($params);
+
+
+		/* pagenation start */
+		$this->load->library("pagination");
+		$config['base_url'] = base_url(uri_string());
+		$config['total_rows'] = $this->data['cnt'];
+		$config['full_tag_open'] = "<div>";
+		$config['full_tag_close'] = '</div>';
+		$this->pagination->initialize($config);
+		$this->data['pagenation'] = $this->pagination->create_links();
 
 		//뷰
-		$this->load->view('stock/ajax_package', $data);
+		$this->load->view('stock/head_package', $data);
 	}
+
+	public function detail_package()
+	{
+		$data['str'] = array(); //검색어관련
+		$data['str']['sdate'] = $this->input->post('sdate'); //시작일자
+		$data['str']['edate'] = $this->input->post('edate'); //끝일자
+		$data['str']['idx'] = $this->input->post('idx'); //끝일자
+
+		$params['SDATE'] = "";
+		$params['EDATE'] = "";
+		$params['IDX'] = "";
+
+		if (!empty($data['str']['sdate'])) { $params['SDATE'] = $data['str']['sdate']; }
+		if (!empty($data['str']['edate'])) { $params['EDATE'] = $data['str']['edate']; }
+		if (!empty($data['str']['idx'])) { $params['IDX'] = $data['str']['idx']; }
+
+		$data['list']=$this->stock_model->ajax_act($params);
+		$data['BIZ']=$this->sys_model->biz_list('EXPORT');
+
+		//뷰
+		$this->load->view('stock/detail_package', $data);
+	}
+
+
 	// 재고내역(포장+탱크)
 	public function stockcur()
 	{
@@ -69,6 +124,16 @@ class STOCK extends CI_Controller
 	}
 	public function ajax_stockcur()
 	{
+		$data['str'] = array(); //검색어관련
+		$data['str']['sdate'] = $this->input->post('sdate'); //시작일자
+		$data['str']['edate'] = $this->input->post('edate'); //끝일자
+
+		$params['SDATE'] = "";
+		$params['EDATE'] = "";
+
+		if (!empty($data['str']['sdate'])) { $params['SDATE'] = $data['str']['sdate']; }
+		if (!empty($data['str']['edate'])) { $params['EDATE'] = $data['str']['edate']; }
+
 		//모델
 		$data['list']=$this->stock_model->ajax_stockcur();
 
@@ -83,6 +148,14 @@ class STOCK extends CI_Controller
 	}
 	public function ajax_stockchange()
 	{
+		$data['str'] = array(); //검색어관련
+		$data['str']['sdate'] = $this->input->post('sdate'); //시작일자
+		$data['str']['edate'] = $this->input->post('edate'); //끝일자
+
+		$params['SDATE'] = "";
+		$params['EDATE'] = "";
+
+		
 		//모델
 		$data['list']=$this->stock_model->ajax_stockchange();
 		// echo var_dump($data['list']);
@@ -109,6 +182,7 @@ class STOCK extends CI_Controller
 		$params['EDATE'] = "";
 		$params['ENDYN'] = "N";
 		$params['BIZ'] = "";
+		$params['LIST'] = "Y";
 
 		if (!empty($data['str']['sdate'])) { $params['SDATE'] = $data['str']['sdate']; }
 		if (!empty($data['str']['edate'])) { $params['EDATE'] = $data['str']['edate']; }
@@ -236,7 +310,7 @@ class STOCK extends CI_Controller
 		if (!empty($data['str']['biz'])) { $params['BIZ'] = $data['str']['biz']; }
 
 
-		$data['perpage'] = ($this->input->post('perpage') != "") ? $this->input->post('perpage') : 20;
+		$data['perpage'] = ($this->input->post('perpage') != "") ? $this->input->post('perpage') : 15;
 		//PAGINATION
 		$config['per_page'] = $data['perpage'];
 		$config['page_query_string'] = true;

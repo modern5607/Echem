@@ -78,11 +78,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 	<div class="pagination">
 	<?php
-	if ($this->data['cnt'] > 20) {
+	if ($this->data['cnt'] > 15) {
 	?>
 		<div class="limitset">
 			<select name="per_page">
-				<option value="20" <?php echo ($perpage == 15) ? "selected" : ""; ?>>20</option>
+				<option value="15" <?php echo ($perpage == 15) ? "selected" : ""; ?>>15</option>
 				<option value="50" <?php echo ($perpage == 50) ? "selected" : ""; ?>>50</option>
 				<option value="80" <?php echo ($perpage == 80) ? "selected" : ""; ?>>80</option>
 				<option value="100" <?php echo ($perpage == 100) ? "selected" : ""; ?>>100</option>

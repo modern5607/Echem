@@ -424,7 +424,7 @@ class ORDPLN extends CI_Controller
 		$List = $this->ordpln_model->calendarInfo_list($year, $month);
 		if (!empty($List)) { 
 			foreach ($List as $i => $row) {
-				$contArray[$row->DAY] = '생산예정량 : '.round($row->QTY,2) . ' (t)<br>' . $row->REMARK;
+				$contArray[$row->DAY] = '생산예정량 : '.round($row->QTY,2) . ' (T)<br>' . $row->REMARK;
 			}
 		} 
 

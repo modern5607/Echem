@@ -32,10 +32,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		<thead>
 			<tr>
 				<th style="width:10%">NO</th>
-				<th>수주일</th>
-				<th>수주명</th>
-				<th>수량(T)</th>
-				<th>거래처</th>
+				<th style="width:20%">수주일</th>
+				<th style="width:30%">수주명</th>
+				<th style="width:20%">수량(T)</th>
+				<th style="width:20%">거래처</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -48,7 +48,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 						<td class="cen"><?= $no ?></td>
 						<td class="cen"><?= $row->ACT_DATE ?></td>
 						<td class="link_s1" data-idx="<?= $row->IDX ?>"><?= $row->ACT_NAME ?></td>
-						<td class="right"><?= number_format($row->QTY,1) ?></td>
+						<td class="right"><?= round($row->QTY,2) ?></td>
 						<td><?= $row->CUST_NM ?></td>
 					</tr>
 				<?php

@@ -53,7 +53,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 						<td class="cen"><?= $no ?></td>
 						<td class="cen"><?= $row->ACT_DATE ?></td>
 						<td><?= $row->ACT_NAME ?></td>
-						<td class="right"><?= number_format($row->QTY,1) ?></td>
+						<td class="right"><?= round($row->QTY,2) ?></td>
 						<td><?= $row->BIZ_IDX ?></td>
 						<td><?= $row->BIZ_NAME ?></td>
 						<td class="cen"><?= $row->END_DATE ?></td>

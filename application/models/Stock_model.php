@@ -34,7 +34,7 @@ SQL;
 			SELECT * FROM T_ITEMS
 SQL;		
 		$query = $this->db->query($sql);
-		echo $this->db->last_query();
+		// echo $this->db->last_query();
 		return $query->result();
 	}
 
@@ -56,11 +56,15 @@ SQL;
 		if (!empty($params['CLAIM']) && $params['CLAIM'] == "2") {
 			$this->db->where('CLAIM is NOT NULL', NULL, FALSE);
 		}
+		if (!empty($params['LIST']) && $params['LIST'] == "Y") {
+			$this->db->order_by('DEL_DATE', 'ACT_DATE');
+		}else{
+			$this->db->order_by('ACT_DATE', 'desc');
+		}
 
 
 		$this->db->select("A.*, B.CUST_NM");
 		$this->db->join("T_BIZ as B", "B.IDX = A.BIZ_IDX");
-		$this->db->order_by('ACT_DATE', 'DESC');
 		$this->db->limit($limit, $start);
 		$query = $this->db->get("T_ACT as A");
 // echo $this->db->last_query();
@@ -77,6 +81,12 @@ SQL;
 		if (!empty($params['BIZ']) && $params['BIZ'] != "") {
 			$this->db->where("BIZ_IDX", $params['BIZ']);
 		}
+		if (!empty($params['CLAIM']) && $params['CLAIM'] == "1") {
+			$this->db->where("CLAIM", NULL);
+		}
+		if (!empty($params['CLAIM']) && $params['CLAIM'] == "2") {
+			$this->db->where('CLAIM is NOT NULL', NULL, FALSE);
+		}
 
 		$this->db->select("COUNT(*) as CUT");
 		$this->db->from("T_ACT");
@@ -88,7 +98,7 @@ SQL;
 		$datetime = date("Y-m-d H:i:s", time());
 		$username = $this->session->userdata('user_name');
 
-if(empty($params['CLAIM'])){
+if(empty($params['CDATE'])){
 	$sql = <<<SQL
 		UPDATE T_ACT
 			SET

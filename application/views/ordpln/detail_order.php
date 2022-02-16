@@ -44,7 +44,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <th>수주명</th>
                     <td><input type="text" class="form_input input_100" autocomplete="off" value='<?= $actnm ?>' name="ACTNM"></td>
 
-                    <th>수량</th>
+                    <th>수량(T)</th>
                     <td><input type="text" class="form_input input_100" autocomplete="off" value='<?= $qty ?>' name="QTY"></td>
                 </tr>
                 <tr>

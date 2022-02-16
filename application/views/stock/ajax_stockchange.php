@@ -10,6 +10,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<header>
 				<div class="searchDiv">
 					<form id="ajaxForm">
+
+					<label>일자</label>
+						<input type="text" name="sdate" class="calendar" size="11" value="<?php echo $str['sdate']; ?>" placeholder="<?= date("Y-m-d") ?>" /> ~
+						<input type="text" name="edate" class="calendar" size="11" value="<?php echo $str['edate']; ?>" placeholder="<?= date("Y-m-d") ?>" />
+
+						<label for="">구분</label>
+							<select name="" id="">
+								<option value="">전체</option>
+								<option value="">원자재</option>
+								<option value="">완제품</option>
+							</select>
 						
 						<button type="button" class="search_submit ajax_search"><i class="material-icons">search</i></button>
 					</form>
