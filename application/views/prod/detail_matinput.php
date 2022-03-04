@@ -16,6 +16,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <input type="hidden" name="hidx" value="<?= $hidx ?>">
         <div class="tbl-write01" style="margin-top: 86px;">
             <table cellpadding="0" cellspacing="0" border="0" width="100%">
+            <div id="loading" style="margin: 170px 0px;"><img src='<?php echo base_url('_static/img/loader.gif'); ?>' width="100"></div>
                 <tbody>
                     <tr>
                         <th class="w120">작업지시일</th>
@@ -31,27 +32,27 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     </tr>
                     <tr>
                         <th>납품예정일</th>
-                        <td><input type="text" readonly name="DEL_DATE" class="calendar form_input input_100 disabled" value="<?= isset($info->DEL_DATE) ? $info->DEL_DATE : '' ?>"></td>
+                        <td><input type="text" readonly name="DEL_DATE" class="form_input input_100 disabled" value="<?= isset($info->DEL_DATE) ? $info->DEL_DATE : '' ?>"></td>
                         <th>주문수량</th>
                         <td><input type="number" readonly name="QTY" class="form_input input_100 disabled" value="<?= isset($info->QTY) ? $info->QTY : '' ?>"></td>
                     </tr>
                     <tr>
                         <th class="w120 res">작업시작일</th>
-                        <td><input type="text" name="START_DATE" readonly class="calendar form_input input_100 disabled" value="<?= isset($info->START_DATE) ? $info->START_DATE : '' ?>"></td>
+                        <td><input type="text" name="START_DATE" readonly class="form_input input_100 disabled" value="<?= isset($info->START_DATE) ? $info->START_DATE : '' ?>"></td>
                         <th class="w120 res">작업종료일</th>
-                        <td><input type="text" name="END_DATE" readonly class="calendar form_input input_100 disabled" value="<?= isset($info->END_DATE) ? $info->END_DATE : '' ?>"></td>
+                        <td><input type="text" name="END_DATE" readonly class="form_input input_100 disabled" value="<?= isset($info->END_DATE) ? $info->END_DATE : '' ?>"></td>
                     </tr>
                     <tr>
                         <th class="w120 res">원료(드럼)</th>
-                        <td><input type="text" name="RAW" class="form_input input_100" value="<?= isset($info->RAW) ? $info->RAW : '' ?>"></td>
+                        <td><input type="text" name="RAW_INPUT" class="form_input input_100" value="<?= isset($info->RAW_INPUT) ? $info->RAW_INPUT : '' ?>"></td>
                         <th class="w120 res">탄산나트륨(Kg)</th>
-                        <td><input type="text" name="NA2CO3" class="form_input input_100" value="<?= isset($info->NA2CO3) ? $info->NA2CO3 : '' ?>"></td>
+                        <td><input type="text" name="NA2CO3_INPUT" class="form_input input_100" value="<?= isset($info->NA2CO3_INPUT) ? $info->NA2CO3_INPUT : '' ?>"></td>
                     </tr>
                     <tr>
                         <th class="w120 res">LiCl</th>
-                        <td><input type="text" name="LICL" class="form_input input_100" value="<?= isset($info->LICL) ? $info->LICL : '' ?>"></td>
+                        <td><input type="text" name="LICL_INPUT" class="form_input input_100" value="<?= isset($info->LICL_INPUT) ? $info->LICL_INPUT : '' ?>"></td>
                         <th class="w120 res">염화나트륨</th>
-                        <td><input type="text" name="NACL" class="form_input input_100" value="<?= isset($info->NACL) ? $info->NACL : '' ?>"></td>
+                        <td><input type="text" name="NACL_INPUT" class="form_input input_100" value="<?= isset($info->NACL_INPUT) ? $info->NACL_INPUT : '' ?>"></td>
                     </tr>
                     <tr>
                         <th class="w120 res">수율</th>
@@ -64,14 +65,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 </tbody>
                 <tfoot>
                     <tr>
-                        <?php if (!empty($str['idx'])) { ?>
-                            <td rowspan="5" colspan="4" class="cen" style="padding: 15px;">
+                        <?php if ($str['mode'] == "mod") { ?>
+                            <td rowspan="5" colspan="6" class="cen" style="padding: 15px;">
                                 <button type="button" class="btn blue_btn upBtn">수정</button>
                                 <button type="button" class="btn blue_btn delBtn">삭제</button>
                             </td>
-                        <?php } else { ?>
-                            <td rowspan="5" colspan="4" class="cen" style="padding: 15px;"><button type="button" class="btn blue_btn submitBtn">등록</button></td>
-                        <?php } ?>
+                            <?php } else  if ($str['mode'] == "new") { ?>
+                            <td rowspan="5" colspan="6" class="cen" style="padding: 15px;"><button type="button" class="btn blue_btn submitBtn">등록</button></td>
+                        <?php } else{}?>
                     </tr>
                 </tfoot>
             </table>
@@ -123,24 +124,27 @@ defined('BASEPATH') or exit('No direct script access allowed');
     $(".upBtn").click(function() {
         var formData = new FormData($("#detailForm")[0]);
 
-        if ($("input[name='ORDER_DATE'").val() == "") {
-            alert("작업 시작일을 입력해 주세요");
-            $("input[name='ORDER_DATE'").focus();
-            return false;
-        }
-        if ($("input[name='START_DATE'").val() == "") {
-            alert("작업 시작일을 입력해 주세요");
-            $("input[name='START_DATE'").focus();
-            return false;
-        }
-        if ($("input[name='END_DATE'").val() == "") {
-            alert("작업 시작일을 입력해 주세요");
-            $("input[name='END_DATE'").focus();
-            return false;
-        }
+        for (var i of formData.entries())
+            console.log(i[0] + ", " + i[1]);
+
+        // if ($("input[name='ORDER_DATE'").val() == "") {
+        //     alert("작업 시작일을 입력해 주세요");
+        //     $("input[name='ORDER_DATE'").focus();
+        //     return false;
+        // }
+        // if ($("input[name='START_DATE'").val() == "") {
+        //     alert("작업 시작일을 입력해 주세요");
+        //     $("input[name='START_DATE'").focus();
+        //     return false;
+        // }
+        // if ($("input[name='END_DATE'").val() == "") {
+        //     alert("작업 시작일을 입력해 주세요");
+        //     $("input[name='END_DATE'").focus();
+        //     return false;
+        // }
 
         $.ajax({
-            url: "<?= base_url('PROD/update_workorder') ?>",
+            url: "<?= base_url('PROD/update_matinput') ?>",
             type: "POST",
             dataType: "HTML",
             data: formData,
@@ -153,7 +157,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 else
                     alert("실패");
             }
-        })
+        });
     });
 
     //제이쿼리 수신일 입력창 누르면 달력 출력

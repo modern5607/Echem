@@ -16,6 +16,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <input type="hidden" name="hidx" value="<?= $hidx ?>">
         <div class="tbl-write01" style="margin-top: 86px;">
             <table cellpadding="0" cellspacing="0" border="0" width="100%">
+            <div id="loading" style="margin: 170px 0px;"><img src='<?php echo base_url('_static/img/loader.gif'); ?>' width="100"></div>
+
                 <tbody>
                     <tr>
                         <th class="w120">작업지시일</th>
@@ -43,35 +45,35 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     </tr>
                     <tr>
                         <th class="w120 res">원료(드럼)</th>
-                        <td colspan="1"><input type="text" name="RAW" class="form_input input_100" value="<?= isset($info->RAW) ? $info->RAW : '' ?>"></td>
-                        <th class="w120 res">Li2Co3</th>
-                        <td colspan="1"><input type="text" name="NA2CO3" class="form_input input_100" value="<?= isset($info->NA2CO3) ? $info->NA2CO3 : '' ?>"></td>
+                        <td colspan="1"><input type="text" name="PHRAW_INPUT" class="form_input input_100" value="<?= isset($info->PHRAW_INPUT) ? $info->PHRAW_INPUT : '' ?>"></td>
+                        <th class="w120 res">LiCl(여과후)</th>
+                        <td colspan="1"><input type="text" name="PHLICL_AFTER_INPUT" class="form_input input_100" value="<?= isset($info->PHLICL_AFTER_INPUT) ? $info->PHLICL_AFTER_INPUT : '' ?>"></td>
                         <th class="w120 res">수율</th>
                         <td colspan="1"><input type="text" readonly name="NA2CO3" class="form_input input_100 disabled" value="<?= isset($info->NA2CO3) ? $info->NA2CO3 : '' ?>"></td>
                     </tr>
                     <tr>
-                        <th class="w120 res">Na3</th>
-                        <td colspan="1"><input type="text" name="RAW" class="form_input input_100" value="<?= isset($info->RAW) ? $info->RAW : '' ?>"></td>
-                        <th class="w120 res">Co2</th>
-                        <td colspan="1"><input type="text" name="NA2CO3" class="form_input input_100" value="<?= isset($info->NA2CO3) ? $info->NA2CO3 : '' ?>"></td>
+                        <th class="w120 res">Na2Co3</th>
+                        <td colspan="1"><input type="text" name="PHNA2CO3_INPUT" class="form_input input_100" value="<?= isset($info->PHNA2CO3_INPUT) ? $info->PHNA2CO3_INPUT : '' ?>"></td>
+                        <th class="w120 res">H2O</th>
+                        <td colspan="1"><input type="text" name="PHH2O_INPUT" class="form_input input_100" value="<?= isset($info->PHH2O_INPUT) ? $info->PHH2O_INPUT : '' ?>"></td>
                         <th class="w120 res">수율</th>
                         <td colspan="1"><input type="text" readonly name="NA2CO3" class="form_input input_100 disabled" value="<?= isset($info->NA2CO3) ? $info->NA2CO3 : '' ?>"></td>
                     </tr>
                     <tr>
                         <th class="w120 res">Li2Co3(생산량)</th>
-                        <td colspan="2"><input type="text" name="RAW" class="form_input input_100" value="<?= isset($info->RAW) ? $info->RAW : '' ?>"></td>
+                        <td colspan="2"><input type="text" readonly name="PPLI2CO3_AFTER_INPUT" class="form_input input_100 disabled" value="<?= isset($info->PPLI2CO3_AFTER_INPUT) ? $info->PPLI2CO3_AFTER_INPUT : '' ?>"></td>
                     </tr>
                 </tbody>
                 <tfoot>
                     <tr>
-                        <?php if (!empty($str['idx'])) { ?>
-                            <td rowspan="5" colspan="4" class="cen" style="padding: 15px;">
+                        <?php if ($str['mode'] == "mod") { ?>
+                            <td rowspan="5" colspan="6" class="cen" style="padding: 15px;">
                                 <button type="button" class="btn blue_btn upBtn">수정</button>
                                 <button type="button" class="btn blue_btn delBtn">삭제</button>
                             </td>
-                        <?php } else { ?>
-                            <td rowspan="5" colspan="4" class="cen" style="padding: 15px;"><button type="button" class="btn blue_btn submitBtn">등록</button></td>
-                        <?php } ?>
+                            <?php } else  if ($str['mode'] == "new") { ?>
+                            <td rowspan="5" colspan="6" class="cen" style="padding: 15px;"><button type="button" class="btn blue_btn submitBtn">등록</button></td>
+                        <?php } else{}?>
                     </tr>
                 </tfoot>
             </table>
@@ -99,7 +101,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         // }
 
         $.ajax({
-            url: "<?= base_url('PROD/update_matinput') ?>",
+            url: "<?= base_url('PROD/update_pharvest') ?>",
             type: "POST",
             dataType: "HTML",
             data: formData,
@@ -123,24 +125,28 @@ defined('BASEPATH') or exit('No direct script access allowed');
     $(".upBtn").click(function() {
         var formData = new FormData($("#detailForm")[0]);
 
-        if ($("input[name='ORDER_DATE'").val() == "") {
-            alert("작업 시작일을 입력해 주세요");
-            $("input[name='ORDER_DATE'").focus();
-            return false;
-        }
-        if ($("input[name='START_DATE'").val() == "") {
-            alert("작업 시작일을 입력해 주세요");
-            $("input[name='START_DATE'").focus();
-            return false;
-        }
-        if ($("input[name='END_DATE'").val() == "") {
-            alert("작업 시작일을 입력해 주세요");
-            $("input[name='END_DATE'").focus();
-            return false;
-        }
+        
+        for (var i of formData.entries())
+            console.log(i[0] + ", " + i[1]);
+
+        // if ($("input[name='ORDER_DATE'").val() == "") {
+        //     alert("작업 시작일을 입력해 주세요");
+        //     $("input[name='ORDER_DATE'").focus();
+        //     return false;
+        // }
+        // if ($("input[name='START_DATE'").val() == "") {
+        //     alert("작업 시작일을 입력해 주세요");
+        //     $("input[name='START_DATE'").focus();
+        //     return false;
+        // }
+        // if ($("input[name='END_DATE'").val() == "") {
+        //     alert("작업 시작일을 입력해 주세요");
+        //     $("input[name='END_DATE'").focus();
+        //     return false;
+        // }
 
         $.ajax({
-            url: "<?= base_url('PROD/update_workorder') ?>",
+            url: "<?= base_url('PROD/update_pharvest') ?>",
             type: "POST",
             dataType: "HTML",
             data: formData,
@@ -152,6 +158,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     alert("성공");
                 else
                     alert("실패");
+            },
+            error: function(xhr, textStatus, errorThrown) {
+                alert(xhr);
+                alert(textStatus);
+                alert(errorThrown);
             }
         })
     });

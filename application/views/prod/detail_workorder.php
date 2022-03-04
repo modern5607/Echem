@@ -9,13 +9,16 @@ defined('BASEPATH') or exit('No direct script access allowed');
 </style>
 
 
+
 <div class="bdcont_100">
     <form id="detailForm">
         <input type="hidden" name="mode" value="<?= $str['mode'] ?>">
         <input type="hidden" name="idx" value="<?= $idx ?>">
         <input type="hidden" name="hidx" value="<?= $hidx ?>">
         <div class="tbl-write01" style="margin-top: 86px;">
+           
             <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                <div id="loading" style="margin: 170px 0px;"><img src='<?php echo base_url('_static/img/loader.gif'); ?>' width="100"></div>
                 <tbody>
                     <tr>
                         <th class="w120">작업지시일</th>
@@ -31,7 +34,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     </tr>
                     <tr>
                         <th>납품예정일</th>
-                        <td><input type="text" readonly name="DEL_DATE" class="calendar form_input input_100 disabled" value="<?= isset($info->DEL_DATE) ? $info->DEL_DATE : '' ?>"></td>
+                        <td><input type="text" readonly name="DEL_DATE" class="form_input input_100 disabled" value="<?= isset($info->DEL_DATE) ? $info->DEL_DATE : '' ?>"></td>
                         <th>주문수량</th>
                         <td><input type="number" readonly name="QTY" class="form_input input_100 disabled" value="<?= isset($info->QTY) ? $info->QTY : '' ?>"></td>
                     </tr>
@@ -55,7 +58,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             </td>
                         <?php } else if ($str['mode'] == "new") { ?>
                             <td rowspan="5" colspan="4" class="cen" style="padding: 15px;"><button type="button" class="btn blue_btn submitBtn">등록</button></td>
-                        <?php } ?>
+                        <?php } else{}?>
                     </tr>
                 </tfoot>
 

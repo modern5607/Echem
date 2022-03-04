@@ -79,6 +79,24 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		text-align: center;
 		vertical-align: middle
 	}
+
+	.water_tank td:nth-child(0) {}
+
+	.color {
+		background: #ffcb2f;
+		text-align: center;
+		width: 210px;
+	}
+
+	.column {
+		width: 110px;
+		text-align: center;
+	}
+
+	.datacell {
+		width: 190px;
+	}
+	.tbl-content{margin-bottom: 4px;}
 </style>
 
 
@@ -88,152 +106,204 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			<span class="btn print add_order" style="padding:7px 11px; margin-bottom: 5px;"><i class="material-icons"></i><?= date("Y-m-d H:i:s", time()) ?></span>
 
 		</header>
-		<div class="tbl-content">
-			<table class="tg" style="table-layout: fixed;" cellpadding="0" cellspacing="0" border="0" width="100%">
-				<colgroup>
-					<col style="width: 107px">
-					<col style="width: 107px">
-					<col style="width: 93px">
-					<col style="width: 95px">
-					<col style="width: 45px">
-					<col style="width: 46px">
-					<col style="width: 82px">
-					<col style="width: 55px">
-					<col style="width: 70px">
-				</colgroup>
-				<tbody>
+
+
+		<div style="display: block;height: 132px;">
+			<!-- 온수탱크-->
+			<span class="tbl-content water_tank" style="max-height: none; overflow-y: auto; left: 10px; top: 10px; float: left;">
+				<table class="tg">
 					<tr>
-						<td class="tg-936e" rowspan="2">온수탱크1</td>
-						<td class="tg-9wq8">수위</td>
-						<td class="tg-9wq8"></td>
-						<td class="tg-ndbq" rowspan="2">온수탱크2</td>
-						<td class="tg-9wq8">수위</td>
-						<td class="tg-9wq8"></td>
-						<td class="tg-9wq8" colspan="3" rowspan="2"></td>
+						<td rowspan="2" class="color">온수탱크<br><br><img src="../_static/img/water-tank.png" width="75"></td>
+						<td class="column">수위</td>
+						<td class="datacell"></td>
 					</tr>
 					<tr>
-						<td class="tg-9wq8">온도</td>
-						<td class="tg-9wq8"></td>
-						<td class="tg-9wq8">온도</td>
-						<td class="tg-9wq8"></td>
+						<td class="column">온도</td>
+						<td class="datacell"></td>
+					</tr>
+				</table>
+			</span>
+
+
+			<!--온수탱크 -->
+			<span class="tbl-content" style="max-height: none; overflow-y: auto; margin-left: 10px; float: left; ">
+				<table class="tg">
+					<tr>
+						<td rowspan="2" class="color">온수탱크<br><br><img src="../_static/img/water-tank.png" width="75"></td>
+						<td class="column">수위</td>
+						<td class="datacell"></td>
 					</tr>
 					<tr>
-						<td class="tg-9wq8" colspan="9"></td>
+						<td class="column">온도</td>
+						<td class="datacell"></td>
+					</tr>
+				</table>
+			</span>
+		</div>
+
+		<div style="display: block;height: 156px;">
+			<!--탄산나트륨탱크 -->
+			<span class="tbl-content" style="max-height: none; overflow-y: auto; float: left;">
+				<table class="tg">
+					<tr>
+						<td rowspan="5" class="color">탄산나트륨탱크<br><br><img src="../_static/img/tank.png" width="100"></td>
+						<td class="column">PH</td>
+						<td class="datacell"></td>
 					</tr>
 					<tr>
-						<td class="tg-ndbq" rowspan="5">탱크아이콘</td>
-						<td class="tg-9wq8">PH</td>
-						<td class="tg-9wq8"></td>
-						<td class="tg-ndbq" rowspan="5">탱크아이콘<br> <br> <br> <br> </td>
-						<td class="tg-9wq8">PH</td>
-						<td class="tg-9wq8"></td>
-						<td class="tg-ndbq" rowspan="5">탱크아이콘</td>
-						<td class="tg-rcip">PH</td>
-						<td class="tg-9wq8"></td>
+						<td class="column">CL</td>
+						<td class="datacell"></td>
 					</tr>
 					<tr>
-						<td class="tg-9wq8">CL</td>
-						<td class="tg-9wq8"></td>
-						<td class="tg-9wq8">CL</td>
-						<td class="tg-9wq8"></td>
-						<td class="tg-rcip">CL</td>
-						<td class="tg-9wq8"></td>
+						<td class="column">온도</td>
+						<td class="datacell"></td>
 					</tr>
 					<tr>
-						<td class="tg-9wq8">온도</td>
-						<td class="tg-9wq8"></td>
-						<td class="tg-9wq8">온도</td>
-						<td class="tg-9wq8"></td>
-						<td class="tg-rcip">온도</td>
-						<td class="tg-9wq8"></td>
+						<td class="column">압력</td>
+						<td class="datacell"></td>
 					</tr>
 					<tr>
-						<td class="tg-9wq8">압력</td>
-						<td class="tg-9wq8"></td>
-						<td class="tg-9wq8">압력</td>
-						<td class="tg-9wq8"></td>
-						<td class="tg-rcip">압력</td>
-						<td class="tg-9wq8"></td>
+						<td class="column">수위</td>
+						<td class="datacell"></td>
+					</tr>
+				</table>
+			</span>
+			<!--탄산나트륨탱크 -->
+			<span class="tbl-content" style="max-height: none; overflow-y: auto; margin-left: 10px; float: left;">
+				<table class="tg">
+					<tr>
+						<td rowspan="5" class="color">탄산나트륨탱크<br><br><img src="../_static/img/tank.png" width="100"></td>
+						<td class="column">PH</td>
+						<td class="datacell"></td>
 					</tr>
 					<tr>
-						<td class="tg-9wq8">수위</td>
-						<td class="tg-9wq8"></td>
-						<td class="tg-9wq8">수위</td>
-						<td class="tg-9wq8"></td>
-						<td class="tg-rcip">수위</td>
-						<td class="tg-9wq8"></td>
+						<td class="column">CL</td>
+						<td class="datacell"></td>
 					</tr>
 					<tr>
-						<td class="tg-9wq8" colspan="9"></td>
+						<td class="column">온도</td>
+						<td class="datacell"></td>
 					</tr>
 					<tr>
-						<td class="tg-9wq8" colspan="6" rowspan="5"></td>
-						<td class="tg-ndbq" rowspan="3">원료탱크</td>
-						<td class="tg-rcip">Cl</td>
-						<td class="tg-9wq8"></td>
+						<td class="column">압력</td>
+						<td class="datacell"></td>
 					</tr>
 					<tr>
-						<td class="tg-nrix">온도</td>
-						<td class="tg-nrix"></td>
+						<td class="column">수위</td>
+						<td class="datacell"></td>
+					</tr>
+				</table>
+			</span>
+			<!--탄산나트륨탱크 -->
+			<span class="tbl-content" style="max-height: none; overflow-y: auto; margin-left: 10px; float: left;margin-bottom: 4px;">
+				<table class="tg">
+					<tr>
+						<td rowspan="5" class="color">탄산나트륨탱크<br><br><img src="../_static/img/tank.png" width="100"></td>
+						<td class="column">PH</td>
+						<td class="datacell"></td>
 					</tr>
 					<tr>
-						<td class="tg-nrix">수위</td>
-						<td class="tg-nrix"></td>
+						<td class="column">CL</td>
+						<td class="datacell"></td>
 					</tr>
 					<tr>
-						<td class="tg-ndbq" rowspan="3">원료탱크</td>
-						<td class="tg-nrix">Cl</td>
-						<td class="tg-nrix"></td>
+						<td class="column">온도</td>
+						<td class="datacell"></td>
 					</tr>
 					<tr>
-						<td class="tg-nrix">온도</td>
-						<td class="tg-nrix"></td>
+						<td class="column">압력</td>
+						<td class="datacell"></td>
 					</tr>
 					<tr>
-						<td class="tg-9wq8">일일 생산계획</td>
-						<td class="tg-9wq8">일일 생산실적</td>
-						<td class="tg-9wq8">진행률(%)</td>
-						<td class="tg-9wq8">잔여율(%)</td>
-						<td class="tg-9wq8" colspan="2" rowspan="4"></td>
-						<td class="tg-nrix">수위</td>
-						<td class="tg-nrix"></td>
+						<td class="column">수위</td>
+						<td class="datacell"></td>
 					</tr>
-					<tr>
-						<td class="tg-xwyw" rowspan="3"></td>
-						<td class="tg-xwyw" rowspan="3"></td>
-						<td class="tg-xwyw" rowspan="3"></td>
-						<td class="tg-xwyw" rowspan="3"></td>
-						<td class="tg-8uya" rowspan="3">원료탱크</td>
-						<td class="tg-nrix">Cl</td>
-						<td class="tg-nrix"></td>
-					</tr>
-					<tr>
-						<td class="tg-nrix">온도</td>
-						<td class="tg-nrix"></td>
-					</tr>
-					<tr>
-						<td class="tg-nrix">수위</td>
-						<td class="tg-nrix"></td>
-					</tr>
-				</tbody>
-			</table>
+				</table>
+			</span>
 		</div>
 
 
+
+		<div style="float: right; margin-right: 36px;">
+			<div class="tbl-content" style="max-height: none; overflow-y: auto;margin-bottom: 4px;">
+				<table class="tg">
+					<tr>
+						<td rowspan="5" class="color">원료탱크<br><br><img src="../_static/img/raw-tank.png" width="75" alt=""></td>
+						<td class="column">CL</td>
+						<td class="datacell"></td>
+					</tr>
+					<tr>
+						<td class="column">온도</td>
+						<td class="datacell"></td>
+					</tr>
+					<tr>
+						<td class="column">수위</td>
+						<td class="datacell"></td>
+					</tr>
+				</table>
+			</div>
+
+			<div class="tbl-content" style="max-height: none; overflow-y: auto;margin-bottom: 4px; ">
+				<table class="tg">
+					<tr>
+						<td rowspan="5" class="color">원료탱크<br><br><img src="../_static/img/raw-tank.png" width="75" alt=""></td>
+						<td class="column">CL</td>
+						<td class="datacell"></td>
+					</tr>
+					<tr>
+						<td class="column">온도</td>
+						<td class="datacell"></td>
+					</tr>
+					<tr>
+						<td class="column">수위</td>
+						<td class="datacell"></td>
+					</tr>
+				</table>
+			</div>
+
+			<div class="tbl-content" style="max-height: none; overflow-y: auto;margin-bottom: 4px; ">
+				<table class="tg">
+					<tr>
+						<td rowspan="5" class="color">원료탱크<br><br><img src="../_static/img/raw-tank.png" width="75" alt=""></td>
+						<td class="column">CL</td>
+						<td class="datacell"></td>
+					</tr>
+					<tr>
+						<td class="column">온도</td>
+						<td class="datacell"></td>
+					</tr>
+					<tr>
+						<td class="column">수위</td>
+						<td class="datacell"></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+
+		<div style="float: left; margin-top: 200px;">
+			<div class="tbl-content" style="max-height: none; overflow-y: auto;">
+				<table class="tg">
+				<tr>
+						<td class="datacell column" style="height: 100px;">일일 생산계획</td>
+						<td class="datacell column" style="height: 100px;">일일 생산실적</td>
+						<td class="datacell column" style="height: 100px;">진행률(%)</td>
+						<td class="datacell column" style="height: 100px;">잔여율(%)</td>
+					</tr>
+					<tr>
+						<td class="datacell column"style="height: 100px;"></td>
+						<td class="datacell column"style="height: 100px;"></td>
+						<td class="datacell column"style="height: 100px;"></td>
+						<td class="datacell column"style="height: 100px;"></td>
+					</tr>
+				</table>
+			</div>
+		</div>
 	</div>
 </div>
 
-
-
-<div id="pop_container">
-
+<!-- <div id="pop_container">
 	<div id="info_content" class="info_content" style="height:auto;">
-
 		<div class="ajaxContent">
-
-
 		</div>
-
 	</div>
-
-</div>
+</div> -->

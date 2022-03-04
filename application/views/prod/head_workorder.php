@@ -3,12 +3,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 ?>
 
 
-<link href="<?= base_url('_static/summernote/summernote-lite.css') ?>" rel="stylesheet">
-<script src="<?= base_url('_static/summernote/summernote-lite.js') ?>"></script>
-<script src="<?= base_url('_static/summernote/lang/summernote-ko-KR.js') ?>"></script>
-
-
-
 <div class="bdcont_100">
 	<div class="">
 		<header>
@@ -62,22 +56,22 @@ defined('BASEPATH') or exit('No direct script access allowed');
 	</div>
 </div>
 
-<div class="pagination">	
+<div class="pagination2">
 	<?php
-	if($this->data['cut'] > 15){
+	if ($this->data['cnt'] > 20) {
 	?>
-	<div class="limitset">
-		<select name="per_page">
-			<option value="15" <?= ($perpage == 15)?"selected":"";?>>15</option>
-			<option value="30" <?= ($perpage == 30)?"selected":"";?>>30</option>
-			<option value="80" <?= ($perpage == 80)?"selected":"";?>>80</option>
-			<option value="100" <?= ($perpage == 100)?"selected":"";?>>100</option>
-		</select>
-	</div>
+		<div class="limitset">
+			<select name="per_page">
+				<option value="20" <?php echo ($perpage == 20) ? "selected" : ""; ?>>20</option>
+				<option value="50" <?php echo ($perpage == 50) ? "selected" : ""; ?>>50</option>
+				<option value="80" <?php echo ($perpage == 80) ? "selected" : ""; ?>>80</option>
+				<option value="100" <?php echo ($perpage == 100) ? "selected" : ""; ?>>100</option>
+			</select>
+		</div>
 	<?php
-	}	
+	}
 	?>
-	<?= $this->data['pagenation'];?>
+	<?php echo $this->data['pagenation']; ?>
 </div>
 
 
@@ -104,7 +98,7 @@ $(".link_hover").click(function () {
 	var hidx = $(this).data("hidx");
 
 	$(".link_hover").removeClass("over");
-			$(this).addClass("over");
+	$(this).addClass("over");
 	$.ajax({
 		url: "<?= base_url('PROD/detail_workorder') ?>",
 		type: "POST",
@@ -113,10 +107,17 @@ $(".link_hover").click(function () {
 			idx:idx,
 			hidx:hidx
 		},
+		beforeSend: function (){
+			$(this).hide();
+			$(".tbl-write01 > table").hide();
+			$("#loading").show();
+		},
 		success: function(data) {
 
 			$("#ajax_detail_container").empty();
 			$("#ajax_detail_container").html(data);
+			$("#loading").hide();
+
 		},
 		error: function(xhr, textStatus, errorThrown) {
 			alert(xhr);

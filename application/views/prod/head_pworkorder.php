@@ -49,10 +49,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 							<td class="cen"><?= $row->BIZ_NAME ?></td>
 							<td class="cen"><?= (!empty($row->START_DATE))?date("Y-m-d",strtotime($row->START_DATE)):'' ?></td>
 							<td class="cen"><?= (!empty($row->END_DATE))?date("Y-m-d",strtotime($row->END_DATE)):'' ?></td>
-							<td class="cen"><?= $row->EACHORDER?></td>
+							<td class="cen"><?= ($row->EACHORDER =="Y")?"Y":"N" ?></td>
 						</tr>
-
-
 					<?php
 					}
 					?>
@@ -64,22 +62,22 @@ defined('BASEPATH') or exit('No direct script access allowed');
 	</div>
 </div>
 
-<div class="pagination">	
+<div class="pagination2">
 	<?php
-	if($this->data['cut'] > 15){
+	if ($this->data['cnt'] > 20) {
 	?>
-	<div class="limitset">
-		<select name="per_page">
-			<option value="15" <?= ($perpage == 15)?"selected":"";?>>15</option>
-			<option value="30" <?= ($perpage == 30)?"selected":"";?>>30</option>
-			<option value="80" <?= ($perpage == 80)?"selected":"";?>>80</option>
-			<option value="100" <?= ($perpage == 100)?"selected":"";?>>100</option>
-		</select>
-	</div>
+		<div class="limitset">
+			<select name="per_page">
+				<option value="20" <?php echo ($perpage == 20) ? "selected" : ""; ?>>20</option>
+				<option value="50" <?php echo ($perpage == 50) ? "selected" : ""; ?>>50</option>
+				<option value="80" <?php echo ($perpage == 80) ? "selected" : ""; ?>>80</option>
+				<option value="100" <?php echo ($perpage == 100) ? "selected" : ""; ?>>100</option>
+			</select>
+		</div>
 	<?php
-	}	
+	}
 	?>
-	<?= $this->data['pagenation'];?>
+	<?php echo $this->data['pagenation']; ?>
 </div>
 
 
@@ -116,6 +114,11 @@ $(".link_hover").click(function () {
 		data: {
 			idx:idx,
 			hidx:hidx
+		},
+		beforeSend: function (){
+			$(this).hide();
+			$(".tbl-write01 > table").hide();
+			$("#loading").show();
 		},
 		success: function(data) {
 			$("#ajax_detail_container").empty();

@@ -118,8 +118,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                             <li><a href="<?= base_url('PROD/workorder') ?>" class="<?= ($this->data['subpos'] == 'workorder') ? "on" : ""; ?>">작업지시등록</a></li>
                                             <li><a href="<?= base_url('PROD/pworkorder') ?>" class="<?= ($this->data['subpos'] == 'pworkorder') ? "on" : ""; ?>">공정별 작업지시</a></li>
                                             <li><a href="<?= base_url('PROD/matinput') ?>" class="<?= ($this->data['subpos'] == 'matinput') ? "on" : ""; ?>">원재료 투입 입력</a></li>
-                                            <li><a href="<?= base_url('PROD/pharvest') ?>" class="<?= ($this->data['subpos'] == 'pharvest') ? "on" : ""; ?>">공정별 수율정보</a></li>
                                             <li><a href="<?= base_url('PROD/pprodcur') ?>" class="<?= ($this->data['subpos'] == 'pprodcur') ? "on" : ""; ?>">공정별 생산내역</a></li>
+                                            <li><a href="<?= base_url('PROD/pharvest') ?>" class="<?= ($this->data['subpos'] == 'pharvest') ? "on" : ""; ?>">공정별 수율정보</a></li>
                                             <!-- <li><a href="<?= base_url('PROD/dprodperf') ?>" class="<?= ($this->data['subpos'] == 'dprodperf') ? "on" : ""; ?>">기간별 생산실적</a></li> -->
                                             <li><a href="<?= base_url('PROD/prodmonitor') ?>" class="<?= ($this->data['subpos'] == 'prodmonitor') ? "on" : ""; ?>">생산 모니터링</a></li>
                                         </ul>
@@ -178,7 +178,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         </li>
                                     <?php   }
                                     */
-                                    /*
+                                    
                                 if ($row->MENU_CODE == "QUAL" && $_SESSION['user_level'] >= $row->MENU_LEVEL) {
                                     ?>
                                         <li class="menu01_li">
@@ -191,8 +191,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                 <li><a href="<?= base_url('QUAL/pooranal') ?>" class="<?= ($this->data['subpos'] == 'pooranal') ? "on" : ""; ?>">불량분석</a></li>
                                             </ul>
                                         </li>
-                                    <?php   *}
-                                    */
+                                    <?php   }
+                                    
                                 if ($row->MENU_CODE == "SYS" && $_SESSION['user_level'] >= $row->MENU_LEVEL) { ?>
                                     <li class="menu01_li">
                                         <a href="<?= base_url('SYS/menu') ?>" class="menu_a <?= ($this->data['pos'] == "SYS") ? "on" : ""; ?>">

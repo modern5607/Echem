@@ -44,18 +44,18 @@ defined('BASEPATH') or exit('No direct script access allowed');
         </thead>
         <tbody>
             <?php
-		if(empty($list)){
+		if(!empty($list)){
             foreach ($list as $i => $row) {
                 $no = $pageNum + $i + 1;
             ?>
-                <tr class="link_hover" data-idx="<?=$row->IDX?>">
+                <tr class="link_hover" data-idx="<?=$row->IDX?>" data-hidx="<?=$row->ACT_IDX?>">
                     <td class="cen"><?= $no; ?></td>
                     <td class="cen"><?=(!empty($row->ORDER_DATE))?date("Y-m-d",strtotime($row->ORDER_DATE)):'' ?></td>
                     <td class="cen"><?= $row->ACT_NAME ?></td>
-                    <td class="cen"><?= $row->CUST_NM ?></td>
+                    <td class="cen"><?= $row->BIZ_NAME ?></td>
                     <td class="cen"><?= (!empty($row->START_DATE))?date("Y-m-d",strtotime($row->START_DATE)):'' ?></td>
                     <td class="cen"><?= (!empty($row->END_DATE))?date("Y-m-d",strtotime($row->END_DATE)):'' ?></td>
-                    <td class="cen">N</td>
+                    <td class="cen"><?= ($row->PACKAGE_YN=="Y")?$row->PACKAGE_YN:"N" ?></td>
                 </tr>
 
 
@@ -113,9 +113,11 @@ $("input").attr("autocomplete", "off");
 $(".link_hover").click(function () { 
 	var idx = $(this).data("idx");
 	var hidx = $(this).data("hidx");
+	$(".link_hover").removeClass("over");
+	$(this).addClass("over");
 
 	$.ajax({
-		url: "<?= base_url('PROD/detail_workorder') ?>",
+		url: "<?= base_url('STOCK/detail_package') ?>",
 		type: "POST",
 		dataType: "HTML",
 		data: {
