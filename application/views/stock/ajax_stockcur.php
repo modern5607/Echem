@@ -11,18 +11,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <input type="text" name="sdate" class="calendar" size="11" value="<?php echo $str['sdate']; ?>" placeholder="<?= date("Y-m-d") ?>" /> ~
                 <input type="text" name="edate" class="calendar" size="11" value="<?php echo $str['edate']; ?>" placeholder="<?= date("Y-m-d") ?>" />
 
-				<label for=SPEC"">구분</label>
-					<select name="SPEC" id="SPEC" style="padding:4px 10px; border:1px solid #ddd;">
+				<label for="spec">구분</label>
+					<select name="spec" id="spec" style="padding:4px 10px; border:1px solid #ddd;">
 						<option value="">전체</option>
-						<option value="원자재">원자재</option>
-						<option value="완제품">완제품</option>
+						<option value="원자재" <?= ($str['spec']=="원자재")?'selected':''; ?>>원자재</option>
+						<option value="완제품" <?= ($str['spec']=="완제품")?'selected':''; ?>>완제품</option>
 					</select>
 
-				<label for=KIND"">입출고</label>
-					<select name="KIND" id="KIND" style="padding:4px 10px; border:1px solid #ddd;">
+				<label for="kind">입출고</label>
+					<select name="kind" id="kind" style="padding:4px 10px; border:1px solid #ddd;">
 						<option value="">전체</option>
-						<option value="IN">입고</option>
-						<option value="OT">출고</option>
+						<option value="IN" <?= ($str['kind']=="IN")?'selected':''; ?>>입고</option>
+						<option value="OT" <?= ($str['kind']=="OT")?'selected':''; ?>>출고</option>
 					</select>
 
 			<button type="button" class="search_submit ajax_search"><i class="material-icons">search</i></button>
@@ -35,8 +35,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<thead>
 			<tr>
 				<th style="width: 5%;">No</th>
-				<th style="width: 10%;">구분</th>
 				<th style="width: 10%;">일자</th>
+				<th style="width: 10%;">구분</th>
 				<th style="width: 15%;">품명</th>
 				<th style="width: 10%;">거래처</th>
 				<th style="width: 7%;">단위</th>
@@ -53,8 +53,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		?>
 			<tr>
 				<td class="cen"><?= $no?></td>
-				<td><?= $row->SPEC?></td>
 				<td class="cen"><?= $row->TRANS_DATE?></td>
+				<td><?= $row->SPEC?></td>
 				<td><?= $row->ITEM_NAME?></td>
 				<td><?= $row->BIZ_NM?></td>
 				<td><?= $row->UNIT?></td>

@@ -82,23 +82,40 @@ SQL;
 
 
 
-	public function ajax_stockcur()
+	public function ajax_stockcur($param)
 	{
+		$where='';
+		if ((!empty($param['SDATE']) && $param['SDATE'] != "") && (!empty($param['EDATE']) && $param['EDATE'] != "")) {
+			$where .=" AND ORDER_DATE BETWEEN '{$param['SDATE']}' AND '{$param['EDATE']}'";
+		}
+		if (!empty($param['KIND']) && $param['KIND'] != "") {
+			$where .=" AND T.KIND = '{$param['KIND']}'";
+		}
+		if (!empty($param['SPEC']) && $param['SPEC'] != "") {
+			$where .=" AND I.SPEC = '{$param['SPEC']}'";
+		}
+
 		$sql=<<<SQL
 			SELECT T.KIND, I.ITEM_NAME, I.SPEC, T.BIZ_NM, I.UNIT, T.QTY, T.KIND, T.TRANS_DATE, T.REMARK
 			FROM T_ITEMS_TRANS AS T
 			LEFT JOIN T_ITEMS AS I ON T.H_IDX = I.IDX
+			WHERE 1 {$where}
 SQL;		
 		$query = $this->db->query($sql);
 		return $query->result();
 	}
 
 	//재고조정
-	public function ajax_stockchange()
+	public function ajax_stockchange($param)
 	{
+		$where='';
+		if (!empty($param['SPEC']) && $param['SPEC'] != "") {
+			$where .=" AND SPEC = '{$param['SPEC']}'";
+		}
+
 		$sql=<<<SQL
 			SELECT * FROM T_ITEMS
-			where USE_YN = 'Y'
+			where USE_YN = 'Y' {$where}
 SQL;		
 		$query = $this->db->query($sql);
 		// echo $this->db->last_query();
@@ -253,32 +270,6 @@ SQL;
 		$this->db->query($sql);
 		
 		return $this->db->affected_rows();
-	}
-
-
-	public function ajax_dbrelease()
-	{
-		$sql=<<<SQL
-			SELECT '1' AS COL1,'2' AS COL2, '3' AS COL3  FROM DUAL;
-SQL;		
-		$query = $this->db->query($sql);
-		return $query->result();
-	}
-	public function ajax_claim()
-	{
-		$sql=<<<SQL
-			SELECT '1' AS COL1,'2' AS COL2, '3' AS COL3  FROM DUAL;
-SQL;		
-		$query = $this->db->query($sql);
-		return $query->result();
-	}
-	public function ajax_claimcur()
-	{
-		$sql=<<<SQL
-			SELECT '1' AS COL1,'2' AS COL2, '3' AS COL3  FROM DUAL;
-SQL;		
-		$query = $this->db->query($sql);
-		return $query->result();
 	}
 
 

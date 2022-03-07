@@ -128,15 +128,21 @@ class STOCK extends CI_Controller
 		$data['str'] = array(); //검색어관련
 		$data['str']['sdate'] = $this->input->post('sdate'); //시작일자
 		$data['str']['edate'] = $this->input->post('edate'); //끝일자
+		$data['str']['spec'] = $this->input->post('spec'); //구분
+		$data['str']['kind'] = $this->input->post('kind'); //입출고
 
 		$params['SDATE'] = "";
 		$params['EDATE'] = "";
+		$params['SPEC'] = "";
+		$params['KIND'] = "";
 
 		if (!empty($data['str']['sdate'])) { $params['SDATE'] = $data['str']['sdate']; }
 		if (!empty($data['str']['edate'])) { $params['EDATE'] = $data['str']['edate']; }
+		if (!empty($data['str']['spec'])) { $params['SPEC'] = $data['str']['spec']; }
+		if (!empty($data['str']['kind'])) { $params['KIND'] = $data['str']['kind']; }
 
 		//모델
-		$data['list']=$this->stock_model->ajax_stockcur();
+		$data['list']=$this->stock_model->ajax_stockcur($params);
 
 		//뷰
 		$this->load->view('stock/ajax_stockcur', $data);
@@ -153,15 +159,14 @@ class STOCK extends CI_Controller
 	public function ajax_stockchange()
 	{
 		$data['str'] = array(); //검색어관련
-		$data['str']['sdate'] = $this->input->post('sdate'); //시작일자
-		$data['str']['edate'] = $this->input->post('edate'); //끝일자
 
-		$params['SDATE'] = "";
-		$params['EDATE'] = "";
+		$data['str']['spec'] = $this->input->post('spec'); //구분
+		$params['SPEC'] = "";
+		if (!empty($data['str']['spec'])) { $params['SPEC'] = $data['str']['spec']; }
 
 		
 		//모델
-		$data['list']=$this->stock_model->ajax_stockchange();
+		$data['list']=$this->stock_model->ajax_stockchange($params);
 		// echo var_dump($data['list']);
 
 		//뷰
