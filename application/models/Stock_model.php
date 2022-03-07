@@ -29,13 +29,13 @@ class Stock_model extends CI_Model
 
 		$sql=<<<SQL
 			SELECT
-				O.IDX, ORDER_DATE, START_DATE, O.END_DATE, ACT_NAME, CUST_NM, PACKAGE_YN, ACT_DATE, DEL_DATE, A.QTY, Li2CO3, DRY_DATE
+				O.IDX, ORDER_DATE, START_DATE, O.END_DATE, ACT_NAME, CUST_NM, PACKAGE_YN, ACT_DATE, DEL_DATE, A.QTY, PPLI2CO3_AFTER_INPUT, DRY_DATE
 			FROM
 				`T_ORDER` as O
 				left join T_ACT as A on A.IDX = O.ACT_IDX
 				left join T_BIZ as B on A.BIZ_IDX = B.IDX
 			WHERE
-				1
+				PPLI2CO3_AFTER_INPUT is not null
 				{$where}
 SQL;		
 		$query = $this->db->query($sql);
@@ -60,7 +60,7 @@ SQL;
 				left join T_ACT as A on A.IDX = O.ACT_IDX
 				left join T_BIZ as B on A.BIZ_IDX = B.IDX
 			WHERE
-				1
+				PPLI2CO3_AFTER_INPUT is not null
 				{$where}
 SQL;
 		$res = $this->db->query($sql);

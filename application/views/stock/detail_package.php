@@ -39,7 +39,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 </tr>
                 <tr>
                     <th>Li2CO3(생산량)</th>
-                    <td><input type="text" disabled name="Li2CO3" class="form_input input_100" value="<?= isset($list[0]->Li2CO3) ? $list[0]->Li2CO3 : '' ?>"></td>
+                    <td><input type="text" disabled name="Li2CO3" class="form_input input_100" value="<?= isset($list[0]->PPLI2CO3_AFTER_INPUT) ? $list[0]->PPLI2CO3_AFTER_INPUT : '' ?>"></td>
                     <th>건조일</th>
                     <td><input type="text" disabled name="DRY_DATE" class="form_input input_100" value="<?= isset($list[0]->DRY_DATE) ? $list[0]->DRY_DATE : '' ?>"></td>
                 </tr>
