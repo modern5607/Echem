@@ -230,7 +230,7 @@ table td.right{text-align:right;}
 .gray{color:#999;}
 
 table:not(.nhover) tr.link_hover td{transition: all 0.3s;}
-table:not(.nhover) tr.link_hover:hover td{/*background: #ddd4d4;*/cursor: pointer;}
+table:not(.nhover) tr.link_hover:hover td{background: #fffed0; cursor: pointer;}
 
 
 /* table:not(.nhover) tbody tr:not(.nhover) td{ transition: all 0.3s;}

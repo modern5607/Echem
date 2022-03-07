@@ -24,7 +24,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |
 */
 
-$config['site_title'] = "스마트팩토리";
+$config['site_title'] = "이켐";
 $config['site_tel'] = "010-0000-0000";
 
 

@@ -1,6 +1,7 @@
 <link href="<?php echo base_url('_static/css/jquery.datetimepicker.min.css') ?>" rel="stylesheet">
 <script src="<?php echo base_url('_static/js/jquery.datetimepicker.full.min.js') ?>"></script>
 
+
 <div id="pageTitle">
     <h1><?php echo $title; ?></h1>
 </div>
@@ -14,6 +15,7 @@
 
 
 <script>
+    <?php if(empty($pos) && empty($subpos)){$pos="ORDPLN"; $subpos='prodpln';}; ?>
     var formData = '';
     var page = 0;
     var limit = 0;
@@ -31,7 +33,7 @@
         }
 
         $.ajax({
-            url: "<?= (empty($pos) && empty($subpos)) ? base_url("/MDM/ajax_calendar") : base_url('/' . $pos . '/ajax_' . $subpos . '/') ?>",
+            url: "<?= base_url('/' . $pos . '/ajax_' . $subpos . '/') ?>",
             type: "post",
             data: formData,
             dataType: "html",

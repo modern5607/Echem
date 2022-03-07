@@ -105,8 +105,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	$(".submitBtn").on("click",function(){
 
 		var formData = new FormData();
-		formData.append("CLAIM", $("input[name='CLAIM']").val());
-		formData.append("CDATE", $("input[name='CDATE']").val());
+		formData.append("CLAIM", $(this).parents("tr").find("input[name='CLAIM']").val());
+		formData.append("CDATE", $(this).parents("tr").find("input[name='CDATE']").val());
 		formData.append("IDX", $(this).data('idx'));
 
 		// FormData의 값 확인

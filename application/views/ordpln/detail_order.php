@@ -13,10 +13,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
     #detailForm2 .tbl-content td {
         background: white;
     }
+    #detailForm2 th{
+        min-width:100px;
+    }
 </style>
 
 <?php 
-    if (!empty($str['idx'])) {
+    if (!empty($str['idx']) && $str['idx'] != "r") {
         $actnm = $list[0]->ACT_NAME;
         $qty = ROUND($list[0]->QTY,3);
         $adate = $list[0]->ACT_DATE;
@@ -24,6 +27,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
         $biz = $list[0]->BIZ_IDX;
         $biznm = $list[0]->BIZ_NAME;
         $remark = $list[0]->REMARK;
+        $check = isset($list[0]->SDATE)?"Y":"N";
+        $end = $list[0]->END_YN;
     }else{
         $actnm = '';
         $qty = '';
@@ -32,6 +37,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
         $biz = '';
         $biznm = '';
         $remark = '';
+        $check = '';
+        $end = '';
     }
 ?>
 
@@ -48,7 +55,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <td><input type="text" class="form_input input_100" autocomplete="off" value='<?= $qty ?>' name="QTY"></td>
                 </tr>
                 <tr>
-                    <th>납기요청일</th>
+                    <th>수주일</th>
                     <td><input type="text" class="form_input input_100 calendar" autocomplete="off" value='<?= $adate ?>' name="ADATE"></td>
                         
                     <th>납기예정일</th>
@@ -77,11 +84,26 @@ defined('BASEPATH') or exit('No direct script access allowed');
             </thead>
             <tfoot>
                 <tr>
-                    <?php if (!empty($str['idx'])) { ?>
-                        <td rowspan="5" colspan="4" class="cen" style="padding: 15px;">
-                            <button type="button" class="btn blue_btn upBtn" >수정</button>
-                            <button type="button" class="btn blue_btn delBtn" >삭제</button>
-                        </td>
+                    <?php if (!empty($str['idx']) && $str['idx'] != "r") { ?>
+                        <?php if($check == 'N'){ ?>
+                            <td rowspan="5" colspan="4" class="cen" style="padding: 15px;">
+                                <button type="button" class="btn blue_btn upBtn" >수정</button>
+                                <button type="button" class="btn blue_btn delBtn" >삭제</button>
+                            </td>
+                        <?php }else{ ?>
+                            <tr>
+                                <th>작업예정일</th>
+                                <td><input type="text" class="form_input input_100" readonly value='<?= $list[0]->SDATE ?>'></td>
+                                <th>종료예정일</th>
+                                <td><input type="text" class="form_input input_100" readonly value='<?= $list[0]->EDATE ?>'></td>
+                            </tr>
+                            <tr>
+                                <th>출고일</th>
+                                <td><input type="text" class="form_input input_100" readonly value='<?= $list[0]->END_DATE ?>'></td>
+                                <th>출고량</th>
+                                <td><input type="text" class="form_input input_100" readonly value='<?= (isset($list[0]->BQTY))?round($list[0]->BQTY,2):'' ?>'></td>
+                            </tr>
+                        <?php } ?>
                     <?php }else{ ?>
                         <td rowspan="5" colspan="4" class="cen" style="padding: 15px;"><button type="button" class="btn blue_btn submitBtn" >저장</button></td>
                     <?php } ?>
@@ -94,11 +116,19 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 
 <script>
+<?php if($check == 'Y'){?>
+    $("#detailForm2 input").attr("readonly",true);
+    $("#detailForm2 textarea").attr("readonly",true);
+    $("#detailForm2 .calendar").removeClass("calendar");
+    $('#detailForm2 option').attr('disabled', true);
+<?php } ?>
+
     $(".calendar").datetimepicker({
         format: 'Y-m-d',
         timepicker: false,
         lang: 'ko-KR'
     });
+
 
     $(".submitBtn").on("click",function(){
 
