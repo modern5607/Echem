@@ -73,8 +73,9 @@ $(".calendar").datetimepicker({
 $(".endBtn").on("click", function() {
 	var formData = new FormData();
 	formData.append("IDX", $(this).data("idx"));
-	formData.append("QTY", $("input[name='QTY']").val());
-	formData.append("REMARK", $("input[name='REMARK']").val());
+	formData.append("QTY", $(this).parents("tr").find("input[name='QTY']").val());
+	formData.append("REMARK", $(this).parents("tr").find("input[name='REMARK']").val());
+
 
 	if($("input[name='QTY']").val() == ""){
 		alert("입고 수량 입력하세요.");

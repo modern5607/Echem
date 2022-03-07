@@ -23,18 +23,19 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			<input type="text" name="edate" class="calendar" size="11" value="<?php echo $str['edate']; ?>" placeholder="<?= date("Y-m-d") ?>" />
 
 			<button type="button" class="search_submit head_search"><i class="material-icons">search</i></button>
+
+			<input type="button" value="추가" class="link_s1" data-idx="r" style="position:absolute; right:20px; color:#333;">
 		</form>
 	</div>
 </header>
-
 <div class="tbl-content">
 	<table cellpadding="0" cellspacing="0" border="0" width="100%">
 		<thead>
 			<tr>
-				<th style="width:10%">NO</th>
+				<th style="width:8%">NO</th>
 				<th style="width:20%">수주일</th>
 				<th style="width:30%">수주명</th>
-				<th style="width:20%">수량(T)</th>
+				<th style="width:12%">수량(T)</th>
 				<th style="width:20%">거래처</th>
 			</tr>
 		</thead>

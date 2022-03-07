@@ -23,7 +23,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 				</thead>
 				<tbody>
 					<tr>
-						<td class="cen"><input name="date" type="text" value="<?= $setDate ?>"></td>
+						<td class="cen"><input name="date" type="text" class="calendar" value="<?= $setDate ?>"></td>
 						<td class="cen"><input name="qty" type="text" value="<?= !empty($List)?round($List[0]->QTY,2):'' ?>"></td>
 						<td class="cen"><input name="remark" type="text" value="<?= !empty($List)?$List[0]->REMARK:'' ?>"></td>
 					</tr>
@@ -43,6 +43,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
 </div>
 
 <script>
+	$(".calendar").datetimepicker({
+		format: 'Y-m-d',
+		timepicker: false,
+		lang: 'ko-KR'
+	});
+
+
 	$(".submitBtn").click(function (){
     var date = $("input[name='date']").val();
     var qty = $("input[name='qty']").val();

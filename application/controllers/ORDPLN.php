@@ -116,7 +116,7 @@ class ORDPLN extends CI_Controller
 
 		$data['list']=$this->ordpln_model->ordpln_dual($params);
 		$data['BIZ']=$this->sys_model->biz_list('EXPORT');
-
+		$data['check']=$this->ordpln_model->act_check($params);
 
 		$this->load->view('/ordpln/detail_order', $data);
 	}
@@ -360,7 +360,7 @@ class ORDPLN extends CI_Controller
 			{/cal_cell_no_content}
 
 			{cal_cell_no_content_today}
-				<div class="xday" data-date="' . $year . '-' . $month . '-{day}">{day}</div>
+				<div class="xday" data-date="' . $year . '-' . $month . '-{day}"><p class="calendarText">{day}</p></div>
 			{/cal_cell_no_content_today}
 
 			{cal_cell_blank}&nbsp;{/cal_cell_blank}
@@ -378,55 +378,15 @@ class ORDPLN extends CI_Controller
 		$this->load->library('calendar', $prefs);
 		
 
-		$info = $this->ordpln_model->calendar_list($year, $month);
-		// echo var_dump($info);
-		$contArray = array();
-		$prev_d = '';
-		$d = '';
-		$i = 0;
-		$total_count = 0;
-		foreach ($info as $ndate) 
-		{
-			$d = explode("-", $ndate->PLN_DATE)[2];
-			if ($prev_d == $d) 
-			{
-				if ($i >=3) {
-					$total_count += $ndate->COUNT;
-					continue;
-				}
-				else
-					$i++;
-			} 
-			else if($prev_d != $d)
-			{
-				
-				if ($i >=3 && $total_count>0) {
-					$contArray[$prev_d] .= "외 " . $total_count . "건";
-					$i = 0;
-					$total_count=0;
-				}
-				else
-					$i = 0;
-			}
-			
-			if (isset($contArray[$d])) 
-				$contArray[$d] .= $ndate->POR_NO . " " . $ndate->COUNT . "건<br>";
-			else 
-				$contArray[$d] = $ndate->POR_NO . " " . $ndate->COUNT . "건<br>";
-			
-			
-
-
-			$prev_d = $d;
-		}
-
 		// 캘린더 내용
 		$List = $this->ordpln_model->calendarInfo_list($year, $month);
 		if (!empty($List)) { 
 			foreach ($List as $i => $row) {
 				$contArray[$row->DAY] = '생산예정량 : '.round($row->QTY,2) . ' (T)<br>' . $row->REMARK;
 			}
-		} 
+		}else{
+			$contArray='';
+		}
 
 
 		$data['calendar'] = $this->calendar->generate($year, $month, $contArray);

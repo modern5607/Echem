@@ -58,12 +58,15 @@ class STOCK extends CI_Controller
 		$data['str'] = array(); //검색어관련
 		$data['str']['sdate'] = $this->input->post('sdate'); //시작일자
 		$data['str']['edate'] = $this->input->post('edate'); //끝일자
+		$data['str']['package'] = $this->input->post('package'); //끝일자
 
 		$params['SDATE'] = "";
 		$params['EDATE'] = "";
+		$params['PACKAGE'] = "";
 
 		if (!empty($data['str']['sdate'])) { $params['SDATE'] = $data['str']['sdate']; }
 		if (!empty($data['str']['edate'])) { $params['EDATE'] = $data['str']['edate']; }
+		if (!empty($data['str']['package'])) { $params['PACKAGE'] = $data['str']['package']; }
 
 
 		$data['perpage'] = ($this->input->post('perpage') != "") ? $this->input->post('perpage') : 20;
@@ -76,8 +79,8 @@ class STOCK extends CI_Controller
 		$data['pageNum'] =  $pageNum;
 
 		//list
-		$data['list']=$this->stock_model->ajax_act($params, $pageNum, $config['per_page']);
-		$this->data['cnt'] = $this->stock_model->act_cut($params);
+		$data['list']=$this->stock_model->ajax_package($params, $pageNum, $config['per_page']);
+		$this->data['cnt'] = $this->stock_model->package_cut($params);
 
 
 		/* pagenation start */
@@ -92,27 +95,25 @@ class STOCK extends CI_Controller
 		//뷰
 		$this->load->view('stock/head_package', $data);
 	}
-
 	public function detail_package()
 	{
 		$data['str'] = array(); //검색어관련
-		$data['str']['sdate'] = $this->input->post('sdate'); //시작일자
-		$data['str']['edate'] = $this->input->post('edate'); //끝일자
 		$data['str']['idx'] = $this->input->post('idx'); //끝일자
 
-		$params['SDATE'] = "";
-		$params['EDATE'] = "";
-		$params['IDX'] = "";
+		$params['IDX'] = "R";
 
-		if (!empty($data['str']['sdate'])) { $params['SDATE'] = $data['str']['sdate']; }
-		if (!empty($data['str']['edate'])) { $params['EDATE'] = $data['str']['edate']; }
 		if (!empty($data['str']['idx'])) { $params['IDX'] = $data['str']['idx']; }
 
-		$data['list']=$this->stock_model->ajax_act($params);
-		$data['BIZ']=$this->sys_model->biz_list('EXPORT');
+		$data['list']=$this->stock_model->ajax_package($params);
 
 		//뷰
 		$this->load->view('stock/detail_package', $data);
+	}
+	public function update_package()
+	{
+		$params['IDX'] = $this->input->post('idx'); 
+		$data['result'] = $this->stock_model->update_package($params);
+		echo $data['result'];
 	}
 
 
@@ -140,6 +141,9 @@ class STOCK extends CI_Controller
 		//뷰
 		$this->load->view('stock/ajax_stockcur', $data);
 	}
+
+
+
 	// 재고조정
 	public function stockchange()
 	{
@@ -163,6 +167,25 @@ class STOCK extends CI_Controller
 		//뷰
 		$this->load->view('stock/ajax_stockchange', $data);
 	}
+	public function stock_update()
+	{
+		$params['IDX'] = $this->input->post("IDX");
+		$params['KIND'] = $this->input->post("KIND");
+		$params['QTY'] = $this->input->post("QTY");
+		$params['DATE'] = $this->input->post("DATE");
+		$params['REMARK'] = $this->input->post("REMARK");
+
+		if($this->input->post("BIZ") == ""){
+			$params['BIZ'] = '재고조정';
+		}else{
+			$params['BIZ'] = $this->input->post("BIZ");
+		}
+			
+		$data = $this->stock_model->stock_update($params);
+
+		echo json_encode($data);
+	}
+
 
 
 	// 출고등록
@@ -233,6 +256,7 @@ class STOCK extends CI_Controller
 	}
 
 
+
 	// 기간별/업체별 출고내역
 	public function dbrelease()
 	{
@@ -284,6 +308,7 @@ class STOCK extends CI_Controller
 		//뷰
 		$this->load->view('stock/ajax_dbrelease', $data);
 	}
+
 
 
 	// 클래임 등록
@@ -338,6 +363,7 @@ class STOCK extends CI_Controller
 		//뷰
 		$this->load->view('stock/ajax_claim', $data);
 	}
+
 
 
 	// 클래임 내역 조회

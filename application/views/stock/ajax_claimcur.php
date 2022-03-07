@@ -55,7 +55,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				<td class="right"><?= round($row->QTY,2) ?></td>
 				<td class="cen"><?= $row->END_DATE?></td>
 				<td class="right"><?= round($row->BQTY,2)?></td>
-				<td><?= $row->CLAIM_DATE?></td>
+				<td class="cen"><?= $row->CLAIM_DATE?></td>
 				<td><?= $row->CLAIM?></td>
 			</tr>
 

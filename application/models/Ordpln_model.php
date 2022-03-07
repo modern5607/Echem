@@ -21,7 +21,7 @@ class Ordpln_model extends CI_Model
 		}
 
 
-		$this->db->select("A.*, B.CUST_NM");
+		$this->db->select("( SELECT START_DATE FROM T_ORDER AS O WHERE O.ACT_IDX = A.IDX ) AS SDATE,( SELECT END_DATE FROM T_ORDER AS O WHERE O.ACT_IDX = A.IDX ) AS EDATE, A.*, B.CUST_NM");
 		$this->db->join("T_BIZ as B", "B.IDX = A.BIZ_IDX");
 		$this->db->order_by('ACT_DATE', 'DESC');
 		$this->db->limit($limit, $start);
@@ -39,6 +39,13 @@ class Ordpln_model extends CI_Model
 		$this->db->select("COUNT(*) as CUT");
 		$this->db->from("T_ACT");
 		$query = $this->db->get();
+		return $query->row()->CUT;
+	}
+	public function act_check($params)
+	{
+		$this->db->select("COUNT(*) as CUT");
+		$this->db->where("ACT_IDX", $params['IDX']);
+		$query = $this->db->get("T_ORDER");
 		return $query->row()->CUT;
 	}
 
@@ -124,43 +131,6 @@ SQL;
 
 
 
-
-
-
-	public function calendar_list($year, $month)
-	{
-		$sql=<<<SQL
-			SELECT
-			POR_NO,SUM(COUNT) AS COUNT,PLN_DATE
-			FROM
-			(
-			SELECT *,COUNT(*) AS COUNT,PROC_PLN AS PLN_DATE,"PROC" AS GJ FROM T_ACTPLN WHERE PROC_PLN BETWEEN '{$year}-{$month}-01' AND '{$year}-{$month}-31'  GROUP BY POR_NO,PROC_PLN
-			UNION
-			SELECT *,COUNT(*),ASSE_PLN,"ASSE" FROM T_ACTPLN WHERE ASSE_PLN BETWEEN '{$year}-{$month}-01' AND '{$year}-{$month}-31' GROUP BY POR_NO,ASSE_PLN
-			UNION
-			SELECT *,COUNT(*),WELD_PLN,"WELD" FROM T_ACTPLN WHERE WELD_PLN BETWEEN '{$year}-{$month}-01' AND '{$year}-{$month}-31' GROUP BY POR_NO,WELD_PLN
-			UNION
-			SELECT *,COUNT(*),MRO_PLN,"MRO" FROM T_ACTPLN WHERE MRO_PLN BETWEEN '{$year}-{$month}-01' AND '{$year}-{$month}-31' GROUP BY POR_NO,MRO_PLN
-			UNION
-			SELECT *,COUNT(*),INRQDA,"INRQDA" FROM T_ACTPLN WHERE INRQDA BETWEEN '{$year}-{$month}-01' AND '{$year}-{$month}-31' GROUP BY POR_NO,INRQDA
-			UNION
-			SELECT *,COUNT(*),PKQDA,"PKQDA" FROM T_ACTPLN WHERE PKQDA BETWEEN '{$year}-{$month}-01' AND '{$year}-{$month}-31' GROUP BY POR_NO,PKQDA
-			UNION
-			SELECT *,COUNT(*),TRNDDA,"TRNDDA" FROM T_ACTPLN WHERE TRNDDA BETWEEN '{$year}-{$month}-01' AND '{$year}-{$month}-31' GROUP BY POR_NO,TRNDDA
-			) AS A
-			GROUP BY POR_NO,PLN_DATE
-			ORDER BY PLN_DATE,POR_NO
-SQL;
-		
-		$query=$this->db->query($sql);
-		// echo nl2br($this->db->last_query());
-		// echo var_dump($query->result());
-		return $query->result();
-
-		// $query = $this->db->like("WORK_DATE", $year . "-" . $month)
-		// 	->get("T_WORKCAL");
-		// return $query->result();
-	}
 
 	//캘린더 세부
 	public function calendarInfo_list($YEAR, $MONTH, $DAY = '')

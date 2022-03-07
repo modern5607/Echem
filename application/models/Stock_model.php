@@ -10,18 +10,84 @@ class Stock_model extends CI_Model
 
 	}
 	
-	public function ajax_package()
+	public function ajax_package($param)
 	{
+		$where ='';
+		if ((!empty($param['SDATE']) && $param['SDATE'] != "") && (!empty($param['EDATE']) && $param['EDATE'] != "")) {
+			$where .=" AND ORDER_DATE BETWEEN '{$param['SDATE']}' AND '{$param['EDATE']}'";
+		}
+		if (!empty($param['IDX']) && $param['IDX'] != "") {
+			$where .=" AND O.IDX = '{$param['IDX']}'";
+		}
+		if (!empty($param['PACKAGE']) && $param['PACKAGE'] != "") {
+			if ($param['PACKAGE'] == "Y") {
+				$where .=" AND PACKAGE_YN = '{$param['PACKAGE']}'";
+			}else{
+				$where .=" AND PACKAGE_YN is null";
+			}
+		}
+
 		$sql=<<<SQL
-			SELECT '1' AS COL1,'2' AS COL2, '3' AS COL3  FROM DUAL;
+			SELECT
+				O.IDX, ORDER_DATE, START_DATE, O.END_DATE, ACT_NAME, CUST_NM, PACKAGE_YN, ACT_DATE, DEL_DATE, A.QTY, Li2CO3, DRY_DATE
+			FROM
+				`T_ORDER` as O
+				left join T_ACT as A on A.IDX = O.ACT_IDX
+				left join T_BIZ as B on A.BIZ_IDX = B.IDX
+			WHERE
+				1
+				{$where}
 SQL;		
 		$query = $this->db->query($sql);
 		return $query->result();
 	}
+	public function package_cut($param)
+	{
+		$where ='';
+		if ((!empty($param['SDATE']) && $param['SDATE'] != "") && (!empty($param['EDATE']) && $param['EDATE'] != "")) {
+			$where .="AND ORDER_DATE BETWEEN '{$param['SDATE']}' AND '{$param['EDATE']}'";
+		}
+		if (!empty($param['PACKAGE']) && $param['PACKAGE'] != "") {
+			$where .=" AND PACKAGE_YN = '{$param['PACKAGE']}'";
+		}
+
+
+		$sql=<<<SQL
+			SELECT
+				O.IDX
+			FROM
+				`T_ORDER` as O
+				left join T_ACT as A on A.IDX = O.ACT_IDX
+				left join T_BIZ as B on A.BIZ_IDX = B.IDX
+			WHERE
+				1
+				{$where}
+SQL;
+		$res = $this->db->query($sql);
+		// echo $this->db->last_query();
+		return $res->num_rows();
+	}
+	public function update_package($params)
+	{
+		$sql=<<<SQL
+			UPDATE T_ORDER
+			SET PACKAGE_YN = "Y"
+			WHERE IDX = "{$params['IDX']}"
+SQL;
+		$this->db->query($sql);
+		echo $this->db->last_query();
+		return $this->db->affected_rows();
+	}
+
+
+
+
 	public function ajax_stockcur()
 	{
 		$sql=<<<SQL
-			SELECT '1' AS COL1,'2' AS COL2, '3' AS COL3  FROM DUAL;
+			SELECT T.KIND, I.ITEM_NAME, I.SPEC, T.BIZ_NM, I.UNIT, T.QTY, T.KIND, T.TRANS_DATE, T.REMARK
+			FROM T_ITEMS_TRANS AS T
+			LEFT JOIN T_ITEMS AS I ON T.H_IDX = I.IDX
 SQL;		
 		$query = $this->db->query($sql);
 		return $query->result();
@@ -32,11 +98,53 @@ SQL;
 	{
 		$sql=<<<SQL
 			SELECT * FROM T_ITEMS
+			where USE_YN = 'Y'
 SQL;		
 		$query = $this->db->query($sql);
 		// echo $this->db->last_query();
 		return $query->result();
 	}
+	public function stock_update($params)
+	{
+		$datetime = date("Y-m-d H:i:s", time());
+		$username = $this->session->userdata('user_name');
+
+		$info = $this->db->query("SELECT * from T_ITEMS where IDX='{$params['IDX']}'")->row();
+		if($params['KIND'] == "IN"){
+			$sum = $info->STOCK + $params['QTY'];
+		}else{
+			$sum = $info->STOCK - $params['QTY'];
+		}
+
+		$sql = <<<SQL
+		UPDATE T_ITEMS
+		SET
+			STOCK   	= '{$sum}',
+			UPDATE_ID   = '{$username}',
+			UPDATE_DATE = '{$datetime}'
+		WHERE
+			IDX 		= "{$params['IDX']}"
+SQL;
+		$this->db->query($sql);
+
+		$sql2 = <<<SQL
+		INSERT T_ITEMS_TRANS
+		SET
+			H_IDX		= '{$params['IDX']}',
+			QTY   		= '{$params['QTY']}',
+			KIND   		= '{$params['KIND']}',
+			TRANS_DATE  = '{$params['DATE']}',
+			REMARK   	= '{$params['REMARK']}',
+			BIZ_NM   	= '{$params['BIZ']}',
+			INSERT_ID   = '{$username}',
+			INSERT_DATE = '{$datetime}'
+SQL;
+		$this->db->query($sql2);
+		
+		return $this->db->affected_rows();
+	}
+
+
 
 
 	public function ajax_act($params,$start=0,$limit=15)
@@ -65,6 +173,8 @@ SQL;
 
 		$this->db->select("A.*, B.CUST_NM");
 		$this->db->join("T_BIZ as B", "B.IDX = A.BIZ_IDX");
+		$this->db->join("T_ORDER as O", "O.ACT_IDX = A.IDX");
+		$this->db->where("O.PACKAGE_YN", 'Y');
 		$this->db->limit($limit, $start);
 		$query = $this->db->get("T_ACT as A");
 // echo $this->db->last_query();
@@ -89,7 +199,9 @@ SQL;
 		}
 
 		$this->db->select("COUNT(*) as CUT");
-		$this->db->from("T_ACT");
+		$this->db->from("T_ACT AS A");
+		$this->db->join("T_ORDER as O", "O.ACT_IDX = A.IDX");
+		$this->db->where("O.PACKAGE_YN", 'Y');
 		$query = $this->db->get();
 		return $query->row()->CUT;
 	}
@@ -100,6 +212,20 @@ SQL;
 
 if(empty($params['CDATE'])){
 	$sql = <<<SQL
+		UPDATE T_ACT
+			SET
+			SHIP_WAY   	= '{$params['SHIP']}',
+			END_DATE   	= '{$params['EDATE']}',
+			BQTY 		= '{$params['BQTY']}',
+			SHIP_REMARK = '{$params['REMARK']}',
+			END_YN    	= 'Y',
+			UPDATE_ID   = '{$username}',
+			UPDATE_DATE = '{$datetime}'
+		WHERE
+			IDX 		= "{$params['IDX']}"
+SQL;
+
+	$sql2 = <<<SQL
 		UPDATE T_ACT
 			SET
 			SHIP_WAY   	= '{$params['SHIP']}',

@@ -11,18 +11,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <input type="text" name="sdate" class="calendar" size="11" value="<?php echo $str['sdate']; ?>" placeholder="<?= date("Y-m-d") ?>" /> ~
                 <input type="text" name="edate" class="calendar" size="11" value="<?php echo $str['edate']; ?>" placeholder="<?= date("Y-m-d") ?>" />
 
-				<label for="">구분</label>
-					<select name="" id="">
+				<label for=SPEC"">구분</label>
+					<select name="SPEC" id="SPEC" style="padding:4px 10px; border:1px solid #ddd;">
 						<option value="">전체</option>
-						<option value="">원자재</option>
-						<option value="">완제품</option>
+						<option value="원자재">원자재</option>
+						<option value="완제품">완제품</option>
 					</select>
 
-				<label for="">입출고</label>
-					<select name="" id="">
+				<label for=KIND"">입출고</label>
+					<select name="KIND" id="KIND" style="padding:4px 10px; border:1px solid #ddd;">
 						<option value="">전체</option>
-						<option value="">입고</option>
-						<option value="">출고</option>
+						<option value="IN">입고</option>
+						<option value="OT">출고</option>
 					</select>
 
 			<button type="button" class="search_submit ajax_search"><i class="material-icons">search</i></button>
@@ -34,16 +34,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<table cellpadding="0" cellspacing="0" border="0" width="100%">
 		<thead>
 			<tr>
-				<th>No</th>
-				<th>등록일</th>
-				<th>구분</th>
-				<th>입출고</th>
-				<th>단위</th>
-				<th>거래처</th>
-				<th>수량</th>
-				<th>입고일</th>
-				<th>출고일</th>
-				<th>등록자</th>
+				<th style="width: 5%;">No</th>
+				<th style="width: 10%;">구분</th>
+				<th style="width: 10%;">일자</th>
+				<th style="width: 15%;">품명</th>
+				<th style="width: 10%;">거래처</th>
+				<th style="width: 7%;">단위</th>
+				<th style="width: 8%;">입출고</th>
+				<th style="width: 7%;">수량</th>
 				<th>비고</th>
 			</tr>
 		</thead>
@@ -53,9 +51,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		foreach($list as $i=>$row){
 			$no = $i+1;
 		?>
-
 			<tr>
-				<td colspan="15" class="list_none">정보가 없습니다.</td>
+				<td class="cen"><?= $no?></td>
+				<td><?= $row->SPEC?></td>
+				<td class="cen"><?= $row->TRANS_DATE?></td>
+				<td><?= $row->ITEM_NAME?></td>
+				<td><?= $row->BIZ_NM?></td>
+				<td><?= $row->UNIT?></td>
+				<td><?= ($row->KIND =="IN")?'입고':(($row->KIND == "OT")?'출고':'')?></td>
+				<td class="right"><?= $row->QTY?></td>
+				<td><?= $row->REMARK?></td>
 			</tr>
 
 		<?php
@@ -72,14 +77,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </div>
 
 
-<div id="pop_container">
-	
-	<div class="info_content" style="height:auto;">
-		<div class="ajaxContent">			
-			
-		<!-- 데이터 -->
-
-		</div>
-	</div>
-
-</div>
+<script>
+	$(".calendar").datetimepicker({
+		format: 'Y-m-d',
+		timepicker: false,
+		lang: 'ko-KR'
+	});
+</script>

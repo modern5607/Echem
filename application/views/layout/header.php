@@ -138,12 +138,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 if ($row->MENU_CODE == "STOCK" && $_SESSION['user_level'] >= $row->MENU_LEVEL) {
                                     ?>
                                         <li class="menu01_li">
-                                            <a href="<?= base_url('STOCK/package') ?>" class="menu_a <?= ($this->data['pos'] == "STOCK") ? "on" : ""; ?>">
+                                            <a href="<?= base_url('STOCK/stockcur') ?>" class="menu_a <?= ($this->data['pos'] == "STOCK") ? "on" : ""; ?>">
                                                 <i class="material-icons">add_business</i>재고/수불 관리</a>
                                             <ul class="menu02" <?= ($this->data['pos'] == "STOCK") ? "style='display:block'" : ""; ?>>
-                                                <li><a href="<?= base_url('STOCK/package') ?>" class="<?= ($this->data['subpos'] == 'package') ? "on" : ""; ?>">포장등록</a></li>
                                                 <li><a href="<?= base_url('STOCK/stockcur') ?>" class="<?= ($this->data['subpos'] == 'stockcur') ? "on" : ""; ?>">재고내역</a></li>
                                                 <li><a href="<?= base_url('STOCK/stockchange') ?>" class="<?= ($this->data['subpos'] == 'stockchange') ? "on" : ""; ?>">재고조정</a></li>
+                                                <li><a href="<?= base_url('STOCK/package') ?>" class="<?= ($this->data['subpos'] == 'package') ? "on" : ""; ?>">포장등록</a></li>
                                                 <li><a href="<?= base_url('STOCK/release') ?>" class="<?= ($this->data['subpos'] == 'release') ? "on" : ""; ?>">출고등록</a></li>
                                                 <li><a href="<?= base_url('STOCK/dbrelease') ?>" class="<?= ($this->data['subpos'] == 'dbrelease') ? "on" : ""; ?>">기간별/업체별 출고내역</a></li>
                                                 <li><a href="<?= base_url('STOCK/claim') ?>" class="<?= ($this->data['subpos'] == 'claim') ? "on" : ""; ?>">클래임 등록</a></li>

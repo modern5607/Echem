@@ -112,14 +112,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	$(".submitBtn").on("click",function(){
 
 	var formData = new FormData();
-	formData.append("SHIP", $("select[name='SHIP']").val());
-	formData.append("EDATE", $("input[name='EDATE']").val());   
-	formData.append("BQTY", $("input[name='BQTY']").val());   
-	formData.append("REMARK", $("input[name='REMARK']").val());
+	formData.append("SHIP", $(this).parents("tr").find("select[name='SHIP']").val());
+	formData.append("EDATE", $(this).parents("tr").find("input[name='EDATE']").val());   
+	formData.append("BQTY", $(this).parents("tr").find("input[name='BQTY']").val());   
+	formData.append("REMARK", $(this).parents("tr").find("input[name='REMARK']").val());
 	formData.append("IDX", $(this).data('idx'));
 
+	var formData2 = new FormData();
+	formData2.append("IDX", '7');
+	formData2.append("KIND", 'OT');
+	formData2.append("BIZ", $(this).parents("tr").find("td:eq(3)").text());
+	formData2.append("QTY", $(this).parents("tr").find("input[name='BQTY']").val());
+	formData2.append("DATE", $(this).parents("tr").find("input[name='EDATE']").val());
+	formData2.append("REMARK", $(this).parents("tr").find("input[name='REMARK']").val());
+
 	// FormData의 값 확인
-	for (var pair of formData.entries()) {
+	for (var pair of formData2.entries()) {
 	console.log(pair[0]+ ', ' + pair[1]);
 	}
 
@@ -131,21 +139,39 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		// return false;
 
 	$.ajax({
-			url: "<?php echo base_url('STOCK/release_update') ?>",
-			type: "POST",
-			data: formData,
-			//asynsc : true,
-			cache: false,
-			contentType: false,
-			processData: false,
-			success: function(data) {
-				location.reload();
-			},
-			error: function(xhr, textStatus, errorThrown) {
-				alert(xhr);
-				alert(textStatus);
-				alert(errorThrown);
-			}
-		});
+		url: "<?php echo base_url('STOCK/release_update') ?>",
+		type: "POST",
+		data: formData,
+		//asynsc : true,
+		cache: false,
+		contentType: false,
+		processData: false,
+		success: function(data) {
+			location.reload();
+		},
+		error: function(xhr, textStatus, errorThrown) {
+			alert(xhr);
+			alert(textStatus);
+			alert(errorThrown);
+		}
+	});
+
+	$.ajax({
+		url: "<?php echo base_url('STOCK/stock_update') ?>",
+		type: "POST",
+		data: formData2,
+		//asynsc : true,
+		cache: false,
+		contentType: false,
+		processData: false,
+		success: function(data) {
+			location.reload();
+		},
+		error: function(xhr, textStatus, errorThrown) {
+			alert(xhr);
+			alert(textStatus);
+			alert(errorThrown);
+		}
+	});
 	});
 </script>

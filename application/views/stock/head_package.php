@@ -23,14 +23,23 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			<input type="text" name="sdate" class="calendar" size="11" value="<?php echo $str['sdate']; ?>" placeholder="<?= date("Y-m-d") ?>" /> ~
 			<input type="text" name="edate" class="calendar" size="11" value="<?php echo $str['edate']; ?>" placeholder="<?= date("Y-m-d") ?>" />
 
+			<label>포장여부</label>
+				<select name="package" id="package" style="padding:4px 10px; border:1px solid #ddd;">
+					<option value="">전체</option>
+					<option value="Y" <?= ($str['package'] == 'Y') ? 'selected' : '' ?>>포장 완료</option>
+					<option value="N" <?= ($str['package'] == 'N') ? 'selected' : '' ?>>포장 전</option>
+				</select>
+
 			<button type="button" class="search_submit head_search"><i class="material-icons">search</i></button>
+
+			<button type="button" class="search_submit link_hover" data-idx="R" style="position:absolute; right:20px;">초기화</button>
 		</form>
 	</div>
 </header>
 
 
 <div class="tbl-content">
-    <table cellpadding="0" cellspacing="0" border="0" width="100%">
+    <table cellpadding="0" cellspacing="0" border="0" width="100%" class="table-hover">
         <thead>
             <tr>
                 <th>NO</th>
@@ -48,14 +57,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
             foreach ($list as $i => $row) {
                 $no = $pageNum + $i + 1;
             ?>
-                <tr class="link_hover" data-idx="<?=$row->IDX?>" data-hidx="<?=$row->ACT_IDX?>">
+                <tr class="link_hover" data-idx="<?=$row->IDX?>">
                     <td class="cen"><?= $no; ?></td>
-                    <td class="cen"><?=(!empty($row->ORDER_DATE))?date("Y-m-d",strtotime($row->ORDER_DATE)):'' ?></td>
+                    <td class="cen"><?= $row->ORDER_DATE ?></td>
                     <td class="cen"><?= $row->ACT_NAME ?></td>
-                    <td class="cen"><?= $row->BIZ_NAME ?></td>
-                    <td class="cen"><?= (!empty($row->START_DATE))?date("Y-m-d",strtotime($row->START_DATE)):'' ?></td>
-                    <td class="cen"><?= (!empty($row->END_DATE))?date("Y-m-d",strtotime($row->END_DATE)):'' ?></td>
-                    <td class="cen"><?= ($row->PACKAGE_YN=="Y")?$row->PACKAGE_YN:"N" ?></td>
+                    <td class="cen"><?= $row->CUST_NM ?></td>
+                    <td class="cen"><?= $row->START_DATE ?></td>
+                    <td class="cen"><?= $row->END_DATE ?></td>
+                    <td class="cen"><?= ($row->PACKAGE_YN == "Y")?"완료":'' ?></td>
                 </tr>
 
 
@@ -73,14 +82,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
 </div>
 
 
-<!-- <div class="pagination2">	
+<div class="pagination2">	
 	<?php
 	if($this->data['cnt'] > 20){
 	?>
 	<div class="limitset">
 		<select name="per_page">
 			<option value="20" <?= ($perpage == 20)?"selected":"";?>>20</option>
-			<option value="30" <?= ($perpage == 30)?"selected":"";?>>30</option>
+			<option value="50" <?= ($perpage == 50)?"selected":"";?>>50</option>
 			<option value="80" <?= ($perpage == 80)?"selected":"";?>>80</option>
 			<option value="100" <?= ($perpage == 100)?"selected":"";?>>100</option>
 		</select>
@@ -89,22 +98,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
 	}	
 	?>
 	<?= $this->data['pagenation'];?>
-</div> -->
-
-
-
-<div id="pop_container">
-
-	<div id="info_content" class="info_content" style="height:auto;">
-
-		<div class="ajaxContent">
-
-
-		</div>
-
-	</div>
-
 </div>
+
+
+
 
 
 <script>
@@ -112,48 +109,20 @@ $("input").attr("autocomplete", "off");
 
 $(".link_hover").click(function () { 
 	var idx = $(this).data("idx");
-	var hidx = $(this).data("hidx");
-	$(".link_hover").removeClass("over");
-	$(this).addClass("over");
+
+	$("tr").removeClass('over')
+	$(this).addClass('over')
 
 	$.ajax({
 		url: "<?= base_url('STOCK/detail_package') ?>",
 		type: "POST",
 		dataType: "HTML",
 		data: {
-			idx:idx,
-			hidx:hidx
+			idx:idx
 		},
 		success: function(data) {
 			$("#ajax_detail_container").empty();
 				$("#ajax_detail_container").html(data);
-		},
-		error: function(xhr, textStatus, errorThrown) {
-			alert(xhr);
-			alert(textStatus);
-			alert(errorThrown);
-		}
-	})
-
-});
-
-
-$(".add_order").on("click", function() {
-
-	$(".ajaxContent").html('');
-	$("#pop_container").fadeIn();
-	$(".info_content").animate({
-		top: "50%"
-	}, 500);
-
-	$.ajax({
-		url: "<?= base_url('PROD/order_form') ?>",
-		type: "POST",
-		dataType: "HTML",
-		data: {
-		},
-		success: function(data) {
-			$(".ajaxContent").html(data);
 		},
 		error: function(xhr, textStatus, errorThrown) {
 			alert(xhr);
