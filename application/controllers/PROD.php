@@ -336,13 +336,13 @@ class PROD extends CI_Controller
 		if (!empty($data['idx']) && !empty($data['hidx'])) {
 			$data['info'] = $this->prod_model->detail_matinput($params);
 
-			if ($data['info']->EACHORDER == "Y")
+			if ($data['info']->RAWINPUT_YN == "Y")
 				$data['str']['mode'] = "mod";
 			else
 				$data['str']['mode'] = "new";
 		}
 
-		// echo $data['str']['mode'];
+		echo $data['str']['mode'];
 
 
 		$this->load->view('prod/detail_matinput', $data);
