@@ -24,7 +24,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 			<button type="button" class="search_submit head_search"><i class="material-icons">search</i></button>
 
-			<input type="button" value="추가" class="link_s1" data-idx="r" style="position:absolute; right:20px; color:#333;">
+			<input type="button" value="선택해제" class="link_s1" data-idx="r" style="position:absolute; right:20px; color:#333;">
 		</form>
 	</div>
 </header>

@@ -29,13 +29,13 @@ class Stock_model extends CI_Model
 
 		$sql=<<<SQL
 			SELECT
-				O.IDX, ORDER_DATE, START_DATE, O.END_DATE, ACT_NAME, CUST_NM, PACKAGE_YN, ACT_DATE, DEL_DATE, A.QTY, PPLI2CO3_AFTER_INPUT, DRY_DATE
+				O.IDX, ORDER_DATE, START_DATE, O.END_DATE, ACT_NAME, CUST_NM, PACKAGE_YN, ACT_DATE, DEL_DATE, A.QTY, PPLI2CO3_AFTER_INPUT, DRY_DATE, PACKAGE_DATE
 			FROM
 				`T_ORDER` as O
 				left join T_ACT as A on A.IDX = O.ACT_IDX
 				left join T_BIZ as B on A.BIZ_IDX = B.IDX
 			WHERE
-				PPLI2CO3_AFTER_INPUT is not null
+				PHINPUT_YN = "Y"
 				{$where}
 SQL;		
 		$query = $this->db->query($sql);
@@ -60,7 +60,7 @@ SQL;
 				left join T_ACT as A on A.IDX = O.ACT_IDX
 				left join T_BIZ as B on A.BIZ_IDX = B.IDX
 			WHERE
-				PPLI2CO3_AFTER_INPUT is not null
+				PHINPUT_YN = "Y"
 				{$where}
 SQL;
 		$res = $this->db->query($sql);
@@ -71,7 +71,8 @@ SQL;
 	{
 		$sql=<<<SQL
 			UPDATE T_ORDER
-			SET PACKAGE_YN = "Y"
+			SET PACKAGE_YN = "Y",
+			PACKAGE_DATE = NOW()
 			WHERE IDX = "{$params['IDX']}"
 SQL;
 		$this->db->query($sql);
@@ -86,7 +87,7 @@ SQL;
 	{
 		$where='';
 		if ((!empty($param['SDATE']) && $param['SDATE'] != "") && (!empty($param['EDATE']) && $param['EDATE'] != "")) {
-			$where .=" AND ORDER_DATE BETWEEN '{$param['SDATE']}' AND '{$param['EDATE']}'";
+			$where .=" AND TRANS_DATE BETWEEN '{$param['SDATE']}' AND '{$param['EDATE']}'";
 		}
 		if (!empty($param['KIND']) && $param['KIND'] != "") {
 			$where .=" AND T.KIND = '{$param['KIND']}'";

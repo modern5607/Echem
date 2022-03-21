@@ -43,6 +43,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <th>건조일</th>
                     <td><input type="text" disabled name="DRY_DATE" class="form_input input_100" value="<?= isset($list[0]->DRY_DATE) ? $list[0]->DRY_DATE : '' ?>"></td>
                 </tr>
+                <?php
+                if(is_numeric($str['idx']) && $list[0]->PACKAGE_YN == 'Y'){
+                    echo 
+                    '<tr>
+                        <th>포장일</th>
+                        <td><input type="text" disabled class="form_input input_100" value="'.$list[0]->PACKAGE_DATE.'"></td>
+                    </tr>';
+                } ?>
             </tbody>
             <?php
             if(is_numeric($str['idx']) && $list[0]->PACKAGE_YN != 'Y'){
