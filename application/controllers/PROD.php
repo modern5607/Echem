@@ -374,7 +374,7 @@ class PROD extends CI_Controller
 	// 공정별 수율정보
 	public function pharvest()
 	{
-		$data['title'] = '공정별 수율정보';
+		$data['title'] = '공정별 수율정보'; 
 		return $this->load->view('main50', $data);
 	}
 	public function head_pharvest()
