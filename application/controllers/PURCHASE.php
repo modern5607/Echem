@@ -60,8 +60,8 @@ class PURCHASE extends CI_Controller
 		$data['str']['sdate'] = $this->input->post('sdate');
 		$data['str']['edate'] = $this->input->post('edate');
 
-		$params['SDATE'] = date("Y-m-d", strtotime("-1 month", time()) );
-		$params['EDATE'] = date("Y-m-d");
+		$params['SDATE'] = '';
+		$params['EDATE'] = '';
 		$params['END_CHK'] = '';
 
 		$data['qstr'] = "?P";
@@ -150,8 +150,8 @@ class PURCHASE extends CI_Controller
 		$data['str']['sdate'] = $this->input->post('sdate');
 		$data['str']['edate'] = $this->input->post('edate');
 
-		$params['SDATE'] = date("Y-m-d", strtotime("-1 month", time()) );
-		$params['EDATE'] = date("Y-m-d");
+		$params['SDATE'] = '';
+		$params['EDATE'] = '';
 		$params['END_CHK'] = 'N';
 
 		$data['qstr'] = "?P";
@@ -187,8 +187,8 @@ class PURCHASE extends CI_Controller
 		$data['str']['sdate'] = $this->input->post('sdate');
 		$data['str']['edate'] = $this->input->post('edate');
 
-		$params['SDATE'] = date("Y-m-d", strtotime("-1 month", time()) );
-		$params['EDATE'] = date("Y-m-d");
+		$params['SDATE'] = '';
+		$params['EDATE'] = '';
 		$params['END_CHK'] = '';
 
 		$data['qstr'] = "?P";

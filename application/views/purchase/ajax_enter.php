@@ -2,13 +2,8 @@
 	<div class="searchBoxxx" style="margin-bottom:20px; padding:15px; border:1px solid #ddd;">
 		<form id="ajaxForm">
 			<label for="sdate">발주등록일</label>
-				<input type="text" name="sdate" class="sdate calendar"
-					value="<?= (!empty($str['sdate']) && $str['sdate'] != "")?$str['sdate']:date("Y-m-d",strtotime("-1 month", time()));?>"
-					size="12" /> ~
-
-				<input type="text" name="edate" class="edate calendar"
-					value="<?= (!empty($str['edate']) && $str['edate'] != "")?$str['edate']:date("Y-m-d");?>"
-					size="12" />
+				<input type="text" name="sdate" class="calendar" size="11" value="<?php echo $str['sdate']; ?>" placeholder="<?= date("Y-m-d") ?>" /> ~
+				<input type="text" name="edate" class="calendar" size="11" value="<?php echo $str['edate']; ?>" placeholder="<?= date("Y-m-d") ?>" />
 			
 			<button type="button" class="search_submit ajax_search"><i class="material-icons">search</i></button>
 		</form>

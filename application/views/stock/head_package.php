@@ -32,7 +32,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 			<button type="button" class="search_submit head_search"><i class="material-icons">search</i></button>
 
-			<button type="button" class="search_submit link_hover" data-idx="R" style="position:absolute; right:20px;">초기화</button>
+			<input type="button" value="선택해제" class="link_s1 link_hover" data-idx="R" style="position:absolute;right:20px;color:#333;" autocomplete="off">
 		</form>
 	</div>
 </header>
