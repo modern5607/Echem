@@ -23,7 +23,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 					<button type="button" class="search_submit ajax_search"><i class="material-icons">search</i></button>
 				</form>
 			</div>
-			<span class="btn print add_biz"><i class="material-icons">add</i>업체추가</span>
+			<!-- <span class="btn print add_biz"><i class="material-icons">add</i>업체추가</span> -->
 			<!-- <span class="btn print print_biz"><i class="material-icons">get_app</i>출력하기</span> -->
 		</header>
 

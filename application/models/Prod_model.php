@@ -745,4 +745,16 @@ SQL;
 		$query = $this->db->query($sql);
 		return $query->result();
 	}
+	public function ajax_prodmonitor2()
+	{
+		$sql = <<<SQL
+		SELECT
+			'1' AS COL1,
+			'2' AS COL2,
+			'2' AS COL3 
+		FROM DUAL;
+SQL;
+		$query = $this->db->query($sql);
+		return $query->result();
+	}
 }

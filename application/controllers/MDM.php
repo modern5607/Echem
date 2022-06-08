@@ -288,6 +288,8 @@ class MDM extends CI_Controller
 			// $params['mod'] = 1;
 		}
 
+		// echo var_dump($data);
+
 		return $this->load->view('/mdm/biz_form', $data);
 	}
 	/* 닉네임 중복 체크 */

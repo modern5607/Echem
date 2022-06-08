@@ -76,7 +76,7 @@ SQL;
 			WHERE IDX = "{$params['IDX']}"
 SQL;
 		$this->db->query($sql);
-		echo $this->db->last_query();
+		// echo $this->db->last_query();
 		return $this->db->affected_rows();
 	}
 

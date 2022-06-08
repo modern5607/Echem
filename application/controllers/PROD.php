@@ -342,7 +342,7 @@ class PROD extends CI_Controller
 				$data['str']['mode'] = "new";
 		}
 
-		echo $data['str']['mode'];
+		// echo $data['str']['mode'];
 
 
 		$this->load->view('prod/detail_matinput', $data);
@@ -581,5 +581,20 @@ class PROD extends CI_Controller
 
 		//뷰
 		$this->load->view('prod/ajax_prodmonitor', $data);
+	}
+	
+	// 생산 모니터링 - 태블릿
+	public function prodmonitor2()
+	{
+		$data['title'] = '생산 모니터링';
+		return $this->load->view('main100', $data);
+	}
+	public function ajax_prodmonitor2()
+	{
+		//모델
+		$data['list'] = $this->prod_model->ajax_prodmonitor2();
+
+		//뷰
+		$this->load->view('prod/ajax_prodmonitor2', $data);
 	}
 }

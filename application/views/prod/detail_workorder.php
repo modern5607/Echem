@@ -152,6 +152,46 @@ defined('BASEPATH') or exit('No direct script access allowed');
             }
         })
     });
+    $(".delBtn").click(function() {
+
+        // if(confirm("삭제하시겠습니까?"))
+        // var formData = new FormData($("#detailForm")[0]);
+
+        // if($("input[name='ORDER_DATE'").val() == "")
+        // {
+        //     alert("작업 시작일을 입력해 주세요");
+        //     $("input[name='ORDER_DATE'").focus();
+        //     return false;
+        // }
+        // if($("input[name='START_DATE'").val() == "")
+        // {
+        //     alert("작업 시작일을 입력해 주세요");
+        //     $("input[name='START_DATE'").focus();
+        //     return false;
+        // }
+        // if($("input[name='END_DATE'").val() == "")
+        // {
+        //     alert("작업 시작일을 입력해 주세요");
+        //     $("input[name='END_DATE'").focus();
+        //     return false;
+        // }
+
+        // $.ajax({
+        //     url: "<?= base_url('PROD/update_workorder') ?>",
+        //     type: "POST",
+        //     dataType: "HTML",
+        //     data: formData,
+        //     cache: false,
+        //     contentType: false,
+        //     processData: false,
+        //     success: function(data) {
+        //         if(data == 1)
+        //         alert("성공");
+        //         else
+        //         alert("실패");
+        //     }
+        // })
+    });
 
     //제이쿼리 수신일 입력창 누르면 달력 출력
     $(".calendar").datetimepicker({

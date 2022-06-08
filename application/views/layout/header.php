@@ -9,9 +9,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <meta charset="utf-8">
     <meta http-equiv="imagetoolbar" content="no">
     <title><?= $siteTitle ?></title>
-    <!--link rel="stylesheet" href="<?= base_url('/_static/css/bootstrap.css?ver=20200725'); ?>"-->
-    <link rel="stylesheet" href="<?= base_url('/_static/css/default_smart.css?ver=20200725'); ?>">
-    <link rel="stylesheet" href="<?= base_url('/_static/css/form.css?ver=20200725'); ?>">
+    <!--link rel="stylesheet" href="<?= base_url('/_static/css/bootstrap.css?ver=1'); ?>"-->
+    <link rel="stylesheet" href="<?= base_url('/_static/css/default_smart.css?ver=1'); ?>">
+    <link rel="stylesheet" href="<?= base_url('/_static/css/form.css?ver=1'); ?>">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <!-- <script src="<?= base_url('/_static/js/jquery-1.12.4.min.js'); ?>"></script>
@@ -122,6 +122,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                             <li><a href="<?= base_url('PROD/pharvest') ?>" class="<?= ($this->data['subpos'] == 'pharvest') ? "on" : ""; ?>">공정별 수율정보</a></li>
                                             <!-- <li><a href="<?= base_url('PROD/dprodperf') ?>" class="<?= ($this->data['subpos'] == 'dprodperf') ? "on" : ""; ?>">기간별 생산실적</a></li> -->
                                             <li><a href="<?= base_url('PROD/prodmonitor') ?>" class="<?= ($this->data['subpos'] == 'prodmonitor') ? "on" : ""; ?>">생산 모니터링</a></li>
+                                            <li><a href="<?= base_url('PROD/prodmonitor2') ?>" class="<?= ($this->data['subpos'] == 'prodmonitor2') ? "on" : ""; ?>">생산 모니터링 - 태블릿</a></li>
                                         </ul>
                                     </li>
                                 <?php   }

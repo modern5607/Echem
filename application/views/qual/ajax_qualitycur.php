@@ -23,12 +23,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					<thead>
 						<tr>
 							<th>No</th>
-							<th>실적일</th>
-							<th>실적량</th>
-							<th>검사일</th>
+							<th>작업지시일</th>
+							<th>수주명</th>
+							<th>거래처</th>
+							<th>작업종료일</th>
+							<th>주문수량</th>
+							<th>실적 Li2Co2</th>
+							<th>품질검사유무</th>
+							<th>불량유무</th>
+							<th>불량사유</th>
 							<th>불량수량</th>
-							<th>비고</th>
-							<th></th>
+							<th>불량률</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -39,10 +44,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					?>
 
 						<tr>
-							<td><?php echo $no;?></td>
-							<td><?= $row->COL1?></td>
-							<td><?= $row->COL2?></td>
-							<td><?= $row->COL3?></td>
+							<td class="cen"><?= $no;?></td>
+							<td class="cen"><?= $row->ORDER_DATE?></td>
+							<td><?= $row->ACT_NAME?></td>
+							<td><?= $row->BIZ_NAME?></td>
+							<td class="cen"><?= $row->END_DATE?></td>
+							<td class="right"><?= number_format($row->QTY)?></td>
+							<td class="right"><?= $row->PPLI2CO3_AFTER_INPUT?></td>
+							<td class="cen"><?= $row->QEXAM_YN?></td>
+							<td class="cen"><?= $row->DEFECT_YN?></td>
+							<td><?= $row->DEFECT_REMARK?></td>
+							<td class="right"><?= $row->DEFECT_QTY?></td>
+							<td class="right"><?= $row->DEFECT_RATE?></td>
 						</tr>
 
 					<?php

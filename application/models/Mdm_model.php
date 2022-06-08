@@ -231,7 +231,7 @@ SQL;
 	public function biz_ins_up($param)
 	{
 		$dateTime = date("Y-m-d H:i:s", time());
-		if ($param['mod'] == 1) {
+		if ($param['mod'] == 'mod') {
 			$data = array(
 				'CUST_NM'		=> $param['CUST_NM'],
 				'ADDRESS'		=> $param['ADDRESS'],
