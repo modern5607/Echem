@@ -37,10 +37,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
 				<th style="width:10%;">수주명</th>
 				<th style="width:10%;">수량(T)</th>
 				<th style="width:10%;">거래처</th>
-				<th style="width:10%;">거래처 당담자</th>
+				<!-- <th style="width:10%;">거래처 당담자</th> -->
 				<th style="width:10%;">납기일</th>
 				<th style="width:15%;">배송방법</th>
-				<th style="width:%;">납품 특이사항</th>
+				<th style="">납품 특이사항</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -54,8 +54,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 						<td class="cen"><?= $row->ACT_DATE ?></td>
 						<td><?= $row->ACT_NAME ?></td>
 						<td class="right"><?= round($row->QTY,2) ?></td>
-						<td><?= $row->BIZ_IDX ?></td>
-						<td><?= $row->BIZ_NAME ?></td>
+						<td><?= $row->CUST_NM ?></td>
+						<!-- <td><?= $row->CUST_NM ?></td> -->
 						<td class="cen"><?= $row->END_DATE ?></td>
 						<td><?= $row->SHIP_WAY ?></td>
 						<td><?= $row->SHIP_REMARK ?></td>

@@ -11,7 +11,7 @@ class Ordpln_model extends CI_Model
 	}
 
 	// 기초 세팅 dual 호출
-	public function ordpln_dual($params,$start=0,$limit=20)
+	public function head_order($params,$start=0,$limit=20)
 	{
 		if ((!empty($params['SDATE']) && $params['SDATE'] != "") && (!empty($params['EDATE']) && $params['EDATE'] != "")) {
 			$this->db->where("ACT_DATE BETWEEN '{$params['SDATE']}' AND '{$params['EDATE']}'");
@@ -22,24 +22,31 @@ class Ordpln_model extends CI_Model
 
 
 		$this->db->select("( SELECT START_DATE FROM T_ORDER AS O WHERE O.ACT_IDX = A.IDX ) AS SDATE,( SELECT END_DATE FROM T_ORDER AS O WHERE O.ACT_IDX = A.IDX ) AS EDATE, A.*, B.CUST_NM");
-		$this->db->join("T_BIZ as B", "B.IDX = A.BIZ_IDX");
+		$this->db->join("T_BIZ as B", "B.IDX = A.BIZ_IDX","LEFT");
 		$this->db->order_by('ACT_DATE', 'DESC');
+		$this->db->order_by('INSERT_DATE', 'DESC');
 		$this->db->limit($limit, $start);
 		$query = $this->db->get("T_ACT as A");
-// echo $this->db->last_query();
+		// echo $this->db->last_query();
 		return $query->result();
 	}
 
-	public function ordpln_cut($params)
+	public function head_order_cut($params)
 	{
 		if ((!empty($params['SDATE']) && $params['SDATE'] != "") && (!empty($params['EDATE']) && $params['EDATE'] != "")) {
 			$this->db->where("ACT_DATE BETWEEN '{$params['SDATE']}' AND '{$params['EDATE']}'");
 		}
+		if (!empty($params['IDX']) && $params['IDX'] != "") {
+			$this->db->where("A.IDX", $params['IDX']);
+		}
 
-		$this->db->select("COUNT(*) as CUT");
-		$this->db->from("T_ACT");
-		$query = $this->db->get();
-		return $query->row()->CUT;
+
+		$this->db->select("( SELECT START_DATE FROM T_ORDER AS O WHERE O.ACT_IDX = A.IDX ) AS SDATE,( SELECT END_DATE FROM T_ORDER AS O WHERE O.ACT_IDX = A.IDX ) AS EDATE, A.*, B.CUST_NM");
+		$this->db->join("T_BIZ as B", "B.IDX = A.BIZ_IDX","LEFT");
+		$this->db->order_by('ACT_DATE', 'DESC');
+		$this->db->order_by('INSERT_DATE', 'DESC');
+		$query = $this->db->get("T_ACT as A");
+		return $query->num_rows();
 	}
 	public function act_check($params)
 	{
@@ -67,7 +74,7 @@ class Ordpln_model extends CI_Model
 			QTY 		= '{$params['QTY']}',
 			DEL_DATE    = '{$params['DEL_DATE']}',	
 			REMARK    	= '{$params['REMARK']}',
-			BIZ_NAME    = '{$params['BIZ_NAME']}',
+			-- BIZ_NAME    = '{$params['BIZ_NAME']}',
 			BIZ_IDX    	= '{$params['BIZ_IDX']}',
 			END_YN    	= 'N',
 			INSERT_ID   = '{$username}',

@@ -12,6 +12,8 @@ class PRODMON extends CI_Controller
 		date_default_timezone_set('Asia/Seoul');
 		$this->data['pos'] = $this->uri->segment(1);
 		$this->data['subpos'] = $this->uri->segment(2);
+		$this->data['ssubpos'] = $this->uri->segment(3);
+
 
 		$this->load->helper('test');
 		$this->load->model(array('mif_model', 'sys_model','stock_model'));

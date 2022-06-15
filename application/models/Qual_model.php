@@ -21,20 +21,21 @@ class Qual_model extends CI_Model
 			O.ORDER_DATE,
 			ACT.ACT_NAME,
 			ACT.BIZ_IDX,
-			ACT.BIZ_NAME,
+			B.CUST_NM,
 			O.END_DATE,
 			ACT.QTY,
 			O.PPLI2CO3_AFTER_INPUT 
 		FROM
 			T_ACT AS ACT
 			JOIN T_ORDER AS O ON O.ACT_IDX = ACT.IDX
+			LEFT JOIN T_BIZ B ON ACT.BIZ_IDX = B.IDX
 		WHERE
 			O.PPINPUT_YN = 'Y'
 			{$where}
 		LIMIT {$start},{$limit}
 SQL;
 		$query = $this->db->query($sql);
-		echo $this->db->Last_query();
+		// echo $this->db->Last_query();
 		return $query->result();
 	}
 	public function head_qexam_cut($params)
@@ -50,13 +51,14 @@ SQL;
 			O.ORDER_DATE,
 			ACT.ACT_NAME,
 			ACT.BIZ_IDX,
-			ACT.BIZ_NAME,
+			B.CUST_NM,
 			O.END_DATE,
 			ACT.QTY,
 			O.PPLI2CO3_AFTER_INPUT 
 		FROM
 			T_ACT AS ACT
 			JOIN T_ORDER AS O ON O.ACT_IDX = ACT.IDX
+			LEFT JOIN T_BIZ B ON ACT.BIZ_IDX = B.IDX
 		WHERE
 			O.PPINPUT_YN = 'Y'
 			{$where}
@@ -74,7 +76,7 @@ SQL;
 				O.ACT_IDX,
 				O.ORDER_DATE,
 				A.ACT_NAME,
-				A.BIZ_NAME,
+				B.CUST_NM,
 				A.ACT_DATE,
 				A.DEL_DATE,
 				A.QTY,
@@ -87,6 +89,7 @@ SQL;
 			FROM
 				T_ORDER O
 				LEFT JOIN T_ACT A ON A.IDX = O.ACT_IDX 
+				LEFT JOIN T_BIZ B ON A.BIZ_IDX = B.IDX
 			WHERE
 			A.IDX ={$params['ACT_IDX']}
 			AND O.IDX = {$params['IDX']}
@@ -99,12 +102,13 @@ SQL;
 			$sql = <<<SQL
 			SELECT
 				A.ACT_NAME,
-				A.BIZ_NAME,
+				B.CUST_NM,
 				A.ACT_DATE,
 				A.DEL_DATE,
 				A.QTY
 			FROM
 				T_ACT A 
+				LEFT JOIN T_BIZ B ON A.BIZ_IDX = B.IDX
 			WHERE
 			A.IDX ={$params['ACT_IDX']}
 SQL;

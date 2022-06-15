@@ -27,7 +27,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     </tr>
                     <tr>
                         <th>거래처</th>
-                        <td colspan="2"><input type="text" readonly name="BIZ_NAME" class="form_input input_100 disabled" value="<?= isset($info->BIZ_NAME) ? $info->BIZ_NAME : '' ?>"></td>
+                        <td colspan="2"><input type="text" readonly name="CUST_NM" class="form_input input_100 disabled" value="<?= isset($info->CUST_NM) ? $info->CUST_NM : '' ?>"></td>
                         <th>수주일</th>
                         <td colspan="2"><input type="text" readonly name="ACT_DATE" class="form_input input_100 disabled" value="<?= isset($info->ACT_DATE) ? $info->ACT_DATE : '' ?>"></td>
                     </tr>

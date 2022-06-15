@@ -46,7 +46,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 							<td class="cen"><?= $no; ?></td>
 							<td class="cen"><?=(!empty($row->ORDER_DATE))?date("Y-m-d",strtotime($row->ORDER_DATE)):'' ?></td>
 							<td class="cen"><?= $row->ACT_NAME ?></td>
-							<td class="cen"><?= $row->BIZ_NAME ?></td>
+							<td class="cen"><?= $row->CUST_NM ?></td>
 							<td class="cen"><?= (!empty($row->END_DATE))?date("Y-m-d",strtotime($row->END_DATE)):'' ?></td>
 							<td class="cen"><?= $row->QTY?></td>
 							<td class="cen"><?= $row->PPLI2CO3_AFTER_INPUT?></td>

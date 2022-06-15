@@ -12,6 +12,8 @@ class ORDPLN extends CI_Controller
 		date_default_timezone_set('Asia/Seoul');
 		$this->data['pos'] = $this->uri->segment(1);
 		$this->data['subpos'] = $this->uri->segment(2);
+		$this->data['ssubpos'] = $this->uri->segment(3);
+
 
 		$this->load->helper('test');
 		$this->load->model(array('mif_model', 'sys_model', 'ordpln_model'));
@@ -52,14 +54,7 @@ class ORDPLN extends CI_Controller
 		$data['title']='주문등록';
 		return $this->load->view('main50', $data);
 	}
-	public function ajax_order()
-	{
-		//모델
-		$data['list']=$this->ordpln_model->ordpln_dual();
-
-		//뷰
-		$this->load->view('ordpln/ajax_order', $data);
-	}
+	
 	public function head_order()
 	{
 		$data['str'] = array(); //검색어관련
@@ -83,8 +78,8 @@ class ORDPLN extends CI_Controller
 		$data['pageNum'] =  $pageNum;
 
 		//list
-		$data['list']=$this->ordpln_model->ordpln_dual($params, $pageNum, $config['per_page']);
-		$this->data['cnt'] = $this->ordpln_model->ordpln_cut($params);
+		$data['list']=$this->ordpln_model->head_order($params, $pageNum, $config['per_page']);
+		$this->data['cnt'] = $this->ordpln_model->head_order_cut($params);
 
 
 		/* pagenation start */
@@ -114,8 +109,8 @@ class ORDPLN extends CI_Controller
 		if (!empty($data['str']['edate'])) { $params['EDATE'] = $data['str']['edate']; }
 		if (!empty($data['str']['idx'])) { $params['IDX'] = $data['str']['idx']; }
 
-		$data['list']=$this->ordpln_model->ordpln_dual($params);
-		$data['BIZ']=$this->sys_model->biz_list('EXPORT');
+		$data['list']=$this->ordpln_model->head_order($params);
+		$data['BIZ']=$this->sys_model->biz_list('수출');
 		$data['check']=$this->ordpln_model->act_check($params);
 
 		$this->load->view('/ordpln/detail_order', $data);
@@ -128,7 +123,7 @@ class ORDPLN extends CI_Controller
 		$params['QTY'] = $this->input->post("QTY");
 		$params['DEL_DATE'] = $this->input->post("DDATE");
 		$params['REMARK'] = $this->input->post("REMARK");
-		$params['BIZ_NAME'] = $this->input->post("BIZNM");
+		// $params['BIZ_NAME'] = $this->input->post("BIZNM");
 		$params['BIZ_IDX'] = $this->input->post("BIZ");
 
 
@@ -210,8 +205,8 @@ class ORDPLN extends CI_Controller
 		$data['pageNum'] =  $pageNum;
 
 		//list
-		$data['list']=$this->ordpln_model->ordpln_dual($params, $pageNum, $config['per_page']);
-		$this->data['cnt'] = $this->ordpln_model->ordpln_cut($params);
+		$data['list']=$this->ordpln_model->head_order($params, $pageNum, $config['per_page']);
+		$this->data['cnt'] = $this->ordpln_model->head_order_cut($params);
 
 
 		/* pagenation start */
@@ -257,8 +252,8 @@ class ORDPLN extends CI_Controller
 		$data['pageNum'] =  $pageNum;
 
 		//list
-		$data['list']=$this->ordpln_model->ordpln_dual($params, $pageNum, $config['per_page']);
-		$this->data['cnt'] = $this->ordpln_model->ordpln_cut($params);
+		$data['list']=$this->ordpln_model->head_order($params, $pageNum, $config['per_page']);
+		$this->data['cnt'] = $this->ordpln_model->head_order_cut($params);
 
 
 		/* pagenation start */

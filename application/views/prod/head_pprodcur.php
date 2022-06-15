@@ -18,7 +18,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 					<input type="text" name="sdate" value="<?= $str['sdate']; ?>" class="calendar"  /> ~ 
 					<input type="text" name="edate" value="<?= $str['edate']; ?>" class="calendar" />
 					
-					<button type="button" class="search_submit ajax_search"><i class="material-icons">search</i></button>
+					<button type="button" class="search_submit head_search"><i class="material-icons">search</i></button>
 				</form>
 			</div>
 			<!-- <span class="btn print add_order"  style="padding:7px 11px;"><i class="material-icons">add</i>작업지시 등록</span> -->
@@ -46,7 +46,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 							<td class="cen"><?= $no; ?></td>
 							<td class="cen"><?=(!empty($row->ORDER_DATE))?date("Y-m-d",strtotime($row->ORDER_DATE)):'' ?></td>
 							<td class="cen"><?= $row->ACT_NAME ?></td>
-							<td class="cen"><?= $row->BIZ_NAME ?></td>
+							<td class="cen"><?= $row->CUST_NM ?></td>
 							<td class="cen"><?= (!empty($row->START_DATE))?date("Y-m-d",strtotime($row->START_DATE)):'' ?></td>
 							<td class="cen"><?= (!empty($row->END_DATE))?date("Y-m-d",strtotime($row->END_DATE)):'' ?></td>
 							<td class="cen"><?= ($row->PPINPUT_YN =="Y")?$row->PPINPUT_YN:"N" ?></td>

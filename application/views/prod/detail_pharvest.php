@@ -10,6 +10,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 
 <div class="bdcont_100">
+<header>
+			<div class="searchDiv" style="height: 66px;">
+            <i class="material-icons">info</i><span> 공정별 수율을 등록하게되면 작업지시를 수정 및 삭제가 불가능합니다. 작업지시를 삭제하기 위해선 해당 화면에서 항목을 선택후 삭제를 해주세요.
+			</span></div>
+		</header>
     <form id="detailForm">
         <input type="hidden" name="mode" value="<?= $str['mode'] ?>">
         <input type="hidden" name="idx" value="<?= $idx ?>">
@@ -27,7 +32,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     </tr>
                     <tr>
                         <th>거래처</th>
-                        <td colspan="2"><input type="text" readonly name="BIZ_NAME" class="form_input input_100 disabled" value="<?= isset($info->BIZ_NAME) ? $info->BIZ_NAME : '' ?>"></td>
+                        <td colspan="2"><input type="text" readonly name="CUST_NM" class="form_input input_100 disabled" value="<?= isset($info->CUST_NM) ? $info->CUST_NM : '' ?>"></td>
                         <th>수주일</th>
                         <td colspan="2"><input type="text" readonly name="ACT_DATE" class="form_input input_100 disabled" value="<?= isset($info->ACT_DATE) ? $info->ACT_DATE : '' ?>"></td>
                     </tr>
@@ -163,6 +168,28 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 alert(xhr);
                 alert(textStatus);
                 alert(errorThrown);
+            }
+        })
+    });
+
+    $(".delBtn").click(function() {
+        if (!confirm("삭제하시겠습니까?"))
+            return;
+        var formData = new FormData($("#detailForm")[0]);
+
+        $.ajax({
+            url: "<?= base_url('PROD/del_pharvest') ?>",
+            type: "POST",
+            dataType: "HTML",
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function(data) {
+                if (data == 1)
+                    alert("성공");
+                else
+                    alert("실패");
             }
         })
     });

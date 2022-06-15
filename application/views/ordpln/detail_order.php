@@ -64,16 +64,16 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <tr>
                     <th>거래처</th>
                     <td>
-                        <select name="BIZ" id="BIZ" class="form_input input_100">
+                        <select name="BIZ_IDX" id="BIZ_IDX" class="form_input input_100">
                             <option value="">거래처</option>
                             <?php foreach ($BIZ as $row) { ?>
-                                <option value="<?php echo $row->IDX ?>" <?php echo ($biz == $row->IDX) ? "selected" : ""; ?>><?php echo $row->CUST_NM; ?></option>
+                                <option value="<?= $row->IDX ?>" <?= ($biz == $row->IDX) ? "selected" : ""; ?>><?= $row->CUST_NM; ?></option>
                             <?php } ?>
                         </select>
                     </td>
 
-                    <th>거래처 담당자</th>
-                    <td><input type="text" class="form_input input_100" autocomplete="off" value='<?= $biznm ?>' name="BIZNM"></td>
+                    <th></th>
+                    <td></td>
                 </tr>
                 <tr>
                     <th>세부사항</th>
@@ -137,11 +137,18 @@ defined('BASEPATH') or exit('No direct script access allowed');
         formData.append("QTY", $("input[name='QTY']").val());   
         formData.append("ADATE", $("input[name='ADATE']").val());   
         formData.append("DDATE", $("input[name='DDATE']").val());
-        formData.append("BIZNM", $("input[name='BIZNM']").val());
-        formData.append("BIZ", $("select[name='BIZ']").val());
+        formData.append("BIZ", $("select[name='BIZ_IDX']").val());
+        // formData.append("BIZNM", $("select[name='BIZ_IDX']").text());
         formData.append("REMARK", $("textarea[name='REMARK']").val());
 
+        for (var i of formData.entries())
+            console.log(i[0] + ", " + i[1]);
 
+        if($("input[name='ACTNM']").val() == ""){
+            alert("수주명 입력하세요.");
+            $("input[name='ACTNM']").focus();
+            return false;
+        }
         if($("input[name='QTY']").val() == ""){
             alert("수주 수량 입력하세요.");
             $("input[name='QTY']").focus();
@@ -149,7 +156,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         }
 
         $.ajax({
-            url: "<?php echo base_url('ORDPLN/order_insert') ?>",
+            url: "<?= base_url('ORDPLN/order_insert') ?>",
             type: "POST",
             data: formData,
             //asynsc : true,
@@ -173,7 +180,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         
         if (confirm('삭제하시겠습니까?') !== false) {
 
-            $.get("<?php echo base_url('ORDPLN/del_order') ?>", {
+            $.get("<?= base_url('ORDPLN/del_order') ?>", {
                 idx: idx
             }, function(data) {
                 location.reload();
@@ -201,7 +208,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
         if (confirm('수정하시겠습니까?') !== false) {
             $.ajax({
-                url: "<?php echo base_url('ORDPLN/update_order') ?>",
+                url: "<?= base_url('ORDPLN/update_order') ?>",
                 type: "POST",
                 data: formData,
                 //asynsc : true,

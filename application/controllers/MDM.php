@@ -12,6 +12,7 @@ class MDM extends CI_Controller
 		date_default_timezone_set('Asia/Seoul');
 		$this->data['pos'] = $this->uri->segment(1);
 		$this->data['subpos'] = $this->uri->segment(2);
+		$this->data['ssubpos'] = $this->uri->segment(3);
 
 		$this->load->helper('test');
 		$this->load->model(array('mdm_model', 'sys_model'));
@@ -815,8 +816,9 @@ class MDM extends CI_Controller
 	public function ajax_cocdDetailchk()
 	{
 		//중복검사
-		$parem = $this->input->post("code");
-		$chk = $this->mdm_model->ajax_cocdDetailchk('CODE', $parem);
+		$params['code'] = $this->input->post("code");
+		$params['hidx'] = $this->input->post("hidx");
+		$chk = $this->mdm_model->ajax_cocdDetailchk('CODE', $params);
 		if ($chk > 0) {
 			$data['state'] = "N";
 			$data['msg'] = "중복된 코드입니다.";

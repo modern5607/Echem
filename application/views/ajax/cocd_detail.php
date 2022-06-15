@@ -159,9 +159,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
 	var chkDetailCode = false;
 	$("input[name='CODE']").change(function() {
 		var $this = $(this);
+		var H_IDX = $("input[name='H_IDX']").val();
 
 		$.post("<?php echo base_url('MDM/ajax_cocdDetailchk'); ?>", {
-			code: $this.val()
+			code: $this.val(),
+			hidx:H_IDX
 		}, function(data) {
 			if (data.state == "N") {
 				$this.focus();

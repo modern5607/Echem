@@ -12,9 +12,11 @@ class _INTERFACE extends CI_Controller
 		date_default_timezone_set('Asia/Seoul');
 		$this->data['pos'] = $this->uri->segment(1);
 		$this->data['subpos'] = $this->uri->segment(2);
+		$this->data['ssubpos'] = $this->uri->segment(3);
+		
 
 		$this->load->helper('test');
-		$this->load->model(array('mif_model', 'sys_model'));
+		$this->load->model(array('interface_model', 'sys_model'));
 
 		$this->data['siteTitle'] = $this->config->item('site_title');
 		$this->data['menuLevel'] = $this->sys_model->menu_level();
@@ -46,9 +48,78 @@ class _INTERFACE extends CI_Controller
 		}
 	}
 
-	public function empty()
+	public function interface($tank="")
 	{
 
+		$data['title'] = "생산관리 INTERFACE";
+		$data['URI'] = $tank;
+		$this->load->view('/main50', $data);
+	}
+
+	public function head_interface($tank="")
+	{
+		$data['str']['sdate'] = $this->input->post("sdate");
+		$data['str']['edate'] = $this->input->post("edate");
+		$data['str']['tank'] = $tank;
+		// echo $data['str']['tank'];
+		$this->data['URI'] = $data['str']['tank'];
+
+		$params['SDATE'] = (isset($data['str']['sdate'])) ? $data['str']['sdate'] : '';
+		$params['EDATE'] = (isset($data['str']['edate'])) ? $data['str']['edate'] : date("Y-m-d", time());
+		$params['TANK'] = $data['str']['tank'];
+
+		$data['perpage'] = ($this->input->post('perpage') != "") ? $this->input->post('perpage') : 20;
+		//PAGINATION
+		$config['per_page'] = $data['perpage'];
+		$config['page_query_string'] = true;
+		$config['query_string_segment'] = "pageNum";
+		$config['reuse_query_string'] = TRUE;
+		$pageNum = $this->input->post('pageNum') > '' ? $this->input->post('pageNum') : 0;
+		$data['pageNum'] =  $pageNum;
+		//=====================================
+
+		$data['list'] = $this->interface_model->head_interface($params,$pageNum,$config['per_page']);
+		$this->data['cnt'] = 0;//$this->interface_model->head_interface_cut($params);
+
+		//=====================================
+		/* pagenation start */
+		$this->load->library("pagination");
+		$config['base_url'] = base_url(uri_string());
+		$config['total_rows'] = $this->data['cnt'];
+		$config['full_tag_open'] = "<div>";
+		$config['full_tag_close'] = '</div>';
+		$this->pagination->initialize($config);
+		$this->data['pagenation'] = $this->pagination->create_links();
+
+		//뷰
+		$this->load->view('interface/head_interface', $data);
+	}
+
+	public function head_interface_select()
+	{
+		$idx = $this->input->post("idx");
+		$tank = $this->input->post("tank");
+		$params['INSERT_DATE'] = $idx;
+		$params['TANK'] = $tank;
+
+		$data = array();
+		$data['selectinfo'] = $this->interface_model->head_interface_select($params);
+
+		return $this->load->view('interface/head_interface_select', $data);
+	}
+
+
+	public function detail_interface()
+	{
+		$data = array();
+		$idx = $this->input->post("idx");
+		$params['IDX'] = $idx;
+		if (empty($params['IDX'])) {
+			$data['info'] = "";
+		} else {
+			$data['info'] = $this->interface_model->detail_interface($params);
+		}
+		return $this->load->view('interface/detail_interface', $data);
 	}
 	
 }

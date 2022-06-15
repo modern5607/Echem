@@ -146,13 +146,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
 					<tr>
 						<td rowspan="2" class="color">온수탱크<br><br><img src="../_static/img/water-tank.png" width="75"></td>
 						<td class="tag"></td>
-						<td class="column">수위</td>
-						<td class="datacell right">111,111</td>
+						<td class="column">수위(%)</td>
+						<td class="datacell right">43</td>
 					</tr>
 					<tr>
 						<td class="tag"></td>
-						<td class="column">온도</td>
-						<td class="datacell right">222,222</td>
+						<td class="column">온도(°C)</td>
+						<td class="datacell right">50</td>
 					</tr>
 				</table>
 			</span>
@@ -164,13 +164,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
 					<tr>
 						<td rowspan="2" class="color">온수탱크<br><br><img src="../_static/img/water-tank.png" width="75"></td>
 						<td class="tag"></td>
-						<td class="column">수위</td>
-						<td class="datacell right">333,333</td>
+						<td class="column">수위(%)</td>
+						<td class="datacell right">43</td>
 					</tr>
 					<tr>
 						<td class="tag"></td>
-						<td class="column">온도</td>
-						<td class="datacell right">444,444</td>
+						<td class="column">온도(°C)</td>
+						<td class="datacell right">50</td>
 					</tr>
 				</table>
 			</span>
@@ -184,27 +184,27 @@ defined('BASEPATH') or exit('No direct script access allowed');
 						<td rowspan="5" class="color">탄산나트륨탱크1<br><br><img src="../_static/img/tank.png" width="100"></td>
 						<td class="tag"></td>
 						<td class="column">PH</td>
-						<td class="datacell right">123456</td>
+						<td class="datacell right">7</td>
 					</tr>
 					<tr>
 						<td class="tag"></td>
-						<td class="column">CL</td>
-						<td class="datacell right">123456</td>
+						<td class="column">CL(ppm)</td>
+						<td class="datacell right">300</td>
 					</tr>
 					<tr>
 						<td class="tag"></td>
-						<td class="column">온도</td>
-						<td class="datacell right">123456</td>
+						<td class="column">온도(°C)</td>
+						<td class="datacell right">50</td>
 					</tr>
 					<tr>
 						<td class="tag"></td>
-						<td class="column">압력</td>
-						<td class="datacell right">123456</td>
+						<td class="column">압력(Pa)</td>
+						<td class="datacell right">3</td>
 					</tr>
 					<tr>
 						<td class="tag"></td>
-						<td class="column">수위</td>
-						<td class="datacell right">123456</td>
+						<td class="column">수위(%)</td>
+						<td class="datacell right">43</td>
 					</tr>
 				</table>
 			</span>
@@ -215,27 +215,27 @@ defined('BASEPATH') or exit('No direct script access allowed');
 						<td rowspan="5" class="color">탄산나트륨탱크2<br><br><img src="../_static/img/tank.png" width="100"></td>
 						<td class="tag"></td>
 						<td class="column">PH</td>
-						<td class="datacell right">123456</td>
+						<td class="datacell right">7</td>
 					</tr>
 					<tr>
 						<td class="tag"></td>
-						<td class="column">CL</td>
-						<td class="datacell right">123456</td>
+						<td class="column">CL(ppm)</td>
+						<td class="datacell right">300</td>
 					</tr>
 					<tr>
 						<td class="tag"></td>
-						<td class="column">온도</td>
-						<td class="datacell right">123456</td>
+						<td class="column">온도(°C)</td>
+						<td class="datacell right">50</td>
 					</tr>
 					<tr>
 						<td class="tag"></td>
-						<td class="column">압력</td>
-						<td class="datacell right">123456</td>
+						<td class="column">압력(Pa)</td>
+						<td class="datacell right">3</td>
 					</tr>
 					<tr>
 						<td class="tag"></td>
-						<td class="column">수위</td>
-						<td class="datacell right">123456</td>
+						<td class="column">수위(%)</td>
+						<td class="datacell right">43</td>
 					</tr>
 				</table>
 			</span>
@@ -246,27 +246,27 @@ defined('BASEPATH') or exit('No direct script access allowed');
 						<td rowspan="5" class="color">탄산나트륨탱크3<br><br><img src="../_static/img/tank.png" width="100"></td>
 						<td class="tag"></td>
 						<td class="column">PH</td>
-						<td class="datacell right">123456</td>
+						<td class="datacell right">7</td>
 					</tr>
 					<tr>
 						<td class="tag"></td>
-						<td class="column">CL</td>
-						<td class="datacell right">123456</td>
+						<td class="column">CL(ppm)</td>
+						<td class="datacell right">300</td>
 					</tr>
 					<tr>
 						<td class="tag"></td>
-						<td class="column">온도</td>
-						<td class="datacell right">123456</td>
+						<td class="column">온도(°C)</td>
+						<td class="datacell right">50</td>
 					</tr>
 					<tr>
 						<td class="tag"></td>
-						<td class="column">압력</td>
-						<td class="datacell right">123456</td>
+						<td class="column">압력(Pa)</td>
+						<td class="datacell right">3</td>
 					</tr>
 					<tr>
 						<td class="tag"></td>
-						<td class="column">수위</td>
-						<td class="datacell right">123456</td>
+						<td class="column">수위(%)</td>
+						<td class="datacell right">43</td>
 					</tr>
 				</table>
 			</span>
@@ -279,27 +279,27 @@ defined('BASEPATH') or exit('No direct script access allowed');
 						<td rowspan="5" class="color">원료배합탱크<br><br><img src="../_static/img/raw-tank.png" width="100"></td>
 						<td class="tag"></td>
 						<td class="column">PH</td>
-						<td class="datacell right">123456</td>
+						<td class="datacell right">7</td>
 					</tr>
 					<tr>
 						<td class="tag"></td>
-						<td class="column">CL</td>
-						<td class="datacell right">123456</td>
+						<td class="column">CL(ppm)</td>
+						<td class="datacell right">300</td>
 					</tr>
 					<tr>
 						<td class="tag"></td>
-						<td class="column">온도</td>
-						<td class="datacell right">123456</td>
+						<td class="column">온도(°C)</td>
+						<td class="datacell right">50</td>
 					</tr>
 					<tr>
 						<td class="tag"></td>
-						<td class="column">압력</td>
-						<td class="datacell right">123456</td>
+						<td class="column">압력(Pa)</td>
+						<td class="datacell right">3</td>
 					</tr>
 					<tr>
 						<td class="tag"></td>
-						<td class="column">수위</td>
-						<td class="datacell right">123456</td>
+						<td class="column">수위(%)</td>
+						<td class="datacell right">43</td>
 					</tr>
 				</table>
 			</span>
@@ -310,27 +310,27 @@ defined('BASEPATH') or exit('No direct script access allowed');
 						<td rowspan="5" class="color">원료배합탱크<br><br><img src="../_static/img/raw-tank.png" width="100"></td>
 						<td class="tag"></td>
 						<td class="column">PH</td>
-						<td class="datacell right">123456</td>
+						<td class="datacell right">7</td>
 					</tr>
 					<tr>
 						<td class="tag"></td>
-						<td class="column">CL</td>
-						<td class="datacell right">123456</td>
+						<td class="column">CL(ppm)</td>
+						<td class="datacell right">300</td>
 					</tr>
 					<tr>
 						<td class="tag"></td>
-						<td class="column">온도</td>
-						<td class="datacell right">123456</td>
+						<td class="column">온도(°C)</td>
+						<td class="datacell right">50</td>
 					</tr>
 					<tr>
 						<td class="tag"></td>
-						<td class="column">압력</td>
-						<td class="datacell right">123456</td>
+						<td class="column">압력(Pa)</td>
+						<td class="datacell right">3</td>
 					</tr>
 					<tr>
 						<td class="tag"></td>
-						<td class="column">수위</td>
-						<td class="datacell right">123456</td>
+						<td class="column">수위(%)</td>
+						<td class="datacell right">43</td>
 					</tr>
 				</table>
 			</span>
@@ -341,27 +341,27 @@ defined('BASEPATH') or exit('No direct script access allowed');
 						<td rowspan="5" class="color">원료배합탱크<br><br><img src="../_static/img/raw-tank.png" width="100"></td>
 						<td class="tag"></td>
 						<td class="column">PH</td>
-						<td class="datacell right">123456</td>
+						<td class="datacell right">7</td>
 					</tr>
 					<tr>
 						<td class="tag"></td>
-						<td class="column">CL</td>
-						<td class="datacell right">123456</td>
+						<td class="column">CL(ppm)</td>
+						<td class="datacell right">300</td>
 					</tr>
 					<tr>
 						<td class="tag"></td>
-						<td class="column">온도</td>
-						<td class="datacell right">123456</td>
+						<td class="column">온도(°C)</td>
+						<td class="datacell right">50</td>
 					</tr>
 					<tr>
 						<td class="tag"></td>
-						<td class="column">압력</td>
-						<td class="datacell right">123456</td>
+						<td class="column">압력(Pa)</td>
+						<td class="datacell right">3</td>
 					</tr>
 					<tr>
 						<td class="tag"></td>
-						<td class="column">수위</td>
-						<td class="datacell right">123456</td>
+						<td class="column">수위(%)</td>
+						<td class="datacell right">43</td>
 					</tr>
 				</table>
 			</span>

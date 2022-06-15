@@ -55,7 +55,7 @@
 		}
 
 		$.ajax({
-			url: "<?= base_url('/' . $pos . '/head_' . $subpos . '/') ?>",
+			url: "<?= base_url('/' . $pos . '/head_' . $subpos . '/'.$ssubpos) ?>",
 			type: "post",
 			data: formData,
 			dataType: "html",
@@ -96,7 +96,7 @@
 			console.log(i[0] + ", " + i[1]);
 
 		$.ajax({
-			url: "<?= base_url('/' . $pos . '/head_' . $subpos . '/') ?>",
+			url: "<?= base_url('/' . $pos . '/head_' . $subpos . '/'.$ssubpos) ?>",
 			type: "post",
 			data: formData,
 			dataType: "html",

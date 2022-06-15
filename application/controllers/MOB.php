@@ -11,6 +11,8 @@ class MOB extends CI_Controller {
 
 		$this->data['pos'] = $this->uri->segment(1);
         $this->data['subpos'] = $this->uri->segment(2);
+		$this->data['ssubpos'] = $this->uri->segment(3);
+
 		
 		$this->load->model(array('bom_model','main_model'));
 

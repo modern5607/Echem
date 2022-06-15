@@ -28,7 +28,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     </tr>
                     <tr>
                         <th>거래처</th>
-                        <td><input type="text" readonly name="BIZ_NAME" class="form_input input_100 disabled" value="<?= isset($info->BIZ_NAME) ? $info->BIZ_NAME : '' ?>"></td>
+                        <td><input type="text" readonly name="CUST_NM" class="form_input input_100 disabled" value="<?= isset($info->CUST_NM) ? $info->CUST_NM : '' ?>"></td>
                         <th>수주일</th>
                         <td><input type="text" readonly name="ACT_DATE" class="form_input input_100 disabled" value="<?= isset($info->ACT_DATE) ? $info->ACT_DATE : '' ?>"></td>
                     </tr>
@@ -53,8 +53,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <tr>
                         <?php if ($str['mode'] == "mod") { ?>
                             <td rowspan="5" colspan="4" class="cen" style="padding: 15px;">
+                                <?php if($info->PHINPUT_YN != "Y"){?>
                                 <button type="button" class="btn blue_btn upBtn">수정</button>
                                 <button type="button" class="btn blue_btn delBtn">삭제</button>
+                                <?php }?>
                             </td>
                         <?php } else if ($str['mode'] == "new") { ?>
                             <td rowspan="5" colspan="4" class="cen" style="padding: 15px;"><button type="button" class="btn blue_btn submitBtn">등록</button></td>
@@ -154,43 +156,26 @@ defined('BASEPATH') or exit('No direct script access allowed');
     });
     $(".delBtn").click(function() {
 
-        // if(confirm("삭제하시겠습니까?"))
-        // var formData = new FormData($("#detailForm")[0]);
+        if(!confirm("삭제하시겠습니까?"))
+            return;
+            
+        var formData = new FormData($("#detailForm")[0]);
 
-        // if($("input[name='ORDER_DATE'").val() == "")
-        // {
-        //     alert("작업 시작일을 입력해 주세요");
-        //     $("input[name='ORDER_DATE'").focus();
-        //     return false;
-        // }
-        // if($("input[name='START_DATE'").val() == "")
-        // {
-        //     alert("작업 시작일을 입력해 주세요");
-        //     $("input[name='START_DATE'").focus();
-        //     return false;
-        // }
-        // if($("input[name='END_DATE'").val() == "")
-        // {
-        //     alert("작업 시작일을 입력해 주세요");
-        //     $("input[name='END_DATE'").focus();
-        //     return false;
-        // }
-
-        // $.ajax({
-        //     url: "<?= base_url('PROD/update_workorder') ?>",
-        //     type: "POST",
-        //     dataType: "HTML",
-        //     data: formData,
-        //     cache: false,
-        //     contentType: false,
-        //     processData: false,
-        //     success: function(data) {
-        //         if(data == 1)
-        //         alert("성공");
-        //         else
-        //         alert("실패");
-        //     }
-        // })
+        $.ajax({
+            url: "<?= base_url('PROD/del_workorder') ?>",
+            type: "POST",
+            dataType: "HTML",
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function(data) {
+                if(data == 1)
+                alert("성공");
+                else
+                alert("실패");
+            }
+        })
     });
 
     //제이쿼리 수신일 입력창 누르면 달력 출력

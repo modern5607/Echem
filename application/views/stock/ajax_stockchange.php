@@ -21,7 +21,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <div class="tbl-content">
 	<table cellpadding="0" cellspacing="0" border="0" width="100%">
 		<thead>
-			<tr><th colspan="12">입고</th></tr>
+			<!-- <tr><th colspan="12">입고</th></tr> -->
 			<tr>
 				<th style="width: 5%;">No</th>
 				<th class="cen" style="width: 10%;">구분</th>
@@ -65,8 +65,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		</tbody>
 	</table>
 </div>
-<br><br><br><br><br>
-<div class="tbl-content">
+
+<!-- <div class="tbl-content">
 	<table cellpadding="0" cellspacing="0" border="0" width="100%">
 		<thead>
 			<tr><th colspan="12">출고</th></tr>
@@ -112,7 +112,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		?>
 		</tbody>
 	</table>
-</div>
+</div> -->
 
 
 <script>

@@ -60,7 +60,7 @@ i { vertical-align: middle; }
 .tbl-content table.none_border th{min-width:80px;}
     
 .tbl-content table th { border-bottom:1px solid #ddd; border-right : 1px solid #ddd; padding:10px;}
-.tbl-content table td { /*border-bottom:1px solid #ddd;*/ border-right : 1px solid #ddd; padding:5px 10px; word-break: break-all; white-space: inherit; }
+.tbl-content table td { border-bottom:1px solid #ddd; border-right : 1px solid #ddd; padding:5px 10px; word-break: break-all; white-space: inherit; }
 .tbl-content table td.rl_board{ border-left:2px solid #ff5b5b; border-right:2px solid #ff5b5b;}
 .tbl-content table td.list_none {padding:49px 0; color:#999; text-align:center;}
 

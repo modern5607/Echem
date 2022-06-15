@@ -12,6 +12,8 @@ class PROD extends CI_Controller
 		date_default_timezone_set('Asia/Seoul');
 		$this->data['pos'] = $this->uri->segment(1);
 		$this->data['subpos'] = $this->uri->segment(2);
+		$this->data['ssubpos'] = $this->uri->segment(3);
+
 
 		$this->load->helper('test');
 		$this->load->model(array('mif_model', 'sys_model', 'prod_model'));
@@ -161,6 +163,17 @@ class PROD extends CI_Controller
 		$data['result'] = $this->prod_model->update_workorder($params);
 		echo $data['result'];
 	}
+	public function del_workorder()
+	{
+		$data['IDX'] =			 $this->input->post('idx');
+		$data['HIDX'] =			 $this->input->post('hidx');
+
+		$params['IDX'] = $data['IDX'];
+		$params['HIDX'] = $data['HIDX'];
+
+		$data['result'] = $this->prod_model->del_workorder($params);
+		echo $data['result'];
+	}
 
 	// 공정별 작업지시
 	public function pworkorder()
@@ -204,8 +217,6 @@ class PROD extends CI_Controller
 		$this->load->view('prod/head_pworkorder', $data);
 	}
 
-
-
 	public function detail_pworkorder()
 	{
 		$data['idx'] = $this->input->post("idx");
@@ -237,7 +248,7 @@ class PROD extends CI_Controller
 		$data['NA2CO3_DATE'] = 	 $this->input->post('NA2CO3_DATE');
 		$data['MIX_DATE'] =		 $this->input->post('MIX_DATE');
 		$data['WASH_DATE'] =	 $this->input->post('WASH_DATE');
-		$data['DRY_DATE'] =		 $this->input->post('DRY_DATE');
+		$data['DRYPHASE_DATE'] = $this->input->post('DRYPHASE_DATE');
 		$data['REMARK'] =		 $this->input->post('REMARK');
 
 		$params['IDX'] = $data['IDX'];
@@ -246,42 +257,24 @@ class PROD extends CI_Controller
 		$params['NA2CO3_DATE'] = $data['NA2CO3_DATE'];
 		$params['MIX_DATE'] = $data['MIX_DATE'];
 		$params['WASH_DATE'] = $data['WASH_DATE'];
-		$params['DRY_DATE'] = $data['DRY_DATE'];
+		$params['DRYPHASE_DATE'] = $data['DRYPHASE_DATE'];
 		$params['REMARK'] = $data['REMARK'];
 		// $params['INSERT_ID'] = $this->session->userdata('user_id');
 
 		$data['result'] = $this->prod_model->update_pworkorder($params);
 		echo $data['result'];
 	}
+	public function del_pworkorder()
+	{
+		$data['IDX'] =			 $this->input->post('idx');
+		$data['HIDX'] =			 $this->input->post('hidx');
 
+		$params['IDX'] = $data['IDX'];
+		$params['HIDX'] = $data['HIDX'];
 
-	// public function act_idx()
-	// {
-	// 	$idx = $this->input->post("idx");
-	// 	$data['info'] = $this->prod_model->act_idx($idx);
-	// 	$data['status'] = "ok";
-	// 	// echo var_dump($data);
-	// 	echo json_encode($data);
-	// }
-
-	// public function add_order()
-	// {
-	// 	$data['ACT_IDX'] = $this->input->post("ACT");
-	// 	$data['ORDER_DATE'] = $this->input->post("ORDER_DATE");
-	// 	$data['COMPONENT_IDX'] = $this->input->post("COMPONENT");
-	// 	$data['ORDER_QTY'] = $this->input->post("ORDER_QTY");
-
-	// 	$params['ACT_IDX'] = 		$data['ACT_IDX'];
-	// 	$params['ORDER_DATE'] = 	$data['ORDER_DATE'];
-	// 	$params['COMPONENT_IDX'] = 	$data['COMPONENT_IDX'];
-	// 	$params['ORDER_QTY'] = 		$data['ORDER_QTY'];
-	// 	$params['INSERT_ID'] = 		$this->session->userdata('user_id');
-
-
-	// 	echo var_dump($data);
-	// 	$data['result'] = $this->prod_model->add_order($params);
-	// }
-
+		$data['result'] = $this->prod_model->del_pworkorder($params);
+		echo $data['result'];
+	}
 
 	// 원재료 투입 입력
 	public function matinput()
@@ -348,6 +341,18 @@ class PROD extends CI_Controller
 		$this->load->view('prod/detail_matinput', $data);
 	}
 
+	public function del_matinput()
+	{
+		$data['IDX'] =			 $this->input->post('idx');
+		$data['HIDX'] =			 $this->input->post('hidx');
+
+		$params['IDX'] = $data['IDX'];
+		$params['HIDX'] = $data['HIDX'];
+
+		$data['result'] = $this->prod_model->del_matinput($params);
+		echo $data['result'];
+	}
+
 	public function update_matinput()
 	{
 		$data['IDX'] =			 $this->input->post('idx');
@@ -368,90 +373,6 @@ class PROD extends CI_Controller
 		// $params['INSERT_ID'] = $this->session->userdata('user_id');
 
 		$data['result'] = $this->prod_model->update_matinput($params);
-		echo $data['result'];
-	}
-
-	// 공정별 수율정보
-	public function pharvest()
-	{
-		$data['title'] = '공정별 수율정보'; 
-		return $this->load->view('main50', $data);
-	}
-	public function head_pharvest()
-	{
-		$data['str']['sdate'] = $this->input->post("sdate");
-		$data['str']['edate'] = $this->input->post("edate");
-
-		$params['SDATE'] = (isset($data['str']['sdate'])) ? $data['str']['sdate'] : '';
-		$params['EDATE'] = (isset($data['str']['edate'])) ? $data['str']['edate'] : date("Y-m-d", time());
-
-		$data['perpage'] = ($this->input->post('perpage') != "") ? $this->input->post('perpage') : 20;
-		//PAGINATION
-		$config['per_page'] = $data['perpage'];
-		$config['page_query_string'] = true;
-		$config['query_string_segment'] = "pageNum";
-		$config['reuse_query_string'] = TRUE;
-		$pageNum = $this->input->post('pageNum') > '' ? $this->input->post('pageNum') : 0;
-		$data['pageNum'] =  $pageNum;
-		//=====================================
-
-		$data['list'] = $this->prod_model->head_pharvest($params,$pageNum,$config['per_page']);
-		$this->data['cnt'] = $this->prod_model->head_pharvest_cut($params);
-
-		//=====================================
-		/* pagenation start */
-		$this->load->library("pagination");
-		$config['base_url'] = base_url(uri_string());
-		$config['total_rows'] = $this->data['cnt'];
-		$config['full_tag_open'] = "<div>";
-		$config['full_tag_close'] = '</div>';
-		$this->pagination->initialize($config);
-		$this->data['pagenation'] = $this->pagination->create_links();
-
-		//뷰
-		$this->load->view('prod/head_pharvest', $data);
-	}
-
-	public function detail_pharvest()
-	{
-		$data['idx'] = $this->input->post("idx");
-		$data['hidx'] = $this->input->post("hidx");
-
-		$params['IDX'] = isset($data['idx']) ? $data['idx'] : "";
-		$params['ACT_IDX'] = isset($data['hidx']) ? $data['hidx'] : "";
-
-		$data['str']['mode'] = 'empty';
-
-		if (!empty($data['idx']) && !empty($data['hidx'])) {
-			$data['info'] = $this->prod_model->detail_pharvest($params);
-
-			if ($data['info']->PHINPUT_YN == "Y")
-				$data['str']['mode'] = "mod";
-			else
-				$data['str']['mode'] = "new";
-		}
-
-		// echo $data['str']['mode'];
-		$this->load->view('prod/detail_pharvest', $data);
-	}
-
-	public function update_pharvest()
-	{
-		$data['IDX'] =			 $this->input->post('idx');
-		$data['HIDX'] =			 $this->input->post('hidx');
-		$data['PHRAW_INPUT'] = 	$this->input->post('PHRAW_INPUT');
-		$data['PHLICL_AFTER_INPUT'] = $this->input->post('PHLICL_AFTER_INPUT');
-		$data['PHNA2CO3_INPUT'] = $this->input->post('PHNA2CO3_INPUT');
-		$data['PHH2O_INPUT'] = $this->input->post('PHH2O_INPUT');
-
-		$params['IDX'] = $data['IDX'];
-		$params['HIDX'] = $data['HIDX'];
-		$params['PHRAW_INPUT'] = $data['PHRAW_INPUT'];
-		$params['PHLICL_AFTER_INPUT'] = $data['PHLICL_AFTER_INPUT'];
-		$params['PHNA2CO3_INPUT'] = $data['PHNA2CO3_INPUT'];
-		$params['PHH2O_INPUT'] = $data['PHH2O_INPUT'];
-
-		$data['result'] = $this->prod_model->update_pharvest($params);
 		echo $data['result'];
 	}
 
@@ -550,6 +471,114 @@ class PROD extends CI_Controller
 
 
 		$data['result'] = $this->prod_model->update_pprodcur($params);
+		echo $data['result'];
+	}
+
+	public function del_pprodcur()
+	{
+		$data['IDX'] =			 $this->input->post('idx');
+		$data['HIDX'] =			 $this->input->post('hidx');
+
+		$params['IDX'] = $data['IDX'];
+		$params['HIDX'] = $data['HIDX'];
+
+		$data['result'] = $this->prod_model->del_pprodcur($params);
+		echo $data['result'];
+	}
+
+	// 공정별 수율정보
+	public function pharvest()
+	{
+		$data['title'] = '공정별 수율'; 
+		return $this->load->view('main50', $data);
+	}
+	public function head_pharvest()
+	{
+		$data['str']['sdate'] = $this->input->post("sdate");
+		$data['str']['edate'] = $this->input->post("edate");
+
+		$params['SDATE'] = (isset($data['str']['sdate'])) ? $data['str']['sdate'] : '';
+		$params['EDATE'] = (isset($data['str']['edate'])) ? $data['str']['edate'] : date("Y-m-d", time());
+
+		$data['perpage'] = ($this->input->post('perpage') != "") ? $this->input->post('perpage') : 20;
+		//PAGINATION
+		$config['per_page'] = $data['perpage'];
+		$config['page_query_string'] = true;
+		$config['query_string_segment'] = "pageNum";
+		$config['reuse_query_string'] = TRUE;
+		$pageNum = $this->input->post('pageNum') > '' ? $this->input->post('pageNum') : 0;
+		$data['pageNum'] =  $pageNum;
+		//=====================================
+
+		$data['list'] = $this->prod_model->head_pharvest($params,$pageNum,$config['per_page']);
+		$this->data['cnt'] = $this->prod_model->head_pharvest_cut($params);
+
+		//=====================================
+		/* pagenation start */
+		$this->load->library("pagination");
+		$config['base_url'] = base_url(uri_string());
+		$config['total_rows'] = $this->data['cnt'];
+		$config['full_tag_open'] = "<div>";
+		$config['full_tag_close'] = '</div>';
+		$this->pagination->initialize($config);
+		$this->data['pagenation'] = $this->pagination->create_links();
+
+		//뷰
+		$this->load->view('prod/head_pharvest', $data);
+	}
+
+	public function detail_pharvest()
+	{
+		$data['idx'] = $this->input->post("idx");
+		$data['hidx'] = $this->input->post("hidx");
+
+		$params['IDX'] = isset($data['idx']) ? $data['idx'] : "";
+		$params['ACT_IDX'] = isset($data['hidx']) ? $data['hidx'] : "";
+
+		$data['str']['mode'] = 'empty';
+
+		if (!empty($data['idx']) && !empty($data['hidx'])) {
+			$data['info'] = $this->prod_model->detail_pharvest($params);
+
+			if ($data['info']->PHINPUT_YN == "Y")
+				$data['str']['mode'] = "mod";
+			else
+				$data['str']['mode'] = "new";
+		}
+
+		// echo $data['str']['mode'];
+		$this->load->view('prod/detail_pharvest', $data);
+	}
+
+	public function update_pharvest()
+	{
+		$data['IDX'] =			 $this->input->post('idx');
+		$data['HIDX'] =			 $this->input->post('hidx');
+		$data['PHRAW_INPUT'] = 	$this->input->post('PHRAW_INPUT');
+		$data['PHLICL_AFTER_INPUT'] = $this->input->post('PHLICL_AFTER_INPUT');
+		$data['PHNA2CO3_INPUT'] = $this->input->post('PHNA2CO3_INPUT');
+		$data['PHH2O_INPUT'] = $this->input->post('PHH2O_INPUT');
+
+		$params['IDX'] = $data['IDX'];
+		$params['HIDX'] = $data['HIDX'];
+		$params['PHRAW_INPUT'] = $data['PHRAW_INPUT'];
+		$params['PHLICL_AFTER_INPUT'] = $data['PHLICL_AFTER_INPUT'];
+		$params['PHNA2CO3_INPUT'] = $data['PHNA2CO3_INPUT'];
+		$params['PHH2O_INPUT'] = $data['PHH2O_INPUT'];
+
+		$data['result'] = $this->prod_model->update_pharvest($params);
+		echo $data['result'];
+	}
+
+	public function del_pharvest()
+	{
+		$data['IDX'] =			 $this->input->post('idx');
+		$data['HIDX'] =			 $this->input->post('hidx');
+
+		$params['IDX'] = $data['IDX'];
+		$params['HIDX'] = $data['HIDX'];
+
+		$data['result'] = $this->prod_model->del_pharvest($params);
 		echo $data['result'];
 	}
 

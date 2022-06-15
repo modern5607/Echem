@@ -119,7 +119,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                             <li><a href="<?= base_url('PROD/pworkorder') ?>" class="<?= ($this->data['subpos'] == 'pworkorder') ? "on" : ""; ?>">공정별 작업지시</a></li>
                                             <li><a href="<?= base_url('PROD/matinput') ?>" class="<?= ($this->data['subpos'] == 'matinput') ? "on" : ""; ?>">원재료 투입 입력</a></li>
                                             <li><a href="<?= base_url('PROD/pprodcur') ?>" class="<?= ($this->data['subpos'] == 'pprodcur') ? "on" : ""; ?>">공정별 생산내역</a></li>
-                                            <li><a href="<?= base_url('PROD/pharvest') ?>" class="<?= ($this->data['subpos'] == 'pharvest') ? "on" : ""; ?>">공정별 수율정보</a></li>
+                                            <li><a href="<?= base_url('PROD/pharvest') ?>" class="<?= ($this->data['subpos'] == 'pharvest') ? "on" : ""; ?>">공정별 수율</a></li>
                                             <!-- <li><a href="<?= base_url('PROD/dprodperf') ?>" class="<?= ($this->data['subpos'] == 'dprodperf') ? "on" : ""; ?>">기간별 생산실적</a></li> -->
                                             <li><a href="<?= base_url('PROD/prodmonitor') ?>" class="<?= ($this->data['subpos'] == 'prodmonitor') ? "on" : ""; ?>">생산 모니터링</a></li>
                                             <li><a href="<?= base_url('PROD/prodmonitor2') ?>" class="<?= ($this->data['subpos'] == 'prodmonitor2') ? "on" : ""; ?>">생산 모니터링 - 태블릿</a></li>
@@ -129,10 +129,16 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 if ($row->MENU_CODE == "_INTERFACE" && $_SESSION['user_level'] >= $row->MENU_LEVEL) {
                                     ?>
                                         <li class="menu01_li">
-                                            <a href="<?= base_url('_INTERFACE/empty') ?>" class="menu_a <?= ($this->data['pos'] == "_INTERFACE") ? "on" : ""; ?>">
+                                            <a href="<?= base_url('_INTERFACE/interface/0') ?>" class="menu_a <?= ($this->data['pos'] == "_INTERFACE") ? "on" : ""; ?>">
                                                 <i class="material-icons">add_business</i>생산관리INTERFACE</a>
                                             <ul class="menu02" <?= ($this->data['pos'] == "_INTERFACE") ? "style='display:block'" : ""; ?>>
-                                                <li><a href="<?= base_url('_INTERFACE/empty') ?>" class="<?= ($this->data['subpos'] == 'empty') ? "on" : ""; ?>">비어있음</a></li>
+                                                <li><a href="<?= base_url('_INTERFACE/interface/0') ?>" class="<?= ($this->data['ssubpos'] == '0') ? "on" : ""; ?>">온수탱크</a></li>
+                                                <li><a href="<?= base_url('_INTERFACE/interface/1') ?>" class="<?= ($this->data['ssubpos'] == '1') ? "on" : ""; ?>">탄산나트륨탱크</a></li>
+                                                <li><a href="<?= base_url('_INTERFACE/interface/2') ?>" class="<?= ($this->data['ssubpos'] == '2') ? "on" : ""; ?>">세척탱크</a></li>
+                                                <li><a href="<?= base_url('_INTERFACE/interface/3') ?>" class="<?= ($this->data['ssubpos'] == '3') ? "on" : ""; ?>">반응탱크</a></li>
+                                                <li><a href="<?= base_url('_INTERFACE/interface/4') ?>" class="<?= ($this->data['ssubpos'] == '4') ? "on" : ""; ?>">교반탱크1</a></li>
+                                                <li><a href="<?= base_url('_INTERFACE/interface/5') ?>" class="<?= ($this->data['ssubpos'] == '5') ? "on" : ""; ?>">교반탱크2</a></li>
+                                                <li><a href="<?= base_url('_INTERFACE/interface/6') ?>" class="<?= ($this->data['ssubpos'] == '6') ? "on" : ""; ?>">교반탱크3</a></li>
                                             </ul>
                                         </li>
                                     <?php   }

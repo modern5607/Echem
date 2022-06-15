@@ -12,6 +12,8 @@ class QUAL extends CI_Controller
 		date_default_timezone_set('Asia/Seoul');
 		$this->data['pos'] = $this->uri->segment(1);
 		$this->data['subpos'] = $this->uri->segment(2);
+		$this->data['ssubpos'] = $this->uri->segment(3);
+
 
 		$this->load->helper('test');
 		$this->load->model(array('mif_model', 'sys_model', 'qual_model'));
@@ -71,7 +73,7 @@ class QUAL extends CI_Controller
 		//=====================================
 
 		$data['list'] = $this->qual_model->head_qexam($params, $pageNum, $config['per_page']);
-		$this->data['cnt'] = $this->qual_model->ajax_qexam_cut($params);
+		$this->data['cnt'] = $this->qual_model->head_qexam_cut($params);
 
 		//=====================================
 		/* pagenation start */

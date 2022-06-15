@@ -16,7 +16,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <input type="hidden" name="hidx" value="<?= $hidx ?>">
         <div class="tbl-write01" style="margin-top: 86px;">
             <table cellpadding="0" cellspacing="0" border="0" width="100%">
-            <div id="loading" style="margin: 170px 0px;"><img src='<?php echo base_url('_static/img/loader.gif'); ?>' width="100"></div>
+                <div id="loading" style="margin: 170px 0px;"><img src='<?php echo base_url('_static/img/loader.gif'); ?>' width="100"></div>
                 <tbody>
                     <tr>
                         <th class="w120">작업지시일</th>
@@ -26,7 +26,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     </tr>
                     <tr>
                         <th>거래처</th>
-                        <td><input type="text" readonly name="BIZ_NAME" class="form_input input_100 disabled" value="<?= isset($info->BIZ_NAME) ? $info->BIZ_NAME : '' ?>"></td>
+                        <td><input type="text" readonly name="CUST_NM" class="form_input input_100 disabled" value="<?= isset($info->CUST_NM) ? $info->CUST_NM : '' ?>"></td>
                         <th>수주일</th>
                         <td><input type="text" readonly name="ACT_DATE" class="form_input input_100 disabled" value="<?= isset($info->ACT_DATE) ? $info->ACT_DATE : '' ?>"></td>
                     </tr>
@@ -44,19 +44,19 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     </tr>
                     <tr>
                         <th class="w120 res">원료투입일</th>
-                        <td><input type="text" name="RAW_DATE" class="calendar form_input input_100" value="<?= (empty($info->RAW_DATE)||$info->RAW_DATE=="0000-00-00") ? '' : $info->RAW_DATE ?>"></td>
+                        <td><input type="text" name="RAW_DATE" class="calendar form_input input_100" value="<?= (empty($info->RAW_DATE) || $info->RAW_DATE == "0000-00-00") ? '' : $info->RAW_DATE ?>"></td>
                         <th class="w120 res">Na2Co3</th>
-                        <td><input type="text" name="NA2CO3_DATE" class="calendar form_input input_100" value="<?= (empty($info->NA2CO3_DATE)||$info->NA2CO3_DATE=="0000-00-00") ? '' : $info->NA2CO3_DATE ?>"></td>
+                        <td><input type="text" name="NA2CO3_DATE" class="calendar form_input input_100" value="<?= (empty($info->NA2CO3_DATE) || $info->NA2CO3_DATE == "0000-00-00") ? '' : $info->NA2CO3_DATE ?>"></td>
                     </tr>
                     <tr>
                         <th class="w120 res">교반공정일</th>
-                        <td><input type="text" name="MIX_DATE" class="calendar form_input input_100" value="<?= (empty($info->MIX_DATE)||$info->MIX_DATE=="0000-00-00") ? '' : $info->MIX_DATE ?>"></td>
+                        <td><input type="text" name="MIX_DATE" class="calendar form_input input_100" value="<?= (empty($info->MIX_DATE) || $info->MIX_DATE == "0000-00-00") ? '' : $info->MIX_DATE ?>"></td>
                         <th class="w120 res">세척 공정일</th>
-                        <td><input type="text" name="WASH_DATE" class="calendar form_input input_100" value="<?= (empty($info->WASH_DATE)||$info->WASH_DATE=="0000-00-00") ? '' : $info->WASH_DATE ?>"></td>
+                        <td><input type="text" name="WASH_DATE" class="calendar form_input input_100" value="<?= (empty($info->WASH_DATE) || $info->WASH_DATE == "0000-00-00") ? '' : $info->WASH_DATE ?>"></td>
                     </tr>
                     <tr>
                         <th class="w120 res">건조 공정일</th>
-                        <td><input type="text" name="DRY_DATE" class="calendar form_input input_100" value="<?= (empty($info->DRY_DATE)||$info->DRY_DATE=="0000-00-00") ? '' : $info->DRY_DATE ?>"></td>
+                        <td><input type="text" name="DRYPHASE_DATE" class="calendar form_input input_100" value="<?= (empty($info->DRYPHASE_DATE) || $info->DRYPHASE_DATE == "0000-00-00") ? '' : $info->DRYPHASE_DATE ?>"></td>
                     </tr>
                     <tr>
                         <th>특이사항</th>
@@ -72,7 +72,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             </td>
                         <?php } else  if ($str['mode'] == "new") { ?>
                             <td rowspan="5" colspan="6" class="cen" style="padding: 15px;"><button type="button" class="btn blue_btn submitBtn">등록</button></td>
-                        <?php } else{}?>
+                        <?php } else {
+                        } ?>
                     </tr>
                 </tfoot>
 
@@ -163,6 +164,28 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 alert(xhr);
                 alert(textStatus);
                 alert(errorThrown);
+            }
+        })
+    });
+
+    $(".delBtn").click(function() {
+        if (!confirm("삭제하시겠습니까?"))
+            return;
+        var formData = new FormData($("#detailForm")[0]);
+
+        $.ajax({
+            url: "<?= base_url('PROD/del_pworkorder') ?>",
+            type: "POST",
+            dataType: "HTML",
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function(data) {
+                if (data == 1)
+                    alert("성공");
+                else
+                    alert("실패");
             }
         })
     });

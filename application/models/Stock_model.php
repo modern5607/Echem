@@ -32,13 +32,14 @@ class Stock_model extends CI_Model
 				O.IDX, ORDER_DATE, START_DATE, O.END_DATE, ACT_NAME, CUST_NM, PACKAGE_YN, ACT_DATE, DEL_DATE, A.QTY, PPLI2CO3_AFTER_INPUT, DRY_DATE, PACKAGE_DATE
 			FROM
 				`T_ORDER` as O
-				left join T_ACT as A on A.IDX = O.ACT_IDX
+				join T_ACT as A on A.IDX = O.ACT_IDX
 				left join T_BIZ as B on A.BIZ_IDX = B.IDX
 			WHERE
 				PHINPUT_YN = "Y"
 				{$where}
 SQL;		
 		$query = $this->db->query($sql);
+		// echo $this->db->last_query();
 		return $query->result();
 	}
 	public function package_cut($param)
@@ -129,9 +130,9 @@ SQL;
 
 		$info = $this->db->query("SELECT * from T_ITEMS where IDX='{$params['IDX']}'")->row();
 		if($params['KIND'] == "IN"){
-			$sum = $info->STOCK + $params['QTY'];
+			$sum = $params['QTY'];
 		}else{
-			$sum = $info->STOCK - $params['QTY'];
+			$sum = $params['QTY'];
 		}
 
 		$sql = <<<SQL
