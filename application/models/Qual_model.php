@@ -12,7 +12,7 @@ class Qual_model extends CI_Model
 	{
 		$where = '';
 		if ($params['SDATE'] != "" && $params['EDATE'] != "")
-			$where .= "AND ACT_DATE BETWEEN '{$params['SDATE']} 00:00:00' AND '{$params['EDATE']} 23:59:59'";
+			$where .= "AND ORDER_DATE BETWEEN '{$params['SDATE']} 00:00:00' AND '{$params['EDATE']} 23:59:59'";
 
 		$sql = <<<SQL
 		SELECT
@@ -272,7 +272,21 @@ SQL;
 	{
 		$where = '';
 		if ($params['SDATE'] != "" && $params['EDATE'] != "")
-			$where .= "AND ACT_DATE BETWEEN '{$params['SDATE']} 00:00:00' AND '{$params['EDATE']} 23:59:59'";
+			$where .= "AND ORDER_DATE BETWEEN '{$params['SDATE']} 00:00:00' AND '{$params['EDATE']} 23:59:59'";
+
+		// if ((!empty($params['SDATE']) && $params['SDATE'] != "") && (!empty($params['EDATE']) && $params['EDATE'] != "")) {
+		// 	$this->db->where("ORDER_DATE BETWEEN '{$params['SDATE']}' AND '{$params['EDATE']}'");
+		// }
+		// if (!empty($params['ORDER_DATE']) && $params['ORDER_DATE'] != "") {
+		// 	$this->db->where("A.ORDER_DATE", $params['ORDER_DATE']);
+		// }
+
+		// if($params['ORDER_DATE']!="" && isset($params['ORDER_DATE']))
+		// 	$where.="AND ORDER_DATE LIKE '%{$params['ORDER_DATE']}%'";
+
+
+		if($params['ACT_NAME']!="" && isset($params['ACT_NAME']))
+			$where.="AND ACT_NAME LIKE'%{$params['ACT_NAME']}%'";
 
 		$sql = <<<SQL
 		SELECT
@@ -308,6 +322,10 @@ SQL;
 		if ($params['SDATE'] != "" && $params['EDATE'] != "")
 			$where .= "AND ACT_DATE BETWEEN '{$params['SDATE']} 00:00:00' AND '{$params['EDATE']} 23:59:59'";
 
+
+		if ((!empty($params['SDATE']) && $params['SDATE'] != "") && (!empty($params['EDATE']) && $params['EDATE'] != "")) {
+				$this->db->where("ACT_DATE BETWEEN '{$params['SDATE']}' AND '{$params['EDATE']}'");
+		}
 		$sql = <<<SQL
 		SELECT
 			ACT.IDX ACT_IDX,

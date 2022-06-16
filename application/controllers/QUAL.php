@@ -229,9 +229,21 @@ class QUAL extends CI_Controller
 	{
 		$data['str']['sdate'] = $this->input->post("sdate");
 		$data['str']['edate'] = $this->input->post("edate");
+		$data['str']['ORDER_DATE']=$this->input->post("work");
+		$data['str']['ACT_NAME']=$this->input->post("sname");
+
+		$params['ORDER_DATE'] = isset($data['str']['ORDER_DATE']) ? $data['str']['ORDER_DATE'] : "";
+		$params['ACT_NAME'] = isset($data['str']['ACT_NAME']) ? $data['str']['ACT_NAME'] : "";
+
+		
+
+		// $data['List']   = $this->mdm_model->get_cocdHead_list($params);
 
 		$params['SDATE'] = (isset($data['str']['sdate'])) ? $data['str']['sdate'] : '';
 		$params['EDATE'] = (isset($data['str']['edate'])) ? $data['str']['edate'] : date("Y-m-d", time());
+
+		if (!empty($data['str']['sdate'])) { $params['SDATE'] = $data['str']['sdate']; }
+		if (!empty($data['str']['edate'])) { $params['EDATE'] = $data['str']['edate']; }
 
 		$data['perpage'] = ($this->input->post('perpage') != "") ? $this->input->post('perpage') : 20;
 		//PAGINATION

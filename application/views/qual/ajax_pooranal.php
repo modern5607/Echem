@@ -10,7 +10,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		<header>
 			<div class="searchDiv">
 				<form id="ajaxForm">
-
+					<label>작업지시일</label>
+					<!-- <input type="text" name="work" value="<?= $str['ORDER_DATE'] ?>" placeholder="년/월 만 입력" /> -->
+					<input type="date" name="sdate" class="" size="11" value="<?php echo $str['sdate']; ?>" placeholder="<?= date("Y-m-d") ?>" /> ~
+					<input type="date" name="edate" class="" size="11" value="<?php echo $str['edate']; ?>" placeholder="<?= date("Y-m-d") ?>" />
+					<label>수주명</label>
+					<input type="text" name="sname" value="<?= $str['ACT_NAME'] ?>" />
 					<button type="button" class="search_submit ajax_search"><i class="material-icons">search</i></button>
 				</form>
 			</div>
@@ -92,7 +97,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 
 <script>
-	$(".link_hover").click(function() {
+	$(".link_hover").click(function() { /* 팝업창 뜨게함 */
 
 		var hidx = $(this).data("hidx");
 		var idx = $(this).data("idx");
@@ -123,4 +128,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		});
 
 	});
+	// $(".calendar").datetimepicker({
+	// 	format: 'Y-m-d',
+	// 	timepicker: false,
+	// 	lang: 'ko-KR'
+	// });
 </script>

@@ -52,7 +52,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <td><input type="text" class="form_input input_100" autocomplete="off" value='<?= $actnm ?>' name="ACTNM"></td>
 
                     <th>수량(T)</th>
-                    <td><input type="text" class="form_input input_100" autocomplete="off" value='<?= $qty ?>' name="QTY"></td>
+                    <td><input type="text" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');" id="count" class="form_input input_100" autocomplete="off" value='<?= $qty ?>' name="QTY"></td>
                 </tr>
                 <tr>
                     <th>수주일</th>
@@ -236,4 +236,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
             });
         }
     });
+    var number = document.getElementById('count');
+
+    number.onkeydown = function(e) {
+        if(!((e.keyCode > 95 && e.keyCode < 106)
+        	|| (e.keyCode > 47 && e.keyCode < 58) 
+        	|| e.keyCode == 8)) {
+            return false;
+        }
+    }
 </script>
