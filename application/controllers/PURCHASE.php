@@ -82,6 +82,8 @@ class PURCHASE extends CI_Controller
 		
 		//모델
 		$data['list']=$this->pur_model->component_list($params);
+		$data['bizType'] = $this->sys_model->biz_list(); 
+		// echo var_dump($data['bizType']);
 		$data['cocd']= $this->sys_model->get_selectInfo("tch.CODE","UNIT");
 
 		//뷰
@@ -91,6 +93,7 @@ class PURCHASE extends CI_Controller
 	public function component_head_insert()
 	{
 		$params['ACT_DATE'] = $this->input->post("ADATE");
+		$params['BIZ_IDX'] = $this->input->post("BIZTYPE");
 		$params['QTY'] = $this->input->post("QTY");
 		$params['UNIT'] = $this->input->post("UNIT");
 		$params['DEL_DATE'] = $this->input->post("DDATE");

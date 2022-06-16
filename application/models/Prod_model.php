@@ -18,12 +18,12 @@ class Prod_model extends CI_Model
 		$sql = <<<SQL
 		SELECT
 			ACT.IDX ACT_IDX,
-			ACT.ACT_DATE,
 			O.IDX,
 			O.ORDER_DATE,
 			ACT.ACT_NAME,
 			ACT.BIZ_IDX,
 			B.CUST_NM,
+			ACT.ACT_DATE,
 			O.START_DATE,
 			O.END_DATE
 		FROM
@@ -36,7 +36,7 @@ class Prod_model extends CI_Model
 		LIMIT {$start},{$limit}
 SQL;
 		$query = $this->db->query($sql);
-		// echo $this->db->Last_query();
+		echo $this->db->Last_query();
 		return $query->result();
 	}
 	public function head_workorder_cut($params)
@@ -86,11 +86,16 @@ SQL;
 				B.CUST_NM,
 				A.ACT_DATE,
 				A.DEL_DATE,
+				A.SHIP_WAY,
+				A.SHIP_REMARK,
 				A.QTY,
 				O.START_DATE,
+				A.END_YN,
 				O.END_DATE,
 				O.REMARK,
-				O.PHINPUT_YN
+				O.PHINPUT_YN,
+				O.INSERT_DATE,
+				O.INSERT_ID
 			FROM
 				T_ORDER O
 				LEFT JOIN T_ACT A ON A.IDX = O.ACT_IDX 

@@ -11,9 +11,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			<div class="searchDiv">
 				<form id="ajaxForm">
 					<label>업체명</label>
-					<input type="text" name="custnm" value="<?php echo $str['custnm']; ?>" />
+					<input type="text" name="custnm" value="<?= $str['custnm']; ?>" />
 					<label>주소</label>
-					<input type="text" name="address" value="<?php echo $str['address']; ?>" />
+					<input type="text" name="address" value="<?= $str['address']; ?>" />
 					<label>사용유무</label>
 					<select name="useyn" id="useyn" style="padding:4px 10px; border:1px solid #ddd;">
 						<option value="A" <?= ($str['useyn'] == 'A') ? 'selected' : '' ?>>전체</option>
@@ -49,13 +49,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
 					?>
 
 							<tr>
-								<td class="cen"><?php echo $no; ?></td>
-								<td><span class="mod_biz  link_s1" data-idx="<?php echo $row->IDX; ?>"><?php echo $row->CUST_NM; ?></span></td>
-								<td><?php echo $row->ADDRESS; ?></td>
-								<td><?php echo $row->TEL; ?></td>
-								<td><?php echo $row->CUST_NAME; ?></td>
-								<td><?php echo $row->ITEM; ?></td>
-								<td class="cen"><?php echo $row->CUST_TYPE; ?></td>
+								<td class="cen"><?= $no; ?></td>
+								<td><span class="mod_biz  link_s1" data-idx="<?= $row->IDX; ?>"><?= $row->CUST_NM; ?></span></td>
+								<td><?= $row->ADDRESS; ?></td>
+								<td><?= $row->TEL; ?></td>
+								<td><?= $row->CUST_NAME; ?></td>
+								<td><?= $row->ITEM; ?></td>
+								<td class="cen"><?= $row->CUST_TYPE; ?></td>
 								<td class="cen"><?= ($row->USE_YN == "Y") ? "사용" : "미사용"; ?></td>
 							</tr>
 
@@ -117,7 +117,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		}, 500);
 
 		$.ajax({
-			url: "<?php echo base_url('/MDM/biz_form') ?>",
+			url: "<?= base_url('/MDM/biz_form') ?>",
 			type: "POST",
 			dataType: "HTML",
 			data: {
@@ -145,7 +145,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 		var idx = $(this).data("idx");
 		$.ajax({
-			url: "<?php echo base_url('/MDM/biz_form') ?>",
+			url: "<?= base_url('/MDM/biz_form') ?>",
 			type: "POST",
 			dataType: "HTML",
 			data: {

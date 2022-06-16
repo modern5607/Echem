@@ -213,7 +213,7 @@ class MDM extends CI_Controller
 	//업체등록
 	public function biz()
 	{
-		$data['title'] = "업체등록";
+		$data['title'] = "업체관리";
 		$this->load->view('/main100', $data);
 	}
 	//업체등록 리스트
@@ -291,7 +291,7 @@ class MDM extends CI_Controller
 
 		// echo var_dump($data);
 
-		return $this->load->view('/mdm/biz_form', $data);
+		 $this->load->view('/mdm/biz_form', $data);
 	}
 	/* 닉네임 중복 체크 */
 	public function biz_nameChk()

@@ -43,9 +43,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <td colspan="2"><input type="number" readonly name="QTY" class="form_input input_100 disabled" value="<?= isset($info->QTY) ? $info->QTY : '' ?>"></td>
                     </tr>
                     <tr>
-                        <th class="w120 res">작업시작일</th>
+                        <th class="w120">작업시작일</th>
                         <td colspan="2"><input type="text" name="START_DATE" readonly class="calendar form_input input_100 disabled" value="<?= isset($info->START_DATE) ? $info->START_DATE : '' ?>"></td>
-                        <th class="w120 res">작업종료일</th>
+                        <th class="w120">작업종료일</th>
                         <td colspan="2"><input type="text" name="END_DATE" readonly class="calendar form_input input_100 disabled" value="<?= isset($info->END_DATE) ? $info->END_DATE : '' ?>"></td>
                     </tr>
                     <tr>
@@ -53,7 +53,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <td colspan="1"><input type="text" name="PHRAW_INPUT" class="form_input input_100" value="<?= isset($info->PHRAW_INPUT) ? $info->PHRAW_INPUT : '' ?>"></td>
                         <th class="w120 res">LiCl(여과후)</th>
                         <td colspan="1"><input type="text" name="PHLICL_AFTER_INPUT" class="form_input input_100" value="<?= isset($info->PHLICL_AFTER_INPUT) ? $info->PHLICL_AFTER_INPUT : '' ?>"></td>
-                        <th class="w120 res">수율</th>
+                        <th class="w120">수율</th>
                         <td colspan="1"><input type="text" readonly name="NA2CO3" class="form_input input_100 disabled" value="<?= isset($info->NA2CO3) ? $info->NA2CO3 : '' ?>"></td>
                     </tr>
                     <tr>
@@ -61,7 +61,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <td colspan="1"><input type="text" name="PHNA2CO3_INPUT" class="form_input input_100" value="<?= isset($info->PHNA2CO3_INPUT) ? $info->PHNA2CO3_INPUT : '' ?>"></td>
                         <th class="w120 res">H2O</th>
                         <td colspan="1"><input type="text" name="PHH2O_INPUT" class="form_input input_100" value="<?= isset($info->PHH2O_INPUT) ? $info->PHH2O_INPUT : '' ?>"></td>
-                        <th class="w120 res">수율</th>
+                        <th class="w120">수율</th>
                         <td colspan="1"><input type="text" readonly name="NA2CO3" class="form_input input_100 disabled" value="<?= isset($info->NA2CO3) ? $info->NA2CO3 : '' ?>"></td>
                     </tr>
                     <tr>
@@ -94,16 +94,18 @@ defined('BASEPATH') or exit('No direct script access allowed');
         for (var i of formData.entries())
             console.log(i[0] + ", " + i[1]);
 
-        // if ($("input[name='START_DATE'").val() == "") {
-        //     alert("작업 시작일을 입력해 주세요");
-        //     $("input[name='START_DATE'").focus();
-        //     return false;
-        // }
-        // if ($("input[name='END_DATE'").val() == "") {
-        //     alert("작업 시작일을 입력해 주세요");
-        //     $("input[name='END_DATE'").focus();
-        //     return false;
-        // }
+        if ($("input[name='PHRAW_INPUT'").val() == "") {
+            check =1;
+        }
+        if ($("input[name='PHLICL_AFTER_INPUT'").val() == "") {
+            check =1;
+        }
+        if ($("input[name='PHNA2CO3_INPUT'").val() == "") {
+            check =1;
+        }
+        if ($("input[name='PHH2O_INPUT'").val() == "") {
+            check =1;
+        }
 
         $.ajax({
             url: "<?= base_url('PROD/update_pharvest') ?>",

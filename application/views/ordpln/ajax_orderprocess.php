@@ -19,8 +19,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		<form id="ajaxForm">
 			
             <label>일자</label>
-                <input type="text" name="sdate" class="calendar" size="11" value="<?php echo $str['sdate']; ?>" placeholder="<?= date("Y-m-d") ?>" /> ~
-                <input type="text" name="edate" class="calendar" size="11" value="<?php echo $str['edate']; ?>" placeholder="<?= date("Y-m-d") ?>" />
+                <input type="date" name="sdate" class="" size="11" value="<?php echo $str['sdate']; ?>" placeholder="<?= date("Y-m-d") ?>" /> ~
+                <input type="date" name="edate" class="" size="11" value="<?php echo $str['edate']; ?>" placeholder="<?= date("Y-m-d") ?>" />
 
 			<button type="button" class="search_submit ajax_search"><i class="material-icons">search</i></button>
 		</form>
@@ -40,6 +40,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 				<!-- <th style="width:10%;">거래처 당담자</th> -->
 				<th style="width:10%;">납기일</th>
 				<th style="width:15%;">배송방법</th>
+				<th style="width:15%;">출고여부</th>
 				<th style="">납품 특이사항</th>
 			</tr>
 		</thead>
@@ -57,7 +58,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 						<td><?= $row->CUST_NM ?></td>
 						<!-- <td><?= $row->CUST_NM ?></td> -->
 						<td class="cen"><?= $row->END_DATE ?></td>
-						<td><?= $row->SHIP_WAY ?></td>
+						<td class="cen"><?= $row->SHIP_WAY ?></td>
+						<td class="cen"><?= ($row->END_YN=="Y")?"출고":"출고안됨" ?></td>
 						<td><?= $row->SHIP_REMARK ?></td>
 					</tr>
 				<?php

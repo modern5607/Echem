@@ -186,7 +186,9 @@ SQL;
 		}
 
 		$this->db->limit($limit,$start);
-		$res = $this->db->get("T_BIZ");
+		$this->db->from("T_BIZ");
+		$res = $this->db->get();
+
 		// echo $this->db->last_query();
 		return $res->result();
 	}

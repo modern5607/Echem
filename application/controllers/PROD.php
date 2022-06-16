@@ -108,7 +108,7 @@ class PROD extends CI_Controller
 			$data['info'] = $this->prod_model->detail_workorder($params);
 		}
 
-		// echo $data['str']['mode'];
+		// echo var_dump($data['info']);
 		$this->load->view('prod/detail_workorder', $data);
 	}
 

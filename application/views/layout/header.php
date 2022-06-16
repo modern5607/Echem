@@ -76,7 +76,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                             <li><a href="<?= base_url('MDM/code') ?>" class="<?= ($this->data['subpos'] == "code") ? "on" : ""; ?>">공통코드등록</a></li>
                                             <li><a href="<?= base_url('MDM/items') ?>" class="<?= ($this->data['subpos'] == "items") ? "on" : ""; ?>">품목등록</a></li>
                                             <li><a href="<?= base_url('MDM/biz') ?>" class="<?= ($this->data['subpos'] == "biz") ? "on" : ""; ?>">업체등록</a></li>
-                                            <li><a href="<?= base_url('MDM/bizcur') ?>" class="<?= ($this->data['subpos'] == "bizcur") ? "on" : ""; ?>">업체현황</a></li>
+                                            <!-- <li><a href="<?= base_url('MDM/bizcur') ?>" class="<?= ($this->data['subpos'] == "bizcur") ? "on" : ""; ?>">업체현황</a></li> -->
                                             <!-- <li><a href="<?= base_url('MDM/person') ?>" class="<?= ($this->data['subpos'] == "person") ? "on" : ""; ?>">인사정보등록</a></li>
                                             <li><a href="<?= base_url('MDM/personcur') ?>" class="<?= ($this->data['subpos'] == "personcur") ? "on" : ""; ?>">인사정보현황</a></li> -->
                                             <!-- <li><a href="<?= base_url('MDM/member') ?>" class="<?= ($this->data['subpos'] == "member") ? "on" : ""; ?>">작업자등록</a></li> -->

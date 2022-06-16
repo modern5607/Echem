@@ -22,9 +22,11 @@ class Pur_model extends CI_Model
 		if ((!empty($params['SDATE']) && $params['SDATE'] != "") && (!empty($params['EDATE']) && $params['EDATE'] != "")) {
 			$this->db->where("ACT_DATE BETWEEN '{$params['SDATE']}' AND '{$params['EDATE']}'");
 		}
+		$this->db->select("COM.IDX,ACT_DATE,BIZ_IDX,CUST_NM,QTY,UNIT,DEL_DATE,COM.REMARK,END_YN,END_DATE,QTY2,REMARK2");
+		$this->db->join("T_BIZ AS B", "B.IDX = COM.BIZ_IDX","LEFT");
 		$this->db->order_by('ACT_DATE', 'DESC');
-		$query = $this->db->get("T_COMPONENT");
-// echo $this->db->last_query();
+		$query = $this->db->get("T_COMPONENT AS COM");
+		echo $this->db->last_query();
 		return $query->result();
 	}
 
@@ -38,6 +40,7 @@ class Pur_model extends CI_Model
 		INSERT T_COMPONENT
 			SET
 			ACT_DATE   	= '{$params['ACT_DATE']}',
+			BIZ_IDX 	= '{$params['BIZ_IDX']}',
 			QTY 		= '{$params['QTY']}',
 			UNIT     	= '{$params['UNIT']}',
 			DEL_DATE    = '{$params['DEL_DATE']}',	

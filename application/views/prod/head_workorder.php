@@ -9,8 +9,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			<div class="searchDiv">
 				<form id="headForm">
 					<label>수주일</label>
-					<input type="text" name="sdate" value="<?= $str['sdate']; ?>" class="calendar"  /> ~ 
-					<input type="text" name="edate" value="<?= $str['edate']; ?>" class="calendar" />
+					<input type="date" name="sdate" value="<?= $str['sdate']; ?>" class=""  /> ~ 
+					<input type="date" name="edate" value="<?= $str['edate']; ?>" class="" />
 					
 					<button type="button" class="search_submit head_search"><i class="material-icons">search</i></button>
 				</form>
@@ -23,9 +23,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
 				<thead>
 					<tr>
 						<th>NO</th>
-						<th>작업지시일</th>
+						<th>수주일</th>
 						<th>수주명</th>
 						<th>거래처</th>
+						<th>작업지시일</th>
 						<th>작업예정일</th>
 						<th>작업종료일</th>
 					</tr>
@@ -37,9 +38,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
 					?>
 						<tr class="link_hover" data-idx="<?=$row->IDX?>" data-hidx="<?=$row->ACT_IDX?>">
 							<td class="cen"><?= $no; ?></td>
-							<td class="cen"><?=(!empty($row->ORDER_DATE))?date("Y-m-d",strtotime($row->ORDER_DATE)):'' ?></td>
+							<td class="cen"><?= $row->ACT_DATE ?></td>
 							<td class="cen"><?= $row->ACT_NAME ?></td>
 							<td class="cen"><?= $row->CUST_NM ?></td>
+							<td class="cen"><?=(!empty($row->ORDER_DATE))?date("Y-m-d",strtotime($row->ORDER_DATE)):'' ?></td>
 							<td class="cen"><?= (!empty($row->START_DATE))?date("Y-m-d",strtotime($row->START_DATE)):'' ?></td>
 							<td class="cen"><?= (!empty($row->END_DATE))?date("Y-m-d",strtotime($row->END_DATE)):'' ?></td>
 						</tr>

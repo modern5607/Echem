@@ -8,8 +8,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<form id="ajaxForm">
 			
             <label>일자</label>
-                <input type="text" name="sdate" class="calendar" size="11" value="<?php echo $str['sdate']; ?>" placeholder="<?= date("Y-m-d") ?>" /> ~
-                <input type="text" name="edate" class="calendar" size="11" value="<?php echo $str['edate']; ?>" placeholder="<?= date("Y-m-d") ?>" />
+                <input type="date" name="sdate" class="" size="11" value="<?php echo $str['sdate']; ?>" placeholder="<?= date("Y-m-d") ?>" /> ~
+                <input type="date" name="edate" class="" size="11" value="<?php echo $str['edate']; ?>" placeholder="<?= date("Y-m-d") ?>" />
 
 			<label for="biz">거래처</label>
 				<select name="biz" id="biz" style="padding:4px 10px; border:1px solid #ddd;">

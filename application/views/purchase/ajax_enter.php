@@ -2,8 +2,8 @@
 	<div class="searchBoxxx" style="margin-bottom:20px; padding:15px; border:1px solid #ddd;">
 		<form id="ajaxForm">
 			<label for="sdate">발주등록일</label>
-				<input type="text" name="sdate" class="calendar" size="11" value="<?php echo $str['sdate']; ?>" placeholder="<?= date("Y-m-d") ?>" /> ~
-				<input type="text" name="edate" class="calendar" size="11" value="<?php echo $str['edate']; ?>" placeholder="<?= date("Y-m-d") ?>" />
+				<input type="date" name="sdate" class="" size="11" value="<?php echo $str['sdate']; ?>" placeholder="<?= date("Y-m-d") ?>" /> ~
+				<input type="date" name="edate" class="" size="11" value="<?php echo $str['edate']; ?>" placeholder="<?= date("Y-m-d") ?>" />
 			
 			<button type="button" class="search_submit ajax_search"><i class="material-icons">search</i></button>
 		</form>
@@ -42,7 +42,7 @@
 					<td><?= $row->REMARK ?></td>
 					<td><input type="number" min="0" name="QTY" id="QTY" value="<?= round($row->QTY,2) ?>" class="form_input input_100" style="width:100%;"></td>	
 					<td><input type="text" name="REMARK" id="REMARK" value="" class="form_input input_100" style="width:100%;"></td>
-					<td><input type="text" name="EDATE" class="calendar" size="15" autocomplete="off" value="<?= date("Y-m-d") ?>"
+					<td><input type="text" name="EDATE" class="" size="15" autocomplete="off" value="<?= date("Y-m-d") ?>"
 						style="border: 1px solid #ddd; padding: 5px 7px; width:100%; background: white;" ></td>
 					<td class="cen">
 						<span type="button" class="endBtn btn" data-idx="<?= $row->IDX ?>">완료</span>

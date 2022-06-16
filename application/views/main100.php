@@ -54,6 +54,11 @@
     $(document).off("click", ".ajax_search");
     $(document).on("click", ".ajax_search", function() {
         formData = new FormData($("#ajaxForm")[0]);
+        if(new Date($("input[name='edate']").val()).getTime() < new Date($("input[name='sdate']").val()).getTime())
+		{
+			alert("To 날짜가 From 날짜보다 작을수 없습니다.");
+			return;
+		}
         page = 0;
         load();
     });

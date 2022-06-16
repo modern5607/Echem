@@ -269,10 +269,11 @@ SQL;
 		return $query->result();
 	}
 	//회사리스트, 업체리스트
-	public function biz_list($type)
+	public function biz_list($type="")
 	{
 		$this->db->where("USE_YN", "Y");
-		$this->db->where("CUST_TYPE", $type);
+		if(!empty($type) && $type!="")
+			$this->db->where("CUST_TYPE", $type);
 		$query = $this->db->get("T_BIZ");
 		// echo $this->db->last_query();
 		return $query->result();

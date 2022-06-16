@@ -92,6 +92,13 @@
 		$(".xdsoft_datetimepicker").remove();
 
 		var formData = new FormData($("#headForm")[0]);
+		
+		if(new Date($("input[name='edate']").val()).getTime() < new Date($("input[name='sdate']").val()).getTime())
+		{
+			alert("To 날짜가 From 날짜보다 작을수 없습니다.");
+			return;
+		}
+
 		for (var i of formData.entries())
 			console.log(i[0] + ", " + i[1]);
 

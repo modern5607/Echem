@@ -39,6 +39,24 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <td><input type="number" readonly name="QTY" class="form_input input_100 disabled" value="<?= isset($info->QTY) ? $info->QTY : '' ?>"></td>
                     </tr>
                     <tr>
+                        <th>배송방법</th>
+                        <td><input type="text" readonly name="SHIP_WAY" class="form_input input_100 disabled" value="<?= isset($info->SHIP_WAY) ? $info->SHIP_WAY : '' ?>"></td>
+                        <th>출고여부</th>
+                        <td><input type="text" readonly name="END_YN" class="form_input input_100 disabled" value="<?= (isset($info->END_YN))?"$info->END_YN":"" ?>"></td>
+                    </tr>
+                    <tr>
+                    <th>출고일자</th>
+                        <td><input type="text" readonly name="END_DATE" class="form_input input_100 disabled" value="<?= isset($info->END_DATE) ? $info->END_DATE : '' ?>"></td>
+                        <th>주문특이사항</th>
+                        <td><input type="text" readonly name="SHIP_REMARK" class="form_input input_100 disabled" value="<?= isset($info->SHIP_REMARK) ? $info->SHIP_REMARK : '' ?>"></td>
+                    </tr>
+                    <tr>
+                        <th>생성일자</th>
+                        <td><input type="text" readonly name="INSERT_DATE" class="form_input input_100 disabled" value="<?= isset($info->INSERT_DATE) ? $info->INSERT_DATE : '' ?>"></td>
+                        <th>생성자</th>
+                        <td><input type="number" readonly name="INSERT_ID" class="form_input input_100 disabled" value="<?= isset($info->INSERT_ID) ? $info->INSERT_ID : '' ?>"></td>
+                    </tr>
+                    <tr>
                         <th class="w120 res">작업시작일</th>
                         <td><input type="text" name="START_DATE" class="calendar form_input input_100" value="<?= isset($info->START_DATE) ? $info->START_DATE : '' ?>"></td>
                         <th class="w120 res">작업종료일</th>
