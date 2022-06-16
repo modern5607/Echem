@@ -89,6 +89,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 <script>
     $(".submitBtn").click(function() {
+        var check=0;
         var formData = new FormData($("#detailForm")[0]);
 
         for (var i of formData.entries())
