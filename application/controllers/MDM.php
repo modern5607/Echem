@@ -127,8 +127,8 @@ class MDM extends CI_Controller
 		$data['str']['ITEM_NAME'] = $this->input->post("ITEM_NAME");
 		$data['str']['USEYN'] = $this->input->post("USEYN");
 
-		$params['ITEM_NAME'] = isset($data['str']['ITEM_NAME'])?$data['str']['ITEM_NAME']:"";
-		$params['USEYN'] = isset($data['str']['USEYN'])?$data['str']['USEYN']:"";
+		$params['ITEM_NAME'] = isset($data['str']['ITEM_NAME']) ? $data['str']['ITEM_NAME'] : "";
+		$params['USEYN'] = isset($data['str']['USEYN']) ? $data['str']['USEYN'] : "";
 
 
 		$data['perpage'] = ($this->input->post('perpage') != "") ? $this->input->post('perpage') : 15;
@@ -145,8 +145,8 @@ class MDM extends CI_Controller
 		$data['pageNum'] = $start;
 
 		//모델
-		$data['list']=$this->mdm_model->ajax_items($params,$start,$config['per_page']);
-		$this->data['cut']=$this->mdm_model->ajax_items_cut($params);
+		$data['list'] = $this->mdm_model->ajax_items($params, $start, $config['per_page']);
+		$this->data['cut'] = $this->mdm_model->ajax_items_cut($params);
 		// echo var_dump($this->data['cut']);
 
 
@@ -164,24 +164,23 @@ class MDM extends CI_Controller
 		//뷰
 		$this->load->view('mdm/ajax_items', $data);
 	}
-	
+
 	public function items_form()
 	{
 		$data['mode'] = $this->input->post("mode");
 		$data['idx'] = $this->input->post("idx");
-		
-		
-		$data['UNIT'] = $this->mdm_model->get_selectInfo("tch.CODE","UNIT");
+
+
+		$data['UNIT'] = $this->mdm_model->get_selectInfo("tch.CODE", "UNIT");
 		// echo var_dump($data['UNIT']);
 
-		if($data['mode'] == "mod")
-		{
+		if ($data['mode'] == "mod") {
 			$data['List'] = $this->mdm_model->get_items($data['idx']);
 
 			// echo var_dump($data['List']);
 		}
-		
-		
+
+
 		return $this->load->view('mdm/items_form', $data);
 	}
 
@@ -201,9 +200,9 @@ class MDM extends CI_Controller
 
 
 
-		if($data['mode'] == "add")
+		if ($data['mode'] == "add")
 			$data['result'] = $this->mdm_model->set_item($params);
-		else if($data['mode']=="mod")
+		else if ($data['mode'] == "mod")
 			$data['result'] = $this->mdm_model->update_item($params);
 
 		// echo var_dump($data);
@@ -213,26 +212,35 @@ class MDM extends CI_Controller
 	//업체등록
 	public function biz()
 	{
-		$data['title'] = "업체등록";
+		$data['title'] = "업체관리";
 		$this->load->view('/main100', $data);
 	}
 	//업체등록 리스트
 	public function ajax_biz()
 	{
+		// 조회 검색 부분======================================
 		$data['str'] = array(); //검색어관련
 		$data['str']['custnm'] = trim((string)$this->input->post('custnm'));
 		$data['str']['address'] = trim((string)$this->input->post('address'));
-		$data['str']['useyn'] = ($this->input->post('useyn'))?$this->input->post('useyn'):'Y' ;
+		$data['str']['useyn'] = ($this->input->post('useyn')) ? $this->input->post('useyn') : 'Y';
 
 		$params['CUST_NM'] = "";
 		$params['ADDRESS'] = "";
 		$params['USEYN'] = "";
 
-		if (!empty($data['str']['custnm'])) { $params['CUST_NM'] = $data['str']['custnm']; }
-		if (!empty($data['str']['address'])) { $params['ADDRESS'] = $data['str']['address']; }
-		if (!empty($data['str']['useyn'])) { $params['USEYN'] = $data['str']['useyn']; }
+		if (!empty($data['str']['custnm'])) {
+			$params['CUST_NM'] = $data['str']['custnm'];
+		}
+		if (!empty($data['str']['address'])) {
+			$params['ADDRESS'] = $data['str']['address'];
+		}
+		if (!empty($data['str']['useyn'])) {
+			$params['USEYN'] = $data['str']['useyn'];
+		}
+		// 조회 검색 부분======================================
 
 
+		//페이지네이션====================================
 		$data['perpage'] = ($this->input->post('perpage') != "") ? $this->input->post('perpage') : 20;
 		//PAGINATION
 		$config['per_page'] = $data['perpage'];
@@ -246,15 +254,24 @@ class MDM extends CI_Controller
 		$start = $pageNum;
 		$data['pageNum'] = $start;
 
+		//페이지네이션====================================
+
 		$user_id = $this->session->userdata('user_id');
 		$this->data['userName'] = $this->session->userdata('user_name');
 
+
+		//모델 부분(DB) ===========
 		$data['bizList']   = $this->mdm_model->biz_list($params, $start, $config['per_page']);
 		$this->data['cut'] = $this->mdm_model->biz_cut($params);
+		//모델 부분(DB) ===========
+
+
 
 		// $data['SJGB']   = $this->mdm_model->get_selectInfo("tch.CODE","SJGB");
 		// echo var_dump($data['SJGB']);
 
+
+		//페이지네이션====================================
 
 		/* pagenation start */
 		$this->load->library("pagination");
@@ -265,6 +282,7 @@ class MDM extends CI_Controller
 
 		$this->pagination->initialize($config);
 		$this->data['pagenation'] = $this->pagination->create_links();
+		//페이지네이션====================================
 
 
 		$this->load->view('/mdm/ajax_biz', $data);
@@ -280,7 +298,7 @@ class MDM extends CI_Controller
 		$params['title'] = "업체등록";
 		$params['mod'] = 0;
 
-		$data['BIZGB'] = $this->sys_model->get_selectInfo('tch.CODE',"BizType"); 
+		$data['BIZGB'] = $this->sys_model->get_selectInfo('tch.CODE', "BizType");
 		// echo var_dump($data['BIZGB']);
 		if ($data['str']['mode'] == "mod") {
 			$data['str']['title'] .= " - 수정";
@@ -342,15 +360,21 @@ class MDM extends CI_Controller
 		$data['str'] = array(); //검색어관련
 		$data['str']['custnm'] = trim((string)$this->input->post('custnm'));
 		$data['str']['address'] = trim((string)$this->input->post('address'));
-		$data['str']['useyn'] = ($this->input->post('useyn'))?$this->input->post('useyn'):'Y' ;
+		$data['str']['useyn'] = ($this->input->post('useyn')) ? $this->input->post('useyn') : 'Y';
 
 		$params['CUST_NM'] = "";
 		$params['ADDRESS'] = "";
 		$params['USEYN'] = "";
 
-		if (!empty($data['str']['custnm'])) { $params['CUST_NM'] = $data['str']['custnm']; }
-		if (!empty($data['str']['address'])) { $params['ADDRESS'] = $data['str']['address']; }
-		if (!empty($data['str']['useyn'])) { $params['USEYN'] = $data['str']['useyn']; }
+		if (!empty($data['str']['custnm'])) {
+			$params['CUST_NM'] = $data['str']['custnm'];
+		}
+		if (!empty($data['str']['address'])) {
+			$params['ADDRESS'] = $data['str']['address'];
+		}
+		if (!empty($data['str']['useyn'])) {
+			$params['USEYN'] = $data['str']['useyn'];
+		}
 
 
 		$data['perpage'] = ($this->input->post('perpage') != "") ? $this->input->post('perpage') : 20;
@@ -387,8 +411,8 @@ class MDM extends CI_Controller
 
 		$this->pagination->initialize($config);
 		$this->data['pagenation'] = $this->pagination->create_links();
-		
-		
+
+
 
 		//뷰
 		$this->load->view('mdm/ajax_bizcur', $data);
@@ -506,7 +530,7 @@ class MDM extends CI_Controller
 
 	// 	$this->load->view('/mdm/member_form', $data);
 	// }
-	
+
 	/* 회원가입 */
 	public function member_ins_up()
 	{

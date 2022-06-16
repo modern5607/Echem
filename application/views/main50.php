@@ -213,4 +213,5 @@
 		detailpage = 0;
 		load2();
 	});
+	
 </script>
