@@ -21,7 +21,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
             <fieldset class="form_1">
                 <table>
                     <tbody>
-
+                        <tr>
+                            <th><label>등록일자</label></th>
+                            <td>
+                            <input type="text" readonly="" name="CUST_NM" class="form_input input_100 disabled" value="" autocomplete="off"><?= !empty($info->DEFECT_REMARK_DATE) ? $info->DEFECT_REMARK_DATE : ""; ?></input>
+                            </td>
+                        </tr>
                         <tr>
                             <th><label>비고</label></th>
                             <td>

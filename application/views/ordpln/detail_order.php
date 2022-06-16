@@ -154,6 +154,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
             $("input[name='QTY']").focus();
             return false;
         }
+        if($("input[name='QTY']").val() == "0"){
+            alert("1이상 입력하세요.");
+            $("input[name='QTY']").focus();
+            return false;
+        }
 
         $.ajax({
             url: "<?= base_url('ORDPLN/order_insert') ?>",
@@ -198,13 +203,18 @@ defined('BASEPATH') or exit('No direct script access allowed');
         formData.append("ADATE", $("input[name='ADATE']").val());   
         formData.append("DDATE", $("input[name='DDATE']").val());
         formData.append("BIZNM", $("input[name='BIZNM']").val());
-        formData.append("BIZ", $("select[name='BIZ']").val());
+        formData.append("BIZ", $("select[name='BIZ_IDX']").val());
         formData.append("REMARK", $("textarea[name='REMARK']").val());
         formData.append("IDX", '<?= $str['idx'] ?>');
 
         for (var pair of formData.entries()) {
   console.log(pair[0]+ ', ' + pair[1]);
 }
+        if($("input[name='QTY']").val() == "0"){
+            alert("1이상 입력하세요.");
+            $("input[name='QTY']").focus();
+            return false;
+        }
 
         if (confirm('수정하시겠습니까?') !== false) {
             $.ajax({

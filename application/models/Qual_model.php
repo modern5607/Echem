@@ -341,7 +341,8 @@ SQL;
 			SELECT
 				O.IDX,
 				O.ACT_IDX,
-				O.DEFECT_REMARK
+				O.DEFECT_REMARK,
+				O.DEFECT_REMARK_DATE
 			FROM
 				T_ORDER O
 				LEFT JOIN T_ACT A ON A.IDX = O.ACT_IDX 
@@ -359,7 +360,8 @@ SQL;
 	{
 		$sql = <<<SQL
 		UPDATE T_ORDER
-		SET DEFECT_REMARK = "{$params['DEFECT_REMARK']}"
+		SET DEFECT_REMARK = "{$params['DEFECT_REMARK']}",
+			DEFECT_REMARK_DATE = NOW()
 		WHERE IDX = "{$params['IDX']}" AND ACT_IDX = "{$params['HIDX']}"
 SQL;
 
