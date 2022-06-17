@@ -53,14 +53,17 @@ class QUAL extends CI_Controller
 	{
 		$data['title'] = '품질검사 등록';
 		return $this->load->view('main50', $data);
+	
 	}
 	public function head_qexam()
 	{
 		$data['str']['sdate'] = $this->input->post("sdate");
 		$data['str']['edate'] = $this->input->post("edate");
+		$data['str']['actname']=$this->input->post("actname");
 
 		$params['SDATE'] = (isset($data['str']['sdate'])) ? $data['str']['sdate'] : '';
 		$params['EDATE'] = (isset($data['str']['edate'])) ? $data['str']['edate'] : date("Y-m-d", time());
+		$params['ACT_NAME'] = (isset($data['str']['actname'])) ? $data['str']['actname'] : '';
 
 		$data['perpage'] = ($this->input->post('perpage') != "") ? $this->input->post('perpage') : 20;
 		//PAGINATION
@@ -143,9 +146,11 @@ class QUAL extends CI_Controller
 	{
 		$data['str']['sdate'] = $this->input->post("sdate");
 		$data['str']['edate'] = $this->input->post("edate");
+		$data['str']['actname']=$this->input->post("actname");
 
 		$params['SDATE'] = (isset($data['str']['sdate'])) ? $data['str']['sdate'] : '';
 		$params['EDATE'] = (isset($data['str']['edate'])) ? $data['str']['edate'] : date("Y-m-d", time());
+		$params['ACT_NAME'] = isset($data['str']['actname']) ? $data['str']['actname'] : '';
 
 		$data['perpage'] = ($this->input->post('perpage') != "") ? $this->input->post('perpage') : 20;
 		//PAGINATION
@@ -186,9 +191,11 @@ class QUAL extends CI_Controller
 	{
 		$data['str']['sdate'] = $this->input->post("sdate");
 		$data['str']['edate'] = $this->input->post("edate");
+		$data['str']['actname']=$this->input->post("actname");
 
 		$params['SDATE'] = (isset($data['str']['sdate'])) ? $data['str']['sdate'] : '';
 		$params['EDATE'] = (isset($data['str']['edate'])) ? $data['str']['edate'] : date("Y-m-d", time());
+		$params['ACT_NAME'] = isset($data['str']['actname']) ? $data['str']['actname'] : '';
 
 		$data['perpage'] = ($this->input->post('perpage') != "") ? $this->input->post('perpage') : 20;
 		//PAGINATION
@@ -229,21 +236,16 @@ class QUAL extends CI_Controller
 	{
 		$data['str']['sdate'] = $this->input->post("sdate");
 		$data['str']['edate'] = $this->input->post("edate");
-		$data['str']['ORDER_DATE']=$this->input->post("work");
-		$data['str']['ACT_NAME']=$this->input->post("sname");
+		$data['str']['actname']=$this->input->post("actname");
 
-		$params['ORDER_DATE'] = isset($data['str']['ORDER_DATE']) ? $data['str']['ORDER_DATE'] : "";
-		$params['ACT_NAME'] = isset($data['str']['ACT_NAME']) ? $data['str']['ACT_NAME'] : "";
+		$params['SDATE'] = (isset($data['str']['sdate'])) ? $data['str']['sdate'] : '';
+		$params['EDATE'] = (isset($data['str']['edate'])) ? $data['str']['edate'] : date("Y-m-d", time());
+		$params['ACT_NAME'] = isset($data['str']['actname']) ? $data['str']['actname'] : '';
 
 		
 
 		// $data['List']   = $this->mdm_model->get_cocdHead_list($params);
 
-		$params['SDATE'] = (isset($data['str']['sdate'])) ? $data['str']['sdate'] : '';
-		$params['EDATE'] = (isset($data['str']['edate'])) ? $data['str']['edate'] : date("Y-m-d", time());
-
-		if (!empty($data['str']['sdate'])) { $params['SDATE'] = $data['str']['sdate']; }
-		if (!empty($data['str']['edate'])) { $params['EDATE'] = $data['str']['edate']; }
 
 		$data['perpage'] = ($this->input->post('perpage') != "") ? $this->input->post('perpage') : 20;
 		//PAGINATION

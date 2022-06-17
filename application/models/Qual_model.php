@@ -13,6 +13,9 @@ class Qual_model extends CI_Model
 		$where = '';
 		if ($params['SDATE'] != "" && $params['EDATE'] != "")
 			$where .= "AND ORDER_DATE BETWEEN '{$params['SDATE']} 00:00:00' AND '{$params['EDATE']} 23:59:59'";
+		
+		if($params['ACT_NAME']!="" && isset($params['ACT_NAME']))
+		$where.="AND ACT_NAME LIKE'%{$params['ACT_NAME']}%'";
 
 		$sql = <<<SQL
 		SELECT
@@ -137,7 +140,10 @@ SQL;
 	{
 		$where = '';
 		if ($params['SDATE'] != "" && $params['EDATE'] != "")
-			$where .= "AND ACT_DATE BETWEEN '{$params['SDATE']} 00:00:00' AND '{$params['EDATE']} 23:59:59'";
+			$where .= "AND ORDER_DATE BETWEEN '{$params['SDATE']} 00:00:00' AND '{$params['EDATE']} 23:59:59'";
+		
+		if($params['ACT_NAME']!="" && isset($params['ACT_NAME']))
+			$where.="AND ACT_NAME LIKE'%{$params['ACT_NAME']}%'";
 
 		$sql = <<<SQL
 		SELECT
@@ -204,7 +210,10 @@ SQL;
 	{
 		$where = '';
 		if ($params['SDATE'] != "" && $params['EDATE'] != "")
-			$where .= "AND ACT_DATE BETWEEN '{$params['SDATE']} 00:00:00' AND '{$params['EDATE']} 23:59:59'";
+			$where .= "AND ORDER_DATE BETWEEN '{$params['SDATE']} 00:00:00' AND '{$params['EDATE']} 23:59:59'";
+		
+		if($params['ACT_NAME']!="" && isset($params['ACT_NAME']))
+			$where.="AND ACT_NAME LIKE'%{$params['ACT_NAME']}%'";
 
 		$sql = <<<SQL
 		SELECT
@@ -239,7 +248,7 @@ SQL;
 	{
 		$where = '';
 		if ($params['SDATE'] != "" && $params['EDATE'] != "")
-			$where .= "AND ACT_DATE BETWEEN '{$params['SDATE']} 00:00:00' AND '{$params['EDATE']} 23:59:59'";
+		$where .= "AND ORDER_DATE BETWEEN '{$params['SDATE']} 00:00:00' AND '{$params['EDATE']} 23:59:59'";
 
 		$sql = <<<SQL
 		SELECT
