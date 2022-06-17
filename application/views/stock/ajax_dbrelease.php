@@ -1,29 +1,31 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 ?>
 
 
 <header>
 	<div class="searchBoxxx" style="margin-bottom:20px; padding:15px; border:1px solid #ddd;">
-		<form id="ajaxForm">
-			
-            <label>수주일자</label>
-                <input type="date" name="sdate" class="" size="11" value="<?php echo $str['sdate']; ?>" placeholder="<?= date("Y-m-d") ?>" /> ~
-                <input type="date" name="edate" class="" size="11" value="<?php echo $str['edate']; ?>" placeholder="<?= date("Y-m-d") ?>" />
+		<form id="ajaxForm" onsubmit="return false">
+
+			<label>수주일자</label>
+			<input type="date" name="sdate" class="" size="11" value="<?php echo $str['sdate']; ?>" placeholder="<?= date("Y-m-d") ?>" /> ~
+			<input type="date" name="edate" class="" size="11" value="<?php echo $str['edate']; ?>" placeholder="<?= date("Y-m-d") ?>" />
+			<label>수주명</label>
+			<input type="text" name="actnm" class="" size="11" value="<?= $str['actnm'] ?>">
 
 			<label for="biz">거래처</label>
-				<select name="biz" id="biz" style="padding:4px 10px; border:1px solid #ddd;">
-					<option value="">거래처</option>
-					<?php foreach ($BIZ as $row) { ?>
-						<option value="<?php echo $row->IDX ?>" <?php echo ($str['biz'] == $row->IDX) ? "selected" : ""; ?>><?php echo $row->CUST_NM; ?></option>
-					<?php } ?>
-				</select>	
+			<select name="biz" id="biz" style="padding:4px 10px; border:1px solid #ddd;">
+				<option value="">거래처</option>
+				<?php foreach ($BIZ as $row) { ?>
+					<option value="<?php echo $row->IDX ?>" <?php echo ($str['biz'] == $row->IDX) ? "selected" : ""; ?>><?php echo $row->CUST_NM; ?></option>
+				<?php } ?>
+			</select>
 
 
-			<button type="button" class="search_submit ajax_search"><i class="material-icons">search</i></button>
+			<button class="search_submit ajax_search"><i class="material-icons">search</i></button>
 		</form>
 	</div>
-</header> 
+</header>
 
 <div class="tbl-content">
 	<table cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -41,39 +43,40 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			</tr>
 		</thead>
 		<tbody>
-		<?php
-		if(!empty($list)){
-		foreach($list as $i=>$row){
-			$no = $pageNum+$i+1;
-		?>
+			<?php
+			if (!empty($list)) {
+				foreach ($list as $i => $row) {
+					$no = $pageNum + $i + 1;
+			?>
 
-			<tr>
-				<td class="cen"><?php echo $no;?></td>
-				<td class="cen"><?= $row->ACT_DATE?></td>
-				<td><?= $row->ACT_NAME?></td>
-				<td><?= $row->CUST_NM?></td>
-				<td class="right"><?= round($row->QTY,2) ?></td>
-				<td><?= $row->SHIP_WAY?></td>
-				<td class="cen"><?= $row->END_DATE?></td>
-				<td class="right"><?= round($row->BQTY,2)?></td>
-				<td><?= $row->SHIP_REMARK?></td>
-			</tr>
+					<tr>
+						<td class="cen"><?php echo $no; ?></td>
+						<td class="cen"><?= $row->ACT_DATE ?></td>
+						<td><?= $row->ACT_NAME ?></td>
+						<td><?= $row->CUST_NM ?></td>
+						<td class="right"><?= round($row->QTY, 2) ?></td>
+						<td><?= $row->SHIP_WAY ?></td>
+						<td class="cen"><?= $row->END_DATE ?></td>
+						<td class="right"><?= round($row->BQTY, 2) ?></td>
+						<td><?= $row->SHIP_REMARK ?></td>
+					</tr>
 
-		<?php
-		}}else{
-		?>
-			<tr>
-				<td colspan="15" class="list_none">정보가 없습니다.</td>
-			</tr>
-		<?php
-		}
-		?>
+				<?php
+				}
+			} else {
+				?>
+				<tr>
+					<td colspan="15" class="list_none">정보가 없습니다.</td>
+				</tr>
+			<?php
+			}
+			?>
 		</tbody>
 	</table>
 </div>
 
 
-	<div class="pagination">
+<div class="pagination">
 	<?php
 	if ($this->data['cnt'] > 20) {
 	?>

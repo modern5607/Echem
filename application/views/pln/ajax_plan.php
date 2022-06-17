@@ -23,7 +23,7 @@
                 <?php
                 }
                 ?>
-            <button type="button" class="search_submit ajax_search"><i class="material-icons">search</i></button>
+            <button class="search_submit ajax_search"><i class="material-icons">search</i></button>
         </form>
     </div>
 </header>

@@ -58,16 +58,19 @@ class STOCK extends CI_Controller
 	public function head_package()
 	{
 		$data['str'] = array(); //검색어관련
+		$data['str']['actnm'] = trim($this->input->post('actnm')); //수주명
 		$data['str']['sdate'] = $this->input->post('sdate'); //시작일자
 		$data['str']['edate'] = $this->input->post('edate'); //끝일자
 		$data['str']['package'] = $this->input->post('package'); //끝일자
 
 		$params['SDATE'] = "";
 		$params['EDATE'] = "";
+		$params['ACT_NAME'] = "";
 		$params['PACKAGE'] = "";
 
 		if (!empty($data['str']['sdate'])) { $params['SDATE'] = $data['str']['sdate']; }
 		if (!empty($data['str']['edate'])) { $params['EDATE'] = $data['str']['edate']; }
+		if (!empty($data['str']['actnm'])) { $params['ACT_NAME'] = $data['str']['actnm']; }
 		if (!empty($data['str']['package'])) { $params['PACKAGE'] = $data['str']['package']; }
 
 
@@ -130,16 +133,19 @@ class STOCK extends CI_Controller
 		$data['str'] = array(); //검색어관련
 		$data['str']['sdate'] = $this->input->post('sdate'); //시작일자
 		$data['str']['edate'] = $this->input->post('edate'); //끝일자
+		$data['str']['itemnm'] = $this->input->post('itemnm'); //품목명
 		$data['str']['spec'] = $this->input->post('spec'); //구분
 		$data['str']['kind'] = $this->input->post('kind'); //입출고
 
 		$params['SDATE'] = "";
 		$params['EDATE'] = "";
+		$params['ITEM_NAME'] = "";
 		$params['SPEC'] = "";
 		$params['KIND'] = "";
 
 		if (!empty($data['str']['sdate'])) { $params['SDATE'] = $data['str']['sdate']; }
 		if (!empty($data['str']['edate'])) { $params['EDATE'] = $data['str']['edate']; }
+		if (!empty($data['str']['itemnm'])) { $params['ITEM_NAME'] = $data['str']['itemnm']; }
 		if (!empty($data['str']['spec'])) { $params['SPEC'] = $data['str']['spec']; }
 		if (!empty($data['str']['kind'])) { $params['KIND'] = $data['str']['kind']; }
 
@@ -161,10 +167,15 @@ class STOCK extends CI_Controller
 	public function ajax_stockchange()
 	{
 		$data['str'] = array(); //검색어관련
-
+		$data['str']['itemnm'] = $this->input->post('itemnm'); //품목명
 		$data['str']['spec'] = $this->input->post('spec'); //구분
+
 		$params['SPEC'] = "";
+		$params['ITEM_NAME'] = "";
+
 		if (!empty($data['str']['spec'])) { $params['SPEC'] = $data['str']['spec']; }
+		if (!empty($data['str']['itemnm'])) { $params['ITEM_NAME'] = $data['str']['itemnm']; }
+
 
 		
 		//모델
@@ -204,18 +215,21 @@ class STOCK extends CI_Controller
 	public function ajax_release()
 	{
 		$data['str'] = array(); //검색어관련
+		$data['str']['actnm'] = trim($this->input->post('actnm')); //수주명
 		$data['str']['sdate'] = $this->input->post('sdate'); //시작일자
 		$data['str']['edate'] = $this->input->post('edate'); //끝일자
 		$data['str']['biz'] = $this->input->post('biz'); //거래처
 
 		$params['SDATE'] = "";
 		$params['EDATE'] = "";
+		$params['ACT_NAME'] = "";
 		$params['ENDYN'] = "N";
 		$params['BIZ'] = "";
 		$params['LIST'] = "Y";
 
 		if (!empty($data['str']['sdate'])) { $params['SDATE'] = $data['str']['sdate']; }
 		if (!empty($data['str']['edate'])) { $params['EDATE'] = $data['str']['edate']; }
+		if (!empty($data['str']['actnm'])) { $params['ACT_NAME'] = $data['str']['actnm']; }
 		if (!empty($data['str']['biz'])) { $params['BIZ'] = $data['str']['biz']; }
 
 
@@ -275,15 +289,18 @@ class STOCK extends CI_Controller
 		$data['str'] = array(); //검색어관련
 		$data['str']['sdate'] = $this->input->post('sdate'); //시작일자
 		$data['str']['edate'] = $this->input->post('edate'); //끝일자
+		$data['str']['actnm'] = trim($this->input->post('actnm')); //수주명
 		$data['str']['biz'] = $this->input->post('biz'); //거래처
 
 		$params['SDATE'] = "";
 		$params['EDATE'] = "";
+		$params['ACT_NAME'] = "";
 		$params['ENDYN'] = "Y";
 		$params['BIZ'] = "";
 
 		if (!empty($data['str']['sdate'])) { $params['SDATE'] = $data['str']['sdate']; }
 		if (!empty($data['str']['edate'])) { $params['EDATE'] = $data['str']['edate']; }
+		if (!empty($data['str']['actnm'])) { $params['ACT_NAME'] = $data['str']['actnm']; }
 		if (!empty($data['str']['biz'])) { $params['BIZ'] = $data['str']['biz']; }
 
 
@@ -329,16 +346,19 @@ class STOCK extends CI_Controller
 		$data['str'] = array(); //검색어관련
 		$data['str']['sdate'] = $this->input->post('sdate'); //시작일자
 		$data['str']['edate'] = $this->input->post('edate'); //끝일자
+		$data['str']['actnm'] = trim($this->input->post('actnm')); //수주명
 		$data['str']['biz'] = $this->input->post('biz'); //거래처
 
 		$params['SDATE'] = "";
 		$params['EDATE'] = "";
+		$params['ACT_NAME'] = "";
 		$params['ENDYN'] = "Y";
 		$params['BIZ'] = "";
 		$params['CLAIM'] = "1";
 
 		if (!empty($data['str']['sdate'])) { $params['SDATE'] = $data['str']['sdate']; }
 		if (!empty($data['str']['edate'])) { $params['EDATE'] = $data['str']['edate']; }
+		if (!empty($data['str']['actnm'])) { $params['ACT_NAME'] = $data['str']['actnm']; }
 		if (!empty($data['str']['biz'])) { $params['BIZ'] = $data['str']['biz']; }
 
 
@@ -384,16 +404,19 @@ class STOCK extends CI_Controller
 				$data['str'] = array(); //검색어관련
 		$data['str']['sdate'] = $this->input->post('sdate'); //시작일자
 		$data['str']['edate'] = $this->input->post('edate'); //끝일자
+		$data['str']['actnm'] = trim($this->input->post('actnm')); //수주명
 		$data['str']['biz'] = $this->input->post('biz'); //거래처
 
 		$params['SDATE'] = "";
 		$params['EDATE'] = "";
+		$params['ACT_NAME'] = "";
 		$params['ENDYN'] = "Y";
 		$params['BIZ'] = "";
 		$params['CLAIM'] = "2";
 
 		if (!empty($data['str']['sdate'])) { $params['SDATE'] = $data['str']['sdate']; }
 		if (!empty($data['str']['edate'])) { $params['EDATE'] = $data['str']['edate']; }
+		if (!empty($data['str']['actnm'])) { $params['ACT_NAME'] = $data['str']['actnm']; }
 		if (!empty($data['str']['biz'])) { $params['BIZ'] = $data['str']['biz']; }
 
 

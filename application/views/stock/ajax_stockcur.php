@@ -5,11 +5,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 <header>
 	<div class="searchBoxxx" style="margin-bottom:20px; padding:15px; border:1px solid #ddd;">
-		<form id="ajaxForm">
+		<form id="ajaxForm" onsubmit="return false">
 			
             <label>일자</label>
-                <input type="date" name="sdate" class="" size="11" value="<?php echo $str['sdate']; ?>" placeholder="<?= date("Y-m-d") ?>" /> ~
-                <input type="date" name="edate" class="" size="11" value="<?php echo $str['edate']; ?>" placeholder="<?= date("Y-m-d") ?>" />
+                <input type="date" name="sdate" class="" size="11" value="<?= $str['sdate']; ?>" placeholder="<?= date("Y-m-d") ?>" /> ~
+                <input type="date" name="edate" class="" size="11" value="<?= $str['edate']; ?>" placeholder="<?= date("Y-m-d") ?>" />
+			<label>품명</label>
+			<input type="text" name="itemnm" class="" size="13" value="<?= $str['itemnm']; ?>">
 
 				<label for="spec">구분</label>
 					<select name="spec" id="spec" style="padding:4px 10px; border:1px solid #ddd;">
@@ -25,7 +27,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<option value="OT" <?= ($str['kind']=="OT")?'selected':''; ?>>출고</option>
 					</select>
 
-			<button type="button" class="search_submit ajax_search"><i class="material-icons">search</i></button>
+			<button class="search_submit ajax_search"><i class="material-icons">search</i></button>
 		</form>
 	</div>
 </header> 

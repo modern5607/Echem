@@ -6,7 +6,7 @@
             <input type="text" class="calendar" name="spodate" value="<?= empty($str['spodate']) ? "" : $str['spodate'] ?>" /> ~
             <input type="text" class="calendar" name="epodate" value="<?= empty($str['epodate']) ? "" : $str['epodate'] ?>" />
 
-            <button type="button" class="search_submit ajax_search"><i class="material-icons">search</i></button>
+            <button class="search_submit ajax_search"><i class="material-icons">search</i></button>
         </form>
     </div>
 </header>

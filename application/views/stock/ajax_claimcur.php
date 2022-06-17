@@ -5,12 +5,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 <header>
 	<div class="searchBoxxx" style="margin-bottom:20px; padding:15px; border:1px solid #ddd;">
-		<form id="ajaxForm">
-			
+		<form id="ajaxForm" onsubmit="return false">
             <label>일자</label>
                 <input type="date" name="sdate" class="" size="11" value="<?php echo $str['sdate']; ?>" placeholder="<?= date("Y-m-d") ?>" /> ~
                 <input type="date" name="edate" class="" size="11" value="<?php echo $str['edate']; ?>" placeholder="<?= date("Y-m-d") ?>" />
-
+				<label>수주명</label>
+			<input type="text" name="actnm" class="" size="11" value="<?= $str['actnm'] ?>">
 			<label for="biz">거래처</label>
 				<select name="biz" id="biz" style="padding:4px 10px; border:1px solid #ddd;">
 					<option value="">거래처</option>
@@ -20,7 +20,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				</select>	
 
 
-			<button type="button" class="search_submit ajax_search"><i class="material-icons">search</i></button>
+			<button class="search_submit ajax_search"><i class="material-icons">search</i></button>
 		</form>
 	</div>
 </header> 
@@ -37,7 +37,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				<th style="width: 10%">납기일</th>
 				<th style="width: 8%">납품량</th>
 				<th style="width: 10%">반품일</th>
-				<th style="width: %">클레임사항</th>
+				<th>클레임사항</th>
 			</tr>
 		</thead>
 		<tbody>

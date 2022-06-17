@@ -20,7 +20,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					<label for="admin">전체보기</label>
 					<input type="checkbox" name="admin" id="admin" value="chk" <?php echo ($str['admin'] == "chk")?"checked":"" ?> >
 
-					<button type="button" class="search_submit ajax_search"><i class="material-icons">search</i></button>
+					<button class="search_submit ajax_search"><i class="material-icons">search</i></button>
 				</form>
 			</div>
 		</header>

@@ -9,11 +9,17 @@ class Prod_model extends CI_Model
 		date_default_timezone_set('Asia/Seoul');
 	}
 
-	public function head_workorder($params,$start,$limit)
+	public function head_workorder($params, $start, $limit)
 	{
-		$where='';
-		if($params['SDATE']!="" && $params['EDATE']!="")
-			$where.="AND ACT_DATE BETWEEN '{$params['SDATE']} 00:00:00' AND '{$params['EDATE']} 23:59:59'";
+		$where = '';
+		if ($params['SDATE'] != "" && $params['EDATE'] != "")
+			$where .= "AND ACT_DATE BETWEEN '{$params['SDATE']} 00:00:00' AND '{$params['EDATE']} 23:59:59'";
+
+		if (!empty($params['ACT_NAME']) && $params['ACT_NAME'] != "")
+			$where .= "AND ACT.ACT_NAME LIKE '%{$params['ACT_NAME']}%'";
+
+		if (!empty($params['BIZ_IDX']) && $params['BIZ_IDX'] != "")
+			$where .= "AND B.IDX = '{$params['BIZ_IDX']}'";
 
 		$sql = <<<SQL
 		SELECT
@@ -41,9 +47,12 @@ SQL;
 	}
 	public function head_workorder_cut($params)
 	{
-		$where='';
-		if($params['SDATE']!="" && $params['EDATE']!="")
-			$where.="AND ACT_DATE BETWEEN '{$params['SDATE']} 00:00:00' AND '{$params['EDATE']} 23:59:59'";
+		$where = '';
+		if ($params['SDATE'] != "" && $params['EDATE'] != "")
+			$where .= "AND ACT_DATE BETWEEN '{$params['SDATE']} 00:00:00' AND '{$params['EDATE']} 23:59:59'";
+
+		if (!empty($params['ACT_NAME']) && $params['ACT_NAME'] != "")
+			$where .= "AND ACT.ACT_NAME LIKE '%{$params['ACT_NAME']}%'";
 
 		$sql = <<<SQL
 		SELECT
@@ -70,13 +79,12 @@ SQL;
 		return $query->num_rows();
 	}
 
-	
+
 
 	public function detail_workorder($params)
 	{
 		$where = '';
-		if (!empty($params['IDX']) && !empty($params['ACT_IDX'])) 
-		{
+		if (!empty($params['IDX']) && !empty($params['ACT_IDX'])) {
 			$sql = <<<SQL
 			SELECT
 				O.IDX,
@@ -108,9 +116,7 @@ SQL;
 			$query = $this->db->query($sql);
 			// echo $this->db->last_query();
 			return $query->row();
-
-		} else if(empty($params['IDX']))
-		{
+		} else if (empty($params['IDX'])) {
 			$sql = <<<SQL
 			SELECT
 				A.ACT_NAME,
@@ -133,7 +139,7 @@ SQL;
 
 	public function insert_workorder($params)
 	{
-		$sql=<<<SQL
+		$sql = <<<SQL
 			INSERT INTO T_ORDER(ACT_IDX,ORDER_DATE,START_DATE,END_DATE,REMARK,INSERT_ID,INSERT_DATE)
 			VALUE("{$params['HIDX']}",NOW(),"{$params['START_DATE']}","{$params['END_DATE']}","{$params['REMARK']}","{$params['INSERT_ID']}",NOW())
 SQL;
@@ -144,7 +150,7 @@ SQL;
 
 	public function update_workorder($params)
 	{
-		$sql=<<<SQL
+		$sql = <<<SQL
 			UPDATE T_ORDER
 			SET START_DATE = "{$params['START_DATE']}",END_DATE = "{$params['END_DATE']}", REMARK="{$params['REMARK']}",EACHORDER="N"
 			WHERE IDX = "{$params['IDX']}" AND ACT_IDX = "{$params['HIDX']}"
@@ -156,7 +162,7 @@ SQL;
 
 	public function del_workorder($params)
 	{
-		$sql=<<<SQL
+		$sql = <<<SQL
 		DELETE FROM T_ORDER
 		WHERE IDX = "{$params['IDX']}" AND ACT_IDX = "{$params['HIDX']}"
 SQL;
@@ -165,12 +171,17 @@ SQL;
 		return $this->db->affected_rows();
 	}
 
-	public function head_pworkorder($params,$start,$limit)
+	public function head_pworkorder($params, $start, $limit)
 	{
-		$where='';
-		if($params['SDATE']!="" && $params['EDATE']!="")
-			$where.="AND ACT_DATE BETWEEN '{$params['SDATE']} 00:00:00' AND '{$params['EDATE']} 23:59:59'";
-			
+		$where = '';
+		if ($params['SDATE'] != "" && $params['EDATE'] != "")
+			$where .= "AND ACT_DATE BETWEEN '{$params['SDATE']} 00:00:00' AND '{$params['EDATE']} 23:59:59'";
+
+		if (!empty($params['ACT_NAME']) && $params['ACT_NAME'] != "")
+			$where .= "AND ACT.ACT_NAME LIKE '%{$params['ACT_NAME']}%'";
+
+		if (!empty($params['BIZ_IDX']) && $params['BIZ_IDX'] != "")
+			$where .= "AND B.IDX = '{$params['BIZ_IDX']}'";
 
 		$sql = <<<SQL
 		SELECT
@@ -199,10 +210,15 @@ SQL;
 	}
 	public function head_pworkorder_cut($params)
 	{
-		$where='';
-		if($params['SDATE']!="" && $params['EDATE']!="")
-			$where.="AND ACT_DATE BETWEEN '{$params['SDATE']} 00:00:00' AND '{$params['EDATE']} 23:59:59'";
-			
+		$where = '';
+		if ($params['SDATE'] != "" && $params['EDATE'] != "")
+			$where .= "AND ACT_DATE BETWEEN '{$params['SDATE']} 00:00:00' AND '{$params['EDATE']} 23:59:59'";
+
+		if (!empty($params['ACT_NAME']) && $params['ACT_NAME'] != "")
+			$where .= "AND ACT.ACT_NAME LIKE '%{$params['ACT_NAME']}%'";
+		if (!empty($params['BIZ_IDX']) && $params['BIZ_IDX'] != "")
+			$where .= "AND B.IDX = '{$params['BIZ_IDX']}'";
+
 
 		$sql = <<<SQL
 		SELECT
@@ -230,8 +246,7 @@ SQL;
 
 	public function detail_pworkorder($params)
 	{
-		if (!empty($params['IDX']) && !empty($params['ACT_IDX'])) 
-		{
+		if (!empty($params['IDX']) && !empty($params['ACT_IDX'])) {
 			$sql = <<<SQL
 			SELECT
 				O.IDX,
@@ -264,9 +279,7 @@ SQL;
 			$query = $this->db->query($sql);
 			// echo $this->db->last_query();
 			return $query->row();
-
-		} else if(empty($params['IDX']))
-		{
+		} else if (empty($params['IDX'])) {
 			$sql = <<<SQL
 			SELECT
 				A.ACT_NAME,
@@ -290,7 +303,7 @@ SQL;
 
 	public function update_pworkorder($params)
 	{
-		$sql=<<<SQL
+		$sql = <<<SQL
 		UPDATE T_ORDER
 		SET RAW_DATE = "{$params['RAW_DATE']}",
 			NA2CO3_DATE="{$params['NA2CO3_DATE']}",
@@ -301,15 +314,14 @@ SQL;
 			EACHORDER="Y"
 		WHERE IDX = "{$params['IDX']}" AND ACT_IDX = "{$params['HIDX']}"
 SQL;
-		
+
 		$this->db->query($sql);
 		// echo $this->db->last_query();
 		return $this->db->affected_rows();
-
 	}
 	public function del_pworkorder($params)
 	{
-		$sql=<<<SQL
+		$sql = <<<SQL
 		UPDATE T_ORDER
 		SET RAW_DATE = NULL,
 			NA2CO3_DATE=NULL,
@@ -320,11 +332,10 @@ SQL;
 			EACHORDER=NULL
 		WHERE IDX = "{$params['IDX']}" AND ACT_IDX = "{$params['HIDX']}"
 SQL;
-		
+
 		$this->db->query($sql);
 		// echo $this->db->last_query();
 		return $this->db->affected_rows();
-
 	}
 
 	public function get_act($params)
@@ -375,12 +386,17 @@ SQL;
 		return $query->result();
 	}
 
-	public function head_matinput($params,$start,$limit)
+	public function head_matinput($params, $start, $limit)
 	{
-		$where='';
-		if($params['SDATE']!="" && $params['EDATE']!="")
-			$where.="AND ACT_DATE BETWEEN '{$params['SDATE']} 00:00:00' AND '{$params['EDATE']} 23:59:59'";
-			
+		$where = '';
+		if ($params['SDATE'] != "" && $params['EDATE'] != "")
+			$where .= "AND ACT_DATE BETWEEN '{$params['SDATE']} 00:00:00' AND '{$params['EDATE']} 23:59:59'";
+
+		if (!empty($params['ACT_NAME']) && $params['ACT_NAME'] != "")
+			$where .= "AND ACT.ACT_NAME LIKE '%{$params['ACT_NAME']}%'";
+		if (!empty($params['BIZ_IDX']) && $params['BIZ_IDX'] != "")
+			$where .= "AND B.IDX = '{$params['BIZ_IDX']}'";
+
 		$sql = <<<SQL
 		SELECT
 			ACT.IDX ACT_IDX,
@@ -408,10 +424,13 @@ SQL;
 	}
 	public function head_matinput_cut($params)
 	{
-		$where='';
-		if($params['SDATE']!="" && $params['EDATE']!="")
-			$where.="AND ACT_DATE BETWEEN '{$params['SDATE']} 00:00:00' AND '{$params['EDATE']} 23:59:59'";
-			
+		$where = '';
+		if ($params['SDATE'] != "" && $params['EDATE'] != "")
+			$where .= "AND ACT_DATE BETWEEN '{$params['SDATE']} 00:00:00' AND '{$params['EDATE']} 23:59:59'";
+
+		if (!empty($params['ACT_NAME']) && $params['ACT_NAME'] != "")
+			$where .= "AND ACT.ACT_NAME LIKE '%{$params['ACT_NAME']}%'";
+
 		$sql = <<<SQL
 		SELECT
 			ACT.IDX ACT_IDX,
@@ -439,8 +458,7 @@ SQL;
 
 	public function detail_matinput($params)
 	{
-		if (!empty($params['IDX']) && !empty($params['ACT_IDX'])) 
-		{
+		if (!empty($params['IDX']) && !empty($params['ACT_IDX'])) {
 			$sql = <<<SQL
 			SELECT
 				O.IDX,
@@ -471,9 +489,7 @@ SQL;
 			$query = $this->db->query($sql);
 			// echo $this->db->last_query();
 			return $query->row();
-
-		} else if(empty($params['IDX']))
-		{
+		} else if (empty($params['IDX'])) {
 			$sql = <<<SQL
 			SELECT
 				A.ACT_NAME,
@@ -492,25 +508,23 @@ SQL;
 			// echo $this->db->last_query();
 			return $query->row();
 		}
-
 	}
 
 	public function update_matinput($params)
 	{
-		$sql=<<<SQL
+		$sql = <<<SQL
 		UPDATE T_ORDER
 		SET RAW_INPUT = "{$params['RAW_INPUT']}",NA2CO3_INPUT="{$params['NA2CO3_INPUT']}",LICL_INPUT="{$params['LICL_INPUT']}",NACL_INPUT="{$params['NACL_INPUT']}",REMARK="{$params['REMARK']}",RAWINPUT_YN="Y"
 		WHERE IDX = "{$params['IDX']}" AND ACT_IDX = "{$params['HIDX']}"
 SQL;
-		
+
 		$this->db->query($sql);
 		// echo $this->db->last_query();
 		return $this->db->affected_rows();
-
 	}
 	public function del_matinput($params)
 	{
-		$sql=<<<SQL
+		$sql = <<<SQL
 			UPDATE T_ORDER
 			SET RAW_INPUT = NULL,
 			NA2CO3_INPUT=NULL,
@@ -520,18 +534,24 @@ SQL;
 			RAWINPUT_YN=NULL
 			WHERE IDX = "{$params['IDX']}" AND ACT_IDX = "{$params['HIDX']}"
 SQL;
-		
+
 		$this->db->query($sql);
 		// echo $this->db->last_query();
 		return $this->db->affected_rows();
 	}
 
-	public function head_pharvest($params,$start,$limit)
+	public function head_pharvest($params, $start, $limit)
 	{
-		$where='';
-		if($params['SDATE']!="" && $params['EDATE']!="")
-			$where.="AND ACT_DATE BETWEEN '{$params['SDATE']} 00:00:00' AND '{$params['EDATE']} 23:59:59'";
-			
+		$where = '';
+		if ($params['SDATE'] != "" && $params['EDATE'] != "")
+			$where .= "AND ACT_DATE BETWEEN '{$params['SDATE']} 00:00:00' AND '{$params['EDATE']} 23:59:59'";
+
+		if (!empty($params['ACT_NAME']) && $params['ACT_NAME'] != "")
+			$where .= "AND ACT.ACT_NAME LIKE '%{$params['ACT_NAME']}%'";
+
+		if (!empty($params['BIZ_IDX']) && $params['BIZ_IDX'] != "")
+			$where .= "AND B.IDX = '{$params['BIZ_IDX']}'";
+
 		$sql = <<<SQL
 		SELECT
 			ACT.IDX ACT_IDX,
@@ -557,10 +577,13 @@ SQL;
 	}
 	public function head_pharvest_cut($params)
 	{
-		$where='';
-		if($params['SDATE']!="" && $params['EDATE']!="")
-			$where.="AND ACT_DATE BETWEEN '{$params['SDATE']} 00:00:00' AND '{$params['EDATE']} 23:59:59'";
-			
+		$where = '';
+		if ($params['SDATE'] != "" && $params['EDATE'] != "")
+			$where .= "AND ACT_DATE BETWEEN '{$params['SDATE']} 00:00:00' AND '{$params['EDATE']} 23:59:59'";
+
+		if (!empty($params['ACT_NAME']) && $params['ACT_NAME'] != "")
+			$where .= "AND ACT.ACT_NAME LIKE '%{$params['ACT_NAME']}%'";
+
 		$sql = <<<SQL
 		SELECT
 			ACT.IDX ACT_IDX,
@@ -587,8 +610,7 @@ SQL;
 
 	public function detail_pharvest($params)
 	{
-		if (!empty($params['IDX']) && !empty($params['ACT_IDX'])) 
-		{
+		if (!empty($params['IDX']) && !empty($params['ACT_IDX'])) {
 			$sql = <<<SQL
 			SELECT
 				O.IDX,
@@ -619,9 +641,7 @@ SQL;
 			$query = $this->db->query($sql);
 			// echo $this->db->last_query();
 			return $query->row();
-
-		} else if(empty($params['IDX']))
-		{
+		} else if (empty($params['IDX'])) {
 			$sql = <<<SQL
 			SELECT
 				A.ACT_NAME,
@@ -644,19 +664,19 @@ SQL;
 
 	public function update_pharvest($params)
 	{
-		$sql=<<<SQL
+		$sql = <<<SQL
 		UPDATE T_ORDER
 		SET PHRAW_INPUT = "{$params['PHRAW_INPUT']}",PHLICL_AFTER_INPUT="{$params['PHLICL_AFTER_INPUT']}",PHNA2CO3_INPUT="{$params['PHNA2CO3_INPUT']}",PHH2O_INPUT="{$params['PHH2O_INPUT']}",PHINPUT_YN="Y"
 		WHERE IDX = "{$params['IDX']}" AND ACT_IDX = "{$params['HIDX']}"
 SQL;
-		
+
 		$this->db->query($sql);
 		// echo $this->db->last_query();
 		return $this->db->affected_rows();
 	}
 	public function del_pharvest($params)
 	{
-		$sql=<<<SQL
+		$sql = <<<SQL
 			UPDATE T_ORDER
 			SET PHRAW_INPUT = NULL,
 			PHLICL_AFTER_INPUT=NULL,
@@ -665,18 +685,23 @@ SQL;
 			PHINPUT_YN=NULL
 			WHERE IDX = "{$params['IDX']}" AND ACT_IDX = "{$params['HIDX']}"
 SQL;
-		
+
 		$this->db->query($sql);
 		// echo $this->db->last_query();
 		return $this->db->affected_rows();
 	}
 
-	public function head_pprodcur($params,$start,$limit)
+	public function head_pprodcur($params, $start, $limit)
 	{
-		$where='';
-		if($params['SDATE']!="" && $params['EDATE']!="")
-			$where.="AND ACT_DATE BETWEEN '{$params['SDATE']} 00:00:00' AND '{$params['EDATE']} 23:59:59'";
-			
+		$where = '';
+		if ($params['SDATE'] != "" && $params['EDATE'] != "")
+			$where .= "AND ACT_DATE BETWEEN '{$params['SDATE']} 00:00:00' AND '{$params['EDATE']} 23:59:59'";
+
+		if (!empty($params['ACT_NAME']) && $params['ACT_NAME'] != "")
+			$where .= "AND ACT.ACT_NAME LIKE '%{$params['ACT_NAME']}%'";
+		if (!empty($params['BIZ_IDX']) && $params['BIZ_IDX'] != "")
+			$where .= "AND B.IDX = '{$params['BIZ_IDX']}'";
+
 		$sql = <<<SQL
 		SELECT
 			ACT.IDX ACT_IDX,
@@ -703,10 +728,13 @@ SQL;
 	}
 	public function head_pprodcur_cut($params)
 	{
-		$where='';
-		if($params['SDATE']!="" && $params['EDATE']!="")
-			$where.="AND ACT_DATE BETWEEN '{$params['SDATE']} 00:00:00' AND '{$params['EDATE']} 23:59:59'";
-			
+		$where = '';
+		if ($params['SDATE'] != "" && $params['EDATE'] != "")
+			$where .= "AND ACT_DATE BETWEEN '{$params['SDATE']} 00:00:00' AND '{$params['EDATE']} 23:59:59'";
+
+		if (!empty($params['ACT_NAME']) && $params['ACT_NAME'] != "")
+			$where .= "AND ACT.ACT_NAME LIKE '%{$params['ACT_NAME']}%'";
+
 		$sql = <<<SQL
 		SELECT
 			ACT.IDX ACT_IDX,
@@ -791,7 +819,7 @@ SQL;
 
 	public function update_pprodcur($params)
 	{
-		$sql=<<<SQL
+		$sql = <<<SQL
 		UPDATE T_ORDER
 		SET PPRAW_INPUT = "{$params['PPRAW_INPUT']}",
 			PPLICL_INPUT = "{$params['PPLICL_INPUT']}",
@@ -805,7 +833,7 @@ SQL;
 			PPINPUT_YN="Y"
 		WHERE IDX = "{$params['IDX']}" AND ACT_IDX = "{$params['HIDX']}"
 SQL;
-		
+
 		$this->db->query($sql);
 		// echo $this->db->last_query();
 		return $this->db->affected_rows();
@@ -813,7 +841,7 @@ SQL;
 
 	public function del_pprodcur($params)
 	{
-		$sql=<<<SQL
+		$sql = <<<SQL
 			UPDATE T_ORDER
 			SET PPRAW_INPUT = NULL,
 			PPLICL_INPUT=NULL,
@@ -827,7 +855,7 @@ SQL;
 			PPINPUT_YN=NULL
 			WHERE IDX = "{$params['IDX']}" AND ACT_IDX = "{$params['HIDX']}"
 SQL;
-		
+
 		$this->db->query($sql);
 		// echo $this->db->last_query();
 		return $this->db->affected_rows();

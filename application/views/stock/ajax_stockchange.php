@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 <header>
 	<div class="searchDiv">
-		<form id="ajaxForm">
+		<form id="ajaxForm" onsubmit="return false">
 
 			<label for="spec">구분</label>
 				<select name="spec" id="spec" style="padding:4px 10px; border:1px solid #ddd;">
@@ -12,8 +12,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					<option value="원자재" <?= ($str['spec']=="원자재")?'selected':''; ?>>원자재</option>
 					<option value="완제품" <?= ($str['spec']=="완제품")?'selected':''; ?>>완제품</option>
 				</select>
+			<label>품명</label>
+			<input type="text" name="itemnm" class="" size="13" value="<?= $str['itemnm']; ?>">
+
 			
-			<button type="button" class="search_submit ajax_search"><i class="material-icons">search</i></button>
+			<button class="search_submit ajax_search"><i class="material-icons">search</i></button>
 		</form>
 	</div>
 </header> 

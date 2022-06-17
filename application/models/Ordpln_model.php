@@ -10,14 +10,20 @@ class Ordpln_model extends CI_Model
 
 	}
 
-	// 기초 세팅 dual 호출
+	// head 주문등록
 	public function head_order($params,$start=0,$limit=20)
 	{
 		if ((!empty($params['SDATE']) && $params['SDATE'] != "") && (!empty($params['EDATE']) && $params['EDATE'] != "")) {
 			$this->db->where("ACT_DATE BETWEEN '{$params['SDATE']}' AND '{$params['EDATE']}'");
 		}
+		if (!empty($params['ACT_NAME']) && $params['ACT_NAME'] != "") {
+			$this->db->like("A.ACT_NAME", $params['ACT_NAME']);
+		}
 		if (!empty($params['IDX']) && $params['IDX'] != "") {
 			$this->db->where("A.IDX", $params['IDX']);
+		}
+		if (!empty($params['BIZ_IDX']) && $params['BIZ_IDX'] != "") {
+			$this->db->where("A.BIZ_IDX", $params['BIZ_IDX']);
 		}
 
 

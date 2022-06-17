@@ -58,14 +58,20 @@ class ORDPLN extends CI_Controller
 	public function head_order()
 	{
 		$data['str'] = array(); //검색어관련
+		$data['str']['actnm'] = trim($this->input->post('actnm')); //시작일자
 		$data['str']['sdate'] = $this->input->post('sdate'); //시작일자
 		$data['str']['edate'] = $this->input->post('edate'); //끝일자
+		$data['str']['biz'] = trim($this->input->post('biz')); //거래처
 
+		$params['BIZ_IDX'] = "";
+		$params['ACT_NAME'] = "";
 		$params['SDATE'] = "";
 		$params['EDATE'] = "";
 
-		if (!empty($data['str']['sdate'])) { $params['SDATE'] = $data['str']['sdate']; }
-		if (!empty($data['str']['edate'])) { $params['EDATE'] = $data['str']['edate']; }
+		if (!empty($data['str']['biz']))  $params['BIZ_IDX'] = $data['str']['biz']; 
+		if (!empty($data['str']['actnm']))  $params['ACT_NAME'] = $data['str']['actnm'];
+		if (!empty($data['str']['sdate']))  $params['SDATE'] = $data['str']['sdate'];
+		if (!empty($data['str']['edate']))  $params['EDATE'] = $data['str']['edate'];
 
 
 		$data['perpage'] = ($this->input->post('perpage') != "") ? $this->input->post('perpage') : 20;
@@ -80,6 +86,7 @@ class ORDPLN extends CI_Controller
 		//list
 		$data['list']=$this->ordpln_model->head_order($params, $pageNum, $config['per_page']);
 		$this->data['cnt'] = $this->ordpln_model->head_order_cut($params);
+		$data['BIZ']=$this->sys_model->biz_list();
 
 
 		/* pagenation start */
@@ -170,12 +177,6 @@ class ORDPLN extends CI_Controller
 		echo json_encode($data);
 	}
 
-
-
-
-
-
-
 	// 주문현황
 	public function ordercur()
 	{
@@ -185,14 +186,21 @@ class ORDPLN extends CI_Controller
 	public function ajax_ordercur()
 	{
 		$data['str'] = array(); //검색어관련
+		$data['str']['actnm'] = trim($this->input->post('actnm')); //수주명
 		$data['str']['sdate'] = $this->input->post('sdate'); //시작일자
 		$data['str']['edate'] = $this->input->post('edate'); //끝일자
+		$data['str']['biz'] = trim($this->input->post('biz')); //거래처
 
+
+		$params['ACT_NAME'] = "";
 		$params['SDATE'] = "";
 		$params['EDATE'] = "";
+		$params['BIZ_IDX'] = "";
 
-		if (!empty($data['str']['sdate'])) { $params['SDATE'] = $data['str']['sdate']; }
-		if (!empty($data['str']['edate'])) { $params['EDATE'] = $data['str']['edate']; }
+		if (!empty($data['str']['actnm']))  $params['ACT_NAME'] = $data['str']['actnm'];
+		if (!empty($data['str']['sdate']))  $params['SDATE'] = $data['str']['sdate']; 
+		if (!empty($data['str']['edate']))  $params['EDATE'] = $data['str']['edate']; 
+		if (!empty($data['str']['biz']))  $params['BIZ_IDX'] = $data['str']['biz']; 
 
 
 		$data['perpage'] = ($this->input->post('perpage') != "") ? $this->input->post('perpage') : 20;
@@ -207,6 +215,10 @@ class ORDPLN extends CI_Controller
 		//list
 		$data['list']=$this->ordpln_model->head_order($params, $pageNum, $config['per_page']);
 		$this->data['cnt'] = $this->ordpln_model->head_order_cut($params);
+		$data['BIZ']=$this->sys_model->biz_list();
+
+
+		// echo var_dump($data['list']);
 
 
 		/* pagenation start */
@@ -232,12 +244,18 @@ class ORDPLN extends CI_Controller
 	public function ajax_orderprocess()
 	{
 		$data['str'] = array(); //검색어관련
+		$data['str']['actnm'] = trim($this->input->post('actnm')); //수주명
 		$data['str']['sdate'] = $this->input->post('sdate'); //시작일자
 		$data['str']['edate'] = $this->input->post('edate'); //끝일자
+		$data['str']['biz'] = trim($this->input->post('biz')); //거래처
 
+		$params['BIZ_IDX'] = "";
+		$params['ACT_NAME'] = "";
 		$params['SDATE'] = "";
 		$params['EDATE'] = "";
 
+		if (!empty($data['str']['biz']))  $params['BIZ_IDX'] = $data['str']['biz']; 
+		if (!empty($data['str']['actnm']))  $params['ACT_NAME'] = $data['str']['actnm'];
 		if (!empty($data['str']['sdate'])) { $params['SDATE'] = $data['str']['sdate']; }
 		if (!empty($data['str']['edate'])) { $params['EDATE'] = $data['str']['edate']; }
 
@@ -254,6 +272,7 @@ class ORDPLN extends CI_Controller
 		//list
 		$data['list']=$this->ordpln_model->head_order($params, $pageNum, $config['per_page']);
 		$this->data['cnt'] = $this->ordpln_model->head_order_cut($params);
+		$data['BIZ']=$this->sys_model->biz_list();
 
 
 		/* pagenation start */

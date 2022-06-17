@@ -15,7 +15,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <label for="cont">내용</label>
                     <input type="text" name="cont" id="cont" value="<?= $str['cont'] ?>" size="12" onkeypress="if(event.keyCode=='13')load();"/>
 
-                    <button type="button" class="search_submit ajax_search"><i class="material-icons">search</i></button>
+                    <button class="search_submit ajax_search"><i class="material-icons">search</i></button>
                 </form>
             </div>
             <span class="btn print add_notice"><i class="material-icons">add</i>신규등록</span>

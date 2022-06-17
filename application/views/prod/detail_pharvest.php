@@ -65,7 +65,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <td colspan="1"><input type="text" readonly name="NA2CO3" class="form_input input_100 disabled" value="<?= isset($info->NA2CO3) ? $info->NA2CO3 : '' ?>"></td>
                     </tr>
                     <tr>
-                        <th class="w120 res">Li2Co3(생산량)</th>
+                        <th class="w120">Li2Co3(생산량)</th>
                         <td colspan="2"><input type="text" readonly name="PPLI2CO3_AFTER_INPUT" class="form_input input_100 disabled" value="<?= isset($info->PPLI2CO3_AFTER_INPUT) ? $info->PPLI2CO3_AFTER_INPUT : '' ?>"></td>
                     </tr>
                 </tbody>
@@ -96,17 +96,24 @@ defined('BASEPATH') or exit('No direct script access allowed');
             console.log(i[0] + ", " + i[1]);
 
         if ($("input[name='PHRAW_INPUT'").val() == "") {
-            check =1;
+            alert("원료를 입력해 주세요.");
+            $("input[name='PHRAW_INPUT'").focus();
         }
         if ($("input[name='PHLICL_AFTER_INPUT'").val() == "") {
-            check =1;
+            alert("LiCl를 입력해 주세요.");
+            $("input[name='PHLICL_AFTER_INPUT'").focus();
         }
         if ($("input[name='PHNA2CO3_INPUT'").val() == "") {
-            check =1;
+            alert("Na2Co3를 입력해 주세요.");
+            $("input[name='PHNA2CO3_INPUT'").focus();
         }
         if ($("input[name='PHH2O_INPUT'").val() == "") {
-            check =1;
+            alert("H2O를 입력해 주세요.");
+            $("input[name='PHH2O_INPUT'").focus();
         }
+
+        if(check==0)
+            
 
         $.ajax({
             url: "<?= base_url('PROD/update_pharvest') ?>",
@@ -118,7 +125,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
             processData: false,
             success: function(data) {
                 if (data == 1)
-                    alert("성공");
+                    alert("등록되었습니다");
                 else
                     alert("실패");
             },
@@ -137,21 +144,23 @@ defined('BASEPATH') or exit('No direct script access allowed');
         for (var i of formData.entries())
             console.log(i[0] + ", " + i[1]);
 
-        // if ($("input[name='ORDER_DATE'").val() == "") {
-        //     alert("작업 시작일을 입력해 주세요");
-        //     $("input[name='ORDER_DATE'").focus();
-        //     return false;
-        // }
-        // if ($("input[name='START_DATE'").val() == "") {
-        //     alert("작업 시작일을 입력해 주세요");
-        //     $("input[name='START_DATE'").focus();
-        //     return false;
-        // }
-        // if ($("input[name='END_DATE'").val() == "") {
-        //     alert("작업 시작일을 입력해 주세요");
-        //     $("input[name='END_DATE'").focus();
-        //     return false;
-        // }
+
+        if ($("input[name='PHRAW_INPUT'").val() == "") {
+            alert("원료를 입력해 주세요.");
+            $("input[name='PHRAW_INPUT'").focus();
+        }
+        if ($("input[name='PHLICL_AFTER_INPUT'").val() == "") {
+            alert("LiCl를 입력해 주세요.");
+            $("input[name='PHLICL_AFTER_INPUT'").focus();
+        }
+        if ($("input[name='PHNA2CO3_INPUT'").val() == "") {
+            alert("Na2Co3를 입력해 주세요.");
+            $("input[name='PHNA2CO3_INPUT'").focus();
+        }
+        if ($("input[name='PHH2O_INPUT'").val() == "") {
+            alert("H2O를 입력해 주세요.");
+            $("input[name='PHH2O_INPUT'").focus();
+        }
 
         $.ajax({
             url: "<?= base_url('PROD/update_pharvest') ?>",
@@ -163,7 +172,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
             processData: false,
             success: function(data) {
                 if (data == 1)
-                    alert("성공");
+                    alert("수정되었습니다.");
                 else
                     alert("실패");
             },
@@ -190,7 +199,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
             processData: false,
             success: function(data) {
                 if (data == 1)
-                    alert("성공");
+                    alert("삭제되었습니다");
                 else
                     alert("실패");
             }

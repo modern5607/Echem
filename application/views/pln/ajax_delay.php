@@ -43,7 +43,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 				?>
 
 				</select>
-				<button type="button" class="search_submit ajax_search"><i class="material-icons">search</i></button>
+				<button class="search_submit ajax_search"><i class="material-icons">search</i></button>
 			</form>
 		</div>
 	</header>

@@ -15,7 +15,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<input type="date" name="edate" class="" size="11" value="<?php echo $str['edate']; ?>" placeholder="<?= date("Y-m-d") ?>" />
 						<label>수주명</label>
 						<input type="text" name="actname" value="<?= $str['actname'] ?>" />
-						<button type="button" class="search_submit ajax_search"><i class="material-icons">search</i></button>
+						<button class="search_submit ajax_search"><i class="material-icons">search</i></button>
 					</form>
 				</div>
 				<!-- <span class="btn print add_biz"><i class="material-icons">add</i>업체추가</span> -->

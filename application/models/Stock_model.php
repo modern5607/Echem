@@ -16,6 +16,9 @@ class Stock_model extends CI_Model
 		if ((!empty($param['SDATE']) && $param['SDATE'] != "") && (!empty($param['EDATE']) && $param['EDATE'] != "")) {
 			$where .=" AND ORDER_DATE BETWEEN '{$param['SDATE']}' AND '{$param['EDATE']}'";
 		}
+		if (!empty($param['ACT_NAME']) && $param['ACT_NAME'] != "") {
+			$where .=" AND A.ACT_NAME LIKE '%{$param['ACT_NAME']}%'";
+		}
 		if (!empty($param['IDX']) && $param['IDX'] != "") {
 			$where .=" AND O.IDX = '{$param['IDX']}'";
 		}
@@ -39,7 +42,7 @@ class Stock_model extends CI_Model
 				{$where}
 SQL;		
 		$query = $this->db->query($sql);
-		// echo $this->db->last_query();
+		echo $this->db->last_query();
 		return $query->result();
 	}
 	public function package_cut($param)
@@ -90,6 +93,9 @@ SQL;
 		if ((!empty($param['SDATE']) && $param['SDATE'] != "") && (!empty($param['EDATE']) && $param['EDATE'] != "")) {
 			$where .=" AND TRANS_DATE BETWEEN '{$param['SDATE']}' AND '{$param['EDATE']}'";
 		}
+		if (!empty($param['ITEM_NAME']) && $param['ITEM_NAME'] != "") {
+			$where .=" AND I.ITEM_NAME LIKE '%{$param['ITEM_NAME']}%'";
+		}
 		if (!empty($param['KIND']) && $param['KIND'] != "") {
 			$where .=" AND T.KIND = '{$param['KIND']}'";
 		}
@@ -104,6 +110,7 @@ SQL;
 			WHERE 1 {$where}
 SQL;		
 		$query = $this->db->query($sql);
+		echo $this->db->last_query();
 		return $query->result();
 	}
 
@@ -114,9 +121,12 @@ SQL;
 		if (!empty($param['SPEC']) && $param['SPEC'] != "") {
 			$where .=" AND SPEC = '{$param['SPEC']}'";
 		}
+		if (!empty($param['ITEM_NAME']) && $param['ITEM_NAME'] != "") {
+			$where .=" AND I.ITEM_NAME LIKE '%{$param['ITEM_NAME']}%'";
+		}
 
 		$sql=<<<SQL
-			SELECT * FROM T_ITEMS
+			SELECT * FROM T_ITEMS AS I
 			where USE_YN = 'Y' {$where}
 SQL;		
 		$query = $this->db->query($sql);
@@ -176,6 +186,9 @@ SQL;
 		}
 		if (!empty($params['BIZ']) && $params['BIZ'] != "") {
 			$this->db->where("A.BIZ_IDX", $params['BIZ']);
+		}
+		if (!empty($params['ACT_NAME']) && $params['ACT_NAME'] != "") {
+			$this->db->like("A.ACT_NAME", $params['ACT_NAME']);
 		}
 		if (!empty($params['CLAIM']) && $params['CLAIM'] == "1") {
 			$this->db->where("CLAIM", NULL);

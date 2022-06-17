@@ -18,10 +18,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 <header>
 	<div class="searchDiv">
-		<form id="headForm">
+		<form id="headForm" onsubmit="return false">
 			<label>일자</label>
 			<input type="text" name="sdate" class="calendar" size="11" value="<?php echo $str['sdate']; ?>" placeholder="<?= date("Y-m-d") ?>" /> ~
 			<input type="text" name="edate" class="calendar" size="11" value="<?php echo $str['edate']; ?>" placeholder="<?= date("Y-m-d") ?>" />
+			<label>수주명</label>
+			<input type="text" name="actnm" class="" size="11" value="<?= $str['actnm']?>">
+
 
 			<label>포장여부</label>
 				<select name="package" id="package" style="padding:4px 10px; border:1px solid #ddd;">
@@ -30,7 +33,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 					<option value="N" <?= ($str['package'] == 'N') ? 'selected' : '' ?>>포장 전</option>
 				</select>
 
-			<button type="button" class="search_submit head_search"><i class="material-icons">search</i></button>
+			<button class="search_submit head_search"><i class="material-icons">search</i></button>
 
 			<input type="button" value="선택해제" class="link_s1 link_hover" data-idx="R" style="position:absolute;right:20px;color:#333;" autocomplete="off">
 		</form>

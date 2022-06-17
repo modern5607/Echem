@@ -30,7 +30,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<option value="N" <?= ($str['useyn'] == 'N')?'selected':'' ?>>미사용</option>
 						</select>
 					
-					<button type="button" class="search_submit ajax_search"><i class="material-icons">search</i></button>
+					<button class="search_submit ajax_search"><i class="material-icons">search</i></button>
 				</form>
 			</div>
 			<?= ($_SESSION['user_level']=='2') ? '<span class="btn print member_insert"><i class="material-icons">add</i>신규등록</span>' : ""; ?>
