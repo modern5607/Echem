@@ -108,7 +108,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
             processData: false,
             success: function(data) {
                 if (data == 1)
-                    alert("성공");
+                    alert("등록되었습니다");
                 else
                     alert("실패");
             },
@@ -143,7 +143,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
             processData: false,
             success: function(data) {
                 if (data == 1)
-                    alert("성공");
+                    alert("수정되었습니다");
                 else
                     alert("실패");
             },

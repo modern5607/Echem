@@ -19,7 +19,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 				<label>건수</label><input type="radio" name="type" value="num" <?= ($str['type'] == 'num') ? "checked" : "" ?>>
 				<label>중량</label><input type="radio" name="type" value="weight" <?= ($str['type'] == 'weight') ? "checked" : "" ?>>
 
-				<button type="button" class="search_submit ajax_search"><i class="material-icons">search</i></button>
+				<button class="search_submit ajax_search"><i class="material-icons">search</i></button>
 				<span class="btn print download" data-type="<?=($str['type'] == 'num')?"건수":"중량"?>"><i class="material-icons">get_app</i>엑셀받기</span> </button>
 
 			</form>

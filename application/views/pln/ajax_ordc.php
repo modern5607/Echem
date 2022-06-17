@@ -34,7 +34,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 				<?php
 				}
 				?>
-				<button type="button" class="search_submit ajax_search"><i class="material-icons">search</i></button>
+				<button class="search_submit ajax_search"><i class="material-icons">search</i></button>
 			</form>
 		</div>
 		<span class="btn print download"><i class="material-icons">get_app</i>엑셀다운로드</span>

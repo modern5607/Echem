@@ -39,7 +39,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 						<label>일자</label>
 						<input type="text" name="month" id="month" size=12 value="<?php echo $str['month']; ?>" />
-						<button type="button" class="search_submit ajax_search"><i class="material-icons">search</i></button>
+						<button class="search_submit ajax_search"><i class="material-icons">search</i></button>
 					</form>
 				</div>
 

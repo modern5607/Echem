@@ -29,7 +29,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 				<label>일자</label>
 				<input type="text" id="week-picker" name="week" value="<?php echo $str['week']; ?>" />
-				<button type="button" class="search_submit ajax_search"><i class="material-icons">search</i></button>
+				<button class="search_submit ajax_search"><i class="material-icons">search</i></button>
 			</form>
 		</div>
 

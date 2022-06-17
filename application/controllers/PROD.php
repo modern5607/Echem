@@ -56,9 +56,11 @@ class PROD extends CI_Controller
 	}
 	public function head_workorder()
 	{
+		$data['str']['actnm'] = trim($this->input->post('actnm')); //수주명
 		$data['str']['sdate'] = $this->input->post("sdate");
 		$data['str']['edate'] = $this->input->post("edate");
 
+		$params['ACT_NAME'] = (isset($data['str']['actnm'])) ? $data['str']['actnm'] : '';
 		$params['SDATE'] = (isset($data['str']['sdate'])) ? $data['str']['sdate'] : '';
 		$params['EDATE'] = (isset($data['str']['edate'])) ? $data['str']['edate'] : date("Y-m-d", time());
 
@@ -184,9 +186,11 @@ class PROD extends CI_Controller
 
 	public function head_pworkorder()
 	{
+		$data['str']['actnm'] = trim($this->input->post('actnm')); //수주명
 		$data['str']['sdate'] = $this->input->post("sdate");
 		$data['str']['edate'] = $this->input->post("edate");
 
+		$params['ACT_NAME'] = (isset($data['str']['actnm'])) ? $data['str']['actnm'] : '';
 		$params['SDATE'] = (isset($data['str']['sdate'])) ? $data['str']['sdate'] : '';
 		$params['EDATE'] = (isset($data['str']['edate'])) ? $data['str']['edate'] : date("Y-m-d", time());
 
@@ -284,9 +288,11 @@ class PROD extends CI_Controller
 	}
 	public function head_matinput()
 	{
+		$data['str']['actnm'] = trim($this->input->post('actnm')); //수주명
 		$data['str']['sdate'] = $this->input->post("sdate");
 		$data['str']['edate'] = $this->input->post("edate");
 
+		$params['ACT_NAME'] = (isset($data['str']['actnm'])) ? $data['str']['actnm'] : '';
 		$params['SDATE'] = (isset($data['str']['sdate'])) ? $data['str']['sdate'] : '';
 		$params['EDATE'] = (isset($data['str']['edate'])) ? $data['str']['edate'] : date("Y-m-d", time());
 
@@ -384,9 +390,11 @@ class PROD extends CI_Controller
 	}
 	public function head_pprodcur()
 	{
+		$data['str']['actnm'] = trim($this->input->post('actnm')); //수주명
 		$data['str']['sdate'] = $this->input->post("sdate");
 		$data['str']['edate'] = $this->input->post("edate");
 
+		$params['ACT_NAME'] = (isset($data['str']['actnm'])) ? $data['str']['actnm'] : '';
 		$params['SDATE'] = (isset($data['str']['sdate'])) ? $data['str']['sdate'] : '';
 		$params['EDATE'] = (isset($data['str']['edate'])) ? $data['str']['edate'] : date("Y-m-d", time());
 
@@ -494,9 +502,11 @@ class PROD extends CI_Controller
 	}
 	public function head_pharvest()
 	{
+		$data['str']['actnm'] = trim($this->input->post('actnm')); //수주명
 		$data['str']['sdate'] = $this->input->post("sdate");
 		$data['str']['edate'] = $this->input->post("edate");
 
+		$params['ACT_NAME'] = (isset($data['str']['actnm'])) ? $data['str']['actnm'] : '';
 		$params['SDATE'] = (isset($data['str']['sdate'])) ? $data['str']['sdate'] : '';
 		$params['EDATE'] = (isset($data['str']['edate'])) ? $data['str']['edate'] : date("Y-m-d", time());
 

@@ -37,9 +37,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <td colspan="2"><input type="number" readonly name="QTY" class="form_input input_100 disabled" value="<?= isset($info->QTY) ? $info->QTY : '' ?>"></td>
                     </tr>
                     <tr>
-                        <th class="w120 res">작업시작일</th>
+                        <th class="w120">작업시작일</th>
                         <td colspan="2"><input type="text" name="START_DATE" readonly class="form_input input_100 disabled" value="<?= isset($info->START_DATE) ? $info->START_DATE : '' ?>"></td>
-                        <th class="w120 res">작업종료일</th>
+                        <th class="w120">작업종료일</th>
                         <td colspan="2"><input type="text" name="END_DATE" readonly class="form_input input_100 disabled" value="<?= isset($info->END_DATE) ? $info->END_DATE : '' ?>"></td>
                     </tr>
                     <tr>
@@ -122,7 +122,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
             processData: false,
             success: function(data) {
                 if (data == 1)
-                    alert("성공");
+                    alert("등록되었습니다");
                 else
                     alert("실패");
             },
@@ -165,7 +165,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
             processData: false,
             success: function(data) {
                 if (data == 1)
-                    alert("성공");
+                    alert("수정되었습니다");
                 else
                     alert("실패");
             },
@@ -191,7 +191,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
             processData: false,
             success: function(data) {
                 if (data == 1)
-                    alert("성공");
+                    alert("삭제되었습니다");
                 else
                     alert("실패");
             }

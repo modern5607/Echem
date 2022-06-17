@@ -18,7 +18,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<option value="R" <?= ($str['sjgb'] == 'R')?'selected':'' ?>>정규</option>
 						<option value="G" <?= ($str['sjgb'] == 'G')?'selected':'' ?>>돌발</option>
 					</select>
-				<button type="button" class="search_submit ajax_search"><i class="material-icons">search</i></button>
+				<button class="search_submit ajax_search"><i class="material-icons">search</i></button>
 			</form>
 		</div>
 	</header> 

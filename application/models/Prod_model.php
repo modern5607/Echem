@@ -15,6 +15,9 @@ class Prod_model extends CI_Model
 		if($params['SDATE']!="" && $params['EDATE']!="")
 			$where.="AND ACT_DATE BETWEEN '{$params['SDATE']} 00:00:00' AND '{$params['EDATE']} 23:59:59'";
 
+		if (!empty($params['ACT_NAME']) && $params['ACT_NAME'] != "")
+			$where.="AND ACT.ACT_NAME LIKE '%{$params['ACT_NAME']}%'";
+
 		$sql = <<<SQL
 		SELECT
 			ACT.IDX ACT_IDX,
@@ -44,6 +47,9 @@ SQL;
 		$where='';
 		if($params['SDATE']!="" && $params['EDATE']!="")
 			$where.="AND ACT_DATE BETWEEN '{$params['SDATE']} 00:00:00' AND '{$params['EDATE']} 23:59:59'";
+
+		if (!empty($params['ACT_NAME']) && $params['ACT_NAME'] != "")
+			$where.="AND ACT.ACT_NAME LIKE '%{$params['ACT_NAME']}%'";
 
 		$sql = <<<SQL
 		SELECT
@@ -171,6 +177,9 @@ SQL;
 		if($params['SDATE']!="" && $params['EDATE']!="")
 			$where.="AND ACT_DATE BETWEEN '{$params['SDATE']} 00:00:00' AND '{$params['EDATE']} 23:59:59'";
 			
+		if (!empty($params['ACT_NAME']) && $params['ACT_NAME'] != "")
+			$where.="AND ACT.ACT_NAME LIKE '%{$params['ACT_NAME']}%'";
+
 
 		$sql = <<<SQL
 		SELECT
@@ -203,6 +212,9 @@ SQL;
 		if($params['SDATE']!="" && $params['EDATE']!="")
 			$where.="AND ACT_DATE BETWEEN '{$params['SDATE']} 00:00:00' AND '{$params['EDATE']} 23:59:59'";
 			
+		if (!empty($params['ACT_NAME']) && $params['ACT_NAME'] != "")
+			$where.="AND ACT.ACT_NAME LIKE '%{$params['ACT_NAME']}%'";
+
 
 		$sql = <<<SQL
 		SELECT
@@ -381,6 +393,9 @@ SQL;
 		if($params['SDATE']!="" && $params['EDATE']!="")
 			$where.="AND ACT_DATE BETWEEN '{$params['SDATE']} 00:00:00' AND '{$params['EDATE']} 23:59:59'";
 			
+		if (!empty($params['ACT_NAME']) && $params['ACT_NAME'] != "")
+			$where.="AND ACT.ACT_NAME LIKE '%{$params['ACT_NAME']}%'";
+
 		$sql = <<<SQL
 		SELECT
 			ACT.IDX ACT_IDX,
@@ -412,6 +427,9 @@ SQL;
 		if($params['SDATE']!="" && $params['EDATE']!="")
 			$where.="AND ACT_DATE BETWEEN '{$params['SDATE']} 00:00:00' AND '{$params['EDATE']} 23:59:59'";
 			
+		if (!empty($params['ACT_NAME']) && $params['ACT_NAME'] != "")
+			$where.="AND ACT.ACT_NAME LIKE '%{$params['ACT_NAME']}%'";
+
 		$sql = <<<SQL
 		SELECT
 			ACT.IDX ACT_IDX,
@@ -532,6 +550,9 @@ SQL;
 		if($params['SDATE']!="" && $params['EDATE']!="")
 			$where.="AND ACT_DATE BETWEEN '{$params['SDATE']} 00:00:00' AND '{$params['EDATE']} 23:59:59'";
 			
+		if (!empty($params['ACT_NAME']) && $params['ACT_NAME'] != "")
+			$where.="AND ACT.ACT_NAME LIKE '%{$params['ACT_NAME']}%'";
+
 		$sql = <<<SQL
 		SELECT
 			ACT.IDX ACT_IDX,
@@ -561,6 +582,9 @@ SQL;
 		if($params['SDATE']!="" && $params['EDATE']!="")
 			$where.="AND ACT_DATE BETWEEN '{$params['SDATE']} 00:00:00' AND '{$params['EDATE']} 23:59:59'";
 			
+		if (!empty($params['ACT_NAME']) && $params['ACT_NAME'] != "")
+			$where.="AND ACT.ACT_NAME LIKE '%{$params['ACT_NAME']}%'";
+
 		$sql = <<<SQL
 		SELECT
 			ACT.IDX ACT_IDX,
@@ -677,6 +701,9 @@ SQL;
 		if($params['SDATE']!="" && $params['EDATE']!="")
 			$where.="AND ACT_DATE BETWEEN '{$params['SDATE']} 00:00:00' AND '{$params['EDATE']} 23:59:59'";
 			
+		if (!empty($params['ACT_NAME']) && $params['ACT_NAME'] != "")
+			$where.="AND ACT.ACT_NAME LIKE '%{$params['ACT_NAME']}%'";
+
 		$sql = <<<SQL
 		SELECT
 			ACT.IDX ACT_IDX,
@@ -707,6 +734,9 @@ SQL;
 		if($params['SDATE']!="" && $params['EDATE']!="")
 			$where.="AND ACT_DATE BETWEEN '{$params['SDATE']} 00:00:00' AND '{$params['EDATE']} 23:59:59'";
 			
+		if (!empty($params['ACT_NAME']) && $params['ACT_NAME'] != "")
+			$where.="AND ACT.ACT_NAME LIKE '%{$params['ACT_NAME']}%'";
+
 		$sql = <<<SQL
 		SELECT
 			ACT.IDX ACT_IDX,

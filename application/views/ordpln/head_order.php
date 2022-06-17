@@ -17,12 +17,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 <header>
 	<div class="searchDiv">
-		<form id="headForm">
-			<label>일자</label>
-			<input type="date" name="sdate" class="" size="11" value="<?php echo $str['sdate']; ?>" placeholder="<?= date("Y-m-d") ?>" /> ~
-			<input type="date" name="edate" class="" size="11" value="<?php echo $str['edate']; ?>" placeholder="<?= date("Y-m-d") ?>" />
+		<form id="headForm" onsubmit="return false">
+			<label>수주일자</label>
+			<input type="date" name="sdate" class="" size="11" value="<?= $str['sdate']; ?>" placeholder="<?= date("Y-m-d") ?>" /> ~
+			<input type="date" name="edate" class="" size="11" value="<?= $str['edate']; ?>" placeholder="<?= date("Y-m-d") ?>" />
+			<label>수주명</label>
+			<input type="text" name="actnm" class="" size="11" value="<?= $str['actnm']?>">
 
-			<button type="button" class="search_submit head_search"><i class="material-icons">search</i></button>
+			<button class="search_submit head_search"><i class="material-icons">search</i></button>
 
 			<input type="button" value="선택해제" class="link_s1" data-idx="r" style="position:absolute; right:20px; color:#333;">
 		</form>
@@ -72,16 +74,16 @@ defined('BASEPATH') or exit('No direct script access allowed');
 	?>
 		<div class="limitset">
 			<select name="per_page">
-				<option value="20" <?php echo ($perpage == 20) ? "selected" : ""; ?>>20</option>
-				<option value="50" <?php echo ($perpage == 50) ? "selected" : ""; ?>>50</option>
-				<option value="80" <?php echo ($perpage == 80) ? "selected" : ""; ?>>80</option>
-				<option value="100" <?php echo ($perpage == 100) ? "selected" : ""; ?>>100</option>
+				<option value="20" <?= ($perpage == 20) ? "selected" : ""; ?>>20</option>
+				<option value="50" <?= ($perpage == 50) ? "selected" : ""; ?>>50</option>
+				<option value="80" <?= ($perpage == 80) ? "selected" : ""; ?>>80</option>
+				<option value="100" <?= ($perpage == 100) ? "selected" : ""; ?>>100</option>
 			</select>
 		</div>
 	<?php
 	}
 	?>
-	<?php echo $this->data['pagenation']; ?>
+	<?= $this->data['pagenation']; ?>
 </div>
 
 <div id="pop_container">

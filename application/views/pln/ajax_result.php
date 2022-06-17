@@ -23,7 +23,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 				<input type="text" name="sdate" id="month" size="11" value="<?= $str['sdate']; ?>" />
 
 				<span class="btn print download"><i class="material-icons">get_app</i>엑셀받기</span> </button>
-				<button type="button" class="search_submit ajax_search"><i class="material-icons">search</i></button>
+				<button class="search_submit ajax_search"><i class="material-icons">search</i></button>
 			</form>
 		</div>
 	</header>

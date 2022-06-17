@@ -21,7 +21,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 							<option value="2" <?= ($str['level'] == 2) ? "selected" : ""; ?>>관리자</option>
 					</select>
 
-					<button type="button" class="search_submit ajax_search"><i class="material-icons">search</i></button>
+					<button class="search_submit ajax_search"><i class="material-icons">search</i></button>
 
 					<span class="btn print add_member"><i class="material-icons">add</i>신규등록</span>
 				</form>

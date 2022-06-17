@@ -11,7 +11,7 @@
 				<option value="Y" <?= ($str['use'] == "Y") ? "selected" : ""; ?>>사용</option>
 				<option value="N" <?= ($str['use'] == "N") ? "selected" : ""; ?>>미사용</option>
 			</select>
-			<button type="button" class="search_submit head_search"><i class="material-icons">search</i></button>
+			<button class="search_submit head_search"><i class="material-icons">search</i></button>
 		</form>
 	</div>
 	<span class="btn add add_head"><i class="material-icons">add</i>추가</span>

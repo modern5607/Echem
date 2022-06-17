@@ -6,7 +6,7 @@
 			<input type="date" name="sdate" class="" size="11" value="<?= $str['sdate']; ?>" placeholder="<?= date("Y-m-d") ?>" /> ~
 			<input type="date" name="edate" class="" size="11" value="<?= $str['edate']; ?>" placeholder="<?= date("Y-m-d") ?>" />
 
-			<button type="button" class="search_submit ajax_search"><i class="material-icons">search</i></button>
+			<button class="search_submit ajax_search"><i class="material-icons">search</i></button>
 		</form>
 	</div>
 	<!-- <span class="btn add add_head"><i class="material-icons">add</i>추가</span> -->

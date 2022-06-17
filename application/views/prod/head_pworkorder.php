@@ -13,12 +13,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
 	<div class="">
 		<header>
 			<div class="searchDiv">
-				<form id="headForm">
+				<form id="headForm" onsubmit="return false">
 					<label>수주일</label>
 					<input type="date" name="sdate" value="<?= $str['sdate']; ?>" class=""  /> ~ 
 					<input type="date" name="edate" value="<?= $str['edate']; ?>" class="" />
+					<label>수주명</label>
+					<input type="text" name="actnm" class="" size="11" value="<?= $str['actnm']?>">
 					
-					<button type="button" class="search_submit head_search"><i class="material-icons">search</i></button>
+					<button class="search_submit head_search"><i class="material-icons">search</i></button>
 				</form>
 			</div>
 			<!-- <span class="btn print add_order"  style="padding:7px 11px;"><i class="material-icons">add</i>작업지시 등록</span> -->

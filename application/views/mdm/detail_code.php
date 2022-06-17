@@ -12,7 +12,7 @@
 				<option value="Y" <?= ($str['use'] == "Y") ? "selected" : ""; ?>>사용</option>
 				<option value="N" <?= ($str['use'] == "N") ? "selected" : ""; ?>>미사용</option>
 			</select>
-			<button type="button" class="search_submit detail_search"><i class="material-icons">search</i></button>
+			<button class="search_submit detail_search"><i class="material-icons">search</i></button>
 		</form>
 	</div>
 	<?php if ($de_show_chk) { //hid값이 없는경우는 노출안됨 
