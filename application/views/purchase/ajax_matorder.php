@@ -114,6 +114,11 @@
 			return false;
 		}
 		
+		if ($("input[name='QTY']").val() == "0") {
+			alert("1이상 입력하세요.");
+			$("input[name='QTY']").focus();
+			return false;
+		}
 		if ($("input[name='QTY']").val() == "") {
 			alert("출고수량 입력하세요.");
 			$("input[name='QTY']").focus();

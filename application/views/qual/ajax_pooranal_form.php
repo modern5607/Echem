@@ -24,7 +24,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <tr>
                             <th><label>등록일자</label></th>
                             <td>
-                            <input type="text" readonly="" name="CUST_NM" class="form_input input_100 disabled" value="<?= !empty($info->DEFECT_REMARK_DATE) ? $info->DEFECT_REMARK_DATE : ""; ?>" autocomplete="off">
+                            <input type="text" readonly="" name="ORDER_DATE" class="form_input input_100" value="<?= !empty($info->DEFECT_REMARK_DATE) ? $info->DEFECT_REMARK_DATE : ""; ?>" autocomplete="off">
                             </td>
                         </tr>
                         <tr>
