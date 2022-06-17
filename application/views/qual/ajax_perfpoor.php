@@ -47,7 +47,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<td class="cen"><?= $no;?></td>
 							<td class="cen"><?= $row->ORDER_DATE?></td>
 							<td><?= $row->ACT_NAME?></td>
-							<td><?= $row->BIZ_NAME?></td>
+							<td><?= $row->CUST_NM?></td>
 							<td class="cen"><?= $row->END_DATE?></td>
 							<td class="right"><?= number_format($row->QTY)?></td>
 							<td class="right"><?= $row->PPLI2CO3_AFTER_INPUT?></td>

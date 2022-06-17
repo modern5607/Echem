@@ -14,6 +14,8 @@ class Qual_model extends CI_Model
 		if ($params['SDATE'] != "" && $params['EDATE'] != "")
 			$where .= "AND ACT_DATE BETWEEN '{$params['SDATE']} 00:00:00' AND '{$params['EDATE']} 23:59:59'";
 
+		if (!empty($params['BIZ_IDX']) && $params['BIZ_IDX'] != "")
+			$where .= "AND B.IDX = '{$params['BIZ_IDX']}'";
 		$sql = <<<SQL
 		SELECT
 			ACT.IDX ACT_IDX,
@@ -146,7 +148,7 @@ SQL;
 			O.ORDER_DATE,
 			ACT.ACT_NAME,
 			ACT.BIZ_IDX,
-			ACT.BIZ_NAME,
+			B.CUST_NM,
 			O.END_DATE,
 			ACT.QTY,
 			O.PPLI2CO3_AFTER_INPUT,
@@ -158,6 +160,7 @@ SQL;
 		FROM
 			T_ACT AS ACT
 			JOIN T_ORDER AS O ON O.ACT_IDX = ACT.IDX
+			LEFT JOIN T_BIZ B ON ACT.BIZ_IDX = B.IDX
 		WHERE
 			O.DEFECT_YN = 'Y'
 			{$where}

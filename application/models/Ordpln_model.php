@@ -22,6 +22,9 @@ class Ordpln_model extends CI_Model
 		if (!empty($params['IDX']) && $params['IDX'] != "") {
 			$this->db->where("A.IDX", $params['IDX']);
 		}
+		if (!empty($params['BIZ_IDX']) && $params['BIZ_IDX'] != "") {
+			$this->db->where("A.BIZ_IDX", $params['BIZ_IDX']);
+		}
 
 
 		$this->db->select("( SELECT START_DATE FROM T_ORDER AS O WHERE O.ACT_IDX = A.IDX ) AS SDATE,( SELECT END_DATE FROM T_ORDER AS O WHERE O.ACT_IDX = A.IDX ) AS EDATE, A.*, B.CUST_NM");
@@ -30,7 +33,7 @@ class Ordpln_model extends CI_Model
 		$this->db->order_by('INSERT_DATE', 'DESC');
 		$this->db->limit($limit, $start);
 		$query = $this->db->get("T_ACT as A");
-		echo $this->db->last_query();
+		// echo $this->db->last_query();
 		return $query->result();
 	}
 

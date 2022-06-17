@@ -19,11 +19,17 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		<form id="ajaxForm" onsubmit="return false">
 			
             <label>일자</label>
-                <input type="date" name="sdate" class="" size="11" value="<?php echo $str['sdate']; ?>" placeholder="<?= date("Y-m-d") ?>" /> ~
-                <input type="date" name="edate" class="" size="11" value="<?php echo $str['edate']; ?>" placeholder="<?= date("Y-m-d") ?>" />
+                <input type="date" name="sdate" class="" size="11" value="<?= $str['sdate']; ?>" placeholder="<?= date("Y-m-d") ?>" /> ~
+                <input type="date" name="edate" class="" size="11" value="<?= $str['edate']; ?>" placeholder="<?= date("Y-m-d") ?>" />
 				<label>수주명</label>
 			<input type="text" name="actnm" class="" size="11" value="<?= $str['actnm']?>">
-
+			<label for="biz">거래처</label>
+			<select name="biz" id="biz" style="padding:4px 10px; border:1px solid #ddd;">
+				<option value="">전체</option>
+				<?php foreach ($BIZ as $row) { ?>
+					<option value="<?= $row->IDX ?>" <?= ($str['biz'] == $row->IDX) ? "selected" : ""; ?>><?= $row->CUST_NM; ?></option>
+				<?php } ?>
+			</select>
 			<button class="search_submit ajax_search"><i class="material-icons">search</i></button>
 		</form>
 	</div>
@@ -82,16 +88,16 @@ defined('BASEPATH') or exit('No direct script access allowed');
 	?>
 		<div class="limitset">
 			<select name="per_page">
-				<option value="20" <?php echo ($perpage == 20) ? "selected" : ""; ?>>20</option>
-				<option value="50" <?php echo ($perpage == 50) ? "selected" : ""; ?>>50</option>
-				<option value="80" <?php echo ($perpage == 80) ? "selected" : ""; ?>>80</option>
-				<option value="100" <?php echo ($perpage == 100) ? "selected" : ""; ?>>100</option>
+				<option value="20" <?= ($perpage == 20) ? "selected" : ""; ?>>20</option>
+				<option value="50" <?= ($perpage == 50) ? "selected" : ""; ?>>50</option>
+				<option value="80" <?= ($perpage == 80) ? "selected" : ""; ?>>80</option>
+				<option value="100" <?= ($perpage == 100) ? "selected" : ""; ?>>100</option>
 			</select>
 		</div>
 	<?php
 	}
 	?>
-	<?php echo $this->data['pagenation']; ?>
+	<?= $this->data['pagenation']; ?>
 </div>
 
 <div id="pop_container">

@@ -58,9 +58,11 @@ class QUAL extends CI_Controller
 	{
 		$data['str']['sdate'] = $this->input->post("sdate");
 		$data['str']['edate'] = $this->input->post("edate");
+		$data['str']['biz'] = trim($this->input->post('biz')); //거래처
 
 		$params['SDATE'] = (isset($data['str']['sdate'])) ? $data['str']['sdate'] : '';
 		$params['EDATE'] = (isset($data['str']['edate'])) ? $data['str']['edate'] : date("Y-m-d", time());
+		$params['BIZ_IDX'] = (isset($data['str']['biz'])) ? $data['str']['biz'] : '';
 
 		$data['perpage'] = ($this->input->post('perpage') != "") ? $this->input->post('perpage') : 20;
 		//PAGINATION
@@ -74,6 +76,7 @@ class QUAL extends CI_Controller
 
 		$data['list'] = $this->qual_model->head_qexam($params, $pageNum, $config['per_page']);
 		$this->data['cnt'] = $this->qual_model->head_qexam_cut($params);
+		$data['BIZ']=$this->sys_model->biz_list();
 
 		//=====================================
 		/* pagenation start */

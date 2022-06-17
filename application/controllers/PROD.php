@@ -59,7 +59,9 @@ class PROD extends CI_Controller
 		$data['str']['actnm'] = trim($this->input->post('actnm')); //수주명
 		$data['str']['sdate'] = $this->input->post("sdate");
 		$data['str']['edate'] = $this->input->post("edate");
+		$data['str']['biz'] = trim($this->input->post('biz')); //거래처
 
+		$params['BIZ_IDX'] = (isset($data['str']['biz'])) ? $data['str']['biz'] : '';
 		$params['ACT_NAME'] = (isset($data['str']['actnm'])) ? $data['str']['actnm'] : '';
 		$params['SDATE'] = (isset($data['str']['sdate'])) ? $data['str']['sdate'] : '';
 		$params['EDATE'] = (isset($data['str']['edate'])) ? $data['str']['edate'] : date("Y-m-d", time());
@@ -77,6 +79,8 @@ class PROD extends CI_Controller
 		//모델
 		$data['list'] = $this->prod_model->head_workorder($params, $pageNum, $config['per_page']);
 		$this->data['cnt'] = $this->prod_model->head_workorder_cut($params);
+		$data['BIZ'] = $this->sys_model->biz_list();
+
 		// echo $this->data['cnt'];
 		//=====================================
 		/* pagenation start */
@@ -189,7 +193,9 @@ class PROD extends CI_Controller
 		$data['str']['actnm'] = trim($this->input->post('actnm')); //수주명
 		$data['str']['sdate'] = $this->input->post("sdate");
 		$data['str']['edate'] = $this->input->post("edate");
+		$data['str']['biz'] = trim($this->input->post('biz')); //거래처
 
+		$params['BIZ_IDX'] = (isset($data['str']['biz'])) ? $data['str']['biz'] : '';
 		$params['ACT_NAME'] = (isset($data['str']['actnm'])) ? $data['str']['actnm'] : '';
 		$params['SDATE'] = (isset($data['str']['sdate'])) ? $data['str']['sdate'] : '';
 		$params['EDATE'] = (isset($data['str']['edate'])) ? $data['str']['edate'] : date("Y-m-d", time());
@@ -207,6 +213,7 @@ class PROD extends CI_Controller
 		//모델
 		$data['list'] = $this->prod_model->head_pworkorder($params, $pageNum, $config['per_page']);
 		$this->data['cnt'] = $this->prod_model->head_pworkorder_cut($params);
+		$data['BIZ'] = $this->sys_model->biz_list();
 
 		//=====================================
 		/* pagenation start */
@@ -291,7 +298,9 @@ class PROD extends CI_Controller
 		$data['str']['actnm'] = trim($this->input->post('actnm')); //수주명
 		$data['str']['sdate'] = $this->input->post("sdate");
 		$data['str']['edate'] = $this->input->post("edate");
+		$data['str']['biz'] = trim($this->input->post('biz')); //거래처
 
+		$params['BIZ_IDX'] = (isset($data['str']['biz'])) ? $data['str']['biz'] : '';
 		$params['ACT_NAME'] = (isset($data['str']['actnm'])) ? $data['str']['actnm'] : '';
 		$params['SDATE'] = (isset($data['str']['sdate'])) ? $data['str']['sdate'] : '';
 		$params['EDATE'] = (isset($data['str']['edate'])) ? $data['str']['edate'] : date("Y-m-d", time());
@@ -306,8 +315,9 @@ class PROD extends CI_Controller
 		$data['pageNum'] =  $pageNum;
 		//=====================================
 
-		$data['list'] = $this->prod_model->head_matinput($params,$pageNum,$config['per_page']);
+		$data['list'] = $this->prod_model->head_matinput($params, $pageNum, $config['per_page']);
 		$this->data['cnt'] = $this->prod_model->head_matinput_cut($params);
+		$data['BIZ'] = $this->sys_model->biz_list();
 
 		//=====================================
 		/* pagenation start */
@@ -393,7 +403,9 @@ class PROD extends CI_Controller
 		$data['str']['actnm'] = trim($this->input->post('actnm')); //수주명
 		$data['str']['sdate'] = $this->input->post("sdate");
 		$data['str']['edate'] = $this->input->post("edate");
+		$data['str']['biz'] = trim($this->input->post('biz')); //거래처
 
+		$params['BIZ_IDX'] = (isset($data['str']['biz'])) ? $data['str']['biz'] : '';
 		$params['ACT_NAME'] = (isset($data['str']['actnm'])) ? $data['str']['actnm'] : '';
 		$params['SDATE'] = (isset($data['str']['sdate'])) ? $data['str']['sdate'] : '';
 		$params['EDATE'] = (isset($data['str']['edate'])) ? $data['str']['edate'] : date("Y-m-d", time());
@@ -408,8 +420,9 @@ class PROD extends CI_Controller
 		$data['pageNum'] =  $pageNum;
 		//=====================================
 
-		$data['list'] = $this->prod_model->head_pprodcur($params,$pageNum,$config['per_page']);
+		$data['list'] = $this->prod_model->head_pprodcur($params, $pageNum, $config['per_page']);
 		$this->data['cnt'] = $this->prod_model->head_pprodcur_cut($params);
+		$data['BIZ']=$this->sys_model->biz_list();
 
 		//=====================================
 
@@ -497,7 +510,7 @@ class PROD extends CI_Controller
 	// 공정별 수율정보
 	public function pharvest()
 	{
-		$data['title'] = '공정별 수율'; 
+		$data['title'] = '공정별 수율';
 		return $this->load->view('main50', $data);
 	}
 	public function head_pharvest()
@@ -505,7 +518,9 @@ class PROD extends CI_Controller
 		$data['str']['actnm'] = trim($this->input->post('actnm')); //수주명
 		$data['str']['sdate'] = $this->input->post("sdate");
 		$data['str']['edate'] = $this->input->post("edate");
+		$data['str']['biz'] = trim($this->input->post('biz')); //거래처
 
+		$params['BIZ_IDX'] = (isset($data['str']['biz'])) ? $data['str']['biz'] : '';
 		$params['ACT_NAME'] = (isset($data['str']['actnm'])) ? $data['str']['actnm'] : '';
 		$params['SDATE'] = (isset($data['str']['sdate'])) ? $data['str']['sdate'] : '';
 		$params['EDATE'] = (isset($data['str']['edate'])) ? $data['str']['edate'] : date("Y-m-d", time());
@@ -520,8 +535,9 @@ class PROD extends CI_Controller
 		$data['pageNum'] =  $pageNum;
 		//=====================================
 
-		$data['list'] = $this->prod_model->head_pharvest($params,$pageNum,$config['per_page']);
+		$data['list'] = $this->prod_model->head_pharvest($params, $pageNum, $config['per_page']);
 		$this->data['cnt'] = $this->prod_model->head_pharvest_cut($params);
+		$data['BIZ']=$this->sys_model->biz_list();
 
 		//=====================================
 		/* pagenation start */
@@ -621,7 +637,7 @@ class PROD extends CI_Controller
 		//뷰
 		$this->load->view('prod/ajax_prodmonitor', $data);
 	}
-	
+
 	// 생산 모니터링 - 태블릿
 	public function prodmonitor2()
 	{

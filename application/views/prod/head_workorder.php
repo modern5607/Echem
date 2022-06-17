@@ -13,6 +13,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
 					<input type="date" name="edate" value="<?= $str['edate']; ?>" class="" />
 					<label>수주명</label>
 					<input type="text" name="actnm" class="" size="11" value="<?= $str['actnm'] ?>">
+					<label for="biz">거래처</label>
+					<select name="biz" id="biz" style="padding:4px 10px; border:1px solid #ddd;">
+						<option value="">전체</option>
+						<?php foreach ($BIZ as $row) { ?>
+							<option value="<?= $row->IDX ?>" <?= ($str['biz'] == $row->IDX) ? "selected" : ""; ?>><?= $row->CUST_NM; ?></option>
+						<?php } ?>
+					</select>
 
 					<button class="search_submit head_search"><i class="material-icons">search</i></button>
 				</form>
