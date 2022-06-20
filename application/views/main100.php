@@ -21,8 +21,8 @@
     var limit = 0;
 
     function load() {
-        // for (var i of formData.entries())
-        //     console.log(i[0] + ", " + i[1]);
+        for (var i of formData.entries())
+            console.log(i[0] + ", " + i[1]);
 
 
         $(".xdsoft_datetimepicker").remove();

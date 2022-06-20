@@ -45,7 +45,9 @@
 					<td><input type="text" name="EDATE" class="" size="15" autocomplete="off" value="<?= date("Y-m-d") ?>"
 						style="border: 1px solid #ddd; padding: 5px 7px; width:100%; background: white;" ></td>
 					<td class="cen">
+						<?php if($row->END_YN == "N"){?>
 						<span type="button" class="endBtn btn" data-idx="<?= $row->IDX ?>">완료</span>
+						<?php }?>
 					</td>
 				</tr>
 

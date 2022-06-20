@@ -150,7 +150,9 @@ class QUAL extends CI_Controller
 		$data['str']['sdate'] = $this->input->post("sdate");
 		$data['str']['edate'] = $this->input->post("edate");
 		$data['str']['actname']=$this->input->post("actname");
+		$data['str']['biz'] = trim($this->input->post('biz')); //거래처
 
+		$params['BIZ_IDX'] = (isset($data['str']['biz'])) ? $data['str']['biz'] : '';
 		$params['SDATE'] = (isset($data['str']['sdate'])) ? $data['str']['sdate'] : '';
 		$params['EDATE'] = (isset($data['str']['edate'])) ? $data['str']['edate'] : date("Y-m-d", time());
 		$params['ACT_NAME'] = isset($data['str']['actname']) ? $data['str']['actname'] : '';
@@ -168,6 +170,7 @@ class QUAL extends CI_Controller
 		$data['list'] = $this->qual_model->ajax_perfpoor($params, $pageNum, $config['per_page']);
 		// echo var_dump($data['list']);
 		$this->data['cnt'] = $this->qual_model->ajax_perfpoor_cut($params);
+		$data['BIZ']=$this->sys_model->biz_list();
 
 		//=====================================
 		/* pagenation start */
@@ -195,7 +198,9 @@ class QUAL extends CI_Controller
 		$data['str']['sdate'] = $this->input->post("sdate");
 		$data['str']['edate'] = $this->input->post("edate");
 		$data['str']['actname']=$this->input->post("actname");
+		$data['str']['biz'] = trim($this->input->post('biz')); //거래처
 
+		$params['BIZ_IDX'] = (isset($data['str']['biz'])) ? $data['str']['biz'] : '';
 		$params['SDATE'] = (isset($data['str']['sdate'])) ? $data['str']['sdate'] : '';
 		$params['EDATE'] = (isset($data['str']['edate'])) ? $data['str']['edate'] : date("Y-m-d", time());
 		$params['ACT_NAME'] = isset($data['str']['actname']) ? $data['str']['actname'] : '';
@@ -213,6 +218,7 @@ class QUAL extends CI_Controller
 		$data['list'] = $this->qual_model->ajax_qualitycur($params, $pageNum, $config['per_page']);
 		// echo var_dump($data['list']);
 		$this->data['cnt'] = $this->qual_model->ajax_qualitycur_cut($params);
+		$data['BIZ']=$this->sys_model->biz_list();
 
 		//=====================================
 		/* pagenation start */
@@ -240,7 +246,9 @@ class QUAL extends CI_Controller
 		$data['str']['sdate'] = $this->input->post("sdate");
 		$data['str']['edate'] = $this->input->post("edate");
 		$data['str']['actname']=$this->input->post("actname");
+		$data['str']['biz'] = trim($this->input->post('biz')); //거래처
 
+		$params['BIZ_IDX'] = (isset($data['str']['biz'])) ? $data['str']['biz'] : '';
 		$params['SDATE'] = (isset($data['str']['sdate'])) ? $data['str']['sdate'] : '';
 		$params['EDATE'] = (isset($data['str']['edate'])) ? $data['str']['edate'] : date("Y-m-d", time());
 		$params['ACT_NAME'] = isset($data['str']['actname']) ? $data['str']['actname'] : '';
@@ -263,6 +271,7 @@ class QUAL extends CI_Controller
 		$data['list'] = $this->qual_model->ajax_pooranal($params, $pageNum, $config['per_page']);
 		// echo var_dump($data['list']);
 		$this->data['cnt'] = $this->qual_model->ajax_pooranal_cut($params);
+		$data['BIZ']=$this->sys_model->biz_list();
 
 		//=====================================
 		/* pagenation start */

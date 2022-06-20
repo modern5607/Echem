@@ -1,8 +1,11 @@
 <header>
 	<div class="searchBoxxx" style="margin-bottom:20px; padding:15px; border:1px solid #ddd;">
-		<form id="ajaxForm">
-
-			<label for="sdate">발주등록일</label>
+		<form id="ajaxForm" onsubmit="return false">
+			<label for="sdate">날짜 선택</label>
+			<select name="date" id="date" class="form_input">
+				<option value="ACT_DATE">발주등록일</option>
+				<option value="DEL_DATE">입고예정일</option>
+			</select>
 			<input type="date" name="sdate" class="" size="11" value="<?= $str['sdate']; ?>" placeholder="<?= date("Y-m-d") ?>" /> ~
 			<input type="date" name="edate" class="" size="11" value="<?= $str['edate']; ?>" placeholder="<?= date("Y-m-d") ?>" />
 

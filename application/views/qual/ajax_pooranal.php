@@ -9,12 +9,19 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 		<header>
 			<div class="searchDiv">
-				<form id="ajaxForm">
+				<form id="ajaxForm" onsubmit="return false">
 					<label>작업지시일</label>
 					<input type="date" name="sdate" class="" size="11" value="<?php echo $str['sdate']; ?>" placeholder="<?= date("Y-m-d") ?>" /> ~
 					<input type="date" name="edate" class="" size="11" value="<?php echo $str['edate']; ?>" placeholder="<?= date("Y-m-d") ?>" />
 					<label>수주명</label>
 					<input type="text" name="actname" value="<?= $str['actname'] ?>" />
+					<label for="biz">거래처</label>
+					<select name="biz" id="biz" style="padding:4px 10px; border:1px solid #ddd;">
+						<option value="">전체</option>
+						<?php foreach ($BIZ as $row) { ?>
+							<option value="<?= $row->IDX ?>" <?= ($str['biz'] == $row->IDX) ? "selected" : ""; ?>><?= $row->CUST_NM; ?></option>
+						<?php } ?>
+					</select>
 					<button class="search_submit ajax_search"><i class="material-icons">search</i></button>
 				</form>
 			</div>
@@ -96,7 +103,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 
 <script>
-	$(".link_hover").click(function() { /* 팝업창 뜨게함 */
+	$(".link_hover").click(function() {
+		/* 팝업창 뜨게함 */
 
 		var hidx = $(this).data("hidx");
 		var idx = $(this).data("idx");
@@ -113,8 +121,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			type: "POST",
 			dataType: "HTML",
 			data: {
-				hidx:hidx,
-				idx:idx
+				hidx: hidx,
+				idx: idx
 			},
 			success: function(data) {
 				$(".ajaxContent").html(data);
