@@ -20,7 +20,7 @@ class Pur_model extends CI_Model
 			$this->db->where("END_YN", $params['END_CHK']);
 		}
 		if ((!empty($params['SDATE']) && $params['SDATE'] != "") && (!empty($params['EDATE']) && $params['EDATE'] != "")) {
-			$this->db->where("ACT_DATE BETWEEN '{$params['SDATE']}' AND '{$params['EDATE']}'");
+			$this->db->where("{$params['DATE']} BETWEEN '{$params['SDATE']}' AND '{$params['EDATE']}'");
 		}
 		$this->db->select("COM.IDX,ACT_DATE,BIZ_IDX,CUST_NM,QTY,UNIT,DEL_DATE,COM.REMARK,END_YN,END_DATE,QTY2,REMARK2");
 		$this->db->join("T_BIZ AS B", "B.IDX = COM.BIZ_IDX","LEFT");

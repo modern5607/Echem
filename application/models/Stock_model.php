@@ -42,7 +42,7 @@ class Stock_model extends CI_Model
 				{$where}
 SQL;		
 		$query = $this->db->query($sql);
-		echo $this->db->last_query();
+		// echo $this->db->last_query();
 		return $query->result();
 	}
 	public function package_cut($param)
@@ -110,7 +110,7 @@ SQL;
 			WHERE 1 {$where}
 SQL;		
 		$query = $this->db->query($sql);
-		echo $this->db->last_query();
+		// echo $this->db->last_query();
 		return $query->result();
 	}
 
@@ -209,7 +209,7 @@ SQL;
 		$this->db->where("O.PACKAGE_YN", 'Y');
 		$this->db->limit($limit, $start);
 		$query = $this->db->get("T_ACT as A");
-		echo $this->db->last_query();
+		// echo $this->db->last_query();
 		return $query->result();
 	}
 	public function act_cut($params)

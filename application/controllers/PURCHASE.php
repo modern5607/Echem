@@ -59,31 +59,31 @@ class PURCHASE extends CI_Controller
 	{
 		$data['str'] = array(); //검색어관련
 
+		$data['str']['date'] = $this->input->post('date');
 		$data['str']['sdate'] = $this->input->post('sdate');
 		$data['str']['edate'] = $this->input->post('edate');
 
-		$params['SDATE'] = '';
-		$params['EDATE'] = '';
-		$params['END_CHK'] = '';
+		$params['DATE'] = (isset($data['str']['date'])) ? $data['str']['date'] : '';
+		$params['SDATE'] = (isset($data['str']['sdate'])) ? $data['str']['sdate'] : '';
+		$params['EDATE'] = (isset($data['str']['edate'])) ? $data['str']['edate'] : '';
+		$params['END_CHK'] = (isset($data['str']['endyn'])) ? $data['str']['endyn'] : '';
 
-		$data['qstr'] = "?P";
+		// if (!empty($data['str']['sdate'])) {
+		// 	$params['SDATE'] = $data['str']['sdate'];
+		// 	$data['qstr'] .= "&sdate=" . $data['str']['sdate'];
+		// }
 
-		if (!empty($data['str']['sdate'])) {
-			$params['SDATE'] = $data['str']['sdate'];
-			$data['qstr'] .= "&sdate=" . $data['str']['sdate'];
-		}
-
-		if (!empty($data['str']['edate'])) {
-			$params['EDATE'] = $data['str']['edate'];
-			$data['qstr'] .= "&edate=" . $data['str']['edate'];
-		}
+		// if (!empty($data['str']['edate'])) {
+		// 	$params['EDATE'] = $data['str']['edate'];
+		// 	$data['qstr'] .= "&edate=" . $data['str']['edate'];
+		// }
 		
 		
 		
 		//모델
 		$data['list']=$this->pur_model->component_list($params);
 		$data['bizType'] = $this->sys_model->biz_list(); 
-		// echo var_dump($data['bizType']);
+		// echo var_dump($data['list']);
 		$data['cocd']= $this->sys_model->get_selectInfo("tch.CODE","UNIT");
 
 		//뷰
@@ -157,7 +157,7 @@ class PURCHASE extends CI_Controller
 
 		$params['SDATE'] = '';
 		$params['EDATE'] = '';
-		$params['END_CHK'] = 'N';
+		$params['END_CHK'] = '';
 
 		$data['qstr'] = "?P";
 

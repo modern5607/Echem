@@ -13,9 +13,9 @@ class Qual_model extends CI_Model
 		$where = '';
 		if ($params['SDATE'] != "" && $params['EDATE'] != "")
 			$where .= "AND ORDER_DATE BETWEEN '{$params['SDATE']} 00:00:00' AND '{$params['EDATE']} 23:59:59'";
-		
-		if($params['ACT_NAME']!="" && isset($params['ACT_NAME']))
-		$where.="AND ACT_NAME LIKE'%{$params['ACT_NAME']}%'";
+
+		if ($params['ACT_NAME'] != "" && isset($params['ACT_NAME']))
+			$where .= "AND ACT_NAME LIKE'%{$params['ACT_NAME']}%'";
 
 		if (!empty($params['BIZ_IDX']) && $params['BIZ_IDX'] != "")
 			$where .= "AND B.IDX = '{$params['BIZ_IDX']}'";
@@ -143,9 +143,12 @@ SQL;
 		$where = '';
 		if ($params['SDATE'] != "" && $params['EDATE'] != "")
 			$where .= "AND ORDER_DATE BETWEEN '{$params['SDATE']} 00:00:00' AND '{$params['EDATE']} 23:59:59'";
-		
-		if($params['ACT_NAME']!="" && isset($params['ACT_NAME']))
-			$where.="AND ACT_NAME LIKE'%{$params['ACT_NAME']}%'";
+
+		if ($params['ACT_NAME'] != "" && isset($params['ACT_NAME']))
+			$where .= "AND ACT_NAME LIKE'%{$params['ACT_NAME']}%'";
+
+		if (!empty($params['BIZ_IDX']) && $params['BIZ_IDX'] != "")
+			$where .= "AND B.IDX = '{$params['BIZ_IDX']}'";
 
 		$sql = <<<SQL
 		SELECT
@@ -201,6 +204,7 @@ SQL;
 		FROM
 			T_ACT AS ACT
 			JOIN T_ORDER AS O ON O.ACT_IDX = ACT.IDX
+			LEFT JOIN T_BIZ B ON ACT.BIZ_IDX = B.IDX
 		WHERE
 			O.PPINPUT_YN = 'Y'
 			{$where}
@@ -214,10 +218,12 @@ SQL;
 		$where = '';
 		if ($params['SDATE'] != "" && $params['EDATE'] != "")
 			$where .= "AND ORDER_DATE BETWEEN '{$params['SDATE']} 00:00:00' AND '{$params['EDATE']} 23:59:59'";
-		
-		if($params['ACT_NAME']!="" && isset($params['ACT_NAME']))
-			$where.="AND ACT_NAME LIKE'%{$params['ACT_NAME']}%'";
 
+		if ($params['ACT_NAME'] != "" && isset($params['ACT_NAME']))
+			$where .= "AND ACT_NAME LIKE'%{$params['ACT_NAME']}%'";
+
+		if (!empty($params['BIZ_IDX']) && $params['BIZ_IDX'] != "")
+			$where .= "AND B.IDX = '{$params['BIZ_IDX']}'";
 		$sql = <<<SQL
 		SELECT
 			ACT.IDX ACT_IDX,
@@ -237,6 +243,7 @@ SQL;
 		FROM
 			T_ACT AS ACT
 			JOIN T_ORDER AS O ON O.ACT_IDX = ACT.IDX
+			LEFT JOIN T_BIZ B ON ACT.BIZ_IDX = B.IDX
 		WHERE
 			O.PPINPUT_YN = 'Y'
 			{$where}
@@ -251,7 +258,7 @@ SQL;
 	{
 		$where = '';
 		if ($params['SDATE'] != "" && $params['EDATE'] != "")
-		$where .= "AND ORDER_DATE BETWEEN '{$params['SDATE']} 00:00:00' AND '{$params['EDATE']} 23:59:59'";
+			$where .= "AND ORDER_DATE BETWEEN '{$params['SDATE']} 00:00:00' AND '{$params['EDATE']} 23:59:59'";
 
 		$sql = <<<SQL
 		SELECT
@@ -286,9 +293,11 @@ SQL;
 		if ($params['SDATE'] != "" && $params['EDATE'] != "")
 			$where .= "AND ORDER_DATE BETWEEN '{$params['SDATE']} 00:00:00' AND '{$params['EDATE']} 23:59:59'";
 
-		if($params['ACT_NAME']!="" && isset($params['ACT_NAME']))
-			$where.="AND ACT_NAME LIKE'%{$params['ACT_NAME']}%'";
+		if ($params['ACT_NAME'] != "" && isset($params['ACT_NAME']))
+			$where .= "AND ACT_NAME LIKE'%{$params['ACT_NAME']}%'";
 
+		if (!empty($params['BIZ_IDX']) && $params['BIZ_IDX'] != "")
+			$where .= "AND B.IDX = '{$params['BIZ_IDX']}'";
 		$sql = <<<SQL
 		SELECT
 			ACT.IDX ACT_IDX,
@@ -308,13 +317,14 @@ SQL;
 		FROM
 			T_ACT AS ACT
 			JOIN T_ORDER AS O ON O.ACT_IDX = ACT.IDX
+			LEFT JOIN T_BIZ B ON ACT.BIZ_IDX = B.IDX
 		WHERE
 			O.DEFECT_YN = 'Y'
 			{$where}
 		LIMIT {$start},{$limit}
 SQL;
 		$query = $this->db->query($sql);
-		echo $this->db->last_query();
+		// echo $this->db->last_query();
 		return $query->result();
 	}
 	public function ajax_pooranal_cut($params)
@@ -325,7 +335,7 @@ SQL;
 
 
 		if ((!empty($params['SDATE']) && $params['SDATE'] != "") && (!empty($params['EDATE']) && $params['EDATE'] != "")) {
-				$this->db->where("ACT_DATE BETWEEN '{$params['SDATE']}' AND '{$params['EDATE']}'");
+			$this->db->where("ACT_DATE BETWEEN '{$params['SDATE']}' AND '{$params['EDATE']}'");
 		}
 		$sql = <<<SQL
 		SELECT
@@ -371,7 +381,7 @@ SQL;
 SQL;
 
 		$query = $this->db->query($sql);
-		echo $this->db->last_query();
+		// echo $this->db->last_query();
 		return $query->row();
 	}
 
