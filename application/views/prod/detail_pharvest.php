@@ -10,16 +10,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 
 <div class="bdcont_100">
-<header>
-			<div class="searchDiv" style="height: 66px;">
-            <i class="material-icons">info</i><span> 공정별 수율을 등록하게되면 작업지시를 수정 및 삭제가 불가능합니다. 작업지시를 삭제하기 위해선 해당 화면에서 항목을 선택후 삭제를 해주세요.
-			</span></div>
-		</header>
     <form id="detailForm">
         <input type="hidden" name="mode" value="<?= $str['mode'] ?>">
         <input type="hidden" name="idx" value="<?= $idx ?>">
         <input type="hidden" name="hidx" value="<?= $hidx ?>">
-        <div class="tbl-write01" style="margin-top: 86px;">
+        <div class="tbl-write01" style="margin-top: 87px;">
             <table cellpadding="0" cellspacing="0" border="0" width="100%">
             <div id="loading" style="margin: 170px 0px;"><img src='<?php echo base_url('_static/img/loader.gif'); ?>' width="100"></div>
 
@@ -67,6 +62,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <tr>
                         <th class="w120">Li2Co3(생산량)</th>
                         <td colspan="2"><input type="text" readonly name="PPLI2CO3_AFTER_INPUT" class="form_input input_100 disabled" value="<?= isset($info->PPLI2CO3_AFTER_INPUT) ? $info->PPLI2CO3_AFTER_INPUT : '' ?>"></td>
+                        <td colspan="3"> <i class="material-icons">info</i><span> 공정별 수율을 등록하게되면 작업지시를 수정 및 삭제가 불가능합니다. 작업지시를 삭제하기 위해선 해당 화면에서 항목을 선택후 삭제를 해주세요.
+			</span></div></td>
                     </tr>
                 </tbody>
                 <tfoot>
@@ -78,8 +75,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             </td>
                             <?php } else  if ($str['mode'] == "new") { ?>
                             <td rowspan="5" colspan="6" class="cen" style="padding: 15px;"><button type="button" class="btn blue_btn submitBtn">등록</button></td>
+                            
                         <?php } else{}?>
                     </tr>
+                    
                 </tfoot>
             </table>
         </div>

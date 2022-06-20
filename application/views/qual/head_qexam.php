@@ -1,7 +1,12 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 ?>
+<style>
 
+header {
+			width: calc(100vw - 330px);
+		}
+</style>
 
 
 

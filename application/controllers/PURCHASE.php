@@ -67,24 +67,30 @@ class PURCHASE extends CI_Controller
 		$params['SDATE'] = (isset($data['str']['sdate'])) ? $data['str']['sdate'] : '';
 		$params['EDATE'] = (isset($data['str']['edate'])) ? $data['str']['edate'] : '';
 		$params['END_CHK'] = (isset($data['str']['endyn'])) ? $data['str']['endyn'] : '';
+		$data['perpage'] = ($this->input->post('perpage') != "") ? $this->input->post('perpage') : 20;
+		//PAGINATION
+		$config['per_page'] = $data['perpage'];
+		$config['page_query_string'] = true;
+		$config['query_string_segment'] = "pageNum";
+		$config['reuse_query_string'] = TRUE;
+		$pageNum = $this->input->post('pageNum') > '' ? $this->input->post('pageNum') : 0;
+		$data['pageNum'] =  $pageNum;
 
-		// if (!empty($data['str']['sdate'])) {
-		// 	$params['SDATE'] = $data['str']['sdate'];
-		// 	$data['qstr'] .= "&sdate=" . $data['str']['sdate'];
-		// }
-
-		// if (!empty($data['str']['edate'])) {
-		// 	$params['EDATE'] = $data['str']['edate'];
-		// 	$data['qstr'] .= "&edate=" . $data['str']['edate'];
-		// }
-		
-		
-		
 		//모델
-		$data['list']=$this->pur_model->component_list($params);
+		$data['list']=$this->pur_model->component_list($params, $pageNum, $config['per_page']);
+		$this->data['cnt']=$this->pur_model->component_list_cnt($params);
 		$data['bizType'] = $this->sys_model->biz_list(); 
 		// echo var_dump($data['list']);
 		$data['cocd']= $this->sys_model->get_selectInfo("tch.CODE","UNIT");
+
+		/* pagenation start */
+		$this->load->library("pagination");
+		$config['base_url'] = base_url(uri_string());
+		$config['total_rows'] = $this->data['cnt'];
+		$config['full_tag_open'] = "<div>";
+		$config['full_tag_close'] = '</div>';
+		$this->pagination->initialize($config);
+		$this->data['pagenation'] = $this->pagination->create_links();
 
 		//뷰
 		$this->load->view('purchase/ajax_matorder', $data);
@@ -151,28 +157,36 @@ class PURCHASE extends CI_Controller
 	public function ajax_enter()
 	{
 		$data['str'] = array(); //검색어관련
-
+		$data['str']['date'] = $this->input->post('date');
 		$data['str']['sdate'] = $this->input->post('sdate');
 		$data['str']['edate'] = $this->input->post('edate');
 
-		$params['SDATE'] = '';
-		$params['EDATE'] = '';
-		$params['END_CHK'] = '';
-
-		$data['qstr'] = "?P";
-
-		if (!empty($data['str']['sdate'])) {
-			$params['SDATE'] = $data['str']['sdate'];
-			$data['qstr'] .= "&sdate=" . $data['str']['sdate'];
-		}
-
-		if (!empty($data['str']['edate'])) {
-			$params['EDATE'] = $data['str']['edate'];
-			$data['qstr'] .= "&edate=" . $data['str']['edate'];
-		}
+		$params['DATE'] = (isset($data['str']['date'])) ? $data['str']['date'] : '';
+		$params['SDATE'] = (isset($data['str']['sdate'])) ? $data['str']['sdate'] : '';
+		$params['EDATE'] = (isset($data['str']['edate'])) ? $data['str']['edate'] : '';
+		$params['END_CHK'] = (isset($data['str']['endyn'])) ? $data['str']['endyn'] : '';
 		
+		$data['perpage'] = ($this->input->post('perpage') != "") ? $this->input->post('perpage') : 20;
+		//PAGINATION
+		$config['per_page'] = $data['perpage'];
+		$config['page_query_string'] = true;
+		$config['query_string_segment'] = "pageNum";
+		$config['reuse_query_string'] = TRUE;
+		$pageNum = $this->input->post('pageNum') > '' ? $this->input->post('pageNum') : 0;
+		$data['pageNum'] =  $pageNum;
+
 		//모델
-		$data['list']=$this->pur_model->component_list($params);
+		$data['list']=$this->pur_model->component_list($params, $pageNum, $config['per_page']);
+		$this->data['cnt']=$this->pur_model->component_list_cnt($params);
+
+		/* pagenation start */
+		$this->load->library("pagination");
+		$config['base_url'] = base_url(uri_string());
+		$config['total_rows'] = $this->data['cnt'];
+		$config['full_tag_open'] = "<div>";
+		$config['full_tag_close'] = '</div>';
+		$this->pagination->initialize($config);
+		$this->data['pagenation'] = $this->pagination->create_links();
 
 		//뷰
 		$this->load->view('purchase/ajax_enter', $data);
@@ -188,30 +202,37 @@ class PURCHASE extends CI_Controller
 	public function ajax_orderenter()
 	{
 		$data['str'] = array(); //검색어관련
-
+		$data['str']['date'] = $this->input->post('date');
 		$data['str']['sdate'] = $this->input->post('sdate');
 		$data['str']['edate'] = $this->input->post('edate');
 
-		$params['SDATE'] = '';
-		$params['EDATE'] = '';
-		$params['END_CHK'] = '';
+		$params['DATE'] = (isset($data['str']['date'])) ? $data['str']['date'] : '';
+		$params['SDATE'] = (isset($data['str']['sdate'])) ? $data['str']['sdate'] : '';
+		$params['EDATE'] = (isset($data['str']['edate'])) ? $data['str']['edate'] : '';
+		$params['END_CHK'] = (isset($data['str']['endyn'])) ? $data['str']['endyn'] : '';
 
-		$data['qstr'] = "?P";
-
-		if (!empty($data['str']['sdate'])) {
-			$params['SDATE'] = $data['str']['sdate'];
-			$data['qstr'] .= "&sdate=" . $data['str']['sdate'];
-		}
-
-		if (!empty($data['str']['edate'])) {
-			$params['EDATE'] = $data['str']['edate'];
-			$data['qstr'] .= "&edate=" . $data['str']['edate'];
-		}
-
+		$data['perpage'] = ($this->input->post('perpage') != "") ? $this->input->post('perpage') : 20;
+		//PAGINATION
+		$config['per_page'] = $data['perpage'];
+		$config['page_query_string'] = true;
+		$config['query_string_segment'] = "pageNum";
+		$config['reuse_query_string'] = TRUE;
+		$pageNum = $this->input->post('pageNum') > '' ? $this->input->post('pageNum') : 0;
+		$data['pageNum'] =  $pageNum;
 		
 		//모델
-		$data['list']=$this->pur_model->component_list($params);
+		$data['list']=$this->pur_model->component_list($params, $pageNum, $config['per_page']);
+		$this->data['cnt']=$this->pur_model->component_list_cnt($params);
 
+
+		/* pagenation start */
+		$this->load->library("pagination");
+		$config['base_url'] = base_url(uri_string());
+		$config['total_rows'] = $this->data['cnt'];
+		$config['full_tag_open'] = "<div>";
+		$config['full_tag_close'] = '</div>';
+		$this->pagination->initialize($config);
+		$this->data['pagenation'] = $this->pagination->create_links();
 		//뷰
 		$this->load->view('purchase/ajax_orderenter', $data);
 	}

@@ -1,71 +1,75 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 ?>
+<style>
+header {width: calc(100vw - 330px);}
+</style>
 
+<header>
+	<div class="searchDiv">
+		<form id="headForm" onsubmit="return false">
+			<label for="date">날짜 선택</label>
+			<select name="date" id="date" class="form_input">
+				<option value="ACT_DATE" <?= ($str['date'] == "ACT_DATE") ? "selected" : '' ?>>수주일</option>
+				<option value="ORDER_DATE" <?= ($str['date'] == "ORDER_DATE") ? "selected" : '' ?>>작업지시일</option>
+				<option value="START_DATE" <?= ($str['date'] == "START_DATE") ? "selected" : '' ?>>작업예정일</option>
+				<option value="END_DATE" <?= ($str['date'] == "END_DATE") ? "selected" : '' ?>>작업종료일</option>
+			</select>
+			<input type="date" name="sdate" value="<?= $str['sdate']; ?>" class="" /> ~
+			<input type="date" name="edate" value="<?= $str['edate']; ?>" class="" />
+			<label>수주명</label>
+			<input type="text" name="actnm" class="" size="11" value="<?= $str['actnm'] ?>">
+			<label for="biz">거래처</label>
+			<select name="biz" id="biz" class="form_input" >
+				<option value="">전체</option>
+				<?php foreach ($BIZ as $row) { ?>
+					<option value="<?= $row->IDX ?>" <?= ($str['biz'] == $row->IDX) ? "selected" : ""; ?>><?= $row->CUST_NM; ?></option>
+				<?php } ?>
+			</select>
 
-<div class="bdcont_100">
-	<div class="">
-		<header>
-			<div class="searchDiv">
-				<form id="headForm" onsubmit="return false">
-					<label>수주일</label>
-					<input type="date" name="sdate" value="<?= $str['sdate']; ?>" class="" /> ~
-					<input type="date" name="edate" value="<?= $str['edate']; ?>" class="" />
-					<label>수주명</label>
-					<input type="text" name="actnm" class="" size="11" value="<?= $str['actnm'] ?>">
-					<label for="biz">거래처</label>
-					<select name="biz" id="biz" style="padding:4px 10px; border:1px solid #ddd;">
-						<option value="">전체</option>
-						<?php foreach ($BIZ as $row) { ?>
-							<option value="<?= $row->IDX ?>" <?= ($str['biz'] == $row->IDX) ? "selected" : ""; ?>><?= $row->CUST_NM; ?></option>
-						<?php } ?>
-					</select>
-
-					<button class="search_submit head_search"><i class="material-icons">search</i></button>
-				</form>
-			</div>
-			<!-- <span class="btn print add_order"  style="padding:7px 11px;"><i class="material-icons">add</i>작업지시 등록</span> -->
-			<!-- <span class="btn print print_biz"><i class="material-icons">get_app</i>출력하기</span> -->
-		</header>
-		<div class="tbl-content">
-			<table cellpadding="0" cellspacing="0" border="0" width="100%">
-				<thead>
-					<tr>
-						<th>NO</th>
-						<th>수주일</th>
-						<th>수주명</th>
-						<th>거래처</th>
-						<th>작업지시일</th>
-						<th>작업예정일</th>
-						<th>작업종료일</th>
-					</tr>
-				</thead>
-				<tbody>
-					<?php
-					foreach ($list as $i => $row) {
-						$no = $pageNum + $i + 1;
-					?>
-						<tr class="link_hover" data-idx="<?= $row->IDX ?>" data-hidx="<?= $row->ACT_IDX ?>">
-							<td class="cen"><?= $no; ?></td>
-							<td class="cen"><?= $row->ACT_DATE ?></td>
-							<td class="cen"><?= $row->ACT_NAME ?></td>
-							<td class="cen"><?= $row->CUST_NM ?></td>
-							<td class="cen"><?= (!empty($row->ORDER_DATE)) ? date("Y-m-d", strtotime($row->ORDER_DATE)) : '' ?></td>
-							<td class="cen"><?= (!empty($row->START_DATE)) ? date("Y-m-d", strtotime($row->START_DATE)) : '' ?></td>
-							<td class="cen"><?= (!empty($row->END_DATE)) ? date("Y-m-d", strtotime($row->END_DATE)) : '' ?></td>
-						</tr>
-
-
-					<?php
-					}
-					?>
-				</tbody>
-			</table>
-		</div>
-
-
+			<button class="search_submit head_search"><i class="material-icons">search</i></button>
+		</form>
 	</div>
+	<!-- <span class="btn print add_order"  style="padding:7px 11px;"><i class="material-icons">add</i>작업지시 등록</span> -->
+	<!-- <span class="btn print print_biz"><i class="material-icons">get_app</i>출력하기</span> -->
+</header>
+
+<div class="tbl-content">
+	<table cellpadding="0" cellspacing="0" border="0" width="100%">
+		<thead>
+			<tr>
+				<th>NO</th>
+				<th>수주일</th>
+				<th>수주명</th>
+				<th>거래처</th>
+				<th>작업지시일</th>
+				<th>작업예정일</th>
+				<th>작업종료일</th>
+			</tr>
+		</thead>
+		<tbody>
+			<?php
+			foreach ($list as $i => $row) {
+				$no = $pageNum + $i + 1;
+			?>
+				<tr class="link_hover" data-idx="<?= $row->IDX ?>" data-hidx="<?= $row->ACT_IDX ?>">
+					<td class="cen"><?= $no; ?></td>
+					<td class="cen"><?= $row->ACT_DATE ?></td>
+					<td class="cen"><?= $row->ACT_NAME ?></td>
+					<td class="cen"><?= $row->CUST_NM ?></td>
+					<td class="cen"><?= (!empty($row->ORDER_DATE)) ? date("Y-m-d", strtotime($row->ORDER_DATE)) : '' ?></td>
+					<td class="cen"><?= (!empty($row->START_DATE)) ? date("Y-m-d", strtotime($row->START_DATE)) : '' ?></td>
+					<td class="cen"><?= (!empty($row->END_DATE)) ? date("Y-m-d", strtotime($row->END_DATE)) : '' ?></td>
+				</tr>
+
+
+			<?php
+			}
+			?>
+		</tbody>
+	</table>
 </div>
+
 
 <div class="pagination2">
 	<?php

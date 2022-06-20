@@ -13,7 +13,7 @@ class Prod_model extends CI_Model
 	{
 		$where = '';
 		if ($params['SDATE'] != "" && $params['EDATE'] != "")
-			$where .= "AND ACT_DATE BETWEEN '{$params['SDATE']} 00:00:00' AND '{$params['EDATE']} 23:59:59'";
+			$where .= "AND {$params['DATE']} BETWEEN '{$params['SDATE']} 00:00:00' AND '{$params['EDATE']} 23:59:59'";
 
 		if (!empty($params['ACT_NAME']) && $params['ACT_NAME'] != "")
 			$where .= "AND ACT.ACT_NAME LIKE '%{$params['ACT_NAME']}%'";
@@ -42,34 +42,36 @@ class Prod_model extends CI_Model
 		LIMIT {$start},{$limit}
 SQL;
 		$query = $this->db->query($sql);
-		echo $this->db->Last_query();
+		// echo $this->db->Last_query();
 		return $query->result();
 	}
 	public function head_workorder_cut($params)
 	{
 		$where = '';
 		if ($params['SDATE'] != "" && $params['EDATE'] != "")
-			$where .= "AND ACT_DATE BETWEEN '{$params['SDATE']} 00:00:00' AND '{$params['EDATE']} 23:59:59'";
+			$where .= "AND {$params['DATE']} BETWEEN '{$params['SDATE']} 00:00:00' AND '{$params['EDATE']} 23:59:59'";
 
 		if (!empty($params['ACT_NAME']) && $params['ACT_NAME'] != "")
 			$where .= "AND ACT.ACT_NAME LIKE '%{$params['ACT_NAME']}%'";
 
+		if (!empty($params['BIZ_IDX']) && $params['BIZ_IDX'] != "")
+			$where .= "AND B.IDX = '{$params['BIZ_IDX']}'";
+
 		$sql = <<<SQL
 		SELECT
 			ACT.IDX ACT_IDX,
-			ACT.ACT_DATE,
 			O.IDX,
 			O.ORDER_DATE,
 			ACT.ACT_NAME,
 			ACT.BIZ_IDX,
 			B.CUST_NM,
+			ACT.ACT_DATE,
 			O.START_DATE,
-			O.END_DATE 
+			O.END_DATE
 		FROM
 			T_ACT AS ACT
 			LEFT JOIN T_ORDER AS O ON O.ACT_IDX = ACT.IDX
 			LEFT JOIN T_BIZ AS B ON ACT.BIZ_IDX = B.IDX
-
 		WHERE
 		1
 		{$where}
@@ -175,7 +177,7 @@ SQL;
 	{
 		$where = '';
 		if ($params['SDATE'] != "" && $params['EDATE'] != "")
-			$where .= "AND ACT_DATE BETWEEN '{$params['SDATE']} 00:00:00' AND '{$params['EDATE']} 23:59:59'";
+			$where .= "AND {$params['DATE']} BETWEEN '{$params['SDATE']} 00:00:00' AND '{$params['EDATE']} 23:59:59'";
 
 		if (!empty($params['ACT_NAME']) && $params['ACT_NAME'] != "")
 			$where .= "AND ACT.ACT_NAME LIKE '%{$params['ACT_NAME']}%'";
@@ -212,13 +214,13 @@ SQL;
 	{
 		$where = '';
 		if ($params['SDATE'] != "" && $params['EDATE'] != "")
-			$where .= "AND ACT_DATE BETWEEN '{$params['SDATE']} 00:00:00' AND '{$params['EDATE']} 23:59:59'";
+			$where .= "AND {$params['DATE']} BETWEEN '{$params['SDATE']} 00:00:00' AND '{$params['EDATE']} 23:59:59'";
 
 		if (!empty($params['ACT_NAME']) && $params['ACT_NAME'] != "")
 			$where .= "AND ACT.ACT_NAME LIKE '%{$params['ACT_NAME']}%'";
+
 		if (!empty($params['BIZ_IDX']) && $params['BIZ_IDX'] != "")
 			$where .= "AND B.IDX = '{$params['BIZ_IDX']}'";
-
 
 		$sql = <<<SQL
 		SELECT
@@ -227,7 +229,7 @@ SQL;
 			O.ORDER_DATE,
 			ACT.ACT_NAME,
 			ACT.BIZ_IDX,
-			ACT.BIZ_NAME,
+			B.CUST_NM,
 			O.START_DATE,
 			O.END_DATE,
 			EACHORDER
@@ -390,7 +392,7 @@ SQL;
 	{
 		$where = '';
 		if ($params['SDATE'] != "" && $params['EDATE'] != "")
-			$where .= "AND ACT_DATE BETWEEN '{$params['SDATE']} 00:00:00' AND '{$params['EDATE']} 23:59:59'";
+			$where .= "AND {$params['DATE']} BETWEEN '{$params['SDATE']} 00:00:00' AND '{$params['EDATE']} 23:59:59'";
 
 		if (!empty($params['ACT_NAME']) && $params['ACT_NAME'] != "")
 			$where .= "AND ACT.ACT_NAME LIKE '%{$params['ACT_NAME']}%'";
@@ -426,10 +428,12 @@ SQL;
 	{
 		$where = '';
 		if ($params['SDATE'] != "" && $params['EDATE'] != "")
-			$where .= "AND ACT_DATE BETWEEN '{$params['SDATE']} 00:00:00' AND '{$params['EDATE']} 23:59:59'";
+			$where .= "AND {$params['DATE']} BETWEEN '{$params['SDATE']} 00:00:00' AND '{$params['EDATE']} 23:59:59'";
 
 		if (!empty($params['ACT_NAME']) && $params['ACT_NAME'] != "")
 			$where .= "AND ACT.ACT_NAME LIKE '%{$params['ACT_NAME']}%'";
+		if (!empty($params['BIZ_IDX']) && $params['BIZ_IDX'] != "")
+			$where .= "AND B.IDX = '{$params['BIZ_IDX']}'";
 
 		$sql = <<<SQL
 		SELECT
@@ -438,7 +442,7 @@ SQL;
 			O.ORDER_DATE,
 			ACT.ACT_NAME,
 			ACT.BIZ_IDX,
-			ACT.BIZ_NAME,
+			B.CUST_NM,
 			O.START_DATE,
 			O.END_DATE,
 			EACHORDER,
@@ -544,7 +548,7 @@ SQL;
 	{
 		$where = '';
 		if ($params['SDATE'] != "" && $params['EDATE'] != "")
-			$where .= "AND ACT_DATE BETWEEN '{$params['SDATE']} 00:00:00' AND '{$params['EDATE']} 23:59:59'";
+			$where .= "AND {$params['DATE']} BETWEEN '{$params['SDATE']} 00:00:00' AND '{$params['EDATE']} 23:59:59'";
 
 		if (!empty($params['ACT_NAME']) && $params['ACT_NAME'] != "")
 			$where .= "AND ACT.ACT_NAME LIKE '%{$params['ACT_NAME']}%'";
@@ -579,10 +583,13 @@ SQL;
 	{
 		$where = '';
 		if ($params['SDATE'] != "" && $params['EDATE'] != "")
-			$where .= "AND ACT_DATE BETWEEN '{$params['SDATE']} 00:00:00' AND '{$params['EDATE']} 23:59:59'";
+			$where .= "AND {$params['DATE']} BETWEEN '{$params['SDATE']} 00:00:00' AND '{$params['EDATE']} 23:59:59'";
 
 		if (!empty($params['ACT_NAME']) && $params['ACT_NAME'] != "")
 			$where .= "AND ACT.ACT_NAME LIKE '%{$params['ACT_NAME']}%'";
+
+		if (!empty($params['BIZ_IDX']) && $params['BIZ_IDX'] != "")
+			$where .= "AND B.IDX = '{$params['BIZ_IDX']}'";
 
 		$sql = <<<SQL
 		SELECT
@@ -590,7 +597,6 @@ SQL;
 			O.IDX,
 			O.ORDER_DATE,
 			ACT.ACT_NAME,
-			ACT.BIZ_IDX,
 			B.CUST_NM,
 			O.START_DATE,
 			O.END_DATE,
@@ -695,7 +701,7 @@ SQL;
 	{
 		$where = '';
 		if ($params['SDATE'] != "" && $params['EDATE'] != "")
-			$where .= "AND ACT_DATE BETWEEN '{$params['SDATE']} 00:00:00' AND '{$params['EDATE']} 23:59:59'";
+			$where .= "AND {$params['DATE']} BETWEEN '{$params['SDATE']} 00:00:00' AND '{$params['EDATE']} 23:59:59'";
 
 		if (!empty($params['ACT_NAME']) && $params['ACT_NAME'] != "")
 			$where .= "AND ACT.ACT_NAME LIKE '%{$params['ACT_NAME']}%'";
@@ -730,10 +736,12 @@ SQL;
 	{
 		$where = '';
 		if ($params['SDATE'] != "" && $params['EDATE'] != "")
-			$where .= "AND ACT_DATE BETWEEN '{$params['SDATE']} 00:00:00' AND '{$params['EDATE']} 23:59:59'";
+			$where .= "AND {$params['DATE']} BETWEEN '{$params['SDATE']} 00:00:00' AND '{$params['EDATE']} 23:59:59'";
 
 		if (!empty($params['ACT_NAME']) && $params['ACT_NAME'] != "")
 			$where .= "AND ACT.ACT_NAME LIKE '%{$params['ACT_NAME']}%'";
+		if (!empty($params['BIZ_IDX']) && $params['BIZ_IDX'] != "")
+			$where .= "AND B.IDX = '{$params['BIZ_IDX']}'";
 
 		$sql = <<<SQL
 		SELECT

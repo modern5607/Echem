@@ -2,19 +2,21 @@
 defined('BASEPATH') or exit('No direct script access allowed');
 ?>
 
-
-<link href="<?= base_url('_static/summernote/summernote-lite.css') ?>" rel="stylesheet">
-<script src="<?= base_url('_static/summernote/summernote-lite.js') ?>"></script>
-<script src="<?= base_url('_static/summernote/lang/summernote-ko-KR.js') ?>"></script>
-
-
+<style>
+header {width: calc(100vw - 330px);}
+</style>
 
 <div class="bdcont_100">
 	<div class="">
 		<header>
 			<div class="searchDiv">
 				<form id="headForm" onsubmit="return false">
-					<label>수주일</label>
+					<label for="date">날짜 선택</label>
+					<select name="date" id="date" class="form_input">
+						<option value="O.ORDER_DATE" <?= ($str['date'] == "O.ORDER_DATE") ? "selected" : '' ?>>작업지시일</option>
+						<option value="O.START_DATE" <?= ($str['date'] == "O.START_DATE") ? "selected" : '' ?>>작업예정일</option>
+						<option value="O.END_DATE" <?= ($str['date'] == "O.END_DATE") ? "selected" : '' ?>>작업종료일</option>
+					</select>
 					<input type="date" name="sdate" value="<?= $str['sdate']; ?>" class="" /> ~
 					<input type="date" name="edate" value="<?= $str['edate']; ?>" class="" />
 					<label>수주명</label>

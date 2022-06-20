@@ -24,7 +24,7 @@ class Pln_model extends CI_Model
 			1
 			{$where}
 			ORDER BY PORRQDA DESC
-			LIMIT $start,$limit
+			LIMIT {$start},{$limit}
 SQL;
 		$query= $this->db->query($sql);
 		// echo $this->db->last_query();

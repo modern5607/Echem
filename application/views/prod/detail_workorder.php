@@ -15,7 +15,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <input type="hidden" name="mode" value="<?= $str['mode'] ?>">
         <input type="hidden" name="idx" value="<?= $idx ?>">
         <input type="hidden" name="hidx" value="<?= $hidx ?>">
-        <div class="tbl-write01" style="margin-top: 86px;">
+        <div class="tbl-write01" style="margin-top: 78px;">
            
             <table cellpadding="0" cellspacing="0" border="0" width="100%">
                 <div id="loading" style="margin: 170px 0px;"><img src='<?php echo base_url('_static/img/loader.gif'); ?>' width="100"></div>

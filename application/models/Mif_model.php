@@ -29,7 +29,7 @@ class Mif_model extends CI_Model
 			1
 			{$where}
 			ORDER BY END_DATE ASC
-			LIMIT $start,$limit
+			LIMIT {$start},{$limit}
 SQL;
 
 		$query = $this->db->query($sql);

@@ -1,10 +1,14 @@
 <header>
 	<div class="searchBoxxx" style="margin-bottom:20px; padding:15px; border:1px solid #ddd;">
-		<form id="ajaxForm">
-			<label for="sdate">발주등록일</label>
-				<input type="date" name="sdate" class="" size="11" value="<?php echo $str['sdate']; ?>" placeholder="<?= date("Y-m-d") ?>" /> ~
-				<input type="date" name="edate" class="" size="11" value="<?php echo $str['edate']; ?>" placeholder="<?= date("Y-m-d") ?>" />
-			
+		<form id="ajaxForm" onsubmit="return false">
+			<label for="date">날짜 선택</label>
+			<select name="date" id="date" class="form_input">
+				<option value="ACT_DATE" <?= ($str['date'] == "ACT_DATE") ? "selected" : '' ?>>발주등록일</option>
+				<option value="END_DATE" <?= ($str['date'] == "END_DATE") ? "selected" : '' ?>>입고일</option>
+			</select>
+			<input type="date" name="sdate" class="" size="11" value="<?php echo $str['sdate']; ?>" placeholder="<?= date("Y-m-d") ?>" /> ~
+			<input type="date" name="edate" class="" size="11" value="<?php echo $str['edate']; ?>" placeholder="<?= date("Y-m-d") ?>" />
+
 			<button class="search_submit ajax_search"><i class="material-icons">search</i></button>
 		</form>
 	</div>
@@ -30,10 +34,10 @@
 
 			<?php
 			foreach ($list as $i => $row) {
-                $num = $i+1;
+				$num = $i + 1;
 			?>
 				<tr class="pocbox">
-					<td class="cen"><?=$num?></td>
+					<td class="cen"><?= $num ?></td>
 					<td class="cen"><?= $row->ACT_DATE ?></td>
 					<td class="right"><?= number_format($row->QTY) ?></td>
 					<td class="cen"><?= $row->UNIT ?></td>
@@ -51,13 +55,29 @@
 	</table>
 </div>
 
+<div class="pagination">
+	<?php
+	if($this->data['cnt'] > 20){
+	?>
+	<div class="limitset">
+		<select name="per_page">
+			<option value="20" <?php echo ($perpage == 20)?"selected":"";?>>20</option>
+			<option value="50" <?php echo ($perpage == 50)?"selected":"";?>>50</option>
+			<option value="80" <?php echo ($perpage == 80)?"selected":"";?>>80</option>
+			<option value="100" <?php echo ($perpage == 100)?"selected":"";?>>100</option>
+		</select>
+	</div>
+	<?php
+	}	
+	?>
+	<?php echo $this->data['pagenation'];?>
+</div>
 
 <script>
-//제이쿼리 수신일 입력창 누르면 달력 출력
-$(".calendar").datetimepicker({
-    format: 'Y-m-d',
-    timepicker: false,
-    lang: 'ko-KR'
-});
-
+	//제이쿼리 수신일 입력창 누르면 달력 출력
+	$(".calendar").datetimepicker({
+		format: 'Y-m-d',
+		timepicker: false,
+		lang: 'ko-KR'
+	});
 </script>

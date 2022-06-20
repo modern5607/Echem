@@ -61,17 +61,20 @@ class STOCK extends CI_Controller
 		$data['str']['actnm'] = trim($this->input->post('actnm')); //수주명
 		$data['str']['sdate'] = $this->input->post('sdate'); //시작일자
 		$data['str']['edate'] = $this->input->post('edate'); //끝일자
-		$data['str']['package'] = $this->input->post('package'); //끝일자
+		$data['str']['package'] = $this->input->post('package'); //포장여부
+		$data['str']['date'] = $this->input->post('date');
 
 		$params['SDATE'] = "";
 		$params['EDATE'] = "";
 		$params['ACT_NAME'] = "";
 		$params['PACKAGE'] = "";
+		$params['DATE'] = "";
 
 		if (!empty($data['str']['sdate'])) { $params['SDATE'] = $data['str']['sdate']; }
 		if (!empty($data['str']['edate'])) { $params['EDATE'] = $data['str']['edate']; }
 		if (!empty($data['str']['actnm'])) { $params['ACT_NAME'] = $data['str']['actnm']; }
 		if (!empty($data['str']['package'])) { $params['PACKAGE'] = $data['str']['package']; }
+		if (!empty($data['str']['date'])) { $params['DATE'] = $data['str']['date']; }
 
 
 		$data['perpage'] = ($this->input->post('perpage') != "") ? $this->input->post('perpage') : 20;
@@ -148,9 +151,27 @@ class STOCK extends CI_Controller
 		if (!empty($data['str']['itemnm'])) { $params['ITEM_NAME'] = $data['str']['itemnm']; }
 		if (!empty($data['str']['spec'])) { $params['SPEC'] = $data['str']['spec']; }
 		if (!empty($data['str']['kind'])) { $params['KIND'] = $data['str']['kind']; }
+		$data['perpage'] = ($this->input->post('perpage') != "") ? $this->input->post('perpage') : 20;
+		//PAGINATION
+		$config['per_page'] = $data['perpage'];
+		$config['page_query_string'] = true;
+		$config['query_string_segment'] = "pageNum";
+		$config['reuse_query_string'] = TRUE;
+		$pageNum = $this->input->post('pageNum') > '' ? $this->input->post('pageNum') : 0;
+		$data['pageNum'] =  $pageNum;
 
 		//모델
-		$data['list']=$this->stock_model->ajax_stockcur($params);
+		$data['list']=$this->stock_model->ajax_stockcur($params, $pageNum, $config['per_page']);
+		$this->data['cnt']=$this->stock_model->ajax_stockcur_cnt($params);
+
+		/* pagenation start */
+		$this->load->library("pagination");
+		$config['base_url'] = base_url(uri_string());
+		$config['total_rows'] = $this->data['cnt'];
+		$config['full_tag_open'] = "<div>";
+		$config['full_tag_close'] = '</div>';
+		$this->pagination->initialize($config);
+		$this->data['pagenation'] = $this->pagination->create_links();
 
 		//뷰
 		$this->load->view('stock/ajax_stockcur', $data);
@@ -176,12 +197,29 @@ class STOCK extends CI_Controller
 		if (!empty($data['str']['spec'])) { $params['SPEC'] = $data['str']['spec']; }
 		if (!empty($data['str']['itemnm'])) { $params['ITEM_NAME'] = $data['str']['itemnm']; }
 
+		$data['perpage'] = ($this->input->post('perpage') != "") ? $this->input->post('perpage') : 20;
+		//PAGINATION
+		$config['per_page'] = $data['perpage'];
+		$config['page_query_string'] = true;
+		$config['query_string_segment'] = "pageNum";
+		$config['reuse_query_string'] = TRUE;
+		$pageNum = $this->input->post('pageNum') > '' ? $this->input->post('pageNum') : 0;
+		$data['pageNum'] =  $pageNum;
 
 		
 		//모델
-		$data['list']=$this->stock_model->ajax_stockchange($params);
+		$data['list']=$this->stock_model->ajax_stockchange($params, $pageNum, $config['per_page']);
+		$this->data['cnt']=$this->stock_model->ajax_stockchange_cnt($params);
 		// echo var_dump($data['list']);
 
+		/* pagenation start */
+		$this->load->library("pagination");
+		$config['base_url'] = base_url(uri_string());
+		$config['total_rows'] = $this->data['cnt'];
+		$config['full_tag_open'] = "<div>";
+		$config['full_tag_close'] = '</div>';
+		$this->pagination->initialize($config);
+		$this->data['pagenation'] = $this->pagination->create_links();
 		//뷰
 		$this->load->view('stock/ajax_stockchange', $data);
 	}

@@ -14,7 +14,23 @@ class Pur_model extends CI_Model
 
 
 	// 구매관리 - 원자재 리스트
-	public function component_list($params)
+	public function component_list($params,$start,$limit)
+	{
+		if (!empty($params['END_CHK']) && $params['END_CHK'] != "") {
+			$this->db->where("END_YN", $params['END_CHK']);
+		}
+		if ((!empty($params['SDATE']) && $params['SDATE'] != "") && (!empty($params['EDATE']) && $params['EDATE'] != "")) {
+			$this->db->where("{$params['DATE']} BETWEEN '{$params['SDATE']}' AND '{$params['EDATE']}'");
+		}
+		$this->db->select("COM.IDX,ACT_DATE,BIZ_IDX,CUST_NM,QTY,UNIT,DEL_DATE,COM.REMARK,END_YN,END_DATE,QTY2,REMARK2");
+		$this->db->join("T_BIZ AS B", "B.IDX = COM.BIZ_IDX","LEFT");
+		$this->db->order_by('ACT_DATE', 'DESC');
+		$this->db->limit($limit,$start);
+		$query = $this->db->get("T_COMPONENT AS COM");
+		// echo $this->db->last_query();
+		return $query->result();
+	}
+	public function component_list_cnt($params)
 	{
 		if (!empty($params['END_CHK']) && $params['END_CHK'] != "") {
 			$this->db->where("END_YN", $params['END_CHK']);
@@ -26,8 +42,8 @@ class Pur_model extends CI_Model
 		$this->db->join("T_BIZ AS B", "B.IDX = COM.BIZ_IDX","LEFT");
 		$this->db->order_by('ACT_DATE', 'DESC');
 		$query = $this->db->get("T_COMPONENT AS COM");
-		echo $this->db->last_query();
-		return $query->result();
+		// echo $this->db->last_query();
+		return $query->num_rows();
 	}
 
 	// 구매관리 - 원자재 발주등록

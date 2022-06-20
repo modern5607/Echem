@@ -51,7 +51,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<?php
 		if(!empty($list)){
 		foreach($list as $i=>$row){
-			$no = $i+1;
+			$no = $pageNum + $i+1;
 		?>
 			<tr>
 				<td class="cen"><?= $no?></td>
@@ -76,6 +76,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		?>
 		</tbody>
 	</table>
+</div>
+<div class="pagination">
+	<?php
+	if($this->data['cnt'] > 20){
+	?>
+	<div class="limitset">
+		<select name="per_page">
+			<option value="20" <?php echo ($perpage == 20)?"selected":"";?>>20</option>
+			<option value="50" <?php echo ($perpage == 50)?"selected":"";?>>50</option>
+			<option value="80" <?php echo ($perpage == 80)?"selected":"";?>>80</option>
+			<option value="100" <?php echo ($perpage == 100)?"selected":"";?>>100</option>
+		</select>
+	</div>
+	<?php
+	}	
+	?>
+	<?php echo $this->data['pagenation'];?>
 </div>
 
 

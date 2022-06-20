@@ -1,10 +1,14 @@
 <header>
 	<div class="searchBoxxx" style="margin-bottom:20px; padding:15px; border:1px solid #ddd;">
-		<form id="ajaxForm">
-			<label for="sdate">발주등록일</label>
-				<input type="date" name="sdate" class="" size="11" value="<?php echo $str['sdate']; ?>" placeholder="<?= date("Y-m-d") ?>" /> ~
-				<input type="date" name="edate" class="" size="11" value="<?php echo $str['edate']; ?>" placeholder="<?= date("Y-m-d") ?>" />
-			
+		<form id="ajaxForm" onsubmit="return false">
+			<label for="date">날짜 선택</label>
+			<select name="date" id="date" class="form_input">
+				<option value="ACT_DATE" <?= ($str['date'] == "ACT_DATE") ? "selected" : '' ?>>발주등록일</option>
+				<option value="DEL_DATE" <?= ($str['date'] == "DEL_DATE") ? "selected" : '' ?>>입고예정일</option>
+			</select>
+			<input type="date" name="sdate" class="" size="11" value="<?php echo $str['sdate']; ?>" placeholder="<?= date("Y-m-d") ?>" /> ~
+			<input type="date" name="edate" class="" size="11" value="<?php echo $str['edate']; ?>" placeholder="<?= date("Y-m-d") ?>" />
+
 			<button class="search_submit ajax_search"><i class="material-icons">search</i></button>
 		</form>
 	</div>
@@ -31,23 +35,22 @@
 
 			<?php
 			foreach ($list as $i => $row) {
-                $num = $i+1;
+				$num = $i + 1;
 			?>
 				<tr class="pocbox">
-					<td class="cen"><?=$num?></td>
+					<td class="cen"><?= $num ?></td>
 					<td class="cen"><?= $row->ACT_DATE ?></td>
-					<td class="right"><?= round($row->QTY,2) ?></td>
+					<td class="right"><?= round($row->QTY, 2) ?></td>
 					<td class="cen"><?= $row->UNIT ?></td>
 					<td class="cen"><?= $row->DEL_DATE ?></td>
 					<td><?= $row->REMARK ?></td>
-					<td><input type="number" min="0" name="QTY" id="QTY" value="<?= round($row->QTY,2) ?>" class="form_input input_100" style="width:100%;"></td>	
+					<td><input type="number" min="0" name="QTY" id="QTY" value="<?= round($row->QTY, 2) ?>" class="form_input input_100" style="width:100%;"></td>
 					<td><input type="text" name="REMARK" id="REMARK" value="" class="form_input input_100" style="width:100%;"></td>
-					<td><input type="text" name="EDATE" class="" size="15" autocomplete="off" value="<?= date("Y-m-d") ?>"
-						style="border: 1px solid #ddd; padding: 5px 7px; width:100%; background: white;" ></td>
+					<td><input type="text" name="EDATE" class="" size="15" autocomplete="off" value="<?= date("Y-m-d") ?>" style="border: 1px solid #ddd; padding: 5px 7px; width:100%; background: white;"></td>
 					<td class="cen">
-						<?php if($row->END_YN == "N"){?>
-						<span type="button" class="endBtn btn" data-idx="<?= $row->IDX ?>">완료</span>
-						<?php }?>
+						<?php if ($row->END_YN == "N") { ?>
+							<span type="button" class="endBtn btn" data-idx="<?= $row->IDX ?>">완료</span>
+						<?php } ?>
 					</td>
 				</tr>
 
@@ -58,46 +61,64 @@
 	</table>
 </div>
 
+<div class="pagination">
+	<?php
+	if($this->data['cnt'] > 20){
+	?>
+	<div class="limitset">
+		<select name="per_page">
+			<option value="20" <?php echo ($perpage == 20)?"selected":"";?>>20</option>
+			<option value="50" <?php echo ($perpage == 50)?"selected":"";?>>50</option>
+			<option value="80" <?php echo ($perpage == 80)?"selected":"";?>>80</option>
+			<option value="100" <?php echo ($perpage == 100)?"selected":"";?>>100</option>
+		</select>
+	</div>
+	<?php
+	}	
+	?>
+	<?php echo $this->data['pagenation'];?>
+</div>
+
 
 <script>
-//제이쿼리 수신일 입력창 누르면 달력 출력
-$(".calendar").datetimepicker({
-    format: 'Y-m-d',
-    timepicker: false,
-    lang: 'ko-KR'
-});
+	//제이쿼리 수신일 입력창 누르면 달력 출력
+	$(".calendar").datetimepicker({
+		format: 'Y-m-d',
+		timepicker: false,
+		lang: 'ko-KR'
+	});
 
-$(".endBtn").on("click", function() {
-	var formData = new FormData();
-	formData.append("IDX", $(this).data("idx"));
-	formData.append("QTY", $(this).parents("tr").find("input[name='QTY']").val());
-	formData.append("REMARK", $(this).parents("tr").find("input[name='REMARK']").val());
+	$(".endBtn").on("click", function() {
+		var formData = new FormData();
+		formData.append("IDX", $(this).data("idx"));
+		formData.append("QTY", $(this).parents("tr").find("input[name='QTY']").val());
+		formData.append("REMARK", $(this).parents("tr").find("input[name='REMARK']").val());
 
 
-	if($("input[name='QTY']").val() == ""){
-		alert("입고 수량 입력하세요.");
-		return false;
-	}
+		if ($("input[name='QTY']").val() == "") {
+			alert("입고 수량 입력하세요.");
+			return false;
+		}
 
-	if (confirm('입고하시겠습니까?') !== false) {
+		if (confirm('입고하시겠습니까?') !== false) {
 
-		$.ajax({
-			url: "<?php echo base_url('PURCHASE/end_component') ?>",
-			type: "POST",
-			data: formData,
-			//asynsc : true,
-			cache: false,
-			contentType: false,
-			processData: false,
-			success: function(data) {
-				location.reload();
-			},
-			error: function(xhr, textStatus, errorThrown) {
-				alert(xhr);
-				alert(textStatus);
-				alert(errorThrown);
-			}
-		});
-	}
-});
+			$.ajax({
+				url: "<?php echo base_url('PURCHASE/end_component') ?>",
+				type: "POST",
+				data: formData,
+				//asynsc : true,
+				cache: false,
+				contentType: false,
+				processData: false,
+				success: function(data) {
+					location.reload();
+				},
+				error: function(xhr, textStatus, errorThrown) {
+					alert(xhr);
+					alert(textStatus);
+					alert(errorThrown);
+				}
+			});
+		}
+	});
 </script>

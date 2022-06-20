@@ -56,6 +56,7 @@ class PROD extends CI_Controller
 	}
 	public function head_workorder()
 	{
+		$data['str']['date'] = $this->input->post('date');
 		$data['str']['actnm'] = trim($this->input->post('actnm')); //수주명
 		$data['str']['sdate'] = $this->input->post("sdate");
 		$data['str']['edate'] = $this->input->post("edate");
@@ -65,6 +66,7 @@ class PROD extends CI_Controller
 		$params['ACT_NAME'] = (isset($data['str']['actnm'])) ? $data['str']['actnm'] : '';
 		$params['SDATE'] = (isset($data['str']['sdate'])) ? $data['str']['sdate'] : '';
 		$params['EDATE'] = (isset($data['str']['edate'])) ? $data['str']['edate'] : date("Y-m-d", time());
+		$params['DATE'] = (isset($data['str']['date'])) ? $data['str']['date'] : '';
 
 		$data['perpage'] = ($this->input->post('perpage') != "") ? $this->input->post('perpage') : 20;
 		//PAGINATION
@@ -190,6 +192,7 @@ class PROD extends CI_Controller
 
 	public function head_pworkorder()
 	{
+		$data['str']['date'] = $this->input->post('date');
 		$data['str']['actnm'] = trim($this->input->post('actnm')); //수주명
 		$data['str']['sdate'] = $this->input->post("sdate");
 		$data['str']['edate'] = $this->input->post("edate");
@@ -199,6 +202,7 @@ class PROD extends CI_Controller
 		$params['ACT_NAME'] = (isset($data['str']['actnm'])) ? $data['str']['actnm'] : '';
 		$params['SDATE'] = (isset($data['str']['sdate'])) ? $data['str']['sdate'] : '';
 		$params['EDATE'] = (isset($data['str']['edate'])) ? $data['str']['edate'] : date("Y-m-d", time());
+		$params['DATE'] = (isset($data['str']['date'])) ? $data['str']['date'] : '';
 
 		$data['perpage'] = ($this->input->post('perpage') != "") ? $this->input->post('perpage') : 20;
 		//PAGINATION
@@ -295,6 +299,7 @@ class PROD extends CI_Controller
 	}
 	public function head_matinput()
 	{
+		$data['str']['date'] = $this->input->post('date');
 		$data['str']['actnm'] = trim($this->input->post('actnm')); //수주명
 		$data['str']['sdate'] = $this->input->post("sdate");
 		$data['str']['edate'] = $this->input->post("edate");
@@ -304,6 +309,7 @@ class PROD extends CI_Controller
 		$params['ACT_NAME'] = (isset($data['str']['actnm'])) ? $data['str']['actnm'] : '';
 		$params['SDATE'] = (isset($data['str']['sdate'])) ? $data['str']['sdate'] : '';
 		$params['EDATE'] = (isset($data['str']['edate'])) ? $data['str']['edate'] : date("Y-m-d", time());
+		$params['DATE'] = (isset($data['str']['date'])) ? $data['str']['date'] : '';
 
 		$data['perpage'] = ($this->input->post('perpage') != "") ? $this->input->post('perpage') : 20;
 		//PAGINATION
@@ -400,6 +406,7 @@ class PROD extends CI_Controller
 	}
 	public function head_pprodcur()
 	{
+		$data['str']['date'] = $this->input->post('date');
 		$data['str']['actnm'] = trim($this->input->post('actnm')); //수주명
 		$data['str']['sdate'] = $this->input->post("sdate");
 		$data['str']['edate'] = $this->input->post("edate");
@@ -409,6 +416,7 @@ class PROD extends CI_Controller
 		$params['ACT_NAME'] = (isset($data['str']['actnm'])) ? $data['str']['actnm'] : '';
 		$params['SDATE'] = (isset($data['str']['sdate'])) ? $data['str']['sdate'] : '';
 		$params['EDATE'] = (isset($data['str']['edate'])) ? $data['str']['edate'] : date("Y-m-d", time());
+		$params['DATE'] = (isset($data['str']['date'])) ? $data['str']['date'] : '';
 
 		$data['perpage'] = ($this->input->post('perpage') != "") ? $this->input->post('perpage') : 20;
 		//PAGINATION
@@ -515,6 +523,7 @@ class PROD extends CI_Controller
 	}
 	public function head_pharvest()
 	{
+		$data['str']['date'] = $this->input->post('date');
 		$data['str']['actnm'] = trim($this->input->post('actnm')); //수주명
 		$data['str']['sdate'] = $this->input->post("sdate");
 		$data['str']['edate'] = $this->input->post("edate");
@@ -524,6 +533,7 @@ class PROD extends CI_Controller
 		$params['ACT_NAME'] = (isset($data['str']['actnm'])) ? $data['str']['actnm'] : '';
 		$params['SDATE'] = (isset($data['str']['sdate'])) ? $data['str']['sdate'] : '';
 		$params['EDATE'] = (isset($data['str']['edate'])) ? $data['str']['edate'] : date("Y-m-d", time());
+		$params['DATE'] = (isset($data['str']['date'])) ? $data['str']['date'] : '';
 
 		$data['perpage'] = ($this->input->post('perpage') != "") ? $this->input->post('perpage') : 20;
 		//PAGINATION
