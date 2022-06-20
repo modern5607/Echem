@@ -163,12 +163,21 @@ SQL;
 		}
 
 		$sql=<<<SQL
-			SELECT * FROM T_ITEMS AS I
-			where USE_YN = 'Y' {$where}
+			SELECT 
+				I.IDX,ITEM_NAME,SPEC,UNIT,STOCK,USE_YN,TRANS_DATE,REMARK
+			FROM 
+				T_ITEMS AS I
+				LEFT JOIN T_ITEMS_TRANS AS IT ON IT.H_IDX = I.IDX 
+			WHERE 
+				USE_YN = 'Y' 
+				AND ( H_IDX, IT.INSERT_DATE ) IN ( SELECT H_IDX, max( INSERT_DATE ) AS INSERT_DATE FROM T_ITEMS_TRANS GROUP BY H_IDX ) 
+				{$where}
+			ORDER BY
+				H_IDX
 			LIMIT {$start},{$limit}
 SQL;		
 		$query = $this->db->query($sql);
-		echo $this->db->last_query();
+		// echo $this->db->last_query();
 		return $query->result();
 	}
 	public function ajax_stockchange_cnt($param)
@@ -182,8 +191,16 @@ SQL;
 		}
 
 		$sql=<<<SQL
-			SELECT * FROM T_ITEMS AS I
-			where USE_YN = 'Y' {$where}
+			SELECT * 
+			FROM 
+				T_ITEMS AS I
+				LEFT JOIN T_ITEMS_TRANS AS IT ON IT.H_IDX = I.IDX 
+			WHERE 
+				USE_YN = 'Y' 
+				AND ( H_IDX, IT.INSERT_DATE ) IN ( SELECT H_IDX, max( INSERT_DATE ) AS INSERT_DATE FROM T_ITEMS_TRANS GROUP BY H_IDX ) 
+				{$where}
+			ORDER BY
+				H_IDX
 SQL;		
 		$query = $this->db->query($sql);
 		// echo $this->db->last_query();

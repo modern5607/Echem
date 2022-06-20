@@ -50,9 +50,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				<td><?= isset($row->UNIT)?$row->UNIT:"" ?></td>
 				<td class="right"><?= isset($row->STOCK)?round($row->STOCK,2):"0"?></td>
 				<td><input type="number" name="QTY" class="input_100"></td>
-				<td><input type="text" name="DATE" class="calendar" size="15" autocomplete="off" value="<?= date("Y-m-d") ?>" 
+				<td><input type="date" name="DATE" class="" size="15" autocomplete="off" value="<?= isset($row->TRANS_DATE)?$row->TRANS_DATE:date("Y-m-d") ?>" 
 				style="border: 1px solid #ddd; padding: 3px 7px; width:100%; background: white;"></td>
-				<td><input type="text" name="REMARK" class="input_100"></td>
+				<td><input type="text" name="REMARK" class="input_100" value="<?=$row->REMARK ?>"></td>
 				<td class="cen"><span type="button" class="submitBtn btn" style="background-color: white;" data-idx="<?=$row->IDX?>">수정</span></td>
 			</tr>
 
