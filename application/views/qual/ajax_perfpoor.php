@@ -9,7 +9,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 			<header>
 				<div class="searchDiv">
-					<form id="ajaxForm">
+					<form id="ajaxForm" onsubmit="return false">
 						<label>작업지시일</label>
 						<input type="date" name="sdate" class="" size="11" value="<?php echo $str['sdate']; ?>" placeholder="<?= date("Y-m-d") ?>" /> ~
 						<input type="date" name="edate" class="" size="11" value="<?php echo $str['edate']; ?>" placeholder="<?= date("Y-m-d") ?>" />

@@ -8,7 +8,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<div class="">
 
 			<header>
-				<div class="searchDiv">
+				<div class="searchDiv" onsubmit="return false">
 					<form id="ajaxForm">
 						<label>작업지시일</label>
 						<input type="date" name="sdate" class="" size="11" value="<?php echo $str['sdate']; ?>" placeholder="<?= date("Y-m-d") ?>" /> ~
