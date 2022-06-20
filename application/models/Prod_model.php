@@ -101,6 +101,7 @@ SQL;
 				A.QTY,
 				O.START_DATE,
 				A.END_YN,
+				A.END_DATE AS RELEASE_DATE,
 				O.END_DATE,
 				O.REMARK,
 				O.PHINPUT_YN,
@@ -125,7 +126,8 @@ SQL;
 				B.CUST_NM,
 				A.ACT_DATE,
 				A.DEL_DATE,
-				A.QTY
+				A.QTY,
+				A.END_DATE AS RELEASE_DATE
 			FROM
 				T_ACT A 
 				LEFT JOIN T_BIZ AS B ON A.BIZ_IDX = B.IDX

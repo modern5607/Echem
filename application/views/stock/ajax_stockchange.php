@@ -105,10 +105,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		formData.append("REMARK", $(this).parents("tr").find("input[name='REMARK']").val());
 
 
-		// FormData의 값 확인
-		for (var pair of formData.entries()) {
-		console.log(pair[0]+ ', ' + pair[1]);
-		}
+		for (var i of formData.entries())
+            console.log(i[0] + ", " + i[1]);
 
 
 		$.ajax({

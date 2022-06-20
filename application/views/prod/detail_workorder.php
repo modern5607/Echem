@@ -46,7 +46,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     </tr>
                     <tr>
                     <th>출고일자</th>
-                        <td><input type="text" readonly name="END_DATE" class="form_input input_100 disabled" value="<?= isset($info->END_DATE) ? $info->END_DATE : '' ?>"></td>
+                        <td><input type="text" readonly name="RELEASE_DATE" class="form_input input_100 disabled" value="<?= isset($info->RELEASE_DATE) ? $info->RELEASE_DATE : '' ?>"></td>
                         <th>주문특이사항</th>
                         <td><input type="text" readonly name="SHIP_REMARK" class="form_input input_100 disabled" value="<?= isset($info->SHIP_REMARK) ? $info->SHIP_REMARK : '' ?>"></td>
                     </tr>
@@ -58,9 +58,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     </tr>
                     <tr>
                         <th class="w120 res">작업시작일</th>
-                        <td><input type="text" name="START_DATE" class="calendar form_input input_100" value="<?= isset($info->START_DATE) ? $info->START_DATE : '' ?>"></td>
+                        <td><input type="date" name="START_DATE" class="form_input input_100" value="<?= isset($info->START_DATE) ? $info->START_DATE : '' ?>"></td>
                         <th class="w120 res">작업종료일</th>
-                        <td><input type="text" name="END_DATE" class="calendar form_input input_100" value="<?= isset($info->END_DATE) ? $info->END_DATE : '' ?>"></td>
+                        <td><input type="date" name="END_DATE" class="form_input input_100" value="<?= isset($info->END_DATE) ? $info->END_DATE : '' ?>"></td>
                     </tr>
                     <tr>
                         <th>작업 특이사항</th>
@@ -99,16 +99,17 @@ defined('BASEPATH') or exit('No direct script access allowed');
         for (var i of formData.entries())
             console.log(i[0] + ", " + i[1]);
 
-        if($("input[name='START_DATE'").val() == "")
+        if($("input[name='START_DATE']").val() == "")
         {
             alert("작업 시작일을 입력해 주세요");
-            $("input[name='START_DATE'").focus();
+            $("input[name='START_DATE']").focus();
             return false;
         }
-        if($("input[name='END_DATE'").val() == "")
+
+        if($("input[name='END_DATE']").val() == "")
         {
-            alert("작업 시작일을 입력해 주세요");
-            $("input[name='END_DATE'").focus();
+            alert("작업 종료일을 입력해 주세요");
+            $("input[name='END_DATE']").focus();
             return false;
         }
 
@@ -137,22 +138,22 @@ defined('BASEPATH') or exit('No direct script access allowed');
     $(".upBtn").click(function() {
         var formData = new FormData($("#detailForm")[0]);
 
-        if($("input[name='ORDER_DATE'").val() == "")
+        if($("input[name='ORDER_DATE']").val() == "")
         {
             alert("작업 시작일을 입력해 주세요");
-            $("input[name='ORDER_DATE'").focus();
+            $("input[name='ORDER_DATE']").focus();
             return false;
         }
-        if($("input[name='START_DATE'").val() == "")
+        if($("input[name='START_DATE']").val() == "")
         {
             alert("작업 시작일을 입력해 주세요");
-            $("input[name='START_DATE'").focus();
+            $("input[name='START_DATE']").focus();
             return false;
         }
-        if($("input[name='END_DATE'").val() == "")
+        if($("input[name='END_DATE']").val() == "")
         {
             alert("작업 시작일을 입력해 주세요");
-            $("input[name='END_DATE'").focus();
+            $("input[name='END_DATE']").focus();
             return false;
         }
 
