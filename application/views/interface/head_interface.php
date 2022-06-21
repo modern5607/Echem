@@ -8,7 +8,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 <div class="searchBox">
 <header>
 			<div class="searchDiv">
-				<form id="headForm">
+				<form id="headForm" onsubmit="return false">
 					<label>수주일</label>
 					<input type="date" name="sdate" value="<?= $str['sdate']; ?>" class=""  /> ~ 
 					<input type="date" name="edate" value="<?= $str['edate']; ?>" class="" />
