@@ -50,8 +50,14 @@ class _INTERFACE extends CI_Controller
 
 	public function interface($tank="")
 	{
-
-		$data['title'] = "생산관리 INTERFACE";
+		$title[0] = "온수탱크";
+		$title[1] = "탄산나트륨탱크";
+		$title[2] = "세척탱크";
+		$title[3] = "반응탱크";
+		$title[4] = "교반탱크1";
+		$title[5] = "교반탱크2";
+		$title[6] = "교반탱크3";
+		$data['title'] = $title[$tank]." INTERFACE";
 		$data['URI'] = $tank;
 		$this->load->view('/main50', $data);
 	}

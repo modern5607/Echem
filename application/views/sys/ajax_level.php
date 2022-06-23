@@ -56,7 +56,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 	<div class="">
 		<header>
 			<div class="searchDiv">
-				<form id="ajaxForm">
+				<form id="ajaxForm" onsubmit="return false">
 
 					<label for="mid">아이디</label>
 					<input type="text" name="mid" id="mid" value="<?php echo $str['mid'] ?>" size="6" />

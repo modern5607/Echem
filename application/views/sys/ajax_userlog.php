@@ -7,7 +7,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<div class="">
 		<header>
 			<div class="searchDiv">
-				<form id="ajaxForm">
+				<form id="ajaxForm" onsubmit="return false">
                     <?php date_default_timezone_set('Asia/Seoul');?>
                     <label for="login">로그인 날짜</label>
 					<input type="text" class="calendar" size="13" name="login" id="login" autocomplete="off" value="<?php echo $str['login']?>" />
