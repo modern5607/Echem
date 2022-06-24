@@ -645,7 +645,7 @@ class PROD extends CI_Controller
 		$data['list'] = $this->prod_model->ajax_prodmonitor();
 
 		//뷰
-		$this->load->view('prod/ajax_prodmonitor', $data);
+		$this->load->view('prod/ajax_prodmonitor3', $data);
 	}
 
 	// 생산 모니터링 - 태블릿

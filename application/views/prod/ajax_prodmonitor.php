@@ -272,11 +272,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			</span>
 		</div>
 		<div style="display: block;height: 300px;">
-			<!--원료배합탱크 -->
+			<!--교반탱크 -->
 			<span class="" style="max-height: none; overflow-y: auto; float: left;">
 				<table class="tg">
 					<tr>
-						<td rowspan="5" class="color">원료배합탱크<br><br><img src="../_static/img/raw-tank.png" width="100"></td>
+						<td rowspan="5" class="color">교반탱크<br><br><img src="../_static/img/raw-tank.png" width="100"></td>
 						<td class="tag"></td>
 						<td class="column">PH</td>
 						<td class="datacell right">12.5</td>
@@ -303,11 +303,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
 					</tr>
 				</table>
 			</span>
-			<!--원료배합탱크 -->
+			<!--교반탱크 -->
 			<span class="" style="max-height: none; overflow-y: auto; margin-left: 10px; float: left;">
 				<table class="tg">
 					<tr>
-						<td rowspan="5" class="color">원료배합탱크<br><br><img src="../_static/img/raw-tank.png" width="100"></td>
+						<td rowspan="5" class="color">교반탱크<br><br><img src="../_static/img/raw-tank.png" width="100"></td>
 						<td class="tag"></td>
 						<td class="column">PH</td>
 						<td class="datacell right">12.5</td>
@@ -334,11 +334,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
 					</tr>
 				</table>
 			</span>
-			<!--원료배합탱크 -->
+			<!--교반탱크 -->
 			<span class="" style="max-height: none; overflow-y: auto; margin-left: 10px; float: left;margin-bottom: 4px;">
 				<table class="tg">
 					<tr>
-						<td rowspan="5" class="color">원료배합탱크<br><br><img src="../_static/img/raw-tank.png" width="100"></td>
+						<td rowspan="5" class="color">교반탱크<br><br><img src="../_static/img/raw-tank.png" width="100"></td>
 						<td class="tag"></td>
 						<td class="column">PH</td>
 						<td class="datacell right">12.4</td>

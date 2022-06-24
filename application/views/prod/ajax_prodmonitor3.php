@@ -10,7 +10,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 <script src="../_static/js/Figures.js"></script>
 <style type="text/css">
   .body_Content {
-    /* background-color: #121415; */
+    background-color: #121415;
   }
 </style>
 
@@ -22,20 +22,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
       <script id="code">
         $(document).ready(function() {
           init();
-
-          drawBox();
         });
 
-        function drawBox() {
-          /**@type {HTMLCanvasElement} */
-          var canvas = document.getElementById("myDiagramDiv").firstChild;
-          // console.log(canvas);
-          var ctx = canvas.getContext("2d");
-          ctx.fillStyle = "red";
-          ctx.fillRect(100, 100, 100, 100);
-          ctx.font = "30px Arial";
-          ctx.fillText("Hello World", 10, 50);
-        }
 
         function init() {
           // console.log("init");
@@ -45,13 +33,17 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
           myDiagram =
             $(go.Diagram, "myDiagramDiv", {
-              "grid.visible": true,
-              "grid.gridCellSize": new go.Size(70, 70),
-              "draggingTool.isGridSnapEnabled": true,
-              "resizingTool.isGridSnapEnabled": true,
+              "grid.visible": false,
+              "grid.gridCellSize": new go.Size(5, 5),
+              "draggingTool.isGridSnapEnabled": false,
+              "resizingTool.isGridSnapEnabled": false,
               "rotatingTool.snapAngleMultiple": 90,
               "rotatingTool.snapAngleEpsilon": 45,
-              "undoManager.isEnabled": true
+              "undoManager.isEnabled": true,
+              allowHorizontalScroll:false,
+              allowVerticalScroll:false,
+              // allowSelect:false,
+              initialScale:1.6
             });
 
           // when the document is modified, add a "*" to the title and enable the "Save" button
@@ -132,6 +124,51 @@ defined('BASEPATH') or exit('No direct script access allowed');
               })
             ));
 
+          myDiagram.nodeTemplateMap.add("Table1", //카테고리명
+          $(go.Part, "Auto",{},
+          new go.Binding("location", "pos", go.Point.parse).makeTwoWay(go.Point.stringify),
+            $(go.Shape, { fill: "white", stroke: "gray", strokeWidth: 3 }),
+            $(go.Panel, "Table",
+
+              // drawn before row 1:
+              $(go.RowColumnDefinition,
+                { row: 1, separatorStrokeWidth: 1.5, separatorStroke: "black" }),
+              // drawn before column 1:
+              $(go.RowColumnDefinition,
+                { column: 1, separatorStrokeWidth: 1.5, separatorStroke: "black" }),
+
+              $(go.TextBlock, "수위", { row: 1, column: 0, stroke: "green", margin: 2 }),
+              $(go.TextBlock, "row 1 col 1", { row: 1, column: 1, margin: 2 },new go.Binding("text", "text1")),
+              $(go.TextBlock, "온도", { row: 2, column: 0, stroke: "green", margin: 2 }),
+              $(go.TextBlock, "row 2 col 1", { row: 2, column: 1, margin: 2 },new go.Binding("text", "text2")),
+            )
+          ));
+          myDiagram.nodeTemplateMap.add("Table2",
+          $(go.Part, "Auto",{},
+          new go.Binding("location", "pos", go.Point.parse).makeTwoWay(go.Point.stringify),
+            $(go.Shape, { fill: "white", stroke: "gray", strokeWidth: 3 }),
+            $(go.Panel, "Table",
+
+              // drawn before row 1:
+              $(go.RowColumnDefinition,
+                { row: 1, separatorStrokeWidth: 1.5, separatorStroke: "black" }),
+              // drawn before column 1:
+              $(go.RowColumnDefinition,
+                { column: 1, separatorStrokeWidth: 1.5, separatorStroke: "black" }),
+
+              $(go.TextBlock, "PH", { row: 1, column: 0, stroke: "green", margin: 2 }),
+              $(go.TextBlock, "row 1 col 1", { row: 1, column: 1, margin: 2 },new go.Binding("text", "text1")),
+              $(go.TextBlock, "Cl", { row: 2, column: 0, stroke: "green", margin: 2 }),
+              $(go.TextBlock, "row 2 col 1", { row: 2, column: 1, margin: 2 },new go.Binding("text", "text2")),
+              $(go.TextBlock, "온도", { row: 3, column: 0, stroke: "green", margin: 2 }),
+              $(go.TextBlock, "row 3 col 1", { row: 3, column: 1, margin: 2 },new go.Binding("text", "text3")),
+              $(go.TextBlock, "압력", { row: 4, column: 0, stroke: "green", margin: 2 }),
+              $(go.TextBlock, "row 4 col 1", { row: 4, column: 1, margin: 2 },new go.Binding("text", "text4")),
+              $(go.TextBlock, "수위", { row: 5, column: 0, stroke: "green", margin: 2 }),
+              $(go.TextBlock, "row 5 col 1", { row: 5, column: 1, margin: 2 },new go.Binding("text", "text5")),
+            )
+          ));
+
           myDiagram.linkTemplate =
             $(go.Link, {
                 routing: go.Link.AvoidsNodes,
@@ -177,26 +214,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
           animation.runCount = Infinity;
           animation.start();
         }
-
-        // Always show the first Node:
-        var inspector2 = new Inspector('myInspectorDiv2', myDiagram, {
-          // By default the inspector works on the Diagram selection.
-          // This property lets us inspect a specific object by calling Inspector.inspectObject.
-          inspectSelection: false,
-          properties: {
-            "text": {},
-            // This property we want to declare as a color, to show a color-picker:
-            "color": {
-              type: 'color'
-            },
-            // key would be automatically added for node data, but we want to declare it read-only also:
-            "key": {
-              readOnly: true,
-              show: Inspector.showIfPresent
-            }
-          }
-        });
-
+       
         function save() {
           document.getElementById("mySavedModel").value = myDiagram.model.toJson();
           myDiagram.isModified = false;
@@ -210,7 +228,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
       </script>
 
       <div id="sample">
-        <div id="myDiagramDiv" style="border: 1px solid black; width: 100%; height: 500px; position: relative; -webkit-tap-highlight-color: rgba(255, 255, 255, 255);"><canvas tabindex="0" width="1054" height="498" style="position: absolute; top: 0px; left: 0px; z-index: 2; user-select: none; touch-action: none; width: 1054px; height: 498px;">This text is displayed if your browser does not support the Canvas HTML element.</canvas>
+        <div id="myDiagramDiv" style="border: 1px solid black; width: 100%; height: 700px; position: relative; -webkit-tap-highlight-color: rgba(255, 255, 255, 0);"><canvas tabindex="0" width="1054" height="700" style="position: absolute; top: 0px; left: 0px; z-index: 2; user-select: none; touch-action: none; width: 1054px; height: 498px;">This text is displayed if your browser does not support the Canvas HTML element.</canvas>
           <!-- <div style="position: absolute; overflow: auto; width: 1054px; height: 498px; z-index: 1;"> -->
           <!-- <div style="position: absolute; width: 1px; height: 1px;"></div> -->
         </div>
@@ -222,7 +240,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
           <button onclick="load()">Load</button>
           Diagram Model saved in JSON format:
         </div>
-        <textarea id="mySavedModel" style="width:100%;height:300px">{ "class": "GraphLinksModel",
+        <textarea id="mySavedModel" style="width:100%;height:300px;display:none;">{ "class": "GraphLinksModel",
   "nodeDataArray": [
 {"key":"T1","category":"Process","pos":"78.008544921875 125","text":"Na2Co3","size":"90 100"},
 {"key":"T2","category":"Process","pos":"210 125","text":"Wash","size":"90 100"},
@@ -231,7 +249,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
 {"key":"W2","category":"Process","pos":"85 20","text":"H2O"},
 {"key":"M1","category":"Process","pos":"450 220","text":"Licl1","size":"50 60"},
 {"key":"M2","category":"Process","pos":"510 220","text":"Licl2","size":"50 60"},
-{"key":"B1","category":"Process","pos":"210 260","text":"Li2Co3","size":"50 60"}
+{"key":"B1","category":"Process","pos":"210 260","text":"Li2Co3","size":"50 60"},
+{"key":"w1","category":"Table1","text1":"72","text2":"59","pos":"55 -55"},
+{"key":"w2","category":"Table1","text1":"67","text2":"58","pos":"130 -60"},
+{"key":"t1","category":"Table2","text1":"11.77","text2":"0.02","text3":"41","text4":"1.01","text5":"43","pos":"50 185"},
+{"key":"t2","category":"Table2","text1":"10.3","text2":"5.4","text3":"33","text4":"0.998","text5":"64","pos":"180 -35"},
+{"key":"t3","category":"Table2","text1":"11.04","text2":"9.8","text3":"45","text4":"1.22","text5":"61","pos":"320 -35"},
+{"key":"m1","category":"Table2","text1":"12.5","text2":"9.9","text3":"35","text4":"1.09","text5":"43","pos":"345 200"},
+{"key":"m2","category":"Table2","text1":"12.5","text2":"9.98","text3":"34","text4":"1.10","text5":"45","pos":"545 200"}
 ],
   "linkDataArray": [
 {"from":"T1","to":"T3","points":[124.008544921875,125,134.008544921875,125,146,125,146,193,269,193,269,125,294,125,304,125]},
