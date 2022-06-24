@@ -662,4 +662,17 @@ class PROD extends CI_Controller
 		//뷰
 		$this->load->view('prod/ajax_prodmonitor2', $data);
 	}
+
+	public function save_monitor_setting()
+	{
+		$json = $this->input->post('json');
+		$this->db->query("INSERT INTO T_JSON(JSON) VALUES('{$json}')");
+		$res = $this->db->affected_rows();
+		echo $res;
+	}
+	public function load_monitor_setting()
+	{
+		$res = $this->db->query("SELECT JSON FROM T_JSON ORDER BY IDX DESC LIMIT 1");
+		echo $res->row()->JSON;
+	}
 }
