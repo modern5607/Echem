@@ -83,9 +83,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
                   fill: $(go.Brush, "Linear", {
                     start: go.Spot.Left,
                     end: go.Spot.Right,
-                    0: "lightgray",
-                    0.5: "lightgray",
-                    1: "lightgray"
+                    0: "gray",
+                    0.5: "white",
+                    1: "gray"
                   }),
                   minSize: new go.Size(50, 50),
                   portId: "",
@@ -96,6 +96,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
               $(go.TextBlock, {
                   alignment: go.Spot.Top,
                   textAlign: "center",
+                  font: "bold 14px dotum",
                   margin: 5,
                   editable: true
                 },
@@ -138,7 +139,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
           myDiagram.nodeTemplateMap.add("Table1", //카테고리명
           $(go.Part, "Auto",{},
           new go.Binding("location", "pos", go.Point.parse).makeTwoWay(go.Point.stringify),
-            $(go.Shape, { fill: "lightgray", stroke: "lightgray", strokeWidth: 3 }),
+            $(go.Shape, { /*fill: "lightgray", */opacity:0.0, stroke: "lightgray", strokeWidth: 3 }),
             $(go.Panel, "Table",
 
               // drawn before row 1:
@@ -149,16 +150,16 @@ defined('BASEPATH') or exit('No direct script access allowed');
               // $(go.RowColumnDefinition,
               //   { column: 1, separatorStrokeWidth: 1.5, separatorStroke: "black" }),
 
-              $(go.TextBlock, "수위", { row: 1, column: 0, stroke: "green", margin: 2 }),
-              $(go.TextBlock, "row 1 col 1", { row: 1, column: 1, margin: 2 },new go.Binding("text", "text1")),
-              $(go.TextBlock, "온도", { row: 2, column: 0, stroke: "green", margin: 2 }),
-              $(go.TextBlock, "row 2 col 1", { row: 2, column: 1, margin: 2 },new go.Binding("text", "text2")),
+              $(go.TextBlock, "수위", { font: "bold 14px dotum",row: 1, column: 0, stroke: "green", margin: 2 }),
+              $(go.TextBlock, "row 1 col 1", { font: "bold 14px dotum",row: 1, column: 1, margin: 2 },new go.Binding("text", "text1")),
+              $(go.TextBlock, "온도", { font: "bold 14px dotum",row: 2, column: 0, stroke: "green", margin: 2 }),
+              $(go.TextBlock, "row 2 col 1", { font: "bold 14px dotum",row: 2, column: 1, margin: 2 },new go.Binding("text", "text2")),
             )
           ));
           myDiagram.nodeTemplateMap.add("Table2",
           $(go.Part, "Auto",{},
           new go.Binding("location", "pos", go.Point.parse).makeTwoWay(go.Point.stringify),
-            $(go.Shape, { fill: "lightgray", stroke: "lightgray", strokeWidth: 3 }),
+            $(go.Shape, { /*fill: "lightgray",*/opacity:0.0, stroke: "lightgray", strokeWidth: 3 }),
             $(go.Panel, "Table",
 
               // drawn before row 1:
@@ -168,16 +169,16 @@ defined('BASEPATH') or exit('No direct script access allowed');
               // $(go.RowColumnDefinition,
               //   { column: 1, separatorStrokeWidth: 1.5, separatorStroke: "black" }),
 
-              $(go.TextBlock, "PH", { row: 1, column: 0, stroke: "green", margin: 2 }),
-              $(go.TextBlock, "row 1 col 1", { row: 1, column: 1, margin: 2 },new go.Binding("text", "text1")),
-              $(go.TextBlock, "Cl", { row: 2, column: 0, stroke: "green", margin: 2 }),
-              $(go.TextBlock, "row 2 col 1", { row: 2, column: 1, margin: 2 },new go.Binding("text", "text2")),
-              $(go.TextBlock, "온도", { row: 3, column: 0, stroke: "green", margin: 2 }),
-              $(go.TextBlock, "row 3 col 1", { row: 3, column: 1, margin: 2 },new go.Binding("text", "text3")),
-              $(go.TextBlock, "압력", { row: 4, column: 0, stroke: "green", margin: 2 }),
-              $(go.TextBlock, "row 4 col 1", { row: 4, column: 1, margin: 2 },new go.Binding("text", "text4")),
-              $(go.TextBlock, "수위", { row: 5, column: 0, stroke: "green", margin: 2 }),
-              $(go.TextBlock, "row 5 col 1", { row: 5, column: 1, margin: 2 },new go.Binding("text", "text5")),
+              $(go.TextBlock, "PH", { font: "bold 14px dotum", row: 1, column: 0, stroke: "green", margin: 2 }),
+              $(go.TextBlock, "row 1 col 1", { font: "bold 14px dotum", row: 1, column: 1, margin: 2 },new go.Binding("text", "text1")),
+              $(go.TextBlock, "Cl", { font: "bold 14px dotum", row: 2, column: 0, stroke: "green", margin: 2 }),
+              $(go.TextBlock, "row 2 col 1", { font: "bold 14px dotum", row: 2, column: 1, margin: 2 },new go.Binding("text", "text2")),
+              $(go.TextBlock, "온도", { font: "bold 14px dotum", row: 3, column: 0, stroke: "green", margin: 2 }),
+              $(go.TextBlock, "row 3 col 1", { font: "bold 14px dotum", row: 3, column: 1, margin: 2 },new go.Binding("text", "text3")),
+              $(go.TextBlock, "압력", { font: "bold 14px dotum", row: 4, column: 0, stroke: "green", margin: 2 }),
+              $(go.TextBlock, "row 4 col 1", { font: "bold 14px dotum", row: 4, column: 1, margin: 2 },new go.Binding("text", "text4")),
+              $(go.TextBlock, "수위", { font: "bold 14px dotum", row: 5, column: 0, stroke: "green", margin: 2 }),
+              $(go.TextBlock, "row 5 col 1", { font: "bold 14px dotum", row: 5, column: 1, margin: 2 },new go.Binding("text", "text5")),
             )
           ));
 
@@ -256,6 +257,22 @@ defined('BASEPATH') or exit('No direct script access allowed');
           animation.start();
         }
 
+        var isShow = false;
+        function hide_show()
+        {
+          isShow = !isShow;
+          if(isShow)
+          {
+            $("#mySavedModel").css("display","block");
+            $("#showcode").html("Hide Code");
+          }
+          else
+          {
+            $("#mySavedModel").css("display","none");
+            $("#showcode").html("Show Code");
+          }
+        }
+
         window.addEventListener('DOMContentLoaded', init);
       </script>
 
@@ -271,6 +288,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
           <button id="SaveButton" onclick="save()" >Save to DB</button>
           <button onclick="load()">Load from DB</button>
           <button onclick="default_load()">Default Load</button>
+          <button id="showcode" onclick="hide_show()" style="float:right;">Show Code</button>
         </div>
         <textarea id="mySavedModel" style="width:100%;height:300px;display:none;">{ "class": "GraphLinksModel",
   "nodeDataArray": [

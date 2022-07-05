@@ -255,4 +255,75 @@ SQL;
 
 		return $data;
 	}
+
+	public function get_member()
+	{
+		$sql=<<<SQL
+			SELECT 
+				IDX,NAME
+			FROM
+				T_MEMBER
+SQL;
+		return $this->db->query($sql)->result();
+	}
+	public function ajax_vacation($YEAR, $MONTH, $DAY = '')
+	{
+		$where = "";
+		if (!empty($DAY) && $DAY != "") {
+			$where = " AND SUBSTRING(VACATION_DATE, 9, 2) = '{$DAY}'";
+		}
+		$sql=<<<SQL
+			SELECT 
+				V.IDX,
+				SUBSTRING( VACATION_DATE, 9, 2 ) AS DAY,
+				VACATION_DATE,
+				MEMBER_IDX,
+				M.NAME,
+				REMARK
+			FROM 
+				T_VACATION2 V
+				LEFT JOIN T_MEMBER AS M ON M.IDX = V.MEMBER_IDX
+			WHERE
+				SUBSTRING(VACATION_DATE, 1, 4) = '{$YEAR}' 
+				AND SUBSTRING(VACATION_DATE, 6, 2) = '{$MONTH}'
+				{$where}
+SQL;
+		$query=$this->db->query($sql);
+		// echo $this->db->last_query();
+		return $query->result();
+
+	}
+
+	public function vacation_insert($params)
+	{
+		$username = $this->session->userdata('user_name');
+		$sql=<<<SQL
+			INSERT INTO T_VACATION2 (VACATION_DATE,REMARK,INSERT_ID,INSERT_DATE,MEMBER_IDX)
+			VALUES ('{$params['DATE']}','{$params['REMARK']}','{$username}',NOW(),'{$params['MEMBER_IDX']}')
+SQL;
+		$query = $this->db->query($sql);
+		// echo $this->db->last_query();
+		return $this->db->affected_rows();
+	}
+
+	public function vacation_update($params)
+	{
+		$sql=<<<SQL
+			UPDATE T_VACATION2
+			SET VACATION_DATE= '{$params['DATE']}',REMARK = '{$params['REMARK']}',MEMBER_IDX = '{$params['MEMBER_IDX']}'
+			WHERE IDX = '{$params['IDX']}'
+SQL;
+		$query = $this->db->query($sql);
+		return $this->db->affected_rows();
+	}
+
+	public function vacation_delete($params)
+	{
+		$sql=<<<SQL
+			DELETE FROM T_VACATION2
+			WHERE IDX = '{$params['IDX']}'
+SQL;
+		$query = $this->db->query($sql);
+		return $this->db->affected_rows();
+	}
 }

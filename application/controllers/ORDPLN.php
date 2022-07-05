@@ -450,4 +450,176 @@ class ORDPLN extends CI_Controller
 		//뷰
 		$this->load->view('ordpln/ajax_prodplncur', $data);
 	}
+
+
+	public function vacation()
+	{
+		$data['title']='근태관리';
+		return $this->load->view('main100', $data);
+	}
+
+	public function ajax_vacation()
+	{
+		$prefs = array(
+			'start_day'    => 'sunday',
+			'month_type'   => 'short',
+			'day_type'     => 'short',
+			'show_next_prev'  => true,
+			'show_other_days' => false,
+			'next_prev_url'   => base_url('ORDPLN/ajax_vacation/')
+		);
+
+		// $year = (!empty($this->uri->segment(3))) ? $this->uri->segment(3) : date("Y", time());
+		// $month = (!empty($this->uri->segment(4))) ? $this->uri->segment(4) : date("m", time());
+
+		$year = empty($this->input->post("year")) ? date("Y", time()) : $this->input->post("year");
+		$month = empty($this->input->post("month")) ? date("m", time()) : $this->input->post("month");
+
+		$prev_month = date("Y-m", strtotime('-1 month', strtotime($year . '-' . $month . '-01')));
+		$next_month = date("Y-m", strtotime('+1 month', strtotime($year . '-' . $month . '-01')));
+
+
+		$prefs['template'] = '
+
+			{table_open}<table border="0" cellpadding="0" cellspacing="3" id="calendar">{/table_open}
+
+			{heading_row_start}<tr class="headset">{/heading_row_start}
+
+			{heading_previous_cell}
+			<th>
+				<a href="#" data-date="' . $prev_month . '" class="moveBtn btn">이전달</a>
+			</th>
+			{/heading_previous_cell}
+
+			{heading_title_cell}<th colspan="{colspan}" style="font-size:18px">' . $year . "년 - " . $month . "월" . '</th>{/heading_title_cell}
+			
+			{heading_next_cell}
+			<th>
+				<a href="#" data-date="' . $next_month . '" class="moveBtn btn">다음달</a>
+			</th>
+			{/heading_next_cell}
+
+			{heading_row_end}</tr>{/heading_row_end}
+
+			{week_row_start}<tr class="week">{/week_row_start}
+			{week_row_class_start}<td class="{week_class}">{/week_row_class_start}
+			{week_day_cell}{week_day}{/week_day_cell}
+			{week_row_class_end}</td>{/week_row_class_end}
+			{week_row_end}</tr>{/week_row_end}
+
+			{cal_row_start}<tr>{/cal_row_start}
+			{cal_cell_start}<td>{/cal_cell_start}
+			{cal_cell_start_today}<td>{/cal_cell_start_today}
+			{cal_cell_start_other}<td class="other-month">{/cal_cell_start_other}
+
+			{cal_cell_content}
+				<div class="xday" data-date="' . $year . '-' . $month . '-{day}">
+					<p class="calendarText">{day}</p>
+					<div class="cont">{content}</div>
+				</div>
+			{/cal_cell_content}
+
+			{cal_cell_content_today}
+				<div class="xday"  data-date="' . $year . '-' . $month . '-{day}">
+					<p class="calendarText">{day}</p>
+					<div class="cont">{content}</div>
+				</div>
+			{/cal_cell_content_today}
+
+			{cal_cell_no_content}
+			
+				<div class="xday" data-date="' . $year . '-' . $month . '-{day}">
+					<p class="calendarText">{day}</p>
+					<div id="{day}"></div>
+				</div>
+			
+			{/cal_cell_no_content}
+
+			{cal_cell_no_content_today}
+				<div class="xday" data-date="' . $year . '-' . $month . '-{day}"><p class="calendarText">{day}</p></div>
+			{/cal_cell_no_content_today}
+
+			{cal_cell_blank}&nbsp;{/cal_cell_blank}
+
+			{cal_cell_other}{day}{cal_cel_other}
+
+			{cal_cell_end}</td>{/cal_cell_end}
+			{cal_cell_end_today}</td>{/cal_cell_end_today}
+			{cal_cell_end_other}</td>{/cal_cell_end_other}
+			{cal_row_end}</tr>{/cal_row_end}
+
+			{table_close}</table>{/table_close}
+	';
+
+		$this->load->library('calendar', $prefs);
+		
+		$List = $this->ordpln_model->ajax_vacation($year, $month);
+
+		foreach($List as $row)
+		{
+			$contArray[$row->DAY] = '';
+		}
+
+		// echo var_dump($List);
+		if (!empty($List)) { 
+			foreach ($List as $i => $row) {
+				$contArray[$row->DAY] .= $row->NAME.' : '. $row->REMARK . '<br>';
+			}
+		}else{
+			$contArray='';
+		}
+
+		// echo var_dump($contArray);
+
+		$data['calendar'] = $this->calendar->generate($year, $month, $contArray);
+
+		return $this->load->view('ordpln/ajax_vacation', $data);
+
+	}
+
+	public function vacation_form()
+	{
+		$data['setDate'] = $this->input->post("xdate");
+		$data['title'] = "근태관리 - ".$data['setDate'];
+
+		$year = substr($data['setDate'], 0, 4);
+		$month = substr($data['setDate'], 5, 2);
+		$day = substr($data['setDate'], 8, 2);
+
+		$data['List'] = $this->ordpln_model->ajax_vacation($year,$month,$day);
+		$data['Member'] = $this->ordpln_model->get_member();
+
+		// echo var_dump($data['List']);
+		// echo var_dump($data['Member']);
+
+		$this->load->view('ordpln/vacation_form', $data);
+	}
+
+	public function vacation_insert()
+	{
+		$params['MEMBER_IDX'] = $this->input->post("MEMBER_IDX");
+		$params['REMARK'] = $this->input->post("REMARK");
+		$params['DATE'] = $this->input->post("DATE");
+		$result = $this->ordpln_model->vacation_insert($params);
+
+		echo $result;
+	}
+
+	public function vacation_update()
+	{
+		$params['IDX'] = $this->input->post("IDX");
+		$params['MEMBER_IDX'] = $this->input->post("MEMBER_IDX");
+		$params['REMARK'] = $this->input->post("REMARK");
+		$params['DATE'] = $this->input->post("DATE");
+		$result = $this->ordpln_model->vacation_update($params);
+
+		echo $result;
+	}
+	public function vacation_delete()
+	{
+		$params['IDX'] = $this->input->post("IDX");
+		$result = $this->ordpln_model->vacation_delete($params);
+
+		echo $result;
+	}
 }
