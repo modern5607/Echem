@@ -16,7 +16,7 @@ class ORDPLN extends CI_Controller
 
 
 		$this->load->helper('test');
-		$this->load->model(array('mif_model', 'sys_model', 'ordpln_model'));
+		$this->load->model(array('mif_model', 'sys_model', 'ordpln_model','offday_model'));
 
 		$this->data['siteTitle'] = $this->config->item('site_title');
 		$this->data['menuLevel'] = $this->sys_model->menu_level();
@@ -47,6 +47,303 @@ class ORDPLN extends CI_Controller
 			}
 		}
 	}
+
+	//---------------------------------------------------------//
+	//---------------------------------------------------------//
+	
+
+	//일별 근태 관리
+
+public function month()
+	{
+		$data['title']='일별 근태 관리';
+		return $this->load->view('main50', $data);
+	}
+
+	public function head_month()
+	{
+		$data['str'] = array(); //검색어관련
+		$data['str']['sdate'] = $this->input->post('sdate'); //시작일자
+		$data['str']['edate'] = $this->input->post('edate'); //끝일자
+
+		$params['SDATE'] = "";
+		$params['EDATE'] = "";
+
+		if (!empty($data['str']['sdate'])) { $params['SDATE'] = $data['str']['sdate']; }
+		if (!empty($data['str']['edate'])) { $params['EDATE'] = $data['str']['edate']; }
+
+
+
+
+		$data['perpage'] = ($this->input->post('perpage') != "") ? $this->input->post('perpage') : 20;
+		//PAGINATION
+		$config['per_page'] = $data['perpage'];
+		$config['page_query_string'] = true;
+		$config['query_string_segment'] = "pageNum";
+		$config['reuse_query_string'] = TRUE;
+		$pageNum = $this->input->post('pageNum') > '' ? $this->input->post('pageNum') : 0;
+		$data['pageNum'] =  $pageNum;
+
+		//list
+		$data['list']=$this->offday_model->head_month($params, $pageNum, $config['per_page']);
+
+		// echo var_dump($data['list']);
+		$this->data['cnt'] = 0;//$this->ordpln_model->head__cut($params);
+
+
+		/* pagenation start */
+		$this->load->library("pagination");
+		$config['base_url'] = base_url(uri_string());
+		$config['total_rows'] = $this->data['cnt'];
+		$config['full_tag_open'] = "<div>";
+		$config['full_tag_close'] = '</div>';
+		$this->pagination->initialize($config);
+		$this->data['pagenation'] = $this->pagination->create_links();
+
+
+		$this->load->view('/ordpln/head_month', $data);
+	}
+//------------------------------------------------------------------//
+//------------------------디테일 ----------------------------------//
+
+////----------------------등록---------------------------------//
+	public function detail_month()
+	{
+		$data['str'] = array(); //검색어관련
+		// $data['str']['vdate'] = $this->input->post('vdate'); //월차등록일자
+		$data['str']['idx'] = $this->input->post('idx'); //끝
+
+
+		// echo $data['str']['idx'];
+
+		$params['MEMBER_IDX'] = $data['str']['idx']; 
+
+		// if (!empty($data['str']['sdate'])) { $params['SDATE'] = $data['str']['sdate']; }
+		// if (!empty($data['str']['edate'])) { $params['EDATE'] = $data['str']['edate']; }
+		// if (!empty($data['str']['idx'])) { $params['IDX'] = $data['str']['idx']; }
+
+		$data['list']=$this->ordpln_model->detail_month($params);
+		// echo var_dump($data['list']);
+		$data['member'] = $this->ordpln_model->get_member();
+		// echo var_dump($data['member']);
+		// $data['BIZ']=$this->sys_model->biz_list('수출');
+		// $data['check']=$this->ordpln_model->act_check($params);
+
+		return $this->load->view('/ordpln/detail_month', $data);
+	}
+	public function offday_insert()
+	{
+
+		$params['VACATION_DATE'] = $this->input->post("VACATION_DATE");
+		$params['MEMBER_IDX'] = $this->input->post("MEMBER_IDX");
+		$params['REMARK'] = $this->input->post("REMARK");
+
+		// echo var_dump($params);
+    
+		
+		$num = $this->offday_model->offday_insert($params);
+
+		echo $num;
+		// if ($num > 0) {
+		// 	echo 1;
+		// }
+		// else
+		// 	echo 0;
+
+		// echo json_encode($params);
+	}
+
+	//------------------삭제------------///
+	public function offday_del()
+	{
+		$params = $this->input->post("idx");
+		$num = $this->offday_model->offday_del($params);
+
+		if ($num > 0) {
+			$params['status'] = "ok";
+			$params['msg'] = "삭제되었습니다.";
+		} else {
+			$params['status'] = "no";
+			$params['msg'] = "삭제에 실패했습니다. 관리자에게 문의하세요";
+		}
+
+		echo json_encode($params);
+	  
+	}
+
+	//--------------------------------------------수정------------------------//
+	
+	public function update_offday()
+	{
+		
+		$params['VACATION_DATE'] = $this->input->post("VACATION_DATE");
+		$params['MEMBER_IDX'] = $this->input->post("MEMBER_IDX");
+		$params['REMARK'] = $this->input->post("REMARK");
+		$params['IDX'] = $this->input->post("IDX");	
+		echo var_dump($params);
+		$data = $this->offday_model->update_offday($params);
+		
+		
+		// echo json_encode($params);	//json
+	}
+
+	//---------------------------------------일별근태조회 달력---------------------------------------------------------//
+	
+	public function monthpln()
+	{
+		$data['title']='일별 근태 조회';
+		return $this->load->view('main100', $data);
+	}
+	public function ajax_monthpln()
+	{
+		$prefs = array(
+			'start_day'    => 'sunday',
+			'month_type'   => 'short',
+			'day_type'     => 'short',
+			'show_next_prev'  => true,
+			'show_other_days' => false,
+			'next_prev_url'   => base_url('ORDPLN/ajax_monthpln/')
+		);
+
+		// $year = (!empty($this->uri->segment(3))) ? $this->uri->segment(3) : date("Y", time());
+		// $month = (!empty($this->uri->segment(4))) ? $this->uri->segment(4) : date("m", time());
+
+		$year = empty($this->input->post("year")) ? date("Y", time()) : $this->input->post("year");
+		$month = empty($this->input->post("month")) ? date("m", time()) : $this->input->post("month");
+
+		$prev_month = date("Y-m", strtotime('-1 month', strtotime($year . '-' . $month . '-01')));
+		$next_month = date("Y-m", strtotime('+1 month', strtotime($year . '-' . $month . '-01')));
+
+
+		$prefs['template'] = '
+
+			{table_open}<table border="0" cellpadding="0" cellspacing="3" id="calendar">{/table_open}
+
+			{heading_row_start}<tr class="headset">{/heading_row_start}
+
+			{heading_previous_cell}
+			<th>
+				<a href="#" data-date="' . $prev_month . '" class="moveBtn btn">이전달</a>
+			</th>
+			{/heading_previous_cell}
+
+			{heading_title_cell}<th colspan="{colspan}" style="font-size:18px">' . $year . "년 - " . $month . "월" . '</th>{/heading_title_cell}
+			
+			{heading_next_cell}
+			<th>
+				<a href="#" data-date="' . $next_month . '" class="moveBtn btn">다음달</a>
+			</th>
+			{/heading_next_cell}
+
+			{heading_row_end}</tr>{/heading_row_end}
+
+			{week_row_start}<tr class="week">{/week_row_start}
+			{week_row_class_start}<td class="{week_class}">{/week_row_class_start}
+			{week_day_cell}{week_day}{/week_day_cell}
+			{week_row_class_end}</td>{/week_row_class_end}
+			{week_row_end}</tr>{/week_row_end}
+
+			{cal_row_start}<tr>{/cal_row_start}
+			{cal_cell_start}<td>{/cal_cell_start}
+			{cal_cell_start_today}<td>{/cal_cell_start_today}
+			{cal_cell_start_other}<td class="other-month">{/cal_cell_start_other}
+
+			{cal_cell_content}
+				<div class="xday" data-date="' . $year . '-' . $month . '-{day}">
+					<p class="calendarText">{day}</p>
+					<div class="cont">{content}</div>
+				</div>
+			{/cal_cell_content}
+
+			{cal_cell_content_today}
+				<div class="xday"  data-date="' . $year . '-' . $month . '-{day}">
+					<p class="calendarText">{day}</p>
+					<div class="cont">{content}</div>
+				</div>
+			{/cal_cell_content_today}
+
+			{cal_cell_no_content}
+			
+				<div class="xday" data-date="' . $year . '-' . $month . '-{day}">
+					<p class="calendarText">{day}</p>
+					<div id="{day}"></div>
+				</div>
+			
+			{/cal_cell_no_content}
+
+			{cal_cell_no_content_today}
+				<div class="xday" data-date="' . $year . '-' . $month . '-{day}"><p class="calendarText">{day}</p></div>
+			{/cal_cell_no_content_today}
+
+			{cal_cell_blank}&nbsp;{/cal_cell_blank}
+
+			{cal_cell_other}{day}{cal_cel_other}
+
+			{cal_cell_end}</td>{/cal_cell_end}
+			{cal_cell_end_today}</td>{/cal_cell_end_today}
+			{cal_cell_end_other}</td>{/cal_cell_end_other}
+			{cal_row_end}</tr>{/cal_row_end}
+
+			{table_close}</table>{/table_close}
+	';
+
+		$this->load->library('calendar', $prefs);
+		
+
+		// 캘린더 내용
+		$List = $this->offday_model->offCalendarInfo_list($year, $month);
+		if (!empty($List)) { 
+			foreach ($List as $i => $row) {
+				$contArray[$row->DAY] = '생산예정량 : '.round($row->QTY,2) . ' (T)<br>' . $row->REMARK;
+			}
+		}else{
+			$contArray='';
+		}
+
+
+		$data['calendar'] = $this->calendar->generate($year, $month, $contArray);
+
+		return $this->load->view('ordpln/ajax_monthpln', $data);
+	}
+	public function month_form()
+	{
+		$data['title'] = "연차일정";
+		$data['setDate'] = $this->input->post("xdate");
+		$year = substr($data['setDate'], 0, 4);
+		$month = substr($data['setDate'], 5, 2);
+		$day = substr($data['setDate'], 8, 2);
+
+		$data['List'] = $this->offday_model->offCalendarInfo_list($year,$month,$day);
+		// echo var_dump($data['List']);
+
+		$this->load->view('ordpln/month_form', $data);
+	}
+
+	public function month_update()
+	{
+		$params['VACATION_DATE'] = $this->input->post("VACATION_DATE");
+		$params['MEMBER_IDX'] = $this->input->post("MEMBER_IDX");
+		$params['REMARK'] = $this->input->post("REMARK");;
+		
+			
+		$data = $this->offday_model->month_update($params);
+
+		echo json_encode($data);
+	}
+
+
+
+
+	
+
+
+	
+
+
+ 	//-----------------------------------------------------------------------------------------------------------//
+	//-----------------------------------------------------------------------------------------------------------//
+
+
 
 	// 	주문등록
 	public function order()
@@ -94,6 +391,8 @@ class ORDPLN extends CI_Controller
 
 		$this->load->view('/ordpln/head_order', $data);
 	}
+
+
 	public function detail_order()
 	{
 		$data['str'] = array(); //검색어관련
@@ -176,7 +475,9 @@ class ORDPLN extends CI_Controller
 
 
 
-	// 주문현황
+	// --------------------------------주문현황---------------------------
+
+
 	public function ordercur()
 	{
 		$data['title']='주문현황';

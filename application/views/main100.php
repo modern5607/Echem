@@ -15,7 +15,7 @@
 
 
 <script>
-    <?php if(empty($pos) && empty($subpos)){$pos="ORDPLN"; $subpos='prodpln';}; ?>
+    <?php if(empty($pos) && empty($subpos)){$pos="ORDPLN"; $subpos='ajax';}; ?>
     var formData = '';
     var page = 0;
     var limit = 0;
@@ -89,7 +89,7 @@
             },
             dataType: "html",
             success: function(data) {
-                // $('#ajax_container').html('');
+                 $('#ajax_container').html('');
                 $('#ajax_container').html(data);
             }
         });

@@ -14,32 +14,29 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		}
 	};
 </style>
-<header>
-	<div class="searchBoxxx" style="margin-bottom:20px; padding:15px; border:1px solid #ddd;">
-		<form id="ajaxForm">
-			
-            <label>일자</label>
-                <input type="date" name="sdate" class="" size="11" value="<?php echo $str['sdate']; ?>" placeholder="<?= date("Y-m-d") ?>" /> ~
-                <input type="date" name="edate" class="" size="11" value="<?php echo $str['edate']; ?>" placeholder="<?= date("Y-m-d") ?>" />
 
-			<button type="button" class="search_submit ajax_search"><i class="material-icons">search</i></button>
+<header>
+	<div class="searchDiv">
+		<form id="headForm">
+			<label>일자</label>
+			<input type="date" name="sdate" class="" size="11" value="<?php echo $str['sdate']; ?>" placeholder="<?= date("Y-m-d") ?>" /> ~
+			<input type="date" name="edate" class="" size="11" value="<?php echo $str['edate']; ?>" placeholder="<?= date("Y-m-d") ?>" />
+
+			<button type="button" class="search_submit head_search"><i class="material-icons">search</i></button>
+
+			<input type="button" value="선택해제" class="link_s1" data-idx="r" style="position:absolute; right:20px; color:#333;">
 		</form>
 	</div>
-	<!-- <span class="btn add add_head"><i class="material-icons">add</i>추가</span> -->
 </header>
-
 <div class="tbl-content">
 	<table cellpadding="0" cellspacing="0" border="0" width="100%">
 		<thead>
 			<tr>
-				<th style="width:5%;">NO</th>
-				<th style="width:10%;">수주일</th>
-				<th style="width:10%;">수주명</th>
-				<th style="width:10%;">수량(T)</th>
-				<th style="width:10%;">거래처</th>
-				<th style="width:10%;">거래처 당담자</th>
-				<th style="width:10%;">납기예정일</th>
-				<th style="width:5%;">수주 세부사항</th>
+				<th style="width:8%">NO</th>
+				<th style="width:30%">월차등록일</th>
+				<th style="width:20%">작업자</th>
+				<th style="width:42%">월차사유</th>
+				
 			</tr>
 		</thead>
 		<tbody>
@@ -50,20 +47,18 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			?>
 					<tr class="headLink">
 						<td class="cen"><?= $no ?></td>
-						<td class="cen"><?= $row->ACT_DATE ?></td>
-						<td><?= $row->ACT_NAME ?></td>
-						<td class="right"><?= round($row->QTY,2) ?></td>
-						<td><?= $row->CUST_NM ?></td>
-						<td><?= $row->BIZ_NAME ?></td>
-						<td class="cen"><?= $row->DEL_DATE ?></td>
+						<td class="link_s1 cen" data-idx="<?= $row->IDX ?>"><?= $row->VACATION_DATE ?></td>
+						<td><?= $row->NAME ?></td>
 						<td><?= $row->REMARK ?></td>
+						
+						
 					</tr>
 				<?php
 				}
 			} else {
 				?>
 				<tr>
-					<td colspan="15" class="list_none">납기변경내역이 없습니다.</td>
+					<td colspan="15" class="list_none">근무일정이 없습니다.</td>
 				</tr>
 			<?php
 			}
@@ -72,7 +67,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 	</table>
 </div>
 
-<div class="pagination">
+<div class="pagination2">
 	<?php
 	if ($this->data['cnt'] > 20) {
 	?>
@@ -105,6 +100,31 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 
 <script>
+	$(document).off("click", ".link_s1");
+	$(document).on("click", ".link_s1", function() {
+		$(".headLink").removeClass("over");
+		$(this).parent().addClass("over");
+
+		var idx = $(this).data("idx");
+		console.log(idx);
+
+		$.ajax({
+			url: "<?= base_url('/ORDPLN/detail_month/') ?>",
+			type: "post",
+			data: {
+				idx:idx
+			},
+			dataType: "html",
+			success: function(data) {
+				$("#ajax_detail_container").html(data);
+			}
+		});
+	});
+
+
+
+
+
 	//달력
 	$(".calendar").datetimepicker({
 		format: 'Y-m-d',
