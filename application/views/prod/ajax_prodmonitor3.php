@@ -29,10 +29,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
             url: "<?=base_url('PROD/load_monitor_setting')?>",
             dataType: "html",
             success: function (data) {
+              console.log(data);
               document.getElementById("mySavedModel").value = data;
               load();
             }
           });
+
+         
         });
 
 
@@ -81,60 +84,26 @@ defined('BASEPATH') or exit('No direct script access allowed');
                   name: "SHAPE",
                   strokeWidth: 2,
                   fill: $(go.Brush, "Linear", {
-                    start: go.Spot.Left,
-                    end: go.Spot.Right,
-                    0: "gray",
-                    0.5: "white",
-                    1: "gray"
+                    start: go.Spot.Bottom,
+                    end: go.Spot.Top,
+                    0: "blue",
+                    1: "lightgray"
                   }),
                   minSize: new go.Size(50, 50),
                   portId: "",
                   fromSpot: go.Spot.AllSides,
                   toSpot: go.Spot.AllSides
-                },
-                new go.Binding("desiredSize", "size", go.Size.parse).makeTwoWay(go.Size.stringify)),
+                }, new go.Binding("desiredSize", "size", go.Size.parse).makeTwoWay(go.Size.stringify),new go.Binding("fill", "level", convertLinearBrush)),
               $(go.TextBlock, {
                   alignment: go.Spot.Top,
                   textAlign: "center",
                   font: "bold 14px dotum",
                   margin: 5,
                   editable: true
-                },
-                new go.Binding("text").makeTwoWay())
+                }, new go.Binding("text").makeTwoWay())
             ));
 
-          myDiagram.nodeTemplateMap.add("Valve",
-            $(go.Node, "Vertical", {
-                locationSpot: new go.Spot(0.5, 1, 0, -21),
-                locationObjectName: "SHAPE",
-                selectionObjectName: "SHAPE",
-                rotatable: true
-              },
-              new go.Binding("angle").makeTwoWay(),
-              new go.Binding("location", "pos", go.Point.parse).makeTwoWay(go.Point.stringify),
-              $(go.TextBlock, {
-                  alignment: go.Spot.Center,
-                  textAlign: "center",
-                  margin: 5,
-                  editable: true
-                },
-                new go.Binding("text").makeTwoWay(),
-                // keep the text upright, even when the whole node has been rotated upside down
-                new go.Binding("angle", "angle", a => a === 180 ? 180 : 0).ofObject()),
-              $(go.Shape, {
-                name: "SHAPE",
-                geometryString: "F1 M0 0 L40 20 40 0 0 20z M20 10 L20 30 M12 30 L28 30",
-                strokeWidth: 2,
-                fill: $(go.Brush, "Linear", {
-                  0: "gray",
-                  0.35: "white",
-                  0.7: "gray"
-                }),
-                portId: "",
-                fromSpot: new go.Spot(1, 0.35),
-                toSpot: new go.Spot(0, 0.35)
-              })
-            ));
+         
 
           myDiagram.nodeTemplateMap.add("Table1", //카테고리명
           $(go.Part, "Auto",{},
@@ -221,6 +190,17 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
          Start_animation();
         }
+
+        function convertLinearBrush(c, shape) 
+        {
+          var data = shape.part.data;
+          var b = new go.Brush(go.Brush.Linear);
+          b.addColorStop(0, "gray");
+          b.addColorStop(1-data.level-0.01, "lightgray");
+          b.addColorStop(1-data.level, "#3498DB");
+          b.addColorStop(1, "blue");
+          return b;
+        }
        
         function save() {
           $.post("<?=base_url("PROD/save_monitor_setting")?>", {
@@ -237,6 +217,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
         function load() {
           myDiagram.model = go.Model.fromJson(document.getElementById("mySavedModel").value);
+          
           Start_animation();
 
         }

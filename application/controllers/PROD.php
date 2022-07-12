@@ -642,10 +642,17 @@ class PROD extends CI_Controller
 	public function ajax_prodmonitor()
 	{
 		//모델
-		$data['list'] = $this->prod_model->ajax_prodmonitor();
-
+		// $data['list'] = $this->prod_model->ajax_prodmonitor();
+		
+		// foreach($data['list'] as $i)
+		// {
+			
+		// }
+		// $data['level']=0.3;
+		// echo var_dump($data['list'][0]);
+		// echo var_dump($data['list']);
 		//뷰
-		$this->load->view('prod/ajax_prodmonitor3', $data);
+		$this->load->view('prod/ajax_prodmonitor3');
 	}
 
 	// 생산 모니터링 - 태블릿
@@ -672,7 +679,68 @@ class PROD extends CI_Controller
 	}
 	public function load_monitor_setting()
 	{
+		$data['list'] = $this->prod_model->ajax_prodmonitor();
 		$res = $this->db->query("SELECT JSON FROM T_JSON ORDER BY IDX DESC LIMIT 1");
-		echo $res->row()->JSON;
+		$json= json_decode($res->row()->JSON);
+		// echo var_dump($data['list']);
+		
+		//수위 계산 0~1
+		//T1,2,3
+		$json->nodeDataArray[0]->level = round($data['list'][2]->LEVEL/300,2);
+		$json->nodeDataArray[1]->level = round($data['list'][3]->LEVEL/300,2);
+		$json->nodeDataArray[2]->level = round($data['list'][4]->LEVEL/300,2);
+
+		//온수탱크
+		$json->nodeDataArray[3]->level = round($data['list'][0]->LEVEL/300,2);
+		$json->nodeDataArray[4]->level = round($data['list'][1]->LEVEL/300,2);
+
+		//배합탱크
+		$json->nodeDataArray[5]->level = round($data['list'][5]->LEVEL/300,2);
+		$json->nodeDataArray[6]->level = round($data['list'][6]->LEVEL/300,2);
+		
+		//온수 탱크
+		$json->nodeDataArray[8]->text1 = $data['list'][0]->LEVEL;
+		$json->nodeDataArray[8]->text2 = $data['list'][0]->TEMP;
+		$json->nodeDataArray[9]->text1 = $data['list'][1]->LEVEL;
+		$json->nodeDataArray[9]->text2 = $data['list'][1]->TEMP;
+
+		//주 탱크
+		//T1
+		$json->nodeDataArray[10]->text1 = $data['list'][2]->PH;
+		$json->nodeDataArray[10]->text2 = $data['list'][2]->CL;
+		$json->nodeDataArray[10]->text3 = $data['list'][2]->TEMP;
+		$json->nodeDataArray[10]->text4 = $data['list'][2]->PRESS;
+		$json->nodeDataArray[10]->text5 = $data['list'][2]->LEVEL;
+		//T2
+		$json->nodeDataArray[11]->text1 = $data['list'][3]->PH;
+		$json->nodeDataArray[11]->text2 = $data['list'][3]->CL;
+		$json->nodeDataArray[11]->text3 = $data['list'][3]->TEMP;
+		$json->nodeDataArray[11]->text4 = $data['list'][3]->PRESS;
+		$json->nodeDataArray[11]->text5 = $data['list'][3]->LEVEL;
+		//T3
+		$json->nodeDataArray[12]->text1 = $data['list'][4]->PH;
+		$json->nodeDataArray[12]->text2 = $data['list'][4]->CL;
+		$json->nodeDataArray[12]->text3 = $data['list'][4]->TEMP;
+		$json->nodeDataArray[12]->text4 = $data['list'][4]->PRESS;
+		$json->nodeDataArray[12]->text5 = $data['list'][4]->LEVEL;
+
+		//Licl탱크
+		//배합탱크1
+		$json->nodeDataArray[13]->text1 = $data['list'][5]->PH;
+		$json->nodeDataArray[13]->text2 = $data['list'][5]->CL;
+		$json->nodeDataArray[13]->text3 = $data['list'][5]->TEMP;
+		$json->nodeDataArray[13]->text4 = $data['list'][5]->PRESS;
+		$json->nodeDataArray[13]->text5 = $data['list'][5]->LEVEL;
+
+		//배합탱크2
+		$json->nodeDataArray[14]->text1 = $data['list'][6]->PH;
+		$json->nodeDataArray[14]->text2 = $data['list'][6]->CL;
+		$json->nodeDataArray[14]->text3 = $data['list'][6]->TEMP;
+		$json->nodeDataArray[14]->text4 = $data['list'][6]->PRESS;
+		$json->nodeDataArray[14]->text5 = $data['list'][6]->LEVEL;
+		
+		// echo var_dump($json);
+
+		echo json_encode($json);
 	}
 }
