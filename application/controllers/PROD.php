@@ -683,6 +683,9 @@ class PROD extends CI_Controller
 		$res = $this->db->query("SELECT JSON FROM T_JSON ORDER BY IDX DESC LIMIT 1");
 		$json= json_decode($res->row()->JSON);
 		// echo var_dump($data['list']);
+		$json->animation[0]="T1T3";
+		$json->animation[1]="M1T3";
+		$json->animation[2]="M2T3";
 		
 		//수위 계산 0~1
 		//T1,2,3

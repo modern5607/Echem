@@ -181,8 +181,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
             dataType: "html",
             success: function (data) {
               // console.log(data);
+              var ani = JSON.parse(data).animation;
+              console.log(ani);
               document.getElementById("mySavedModel").value = data;
-              load();
+              load(ani);
             }
           });         
         });
@@ -211,10 +213,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
           myDiagram.isModified = false;
         }
 
-        function load() {
+        function load(ani) {
           myDiagram.model = go.Model.fromJson(document.getElementById("mySavedModel").value);
           
-          Start_animation();
+          Start_animation(ani);
 
         }
         function default_load()
@@ -223,7 +225,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
           // Start_animation();
         }
 
-        function Start_animation()
+        function Start_animation(ani)
         {
            // Animate the flow in the pipes
            var animation = new go.Animation();
@@ -232,10 +234,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
           // var model = go.Model.fromJson(document.getElementById("mySavedModel").value)
           // console.log(myDiagram.model.findLinkDataForKey("1"));
 
-
+          // var arr = ["T1T3","M1T3"];
           myDiagram.links.each(link => {
             console.log(link);
-            if(link.lb.key == "T1T3")
+            if(ani.includes(link.lb.key))
               animation.add(link.findObject("PIPE"), "strokeDashOffset", 20, 0);
           });
           // Run indefinitely
