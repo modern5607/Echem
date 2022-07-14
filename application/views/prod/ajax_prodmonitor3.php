@@ -20,25 +20,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <div id="allSampleContent" class="p-4 w-full">
       <!-- <script src="https://unpkg.com/gojs@2.2.11/extensions/Figures.js"></script> -->
       <script id="code">
-        $(document).ready(function() {
-          init();
-
-
-          $.ajax({
-            type: "post",
-            url: "<?=base_url('PROD/load_monitor_setting')?>",
-            dataType: "html",
-            success: function (data) {
-              console.log(data);
-              document.getElementById("mySavedModel").value = data;
-              load();
-            }
-          });
-
-         
-        });
-
-
         function init() {
           // console.log("init");
           // Since 2.2 you can also author concise templates with method chaining instead of GraphObject.make
@@ -186,10 +167,25 @@ defined('BASEPATH') or exit('No direct script access allowed');
               })
             );
 
-          load();
+          // load();
 
-         Start_animation();
+        //  Start_animation();
         }
+
+
+        $(document).ready(function() {
+          init();
+          $.ajax({
+            type: "post",
+            url: "<?=base_url('PROD/load_monitor_setting')?>",
+            dataType: "html",
+            success: function (data) {
+              // console.log(data);
+              document.getElementById("mySavedModel").value = data;
+              load();
+            }
+          });         
+        });
 
         function convertLinearBrush(c, shape) 
         {
@@ -224,7 +220,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         function default_load()
         {
           myDiagram.model = go.Model.fromJson(document.getElementById("defaultJson").value);
-          Start_animation();
+          // Start_animation();
         }
 
         function Start_animation()
@@ -232,7 +228,16 @@ defined('BASEPATH') or exit('No direct script access allowed');
            // Animate the flow in the pipes
            var animation = new go.Animation();
           animation.easing = go.Animation.EaseLinear;
-          myDiagram.links.each(link => animation.add(link.findObject("PIPE"), "strokeDashOffset", 20, 0));
+
+          // var model = go.Model.fromJson(document.getElementById("mySavedModel").value)
+          // console.log(myDiagram.model.findLinkDataForKey("1"));
+
+
+          myDiagram.links.each(link => {
+            console.log(link);
+            if(link.lb.key == "T1T3")
+              animation.add(link.findObject("PIPE"), "strokeDashOffset", 20, 0);
+          });
           // Run indefinitely
           animation.runCount = Infinity;
           animation.start();
@@ -290,13 +295,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
 {"key":"m2","category":"Table2","text1":"12.5","text2":"9.98","text3":"34","text4":"1.10","text5":"45","pos":"549.2857142857144 35.714285714285694"}
 ],
   "linkDataArray": [
-{"from":"T1","to":"T3","points":[124.008544921875,120,134.008544921875,120,139.99999999999994,120,139.99999999999994,223.12499999999994,319.99999999999994,223.12499999999994,319.99999999999994,148.66666666666669,321,148.66666666666669,339,148.66666666666669]},
-{"from":"W1","to":"T1","points":[0,-4,0,6,0,15,29.34187825520833,15,29.34187825520833,24,29.34187825520833,34]},
-{"from":"W2","to":"T1","points":[110,-4,110,6,110,15,76.67521158854166,15,76.67521158854166,24,76.67521158854166,34]},
-{"from":"M1","to":"T3","points":[524,240,514,240,502.5,240,502.5,148.66666666666666,491,148.66666666666666,481,148.66666666666666]},
-{"from":"M2","to":"T3","points":[524,70,514,70,502.5,70,502.5,120,491,120,481,120]},
-{"from":"T3","to":"T2","points":[339,91.33333333333334,321,91.33333333333334,316,91.33333333333334,316,120,311,120,301,120]},
-{"from":"T2","to":"B1","points":[230,206,230,216,230,230,230,230,230,244,230,254]}
+{"key":"T1T3","from":"T1","to":"T3","points":[124.008544921875,120,134.008544921875,120,139.99999999999994,120,139.99999999999994,223.12499999999994,319.99999999999994,223.12499999999994,319.99999999999994,148.66666666666669,321,148.66666666666669,339,148.66666666666669]},
+{"key":"W1T1","from":"W1","to":"T1","points":[0,-4,0,6,0,15,29.34187825520833,15,29.34187825520833,24,29.34187825520833,34]},
+{"key":"W2T1","from":"W2","to":"T1","points":[110,-4,110,6,110,15,76.67521158854166,15,76.67521158854166,24,76.67521158854166,34]},
+{"key":"M1T3","from":"M1","to":"T3","points":[524,240,514,240,502.5,240,502.5,148.66666666666666,491,148.66666666666666,481,148.66666666666666]},
+{"key":"M2T3","from":"M2","to":"T3","points":[524,70,514,70,502.5,70,502.5,120,491,120,481,120]},
+{"key":"T3T2","from":"T3","to":"T2","points":[339,91.33333333333334,321,91.33333333333334,316,91.33333333333334,316,120,311,120,301,120]},
+{"key":"T2B1","from":"T2","to":"B1","points":[230,206,230,216,230,230,230,230,230,244,230,254]}
 ]}
     </textarea>
         <textarea id="defaultJson" style="width:100%;height:300px;display:none;">{ "class": "GraphLinksModel",
@@ -318,13 +323,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
 {"key":"m2","category":"Table2","text1":"12.5","text2":"9.98","text3":"34","text4":"1.10","text5":"45","pos":"549.2857142857144 35.714285714285694"}
 ],
   "linkDataArray": [
-{"from":"T1","to":"T3","points":[124.008544921875,120,134.008544921875,120,139.99999999999994,120,139.99999999999994,223.12499999999994,319.99999999999994,223.12499999999994,319.99999999999994,148.66666666666669,321,148.66666666666669,339,148.66666666666669]},
-{"from":"W1","to":"T1","points":[0,-4,0,6,0,15,29.34187825520833,15,29.34187825520833,24,29.34187825520833,34]},
-{"from":"W2","to":"T1","points":[110,-4,110,6,110,15,76.67521158854166,15,76.67521158854166,24,76.67521158854166,34]},
-{"from":"M1","to":"T3","points":[524,240,514,240,502.5,240,502.5,148.66666666666666,491,148.66666666666666,481,148.66666666666666]},
-{"from":"M2","to":"T3","points":[524,70,514,70,502.5,70,502.5,120,491,120,481,120]},
-{"from":"T3","to":"T2","points":[339,91.33333333333334,321,91.33333333333334,316,91.33333333333334,316,120,311,120,301,120]},
-{"from":"T2","to":"B1","points":[230,206,230,216,230,230,230,230,230,244,230,254]}
+{"key":"T1T3","from":"T1","to":"T3","points":[124.008544921875,120,134.008544921875,120,139.99999999999994,120,139.99999999999994,223.12499999999994,319.99999999999994,223.12499999999994,319.99999999999994,148.66666666666669,321,148.66666666666669,339,148.66666666666669]},
+{"key":"W1T1","from":"W1","to":"T1","points":[0,-4,0,6,0,15,29.34187825520833,15,29.34187825520833,24,29.34187825520833,34]},
+{"key":"W2T1","from":"W2","to":"T1","points":[110,-4,110,6,110,15,76.67521158854166,15,76.67521158854166,24,76.67521158854166,34]},
+{"key":"M1T3","from":"M1","to":"T3","points":[524,240,514,240,502.5,240,502.5,148.66666666666666,491,148.66666666666666,481,148.66666666666666]},
+{"key":"M2T3","from":"M2","to":"T3","points":[524,70,514,70,502.5,70,502.5,120,491,120,481,120]},
+{"key":"T3T2","from":"T3","to":"T2","points":[339,91.33333333333334,321,91.33333333333334,316,91.33333333333334,316,120,311,120,301,120]},
+{"key":"T2B1","from":"T2","to":"B1","points":[230,206,230,216,230,230,230,230,230,244,230,254]}
 ]}
     </textarea>
       </div>
