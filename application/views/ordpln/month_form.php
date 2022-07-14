@@ -24,7 +24,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 				<tbody>
 					<tr>
 						<td class="cen"><input name="VACATION_DATE" type="input" class="calendar" value="<?= $setDate ?>"></td>
-						<td class="cen"><input name="MEMBER_IDX" type="text" value="<?= !empty($List)?$List[0]->MEMBER_IDX:'' ?>"></td>
+						<td class="cen"><input name="NAME" type="text" value="<?= !empty($List)?$List[0]->NAME:'' ?>"></td>
 						<td class="cen"><input name="REMARK" type="text" value="<?= !empty($List)?$List[0]->REMARK:'' ?>"></td>
 					</tr>
 				</tbody>
