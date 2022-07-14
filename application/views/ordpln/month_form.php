@@ -17,15 +17,15 @@ defined('BASEPATH') or exit('No direct script access allowed');
 				<thead>
 					<tr>
 						<th>연차일</th>
-						<th>휴가자</th>
+						<th>작업자</th>
 						<th>사유</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr>
-						<td class="cen"><input name="vacatoin_date" type="text" class="calendar" value="<?= $setDate ?>"></td>
-						<td class="cen"><input name="member_idx" type="text" value="<?= !empty($List)?round($List[0]->QTY,2):'' ?>"></td>
-						<td class="cen"><input name="remark" type="text" value="<?= !empty($List)?$List[0]->REMARK:'' ?>"></td>
+						<td class="cen"><input name="VACATION_DATE" type="input" class="calendar" value="<?= $setDate ?>"></td>
+						<td class="cen"><input name="MEMBER_IDX" type="text" value="<?= !empty($List)?$List[0]->MEMBER_IDX:'' ?>"></td>
+						<td class="cen"><input name="REMARK" type="text" value="<?= !empty($List)?$List[0]->REMARK:'' ?>"></td>
 					</tr>
 				</tbody>
 			</table>
@@ -51,21 +51,19 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 
 	$(".submitBtn").click(function (){
-    var vacation_date = $("input[name='vacation_date']").val();
-    var member_idx = $("input[name='member_idx']").val();
-    var remark = $("input[name='remark']").val();
+
+		var formData = new FormData();
+    formData.append("VACATION_DATE", $("input[name='VACATION_DATE']").val());
+    formData.append("MEMBER_IDX", $("select[name='MEMBER_IDX']").val());
+    formData.append("REMARK", $("textarea[name='REMARK']").val());
+
 
     // console.log(year + month);
 
     $.ajax({
         type: "post",
         url: "<?= base_url('ORDPLN/month_update')?>",
-        data: {
-            vacation_date:vacation_date,
-            member_idx:member_idx,
-            remark:remark,
-			gb: 'ORD'
-        },
+        data: formData,
         dataType: "html",
         success: function (data) {
 			location.reload();

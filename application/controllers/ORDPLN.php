@@ -291,10 +291,12 @@ public function month()
 		
 
 		// 캘린더 내용
+
+    
 		$List = $this->offday_model->offCalendarInfo_list($year, $month);
 		if (!empty($List)) { 
 			foreach ($List as $i => $row) {
-				$contArray[$row->DAY] = '생산예정량 : '.round($row->QTY,2) . ' (T)<br>' . $row->REMARK;
+				$contArray[$row->DAY] = '연차 : '.($row->NAME) ;
 			}
 		}else{
 			$contArray='';
@@ -323,10 +325,10 @@ public function month()
 	{
 		$params['VACATION_DATE'] = $this->input->post("VACATION_DATE");
 		$params['MEMBER_IDX'] = $this->input->post("MEMBER_IDX");
-		$params['REMARK'] = $this->input->post("REMARK");;
+		$params['REMARK'] = $this->input->post("REMARK");
 		
 			
-		$data = $this->offday_model->month_update($params);
+		$data = $this->offday_model->calendar_up($params);
 
 		echo json_encode($data);
 	}

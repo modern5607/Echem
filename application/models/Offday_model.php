@@ -132,15 +132,16 @@ SQL;
 			$where = " AND SUBSTRING(VACATION_DATE, 9, 2) = '{$DAY}'";
 		}
 		$sql=<<<SQL
-			SELECT SUBSTRING(VACATION_DATE, 9, 2) AS DAY, REMARK
-			FROM T_VACATION
+			SELECT SUBSTRING(VACATION_DATE, 9, 2) AS DAY, REMARK, MEMBER_IDX, M.NAME
+			FROM T_VACATION, T_MEMBER M
 			WHERE
-				SUBSTRING(VACATIOIN_DATE, 1, 4) = '{$YEAR}' 
+				SUBSTRING(VACATION_DATE, 1, 4) = '{$YEAR}' 
 				AND SUBSTRING(VACATION_DATE, 6, 2) = '{$MONTH}'
+				AND MEMBER_IDX = M.IDX
 				{$where}
 SQL;
 		$query=$this->db->query($sql);
-		// echo $this->db->last_query();
+		echo $this->db->last_query();
 		return $query->result();
 	}
 	
@@ -156,8 +157,12 @@ SQL;
 		);
 		if (!empty($chk)) {
 			$this->db->set("REMARK", $params["REMARK"]);
-			$this->db->where("VACTION_DATE", $chk->WORK_DATE);
-			$this->db->update("T_VACTION");
+			$this->db->set("MEMBER_IDX", $params["MEMBER_IDX"]);
+			$this->db->where("VACATION_DATE", $chk->VACATION_DATE);
+			
+			$this->db->update("T_VACATION");
+
+			
 			if ($this->db->affected_rows()) {
 				$data['status'] = "ok";
 				$data['msg'] = "수정되었습니다.";
@@ -168,7 +173,8 @@ SQL;
 			$username = $this->session->userdata('user_name');
 
 			$this->db->set("REMARK", $params['REMARK']);
-			$this->db->set("WORK_DATE", $params['WORK_DATE']);
+			$this->db->set("VACATION_DATE", $params['VACATION_DATE']);
+			$this->db->set("MEMBER_IDX", $params["MEMBER_IDX"]);
 			$this->db->set("INSERT_DATE", $datetime);
 			$this->db->set("INSERT_ID", $username);
 			$this->db->insert("T_VACATION");
@@ -178,15 +184,15 @@ SQL;
 				$data['msg'] = "등록되었습니다.";
 			}
 		}
-
+		
 		return $data;
 	}
 	
 
 	public function offdaycal_update($params)
 	{
-		$query = $this->db->where("WORK_DATE", $params['DATE'])
-			->where("INSERT_ID", $params['INSERT_ID'])
+		$query = $this->db->where("VACATION_DATE", $params['DATE'])
+			->where("MEMBER_IDX", $params['MEMBER_IDX'])
 			->get("T_VACATION");
 		$chk = $query->row();
 		$data = array(
@@ -199,11 +205,8 @@ SQL;
 
 		if (!empty($chk)) {
 			$this->db->set("REMARK", $params['REMARK']);
-			$this->db->set("QTY", $params['QTY']);
-			$this->db->set("UPDATE_DATE", $datetime);
-			$this->db->set("UPDATE_ID", $username);
-			$this->db->where("WORK_DATE", $chk->WORK_DATE);
-			$this->db->where("GB", $params['GB']);
+			$this->db->set("MEMBER_IDX", $params['MEMBER_IDX']);
+			$this->db->where("VACATION_DATE", $chk->VACATION_DATE);	
 			$this->db->update("T_VACTION");
 			if ($this->db->affected_rows()) {
 				$data['status'] = "ok";
@@ -224,7 +227,7 @@ SQL;
 				$data['msg'] = "등록되었습니다.";
 			}
 		}
-
+		
 		return $data;
 	}
 }
