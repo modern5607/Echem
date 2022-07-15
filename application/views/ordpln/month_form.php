@@ -30,7 +30,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 					<tr>
 						<td class="cen"><input name="VACATION_DATE" type="input" class="calendar" value="<?= $setDate ?>"></td>
 						<td class="cen">
-							<input name="NAME" type="text" value="<?= if(!empty($List)){$List[1]->NAME:'';}else{'';} ?>">
+							<input name="NAME" type="text" value="<?= !empty($List)?$List[1]->NAME:'' ?>">
 						</td>
 						<td class="cen">
 							<input name="REMARK" type="text" value="<?= !empty($List)?$List[1]->REMARK:'' ?>">
@@ -38,8 +38,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
 					</tr>
 					<tr>
 						<td class="cen"><input name="VACATION_DATE" type="input" class="calendar" value="<?= $setDate ?>"></td>
-						<td class="cen"><input name="NAME" type="text" value="<?= !empty($List)?$List[2]->NAME:'' ?>"></td>
-						<td class="cen"><input name="REMARK" type="text" value="<?= !empty($List)?$List[2]->REMARK:'' ?>"></td>
+						<td class="cen">
+							<input name="NAME" type="text" value="<?= !empty($List)?$List[2]->NAME:'' ?>">
+						</td>
+						<td class="cen">
+							<input name="REMARK" type="text" value="<?= !empty($List)?$List[2]->REMARK:'' ?>">
+						</td>
 					</tr>
 				</tbody>
 			</table>
