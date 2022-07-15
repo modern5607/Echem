@@ -22,29 +22,26 @@ defined('BASEPATH') or exit('No direct script access allowed');
 					</tr>
 				</thead>
 				<tbody>
+				<?php
+					if (!empty($List)) {
+						foreach ($List as $i => $row) {
+							$no = $i + 1;
+				?>
 					<tr>
 						<td class="cen"><input name="VACATION_DATE" type="input" class="calendar" value="<?= $setDate ?>"></td>
-						<td class="cen"><input name="NAME" type="text" value="<?= !empty($List)?$List[0]->NAME:'' ?>"></td>
-						<td class="cen"><input name="REMARK" type="text" value="<?= !empty($List)?$List[0]->REMARK:'' ?>"></td>
+						<td class="cen"><input name="NAME" type="text" value="<?= !empty($List)?$List[$i]->NAME:'' ?>"></td>
+						<td class="cen"><input name="REMARK" type="text" value="<?= !empty($List)?$List[$i]->REMARK:'' ?>"></td>
 					</tr>
-					<tr>
-						<td class="cen"><input name="VACATION_DATE" type="input" class="calendar" value="<?= $setDate ?>"></td>
-						<td class="cen">
-							<input name="NAME" type="text" value="<?= !empty($List)?$List[1]->NAME:'' ?>">
-						</td>
-						<td class="cen">
-							<input name="REMARK" type="text" value="<?= !empty($List)?$List[1]->REMARK:'' ?>">
-						</td>
-					</tr>
-					<tr>
-						<td class="cen"><input name="VACATION_DATE" type="input" class="calendar" value="<?= $setDate ?>"></td>
-						<td class="cen">
-							<input name="NAME" type="text" value="<?= !empty($List)?$List[2]->NAME:'' ?>">
-						</td>
-						<td class="cen">
-							<input name="REMARK" type="text" value="<?= !empty($List)?$List[2]->REMARK:'' ?>">
-						</td>
-					</tr>
+					<?php
+				}
+			} else {
+				?>
+				<tr>
+					<td colspan="15" class="list_none">근무일정이 없습니다.</td>
+				</tr>
+			<?php
+			}
+			?>
 				</tbody>
 			</table>
 		</fieldset>
