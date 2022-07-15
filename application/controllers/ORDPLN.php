@@ -294,10 +294,14 @@ public function month()
 
     
 		$List = $this->offday_model->offCalendarInfo_list($year, $month);
+		// echo var_dump($List);
+		$contArray = array();
 		if (!empty($List)) { 
 			foreach ($List as $i => $row) {
-				$contArray[$row->DAY] = '연차 : '.($row->NAME). '<br>'
-				.$contArray[$row->DAY] = '연차 : '.($row->NAME);
+				if(isset($contArray[$row->DAY]))
+					$contArray[$row->DAY] .= '연차 : '.($row->NAME). '<br>';
+				else
+					$contArray[$row->DAY] = '연차 : '.($row->NAME). '<br>';
 			}
 		}else{
 			$contArray='';
