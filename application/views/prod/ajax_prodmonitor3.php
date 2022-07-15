@@ -213,6 +213,22 @@ defined('BASEPATH') or exit('No direct script access allowed');
           myDiagram.isModified = false;
         }
 
+        function loadFromDB()
+        {
+          $.ajax({
+            type: "post",
+            url: "<?=base_url('PROD/load_monitor_setting')?>",
+            dataType: "html",
+            success: function (data) {
+              // console.log(data);
+              var ani = JSON.parse(data).animation;
+              console.log(ani);
+              document.getElementById("mySavedModel").value = data;
+              load(ani);
+            }
+          });         
+        }
+
         function load(ani) {
           myDiagram.model = go.Model.fromJson(document.getElementById("mySavedModel").value);
           
@@ -231,10 +247,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
            var animation = new go.Animation();
           animation.easing = go.Animation.EaseLinear;
 
-          // var model = go.Model.fromJson(document.getElementById("mySavedModel").value)
-          // console.log(myDiagram.model.findLinkDataForKey("1"));
-
-          // var arr = ["T1T3","M1T3"];
           myDiagram.links.each(link => {
             console.log(link);
             if(ani.includes(link.lb.key))
@@ -274,7 +286,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
       <div>
         <div>
           <button id="SaveButton" onclick="save()" >Save to DB</button>
-          <button onclick="load()">Load from DB</button>
+          <button onclick="loadFromDB()">Load from DB</button>
           <button onclick="default_load()">Default Load</button>
           <button id="showcode" onclick="hide_show()" style="float:right;">Show Code</button>
         </div>
