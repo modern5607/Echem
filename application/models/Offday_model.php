@@ -22,7 +22,7 @@ class Offday_model extends CI_Model
 		$this->db->order_by('VACATION_DATE', 'DESC');
 		$this->db->limit($limit, $start);
 		$query = $this->db->get("T_VACATION as V");
-		echo $this->db->last_query();
+		//echo $this->db->last_query();
 		return $query->result();
 	}
 
@@ -112,7 +112,7 @@ SQL;
 			IDX 		= '{$params['IDX']}'
 SQL;
 		$this->db->query($sql);
-		echo $this->db->last_query();
+		//echo $this->db->last_query();
 		return $this->db->affected_rows();
 	}
 
@@ -146,88 +146,119 @@ SQL;
 	}
 	
 
-	public function calendar_up($params)
-	{
-		$query = $this->db->where("VACATION_DATE", $params["VACATION_DATE"])
-			->get("T_VACATION");
-		$chk = $query->row();
-		$data = array(
-			"status" => "",
-			"msg"    => ""
-		);
-		if (!empty($chk)) {
-			$this->db->set("REMARK", $params["REMARK"]);
-			$this->db->set("MEMBER_IDX", $params["MEMBER_IDX"]);
-			$this->db->where("VACATION_DATE", $chk->VACATION_DATE);
+	// public function calendar_up($params)
+	// {
+	// 	$query = $this->db->where("VACATION_DATE", $params["VACATION_DATE"])
+	// 		->get("T_VACATION");
+	// 	$chk = $query->row();
+	// 	$data = array(
+	// 		"status" => "",
+	// 		"msg"    => ""
+	// 	);
+	// 	if (!empty($chk)) {
+	// 		$this->db->set("REMARK", $params["REMARK"]);
+	// 		$this->db->set("MEMBER_IDX", $params["MEMBER_IDX"]);
+	// 		$this->db->where("VACATION_DATE", $chk->VACATION_DATE);
 			
-			$this->db->update("T_VACATION");
+	// 		$this->db->update("T_VACATION");
 
 			
-			if ($this->db->affected_rows()) {
-				$data['status'] = "ok";
-				$data['msg'] = "수정되었습니다.";
-			}
-		} else {
+	// 		if ($this->db->affected_rows()) {
+	// 			$data['status'] = "ok";
+	// 			$data['msg'] = "수정되었습니다.";
+	// 		}
+	// 	} else {
 
-			$datetime = date("Y-m-d H:i:s", time());
-			$username = $this->session->userdata('user_name');
+	// 		$datetime = date("Y-m-d H:i:s", time());
+	// 		$username = $this->session->userdata('user_name');
 
-			$this->db->set("REMARK", $params['REMARK']);
-			$this->db->set("VACATION_DATE", $params['VACATION_DATE']);
-			$this->db->set("MEMBER_IDX", $params["MEMBER_IDX"]);
-			$this->db->set("INSERT_DATE", $datetime);
-			$this->db->set("INSERT_ID", $username);
-			$this->db->insert("T_VACATION");
+	// 		$this->db->set("REMARK", $params['REMARK']);
+	// 		$this->db->set("VACATION_DATE", $params['VACATION_DATE']);
+	// 		$this->db->set("MEMBER_IDX", $params["MEMBER_IDX"]);
+	// 		$this->db->set("INSERT_DATE", $datetime);
+	// 		$this->db->set("INSERT_ID", $username);
+	// 		$this->db->insert("T_VACATION");
 
-			if ($this->db->affected_rows()) {
-				$data['status'] = "ok";
-				$data['msg'] = "등록되었습니다.";
-			}
-		}
+	// 		if ($this->db->affected_rows()) {
+	// 			$data['status'] = "ok";
+	// 			$data['msg'] = "등록되었습니다.";
+	// 		}
+	// 	}
 		
-		return $data;
-	}
+	// 	return $data;
+	// }
 	
 
-	public function offdaycal_update($params)
-	{
-		$query = $this->db->where("VACATION_DATE", $params['DATE'])
-			->where("MEMBER_IDX", $params['MEMBER_IDX'])
-			->get("T_VACATION");
-		$chk = $query->row();
-		$data = array(
-			"status" => "",
-			"msg"    => ""
-		);
+	// public function offdaycal_update($params)
+	// {
+	// 	$query = $this->db->where("VACATION_DATE", $params['DATE'])
+	// 		->where("MEMBER_IDX", $params['MEMBER_IDX'])
+	// 		->get("T_VACATION");
+	// 	$chk = $query->row();
+	// 	$data = array(
+	// 		"status" => "",
+	// 		"msg"    => ""
+	// 	);
 
-		$datetime = date("Y-m-d H:i:s", time());
-		$username = $this->session->userdata('user_name');
+	// 	$datetime = date("Y-m-d H:i:s", time());
+	// 	$username = $this->session->userdata('user_name');
 
-		if (!empty($chk)) {
-			$this->db->set("REMARK", $params['REMARK']);
-			$this->db->set("MEMBER_IDX", $params['MEMBER_IDX']);
-			$this->db->where("VACATION_DATE", $chk->VACATION_DATE);	
-			$this->db->update("T_VACTION");
-			if ($this->db->affected_rows()) {
-				$data['status'] = "ok";
-				$data['msg'] = "수정되었습니다.";
-			}
-		} else {
+	// 	if (!empty($chk)) {
+	// 		$this->db->set("REMARK", $params['REMARK']);
+	// 		$this->db->set("MEMBER_IDX", $params['MEMBER_IDX']);
+	// 		$this->db->where("VACATION_DATE", $chk->VACATION_DATE);	
+	// 		$this->db->update("T_VACTION");
+	// 		if ($this->db->affected_rows()) {
+	// 			$data['status'] = "ok";
+	// 			$data['msg'] = "수정되었습니다.";
+	// 		}
+	// 	} else {
 
-			$this->db->set("REMARK", $params['REMARK']);
-			$this->db->set("WORK_DATE", $params['DATE']);
-			$this->db->set("QTY", $params['QTY']);
-			$this->db->set("GB", $params['GB']);
-			$this->db->set("INSERT_DATE", $datetime);
-			$this->db->set("INSERT_ID", $username);
-			$this->db->insert("T_VACTION");
+	// 		$this->db->set("REMARK", $params['REMARK']);
+	// 		$this->db->set("WORK_DATE", $params['DATE']);
+	// 		$this->db->set("QTY", $params['QTY']);
+	// 		$this->db->set("GB", $params['GB']);
+	// 		$this->db->set("INSERT_DATE", $datetime);
+	// 		$this->db->set("INSERT_ID", $username);
+	// 		$this->db->insert("T_VACTION");
 
-			if ($this->db->affected_rows()) {
-				$data['status'] = "ok";
-				$data['msg'] = "등록되었습니다.";
-			}
-		}
+	// 		if ($this->db->affected_rows()) {
+	// 			$data['status'] = "ok";
+	// 			$data['msg'] = "등록되었습니다.";
+	// 		}
+	// 	}
 		
-		return $data;
+	// 	return $data;
+	// }
+	public function detail_month($params)
+	{
+		$sql=<<<SQL
+		SELECT
+			V.IDX,
+			VACATION_DATE,
+			NAME,
+			REMARK 
+		FROM
+			T_VACATION AS V,
+			T_MEMBER AS M 
+		WHERE
+			V.IDX = '{$params['MEMBER_IDX']}'
+			AND M.IDX = V.MEMBER_IDX
+SQL;
+
+		$query = $this->db->query($sql);
+		//echo $this->db->last_query();
+		return $query->row();
+	}
+
+	public function get_member()
+	{
+		$sql=<<<SQL
+			SELECT IDX,NAME FROM T_MEMBER
+SQL;
+
+	$query = $this->db->query($sql);
+	//echo $this->db->last_query();
+	return $query->result();
 	}
 }

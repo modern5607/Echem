@@ -27,7 +27,7 @@ class Ordpln_model extends CI_Model
 		$this->db->order_by('INSERT_DATE', 'DESC');
 		$this->db->limit($limit, $start);
 		$query = $this->db->get("T_ACT as A");
-		echo $this->db->last_query();
+		//echo $this->db->last_query();
 		return $query->result();
 	}
 
@@ -243,35 +243,5 @@ SQL;
 		return $data;
 	}
 
-	public function detail_month($params)
-	{
-		$sql=<<<SQL
-		SELECT
-			V.IDX,
-			VACATION_DATE,
-			NAME,
-			REMARK 
-		FROM
-			T_VACATION AS V,
-			T_MEMBER AS M 
-		WHERE
-			V.IDX = '{$params['MEMBER_IDX']}'
-			AND M.IDX = V.MEMBER_IDX
-SQL;
-
-		$query = $this->db->query($sql);
-		echo $this->db->last_query();
-		return $query->row();
-	}
-
-	public function get_member()
-	{
-		$sql=<<<SQL
-			SELECT IDX,NAME FROM T_MEMBER
-SQL;
-
-	$query = $this->db->query($sql);
-	echo $this->db->last_query();
-	return $query->result();
-	}
+	
 }

@@ -122,9 +122,9 @@ public function month()
 		// if (!empty($data['str']['edate'])) { $params['EDATE'] = $data['str']['edate']; }
 		// if (!empty($data['str']['idx'])) { $params['IDX'] = $data['str']['idx']; }
 
-		$data['list']=$this->ordpln_model->detail_month($params);
+		$data['list']=$this->offday_model->detail_month($params);
 		// echo var_dump($data['list']);
-		$data['member'] = $this->ordpln_model->get_member();
+		$data['member'] = $this->offday_model->get_member();
 		// echo var_dump($data['member']);
 		// $data['BIZ']=$this->sys_model->biz_list('수출');
 		// $data['check']=$this->ordpln_model->act_check($params);
@@ -296,7 +296,8 @@ public function month()
 		$List = $this->offday_model->offCalendarInfo_list($year, $month);
 		if (!empty($List)) { 
 			foreach ($List as $i => $row) {
-				$contArray[$row->DAY] = '연차 : '.($row->NAME) ;
+				$contArray[$row->DAY] = '연차 : '.($row->NAME). '<br>'
+				.$contArray[$row->DAY] = '연차 : '.($row->NAME);
 			}
 		}else{
 			$contArray='';
@@ -321,17 +322,17 @@ public function month()
 		$this->load->view('ordpln/month_form', $data);
 	}
 
-	public function month_update()
-	{
-		$params['VACATION_DATE'] = $this->input->post("VACATION_DATE");
-		$params['MEMBER_IDX'] = $this->input->post("MEMBER_IDX");
-		$params['REMARK'] = $this->input->post("REMARK");
+	// public function month_update()
+	// {
+	// 	$params['VACATION_DATE'] = $this->input->post("VACATION_DATE");
+	// 	$params['MEMBER_IDX'] = $this->input->post("MEMBER_IDX");
+	// 	$params['REMARK'] = $this->input->post("REMARK");
 		
 			
-		$data = $this->offday_model->calendar_up($params);
+	// 	$data = $this->offday_model->calendar_up($params);
 
-		echo json_encode($data);
-	}
+	// 	echo json_encode($data);
+	// }
 
 
 
