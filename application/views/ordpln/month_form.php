@@ -28,9 +28,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 							$no = $i + 1;
 				?>
 					<tr>
-						<td class="cen"><input name="VACATION_DATE" type="input" class="calendar" value="<?= $setDate ?>"></td>
-						<td class="cen"><input name="NAME" type="text" value="<?= !empty($List)?$List[$i]->NAME:'' ?>"></td>
-						<td class="cen"><input name="REMARK" type="text" value="<?= !empty($List)?$List[$i]->REMARK:'' ?>"></td>
+						<td class="cen"><?= $setDate ?></td>
+						<td class="cen"><?= !empty($List)?$List[$i]->NAME:'' ?></td>
+						<td class="cen"><?= !empty($List)?$List[$i]->REMARK:'' ?></td>
 					</tr>
 					<?php
 				}

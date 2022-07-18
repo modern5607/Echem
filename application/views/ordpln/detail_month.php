@@ -41,9 +41,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         </select>
                         <!-- <input type="text" class="form_input input_100" value="<?= isset($list) ? $list->NAME : '' ?>"> -->
                     </td>
-
-                    <th></th>
-                    <td></td>
                 </tr>
                 <tr>
                     <th>월차사유</th>
