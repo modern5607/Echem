@@ -107,6 +107,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                 <li><a href="<?= base_url('ORDPLN/prodpln') ?>" class="<?= ($this->data['subpos'] == 'prodpln') ? "on" : ""; ?>">생산계획 등록</a></li>
                                                 <li><a href="<?= base_url('ORDPLN/vacation') ?>" class="<?= ($this->data['subpos'] == 'vacation') ? "on" : ""; ?>">근태관리</a></li>
                                                 <!-- <li><a href="<?= base_url('ORDPLN/prodplncur') ?>" class="<?= ($this->data['subpos'] == 'prodplncur') ? "on" : ""; ?>">생산계획 조회</a></li> -->
+                                               <li><a href="<?= base_url('ORDPLN/month') ?>" class="<?= ($this->data['subpos'] == 'month') ? "on" : ""; ?>">일별 근태 등록 관리</a></li> 
+                                                <li><a href="<?= base_url('ORDPLN/monthpln') ?>" class="<?= ($this->data['subpos'] == 'monthpln') ? "on" : ""; ?>">일별 근태 조회</a></li> 
                                             </ul>
                                         </li>
                                     <?php   }

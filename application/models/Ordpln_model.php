@@ -33,7 +33,7 @@ class Ordpln_model extends CI_Model
 		$this->db->order_by('INSERT_DATE', 'DESC');
 		$this->db->limit($limit, $start);
 		$query = $this->db->get("T_ACT as A");
-		// echo $this->db->last_query();
+		//echo $this->db->last_query();
 		return $query->result();
 	}
 
