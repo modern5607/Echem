@@ -888,33 +888,60 @@ SQL;
 	public function ajax_prodmonitor()
 	{
 		$sql = <<<SQL
-			SELECT * FROM `T_PARSING` WHERE TANK =0 GROUP BY TANK
-			UNION 
-			SELECT * FROM `T_PARSING` WHERE TANK =1 GROUP BY TANK
-			UNION 
-			SELECT * FROM `T_PARSING` WHERE TANK =2 GROUP BY TANK
-			UNION 
-			SELECT * FROM `T_PARSING` WHERE TANK =3 GROUP BY TANK
-			UNION 
-			SELECT * FROM `T_PARSING` WHERE TANK =4 GROUP BY TANK
-			UNION 
-			SELECT * FROM `T_PARSING` WHERE TANK =5 GROUP BY TANK
-			UNION 
-			SELECT * FROM `T_PARSING` WHERE TANK =6 GROUP BY TANK
+			SELECT * FROM T_PARSING
+			WHERE(TANK,INSERT_DATE)
+			IN(
+			SELECT TANK,MAX(INSERT_DATE) AS INSERT_DATE
+			FROM T_PARSING
+			GROUP BY TANK
+			)
+			ORDER BY TANK
+SQL;
+		$query = $this->db->query($sql);
+		// echo $this->db->last_query();
+		return $query->result();
+	}
+	public function ajax_batch()
+	{
+		$sql = <<<SQL
+		SELECT *
+		FROM T_BATCH
 SQL;
 		$query = $this->db->query($sql);
 		return $query->result();
 	}
-	public function ajax_prodmonitor2()
+
+
+	public function batch_start()
 	{
-		$sql = <<<SQL
-		SELECT
-			'1' AS COL1,
-			'2' AS COL2,
-			'2' AS COL3 
-		FROM DUAL;
+		$info = $this->db->query("SELECT MAX(BATCH_NUM) AS MAX FROM T_BATCH WHERE START_DATE BETWEEN CONCAT(DATE_FORMAT(NOW(),\"%Y-%m-%d\"),\" 00:00:00\") AND CONCAT(DATE_FORMAT(NOW(),\"%Y-%m-%d\"),\" 23:59:59\")")->row();
+		$batch_num='';
+		if(isset($info))
+			$batch_num = $info->MAX+1;
+
+		$sql=<<<SQL
+			INSERT INTO T_BATCH(BATCH_NUM,START_DATE,INSERT_DATE)
+			VALUES("{$batch_num}",NOW(),NOW())
 SQL;
-		$query = $this->db->query($sql);
-		return $query->result();
+
+		$this->db->query($sql);
+		return $this->db->affected_rows();
+	}
+
+	public function get_batch_recent()
+	{
+		$sql=<<<SQL
+			SELECT
+				* 
+			FROM
+				T_BATCH 
+			WHERE
+				START_DATE BETWEEN CONCAT( DATE_FORMAT( NOW( ), "%Y-%m-%d" ), " 00:00:00" ) 
+				AND CONCAT( DATE_FORMAT( NOW( ), "%Y-%m-%d" ), " 23:59:59" )
+			ORDER BY BATCH_NUM DESC
+SQL;
+
+		$result = $this->db->query($sql)->row();
+		return $result;
 	}
 }

@@ -119,6 +119,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                             <i class="material-icons">add_business</i>생산관리</a>
                                         <ul class="menu02" <?= ($this->data['pos'] == "PROD") ? "style='display:block'" : ""; ?>>
                                             <li><a href="<?= base_url('PROD/workorder') ?>" class="<?= ($this->data['subpos'] == 'workorder') ? "on" : ""; ?>">작업지시등록</a></li>
+                                            <li><a href="<?= base_url('PROD/batch') ?>" class="<?= ($this->data['subpos'] == 'batch') ? "on" : ""; ?>">배치시작</a></li>
                                             <li><a href="<?= base_url('PROD/pworkorder') ?>" class="<?= ($this->data['subpos'] == 'pworkorder') ? "on" : ""; ?>">공정별 작업지시</a></li>
                                             <li><a href="<?= base_url('PROD/matinput') ?>" class="<?= ($this->data['subpos'] == 'matinput') ? "on" : ""; ?>">원재료 투입 입력</a></li>
                                             <li><a href="<?= base_url('PROD/pprodcur') ?>" class="<?= ($this->data['subpos'] == 'pprodcur') ? "on" : ""; ?>">공정별 생산내역</a></li>

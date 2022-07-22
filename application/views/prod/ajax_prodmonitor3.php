@@ -41,18 +41,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
               initialScale:1.4
             });
 
-          // when the document is modified, add a "*" to the title and enable the "Save" button
-          // myDiagram.addDiagramListener("Modified", e => {
-          //   var button = document.getElementById("SaveButton");
-          //   if (button) button.disabled = !myDiagram.isModified;
-          //   var idx = document.title.indexOf("*");
-          //   if (myDiagram.isModified) {
-          //     if (idx < 0) document.title += "*";
-          //   } else {
-          //     if (idx >= 0) document.title = document.title.slice(0, idx);
-          //   }
-          // });
-
           myDiagram.nodeTemplateMap.add("Process",
             $(go.Node, "Auto", {
                 locationSpot: new go.Spot(0.5, 0.5),
@@ -175,6 +163,16 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
         $(document).ready(function() {
           init();
+
+          setInterval(function(){
+
+            loadFromDB();
+          },5000);
+          setInterval(function(){
+
+            location.reload();
+          },60000);
+
           $.ajax({
             type: "post",
             url: "<?=base_url('PROD/load_monitor_setting')?>",
@@ -182,7 +180,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
             success: function (data) {
               // console.log(data);
               var ani = JSON.parse(data).animation;
-              console.log(ani);
+              // console.log(ani);
               document.getElementById("mySavedModel").value = data;
               load(ani);
             }
@@ -205,7 +203,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
             json:myDiagram.model.toJson()
           },
             function (data, textStatus, jqXHR) {
-              console.log(data);
+              // console.log(data);
             },
             "html"
           );
@@ -222,7 +220,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
             success: function (data) {
               // console.log(data);
               var ani = JSON.parse(data).animation;
-              console.log(ani);
+              // console.log(ani);
               document.getElementById("mySavedModel").value = data;
               load(ani);
             }
@@ -243,12 +241,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
         function Start_animation(ani)
         {
+          myDiagram.animationManager.stopAnimation(true);
            // Animate the flow in the pipes
            var animation = new go.Animation();
           animation.easing = go.Animation.EaseLinear;
 
           myDiagram.links.each(link => {
-            console.log(link);
+            // console.log(link);
             if(ani.includes(link.lb.key))
               animation.add(link.findObject("PIPE"), "strokeDashOffset", 20, 0);
           });

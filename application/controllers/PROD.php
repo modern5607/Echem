@@ -683,9 +683,33 @@ class PROD extends CI_Controller
 		$res = $this->db->query("SELECT JSON FROM T_JSON ORDER BY IDX DESC LIMIT 1");
 		$json= json_decode($res->row()->JSON);
 		// echo var_dump($data['list']);
-		$json->animation[0]="T1T3";
-		$json->animation[1]="M1T3";
-		$json->animation[2]="M2T3";
+
+
+		$batch_info = $this->prod_model->get_batch_recent();
+		// echo var_dump($batch_info);
+
+		if(isset($batch_info) && $batch_info->STATUS == "STOP")
+		{
+			$json->animation[0]="";
+		}
+		if(isset($batch_info) && $batch_info->STATUS == "WATER")
+		{
+			$json->animation[0]="W1T1";
+			$json->animation[1]="W2T1";
+		}
+		else if(isset($batch_info) && $batch_info->STATUS == "TOMIX")
+		{
+			$json->animation[0]="T1T3";
+			$json->animation[1]="M1T3";
+			$json->animation[2]="M2T3";
+		}
+		else if(isset($batch_info) && $batch_info->STATUS == "TOWASH")
+		{
+			$json->animation[0]="T3T2";
+		}
+		// $json->animation[0]="T1T3";
+		// $json->animation[1]="M1T3";
+		// $json->animation[2]="M2T3";
 		
 		//수위 계산 0~1
 		//T1,2,3
@@ -746,4 +770,29 @@ class PROD extends CI_Controller
 
 		echo json_encode($json);
 	}
+
+	public function batch()
+	{
+
+		$data['title'] = '배치시작';
+		return $this->load->view('main100', $data);
+	}
+
+	public function ajax_batch()
+	{
+		$data['str']['sdate'] = $this->input->post("sdate");
+		$data['str']['edate'] = $this->input->post("edate");
+		//모델
+		$data['list'] = $this->prod_model->ajax_batch();
+		$this->load->view('prod/ajax_batch',$data);
+
+	}
+
+	public function batch_start()
+	{
+		$result = $this->prod_model->batch_start();
+		echo $result;
+
+	}
+	
 }
