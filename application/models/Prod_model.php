@@ -901,13 +901,33 @@ SQL;
 		// echo $this->db->last_query();
 		return $query->result();
 	}
+
+	public function ajax_prodmonitor2()
+	{
+		$sql = <<<SQL
+		SELECT
+			TANK,LEVEL,TEMP,PH,CL,PRESS,INSERT_DATE
+		FROM
+			T_PARSING 
+		WHERE
+			( TANK, INSERT_DATE ) IN ( SELECT TANK, MAX( INSERT_DATE ) AS INSERT_DATE FROM T_PARSING GROUP BY TANK ) 
+		ORDER BY
+			TANK
+SQL;
+		$query = $this->db->query($sql);
+		// echo $this->db->last_query();
+		return $query->result();
+	}
+
 	public function ajax_batch()
 	{
 		$sql = <<<SQL
 		SELECT *
 		FROM T_BATCH
+		ORDER BY START_DATE DESC
 SQL;
 		$query = $this->db->query($sql);
+		echo $this->db->last_query();
 		return $query->result();
 	}
 

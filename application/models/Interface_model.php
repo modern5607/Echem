@@ -13,22 +13,19 @@ class Interface_model extends CI_Model
 	{
 		$where = '';
 		if ((!empty($params['SDATE']) && $params['SDATE'] != "") && (!empty($params['EDATE']) && $params['EDATE'] != "")) {
-			$where .= "AND INSERT_DATE BETWEEN '{$params['SDATE']} 00:00:00' AND '{$params['EDATE']} 23:59:59'";
+			$where .= "AND START_DATE BETWEEN '{$params['SDATE']} 00:00:00' AND '{$params['EDATE']} 23:59:59'";
 		}
 
 		$sql = <<<SQL
 				SELECT
-					DATE_FORMAT( INSERT_DATE, '%Y-%m-%d' ) AS DATE,
-					COUNT(*) AS CNT
+					IDX,DATE_FORMAT(START_DATE,"%Y-%m-%d") AS START_DATE,COUNT(*) AS BATCH_COUNT
 				FROM
-					T_PARSING
+					T_BATCH
 				WHERE
-					TANK = '{$params['TANK']}'
-					{$where}
-				GROUP BY
-					DATE
-				ORDER BY 
-					DATE DESC
+				1
+				{$where}
+				GROUP BY DATE_FORMAT(START_DATE,"%Y-%m-%d")
+				ORDER BY START_DATE DESC
 				LIMIT {$start},{$limit}
 	SQL;
 		$query = $this->db->query($sql);
@@ -39,17 +36,10 @@ class Interface_model extends CI_Model
 	public function head_interface_select($params)
 	{
 		$sql=<<<SQL
-			SELECT
-				IDX,
-				TANK,
-				DATE_FORMAT(INSERT_DATE,"%H:%i:%s") AS INSERT_DATE
-			FROM
-				T_PARSING 
-			WHERE
-				TANK = '{$params['TANK']}'
-				AND INSERT_DATE BETWEEN '{$params['INSERT_DATE']} 00:00:00' AND '{$params['INSERT_DATE']} 23:59:59'
-			ORDER BY
-				INSERT_DATE DESC
+		SELECT IDX, START_DATE,FINISH_DATE
+		FROM T_BATCH
+		WHERE START_DATE BETWEEN '{$params['DATE']} 00:00:00' AND '{$params['DATE']} 23:59:59'
+		ORDER BY START_DATE DESC
 SQL;
 		$query = $this->db->query($sql);
 		// echo $this->db->last_query();
@@ -58,11 +48,27 @@ SQL;
 
 	public function detail_interface($params)
 	{
+
 		$sql=<<<SQL
-			SELECT * FROM T_PARSING WHERE IDX='{$params['IDX']}'
+			SELECT
+				LEVEL,TEMP,PH,CL,PRESS,INSERT_DATE,
+				DATE_FORMAT(INSERT_DATE,"%Y") AS Y,
+				DATE_FORMAT(INSERT_DATE,"%m") AS M,
+				DATE_FORMAT(INSERT_DATE,"%d") AS D,
+				DATE_FORMAT(INSERT_DATE,"%h") AS H,
+				DATE_FORMAT(INSERT_DATE,"%i") AS I,
+				DATE_FORMAT(INSERT_DATE,"%s") AS S 
+			FROM
+				T_PARSING 
+			WHERE
+				TANK = '{$params['TANK']}' 
+				AND INSERT_DATE BETWEEN "{$params['SDATE']} 00:00:00" 
+				AND "{$params['EDATE']} 23:59:59" 
+			ORDER BY
+				INSERT_DATE ASC
 SQL;
 		$query = $this->db->query($sql);
-		// echo $this->db->last_query();
-		return $query->row();
+		echo $this->db->last_query();
+		return $query->result();
 	}
 }

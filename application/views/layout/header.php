@@ -14,6 +14,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <link rel="stylesheet" href="<?= base_url('/_static/css/form.css?ver=1'); ?>">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
     <!-- <script src="<?= base_url('/_static/js/jquery-1.12.4.min.js'); ?>"></script>
     <script src="<?= base_url('/_static/js/common.js'); ?>"></script> -->
 

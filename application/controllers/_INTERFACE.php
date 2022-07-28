@@ -85,6 +85,7 @@ class _INTERFACE extends CI_Controller
 		//=====================================
 
 		$data['list'] = $this->interface_model->head_interface($params,$pageNum,$config['per_page']);
+		// echo var_dump($data['list']);
 		$this->data['cnt'] = 0;//$this->interface_model->head_interface_cut($params);
 
 		//=====================================
@@ -103,12 +104,10 @@ class _INTERFACE extends CI_Controller
 
 	public function head_interface_select()
 	{
-		$idx = $this->input->post("idx");
-		$tank = $this->input->post("tank");
-		$params['INSERT_DATE'] = $idx;
-		$params['TANK'] = $tank;
-
 		$data = array();
+		$data['str']['tank'] = $this->input->post("tank");
+		$params['DATE'] = $this->input->post("date");
+
 		$data['selectinfo'] = $this->interface_model->head_interface_select($params);
 
 		return $this->load->view('interface/head_interface_select', $data);
@@ -118,13 +117,21 @@ class _INTERFACE extends CI_Controller
 	public function detail_interface()
 	{
 		$data = array();
-		$idx = $this->input->post("idx");
-		$params['IDX'] = $idx;
-		if (empty($params['IDX'])) {
-			$data['info'] = "";
+		$sdate = $this->input->post("sdate");
+		$edate = $this->input->post("edate");
+		$tank = $this->input->post("tank");
+		if($tank>=1)
+			$tank++;
+		$params['SDATE'] = $sdate;
+		$params['EDATE'] = $edate;
+		$params['TANK'] = $tank;
+		// echo $params['TANK'];
+		
+		$data['info'] = $this->interface_model->detail_interface($params);
+		if (!isset($params['SDATE'])) {
 		} else {
-			$data['info'] = $this->interface_model->detail_interface($params);
 		}
+		// echo var_dump($data['info']);
 		return $this->load->view('interface/detail_interface', $data);
 	}
 	

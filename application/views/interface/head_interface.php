@@ -2,35 +2,35 @@
 defined('BASEPATH') or exit('No direct script access allowed');
 
 ?>
-<link href="<?= base_url('_static/css/jquery.datetimepicker.min.css') ?>" rel="stylesheet">
-<script src="<?= base_url('_static/js/jquery.datetimepicker.full.min.js') ?>"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
 <div class="searchBox">
-<header>
-			<div class="searchDiv">
-				<form id="headForm" onsubmit="return false">
-					<label>수주일</label>
-					<input type="date" name="sdate" value="<?= $str['sdate']; ?>" class=""  /> ~ 
-					<input type="date" name="edate" value="<?= $str['edate']; ?>" class="" />
-					
-					<button class="search_submit head_search"><i class="material-icons">search</i></button>
-				</form>
-			</div>
-			<!-- <span class="btn print add_order"  style="padding:7px 11px;"><i class="material-icons">add</i>작업지시 등록</span> -->
-			<!-- <span class="btn print print_biz"><i class="material-icons">get_app</i>출력하기</span> -->
-		</header>
+    <header>
+        <div class="searchDiv">
+            <form id="headForm" onsubmit="return false">
+                <label>배치등록일</label>
+                <input type="date" name="sdate" value="<?= $str['sdate']; ?>" class="" /> ~
+                <input type="date" name="edate" value="<?= $str['edate']; ?>" class="" />
+
+                <button class="search_submit head_search"><i class="material-icons">search</i></button>
+            </form>
+        </div>
+        <!-- <span class="btn print add_order"  style="padding:7px 11px;"><i class="material-icons">add</i>작업지시 등록</span> -->
+        <!-- <span class="btn print print_biz"><i class="material-icons">get_app</i>출력하기</span> -->
+    </header>
 
 </div>
 
-<div class="bdcont_50" >
+<div class="bdcont_50">
     <div class="bc__box">
         <div class="tbl-content">
             <table cellpadding="0" cellspacing="0" border="0" width="100%">
                 <thead>
                     <tr>
                         <th>NO</th>
-                        <th>수신일</th>
-                        <th>수신건</th>
+                        <th>배치등록일</th>
+                        <th>배치 건수</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -41,8 +41,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     ?>
                             <tr id="poc_<?= $num ?>" class="pocbox" data-idx="<?= $num ?>">
                                 <td class="cen"><?= $num; ?></td>
-                                <td class="items_ajax mlink cen" data-idxdate=<?= $row->DATE ?> data-tank=<?=$str['tank']?>><strong><?= $row->DATE; ?></strong></td>
-                                <td class="cen"><?= number_format($row->CNT); ?></td>
+                                <td class="items_ajax mlink cen" data-date="<?= $row->START_DATE ?>"><strong><?= $row->START_DATE; ?></strong></td>
+                                <td class="cen"><?= $row->BATCH_COUNT ?></td>
                             </tr>
 
                         <?php
@@ -80,11 +80,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
 </div>
 
 
-<div class="bdcont_50" >
+<div class="bdcont_50">
     <div class="bc__box">
-        <div class="ajax_select" >
+        <div class="ajax_select">
         </div>
-<!-- 
+        <!-- 
         <div class="ajax_container bdcont_80">
         </div> -->
     </div>
@@ -92,38 +92,28 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 
 <script>
-    $(document).off("click",".items_ajax");
+    $(document).off("click", ".items_ajax");
     // 달력 출력
-    $(".calendar").datetimepicker({
-        format: 'Y-m-d',
-        timepicker: false,
-        lang: 'ko-KR'
-    });
-
-    $(document).ready(function() {
-        head_interface_select(0);
-        // detail_parsing2(0);
-    });
-
+   
     $(document).on("click", ".items_ajax", function() {
         //alert("asdf");
         var idx = $(this).parent().data("idx");
-        var idxdate = $(this).data("idxdate");
-        var tank = $(this).data("tank");
-        console.log(idxdate);
+        var date = $(this).data("date");
+        var tank = "<?=$str['tank']?>";
+        // console.log(idxdate);
         $(".pocbox").removeClass("over");
         $("#poc_" + idx).addClass("over");
 
-        head_interface_select(idxdate,tank);
+        head_interface_select(date,tank);
     });
 
-    function head_interface_select(idx,tank) {
-        console.log("ajax_container" + idx);
+    function head_interface_select(date,tank='') {
+        // console.log("ajax_container" + idx);
         $.ajax({
             url: "<?= base_url('_INTERFACE/head_interface_select') ?>",
             type: "post",
             data: {
-                idx: idx,
+                date:date,
                 tank:tank
             },
             dataType: "html",
@@ -134,19 +124,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
             }
         });
     }
+    $(document).ready(function() {
+        head_interface_select(0);
+        // detail_parsing2(0);
 
-    // function detail_parsing2(idx = "") {
-    //     $.ajax({
-    //         url: "<?= base_url('monitor/detail_parsing2') ?>",
-    //         type: "post",
-    //         data: {
-    //             idx: idx
-    //         },
-    //         dataType: "html",
-    //         success: function(data) {
-    //             $("#ajax_detail_container").html(data);
-    //             // $(".ajax_container").html(data);
-    //         }
-    //     });
-
+        google.charts.load('current', {'packages':['line','controls']});
+        chartDrowFun.chartDrow(); //chartDrow() 실행
+    });
 </script>

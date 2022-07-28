@@ -692,7 +692,7 @@ class PROD extends CI_Controller
 		{
 			$json->animation[0]="";
 		}
-		if(isset($batch_info) && $batch_info->STATUS == "WATER")
+		else if(isset($batch_info) && $batch_info->STATUS == "WATER")
 		{
 			$json->animation[0]="W1T1";
 			$json->animation[1]="W2T1";
@@ -707,9 +707,10 @@ class PROD extends CI_Controller
 		{
 			$json->animation[0]="T3T2";
 		}
-		// $json->animation[0]="T1T3";
-		// $json->animation[1]="M1T3";
-		// $json->animation[2]="M2T3";
+		else if(isset($batch_info) && $batch_info->STATUS == "TOLI2CO3")
+		{
+			$json->animation[0]="T2B1";
+		}
 		
 		//수위 계산 0~1
 		//T1,2,3

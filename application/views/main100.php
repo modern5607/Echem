@@ -15,7 +15,7 @@
 
 
 <script>
-    <?php if(empty($pos) && empty($subpos)){$pos="ORDPLN"; $subpos='ajax';}; ?>
+    <?php if(empty($pos) && empty($subpos)){$pos="ORDPLN"; $subpos='prodpln';}; ?>
     var formData = '';
     var page = 0;
     var limit = 0;

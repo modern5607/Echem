@@ -26,9 +26,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
 				<thead>
 					<tr>
                         <th>NO</th>
-						<th>COL1</th>
-						<th>COL2</th>
-						<th>COL3</th>
+						<th>배치 넘버</th>
+						<th>배치 시작</th>
+						<th>배치 종료</th>
+						<th>등록일</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -40,7 +41,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 							<td class="cen"><?= $no; ?></td>
 							<td class="cen"><?= $row->BATCH_NUM; ?></td>
 							<td class="cen"><?= $row->START_DATE; ?></td>
-                            <td class="cen"><?= $row->END_DATE; ?></td>			
+                            <td class="cen"><?= $row->FINISH_DATE; ?></td>			
+                            <td class="cen"><?= $row->INSERT_DATE; ?></td>			
 						</tr>
 
 
