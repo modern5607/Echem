@@ -18,7 +18,7 @@ class Interface_model extends CI_Model
 
 		$sql = <<<SQL
 				SELECT
-					IDX,DATE_FORMAT(START_DATE,"%Y-%m-%d") AS START_DATE,COUNT(*) AS BATCH_COUNT
+					IDX,FINISH_DATE,DATE_FORMAT(INSERT_DATE,"%Y-%m-%d") AS INSERT_DATE,DATE_FORMAT(START_DATE,"%Y-%m-%d %H:%i:%s") AS START_DATE,COUNT(*) AS BATCH_COUNT
 				FROM
 					T_BATCH
 				WHERE
@@ -29,7 +29,7 @@ class Interface_model extends CI_Model
 				LIMIT {$start},{$limit}
 	SQL;
 		$query = $this->db->query($sql);
-		// echo $this->db->last_query();
+		echo $this->db->last_query();
 		return $query->result();
 	}
 

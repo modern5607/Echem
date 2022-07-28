@@ -64,6 +64,10 @@ class _INTERFACE extends CI_Controller
 
 	public function head_interface($tank="")
 	{
+		$data = array();
+		$data['str']['tank'] = $this->input->post("tank");
+		$params['DATE'] = $this->input->post("date");
+
 		$data['str']['sdate'] = $this->input->post("sdate");
 		$data['str']['edate'] = $this->input->post("edate");
 		$data['str']['tank'] = $tank;
@@ -97,9 +101,9 @@ class _INTERFACE extends CI_Controller
 		$config['full_tag_close'] = '</div>';
 		$this->pagination->initialize($config);
 		$this->data['pagenation'] = $this->pagination->create_links();
-
+			$params['DATE'] = $this->input->post("date");
 		//뷰
-		$this->load->view('interface/head_interface', $data);
+		$this->load->view('interface_test/head_interface_select', $data);
 	}
 
 	public function head_interface_select()
@@ -132,7 +136,7 @@ class _INTERFACE extends CI_Controller
 		} else {
 		}
 		// echo var_dump($data['info']);
-		return $this->load->view('interface/detail_interface', $data);
+		return $this->load->view('interface_test/detail_interface', $data);
 	}
 	
 }

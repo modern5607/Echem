@@ -22,7 +22,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   chartDrow : function(){
       var chartData = '';
       //날짜형식 변경하고 싶으시면 이 부분 수정하세요.
-      var chartDateformat     = 'hh:mm:ss';
+      var chartDateformat     = 'hh:ii:ss';
       //라인차트의 라인 수
       var chartLineCount    = 10;
       //컨트롤러 바 차트의 라인 수
