@@ -51,7 +51,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     } else {
                         ?>
                         <tr>
-                            <td colspan="15" class="list_none">제품정보가 없습니다.</td>
+                            <td colspan="15" class="list_none">수신일을 선택해주세요.</td>
                         </tr>
                     <?php
                     }

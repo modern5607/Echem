@@ -18,13 +18,10 @@ class Interface_model extends CI_Model
 
 		$sql = <<<SQL
 				SELECT
-					IDX,FINISH_DATE,DATE_FORMAT(INSERT_DATE,"%Y-%m-%d") AS INSERT_DATE,DATE_FORMAT(START_DATE,"%Y-%m-%d %H:%i:%s") AS START_DATE,COUNT(*) AS BATCH_COUNT
+					IDX,FINISH_DATE,DATE_FORMAT(INSERT_DATE,"%Y-%m-%d") AS INSERT_DATE,DATE_FORMAT(START_DATE,"%Y-%m-%d %H:%i:%s") AS START_DATE
 				FROM
 					T_BATCH
-				WHERE
-				1
-				{$where}
-				GROUP BY DATE_FORMAT(START_DATE,"%Y-%m-%d")
+				WHERE START_DATE BETWEEN '{$params['SDATE']} 00:00:00' AND '{$params['EDATE']} 23:59:59'
 				ORDER BY START_DATE DESC
 				LIMIT {$start},{$limit}
 	SQL;
@@ -33,18 +30,18 @@ class Interface_model extends CI_Model
 		return $query->result();
 	}
 
-	public function head_interface_select($params)
-	{
-		$sql=<<<SQL
-		SELECT IDX, START_DATE,FINISH_DATE
-		FROM T_BATCH
-		WHERE START_DATE BETWEEN '{$params['DATE']} 00:00:00' AND '{$params['DATE']} 23:59:59'
-		ORDER BY START_DATE DESC
-SQL;
-		$query = $this->db->query($sql);
-		// echo $this->db->last_query();
-		return $query->result();
-	}
+// 	public function head_interface_select($params)
+// 	{
+// 		$sql=<<<SQL
+// 		SELECT IDX, START_DATE,FINISH_DATE
+// 		FROM T_BATCH
+// 		WHERE START_DATE BETWEEN '{$params['DATE']} 00:00:00' AND '{$params['DATE']} 23:59:59'
+// 		ORDER BY START_DATE DESC
+// SQL;
+// 		$query = $this->db->query($sql);
+// 		// echo $this->db->last_query();
+// 		return $query->result();
+// 	}
 
 	public function detail_interface($params)
 	{

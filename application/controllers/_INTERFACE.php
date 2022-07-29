@@ -106,16 +106,16 @@ class _INTERFACE extends CI_Controller
 		$this->load->view('interface_test/head_interface_select', $data);
 	}
 
-	public function head_interface_select()
-	{
-		$data = array();
-		$data['str']['tank'] = $this->input->post("tank");
-		$params['DATE'] = $this->input->post("date");
+	// public function head_interface_select()
+	// {
+	// 	$data = array();
+	// 	$data['str']['tank'] = $this->input->post("tank");
+	// 	$params['DATE'] = $this->input->post("date");
 
-		$data['selectinfo'] = $this->interface_model->head_interface_select($params);
+	// 	$data['selectinfo'] = $this->interface_model->head_interface_select($params);
 
-		return $this->load->view('interface/head_interface_select', $data);
-	}
+	// 	return $this->load->view('interface/head_interface_select', $data);
+	// }
 
 
 	public function detail_interface()
