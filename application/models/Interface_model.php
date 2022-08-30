@@ -55,7 +55,7 @@ SQL;
 				DATE_FORMAT(INSERT_DATE,"%Y") AS Y,
 				DATE_FORMAT(INSERT_DATE,"%m") AS M,
 				DATE_FORMAT(INSERT_DATE,"%d") AS D,
-				DATE_FORMAT(INSERT_DATE,"%h") AS H,
+				DATE_FORMAT(INSERT_DATE,"%H") AS H,
 				DATE_FORMAT(INSERT_DATE,"%i") AS I,
 				DATE_FORMAT(INSERT_DATE,"%s") AS S 
 			FROM
@@ -68,7 +68,7 @@ SQL;
 				INSERT_DATE ASC
 SQL;
 		$query = $this->db->query($sql);
-		echo $this->db->last_query();
+		// echo $this->db->last_query();
 		return $query->result();
 	}
 }

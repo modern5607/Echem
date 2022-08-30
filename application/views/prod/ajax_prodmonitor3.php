@@ -167,11 +167,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
           setInterval(function(){
 
             loadFromDB();
-          },5000);
+          },10000);
           setInterval(function(){
 
             location.reload();
-          },60000);
+          },180000);
 
           $.ajax({
             type: "post",
