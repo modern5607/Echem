@@ -714,17 +714,17 @@ class PROD extends CI_Controller
 		
 		//수위 계산 0~1
 		//T1,2,3
-		$json->nodeDataArray[0]->level = round($data['list'][2]->LEVEL/300,2);
-		$json->nodeDataArray[1]->level = round($data['list'][3]->LEVEL/300,2);
-		$json->nodeDataArray[2]->level = round($data['list'][4]->LEVEL/300,2);
+		$json->nodeDataArray[0]->level = round($data['list'][2]->LEVEL/100,2);
+		$json->nodeDataArray[1]->level = round($data['list'][3]->LEVEL/100,2);
+		$json->nodeDataArray[2]->level = round($data['list'][4]->LEVEL/100,2);
 
 		//온수탱크
-		$json->nodeDataArray[3]->level = round($data['list'][0]->LEVEL/300,2);
-		$json->nodeDataArray[4]->level = round($data['list'][1]->LEVEL/300,2);
+		$json->nodeDataArray[3]->level = round($data['list'][0]->LEVEL/100,2);
+		$json->nodeDataArray[4]->level = round($data['list'][1]->LEVEL/100,2);
 
 		//배합탱크
-		$json->nodeDataArray[5]->level = round($data['list'][5]->LEVEL/300,2);
-		$json->nodeDataArray[6]->level = round($data['list'][6]->LEVEL/300,2);
+		$json->nodeDataArray[5]->level = round($data['list'][5]->LEVEL/100,2);
+		$json->nodeDataArray[6]->level = round($data['list'][6]->LEVEL/100,2);
 		
 		//온수 탱크
 		$json->nodeDataArray[8]->text1 = $data['list'][0]->LEVEL;
