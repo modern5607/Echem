@@ -162,6 +162,24 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 
         $(document).ready(function() {
+
+          //왼쪽 메뉴 숨기기/*
+          $(".menu_Content").animate({
+              width: 0
+          }, 0, function() {
+              $(".mhide").addClass('mshow');
+              $(".mhide span").text("keyboard_arrow_right");
+          });
+
+          $("#smart_container").animate({
+              paddingLeft: '15px'
+          }, 0, function() {
+              $(".mControl_show").show();
+          });
+
+          window.scrollTo(0,1);
+          //왼쪽 메뉴 숨기기 */
+
           init();
 
           setInterval(function(){
@@ -276,7 +294,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
       </script>
 
       <div id="sample">
-        <div id="myDiagramDiv" style="border: 1px solid black; width: 100%; height: 700px; position: relative; -webkit-tap-highlight-color: rgba(255, 255, 255, 0);"><canvas tabindex="0" width="1054" height="700" style="position: absolute; top: 0px; left: 0px; z-index: 2; user-select: none; touch-action: none; width: 1054px; height: 498px;">This text is displayed if your browser does not support the Canvas HTML element.</canvas>
+        <div id="myDiagramDiv" style="border: 1px solid black; width: 100%; height: 860px; position: relative; -webkit-tap-highlight-color: rgba(255, 255, 255, 0);"><canvas tabindex="0" width="1054" height="860" style="position: absolute; top: 0px; left: 0px; z-index: 2; user-select: none; touch-action: none; width: 1054px; height: 498px;">This text is displayed if your browser does not support the Canvas HTML element.</canvas>
           <!-- <div style="position: absolute; overflow: auto; width: 1054px; height: 498px; z-index: 1;"> -->
           <!-- <div style="position: absolute; width: 1px; height: 1px;"></div> -->
         </div>
