@@ -139,8 +139,7 @@ class REG extends CI_Controller
 		else 
 			alert("회원정보가 존재하지 않습니다.", base_url('REG/login'));
 		
-
-			redirect(base_url(''));
+			$this->load->view('/register/login_api');
 	}
 
 	public function ajax_savelevel_update()
