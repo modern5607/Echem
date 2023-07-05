@@ -69,9 +69,6 @@ class Ordpln_model extends CI_Model
 		return $query->row()->CUT;
 	}
 
-
-
-
 	// 주문/계획 - 주문등록 detail insert
 	public function order_insert($params)
 	{
@@ -144,14 +141,182 @@ SQL;
 		return $this->db->affected_rows();
 	}
 
+//---------------------------------------------주문등록 복사----------------------------
+// head 주문등록
+public function head_order1($params,$start=0,$limit=20)
+{
+	if ((!empty($params['SDATE']) && $params['SDATE'] != "") && (!empty($params['EDATE']) && $params['EDATE'] != "")) {
+		$this->db->where("INSERT_DATE BETWEEN '{$params['SDATE']}' AND '{$params['EDATE']}'");
+	}
+	if (!empty($params['REMARK']) && $params['REMARK'] != "") {
+		$this->db->like("A.REMARK", $params['REMARK']);
+	}
+	if (!empty($params['IDX']) && $params['IDX'] != "") {
+		$this->db->where("A.IDX", $params['IDX']);
+	}
+	if (!empty($params['BIZ_IDX']) && $params['BIZ_IDX'] != "") {
+		$this->db->where("A.BIZ_IDX", $params['BIZ_IDX']);
+	}
 
 
+	$this->db->select("( SELECT START_DATE FROM T_ORDER AS O WHERE O.ACT_IDX = A.IDX ) AS SDATE,( SELECT END_DATE FROM T_ORDER AS O WHERE O.ACT_IDX = A.IDX ) AS EDATE, A.*, B.CUST_NM");
+	$this->db->join("T_BIZ as B", "B.IDX = A.BIZ_IDX","LEFT");
+	$this->db->order_by('INSERT_DATE', 'DESC');
+	$this->db->limit($limit, $start);
+	$query = $this->db->get("T_ECHEM as A");
+	//echo $this->db->last_query();
+	return $query->result();
+}
+
+public function head_order_cut1($params)
+{
+	if ((!empty($params['SDATE']) && $params['SDATE'] != "") && (!empty($params['EDATE']) && $params['EDATE'] != "")) {
+		$this->db->where("INSERT_DATE BETWEEN '{$params['SDATE']}' AND '{$params['EDATE']}'");
+	}
+	if (!empty($params['REMARK']) && $params['REMARK'] != "") {
+		$this->db->like("A.REMARK", $params['REMARK']);
+	}
+	if (!empty($params['IDX']) && $params['IDX'] != "") {
+		$this->db->where("A.IDX", $params['IDX']);
+	}
+	if (!empty($params['BIZ_IDX']) && $params['BIZ_IDX'] != "") {
+		$this->db->where("A.BIZ_IDX", $params['BIZ_IDX']);
+	}
 
 
+	$this->db->select("( SELECT START_DATE FROM T_ORDER AS O WHERE O.ACT_IDX = A.IDX ) AS SDATE,( SELECT END_DATE FROM T_ORDER AS O WHERE O.ACT_IDX = A.IDX ) AS EDATE, A.*, B.CUST_NM");
+	$this->db->join("T_BIZ as B", "B.IDX = A.BIZ_IDX","LEFT");
+	$this->db->order_by('INSERT_DATE', 'DESC');
+	$query = $this->db->get("T_ECHEM as A");
+	 //echo $this->db->last_query();
+	return $query->num_rows();
+}
+public function act_check1($params)
+{
+	$this->db->select("COUNT(*) as CUT");
+	$this->db->where("ACT_IDX", $params['IDX']);
+	$query = $this->db->get("T_ORDER");
+	return $query->row()->CUT;
+}
+
+// 주문/계획 - 주문등록 detail insert
+public function order_insert1($params)
+{
+	$datetime = date("Y-m-d H:i:s", time());
+	$username = $this->session->userdata('user_name');
 
 
+	$sql = <<<SQL
+	INSERT T_ECHEM
+		SET
+		INSERT_DATE	= '{$params['INSERT_DATE']}',
+		T_TANK   	= '{$params['T_TANK']}',
+		T_SU   		= '{$params['T_SU']}',
+		T_JD   		= '{$params['T_JD']}',
+		NA2CO3_IN   = '{$params['NA2CO3_IN']}',
+		NA2CO3   	= '{$params['NA2CO3']}',
+		OT_OUT   	= '{$params['OT_OUT']}',
+		OT_COL   	= '{$params['OT_COL']}',
+		REMARK   	= '{$params['INSERT_DATE']} 생산건' ,
+		USE_WL   	= '{$params['USE_WL']}',
+		REMARK1   	= '{$params['INSERT_DATE']} 생산건' ,
+		REMARK01   	= '{$params['REMARK01']}',
+		OT_NA   	= '{$params['OT_NA']}',
+		OT_WT   	= '{$params['OT_WT']}',
+		L_WL    	= '{$params['L_WL']}',
+		L_JD    	= '{$params['L_JD']}',
+		L_SU		= '{$params['L_SU']}',
+		U_WL   		= '{$params['U_WL']}',
+		U_JD   		= '{$params['U_JD']}',
+		D_WL   		= '{$params['D_WL']}',
+		U_SU   		= '{$params['U_SU']}',
+		D_JD   		= '{$params['D_JD']}',
+		D_SU   		= '{$params['D_SU']}',
+		Z_WL   		= '{$params['Z_WL']}',
+		Z_JD   		= '{$params['Z_JD']}',
+		Z_SU   		= '{$params['Z_SU']}',
+		PS_1   		= '{$params['PS_1']}',
+		PS_2   		= '{$params['PS_2']}',
+		PS_3   		= '{$params['PS_3']}'
+SQL;
+	$this->db->query($sql);
+
+	/*$sql1 = <<<SQL
+	UPDATE T_STOCK
+		SET
+		STOCK   	= STOCK + '{$params['OT_OUT']}'
+	WHERE IDX = '1'
+SQL;
+	$this->db->query($sql1);*/
+	
+	return $this->db->affected_rows();
+}
+// 주문/계획 - 주문등록 삭제
+public function del_order1($idx)
+{
+	$this->db->trans_start();
+		$this->db->where("IDX", $idx);
+		$this->db->delete("T_ECHEM");
+	$this->db->trans_complete();
+	// echo $this->db->last_query();
+
+	$data = 0;
+	if ($this->db->trans_status() !== FALSE) {
+		$data = 1;
+	}
+
+	return $data;
+}
+// 주문/계획 - 주문등록 수정
+public function update_order1($params)
+{
+
+	$datetime = date("Y-m-d H:i:s", time());
+	$username = $this->session->userdata('user_name');
 
 
+	$sql = <<<SQL
+	UPDATE T_ECHEM
+		SET
+		INSERT_DATE	= '{$params['INSERT_DATE']}',
+		T_TANK   	= '{$params['T_TANK']}',
+		T_SU   		= '{$params['T_SU']}',
+		T_JD   		= '{$params['T_JD']}',
+		NA2CO3_IN   = '{$params['NA2CO3_IN']}',
+		NA2CO3   	= '{$params['NA2CO3']}',
+		OT_OUT   	= '{$params['OT_OUT']}',
+		OT_COL   	= '{$params['OT_COL']}',
+		REMARK   	= '{$params['INSERT_DATE']} 생산건' ,
+		USE_WL   	= '{$params['USE_WL']}',
+		REMARK1   	= '{$params['INSERT_DATE']} 생산건' ,
+		REMARK01   	= '{$params['REMARK01']}',
+		OT_NA   	= '{$params['OT_NA']}',
+		OT_WT   	= '{$params['OT_WT']}',
+		L_WL    	= '{$params['L_WL']}',
+		L_JD    	= '{$params['L_JD']}',
+		L_SU		= '{$params['L_SU']}',
+		U_WL   		= '{$params['U_WL']}',
+		U_JD   		= '{$params['U_JD']}',
+		D_WL   		= '{$params['D_WL']}',
+		U_SU   		= '{$params['U_SU']}',
+		D_JD   		= '{$params['D_JD']}',
+		D_SU   		= '{$params['D_SU']}',
+		Z_WL   		= '{$params['Z_WL']}',
+		Z_JD   		= '{$params['Z_JD']}',
+		Z_SU   		= '{$params['Z_SU']}',
+		PS_1   		= '{$params['PS_1']}',
+		PS_2   		= '{$params['PS_2']}',
+		PS_3   		= '{$params['PS_3']}'
+	WHERE
+		IDX 		= "{$params['IDX']}"
+SQL;
+	$this->db->query($sql);
+
+	
+	return $this->db->affected_rows();
+}
+
+//----------------------------------------------주문등록 복사한거 끝-----------------------------------------
 	//캘린더 세부
 	public function calendarInfo_list($YEAR, $MONTH, $DAY = '')
 	{
@@ -160,7 +325,7 @@ SQL;
 			$where = " AND SUBSTRING(WORK_DATE, 9, 2) = '{$DAY}'";
 		}
 		$sql=<<<SQL
-			SELECT SUBSTRING(WORK_DATE, 9, 2) AS DAY, REMARK, QTY
+			SELECT SUBSTRING(WORK_DATE, 9, 2) AS DAY, REMARK, REMARK1,QTY
 			FROM T_WORKCAL
 			WHERE
 				SUBSTRING(WORK_DATE, 1, 4) = '{$YEAR}' 
@@ -227,6 +392,7 @@ SQL;
 
 		if (!empty($chk)) {
 			$this->db->set("REMARK", $params['REMARK']);
+			$this->db->set("REMARK1", $params['REMARK1']);
 			$this->db->set("QTY", $params['QTY']);
 			$this->db->set("UPDATE_DATE", $datetime);
 			$this->db->set("UPDATE_ID", $username);
@@ -240,6 +406,7 @@ SQL;
 		} else {
 
 			$this->db->set("REMARK", $params['REMARK']);
+			$this->db->set("REMARK1", $params['REMARK1']);
 			$this->db->set("WORK_DATE", $params['DATE']);
 			$this->db->set("QTY", $params['QTY']);
 			$this->db->set("GB", $params['GB']);

@@ -17,8 +17,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 				<thead>
 					<tr>
 						<th>날자</th>
-						<th>생산예정량</th>
-						<th>비고</th>
+						<th>생산량</th>
+						<th>원료</th>
+						<th>색상</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -26,6 +27,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 						<td class="cen"><input name="date" type="text" class="calendar" value="<?= $setDate ?>"></td>
 						<td class="cen"><input name="qty" type="text" value="<?= !empty($List)?round($List[0]->QTY,2):'' ?>"></td>
 						<td class="cen"><input name="remark" type="text" value="<?= !empty($List)?$List[0]->REMARK:'' ?>"></td>
+						<td class="cen"><input name="remark1" type="text" value="<?= !empty($List)?$List[0]->REMARK1:'' ?>"></td>
 					</tr>
 				</tbody>
 			</table>
@@ -54,6 +56,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
     var date = $("input[name='date']").val();
     var qty = $("input[name='qty']").val();
     var remark = $("input[name='remark']").val();
+    var remark1 = $("input[name='remark1']").val();
 
     // console.log(year + month);
 
@@ -62,6 +65,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         url: "<?= base_url('ORDPLN/calendar_update')?>",
         data: {
             remark:remark,
+            remark1:remark1,
             qty:qty,
             date:date,
 			gb: 'ORD'

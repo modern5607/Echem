@@ -51,11 +51,11 @@ class _INTERFACE extends CI_Controller
 	public function interface($tank="")
 	{
 		$title[0] = "온수탱크";
-		$title[1] = "탄산나트륨탱크";
-		$title[2] = "세척탱크";
-		$title[3] = "반응탱크";
-		$title[4] = "교반탱크1";
-		$title[5] = "교반탱크2";
+		$title[1] = "A 탱크(2Ton)";
+		$title[2] = "B 탱크(2Ton)";
+		$title[3] = "C 탱크(5Ton)";
+		$title[4] = "SUS 탱크(1Ton)";
+		$title[5] = "SUS 탱크(1Ton)";
 		$title[6] = "교반탱크3";
 		$data['title'] = $title[$tank]." INTERFACE";
 		$data['URI'] = $tank;
@@ -123,11 +123,36 @@ class _INTERFACE extends CI_Controller
 		if($tank>=1)
 			$tank++;
 		$params['SDATE'] = $sdate;
-		$params['EDATE'] = $edate;
-		$params['TANK'] = $tank;
-		// echo $params['TANK'];
 		
-		$data['info'] = $this->interface_model->detail_interface($params);
+		if(strlen($edate)>0){
+			$params['EDATE'] = $edate;
+		}else{
+			$params['EDATE'] = date('Y-m-d H:i:s', time());
+		}
+		
+		//$params['EDATE'] = $edate;
+		$params['TANK'] = $tank;
+		 
+		//echo $params['TANK'];
+		
+		if($tank==2){
+			$params['TANK'] = '1';
+			$data['info'] = $this->interface_model->detail_interface($params);
+		}else if($tank==3){
+			$params['TANK'] = '2';
+			$data['info'] = $this->interface_model->detail_interface2($params);
+		}else if($tank==4){
+			$params['TANK'] = '3';
+			$data['info'] = $this->interface_model->detail_interface3($params);
+		}else if($tank==5){
+			$params['TANK'] = '4';
+			$data['info'] = $this->interface_model->detail_interface4($params);
+		}else if($tank==6){
+			$params['TANK'] = '5';
+			$data['info'] = $this->interface_model->detail_interface5($params);
+		}
+
+		//$data['info'] = $this->interface_model->detail_interface($params);
 		if (!isset($params['SDATE'])) {
 		} else {
 		}

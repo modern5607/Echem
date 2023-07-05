@@ -795,5 +795,20 @@ class PROD extends CI_Controller
 		echo $result;
 
 	}
-	
+
+	public function batch_end()
+	{
+		$idx = $this->input->get("idx");
+		$num = $this->prod_model->batch_end($idx);
+
+		if ($num > 0) {
+			$data['status'] = "ok";
+			$data['msg'] = "삭제되었습니다.";
+		} else {
+			$data['status'] = "no";
+			$data['msg'] = "삭제에 실패했습니다. 관리자에게 문의하세요";
+		}
+
+		echo json_encode($data);
+	}
 }

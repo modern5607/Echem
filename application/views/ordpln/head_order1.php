@@ -1,6 +1,9 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 ?>
+
+<!-- 주문등록 헤더 복사 뷰 -->
+
 <style>
 	header {
 		width: 870px;
@@ -18,11 +21,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
 <header>
 	<div class="searchDiv">
 		<form id="headForm" onsubmit="return false">
-			<label>수주일자</label>
+			<label>등록일</label>
 			<input type="date" name="sdate" class="" size="11" value="<?= $str['sdate']; ?>" placeholder="<?= date("Y-m-d") ?>" /> ~
 			<input type="date" name="edate" class="" size="11" value="<?= $str['edate']; ?>" placeholder="<?= date("Y-m-d") ?>" />
 			<label>수주명</label>
-			<input type="text" name="actnm" class="" size="11" value="<?= $str['actnm']?>">
+			<input type="text" name="remark" class="" size="11" value="<?= $str['remark']?>">
 
 			<label for="biz">거래처</label>
 			<select name="biz" id="biz" style="padding:4px 10px; border:1px solid #ddd;">
@@ -43,10 +46,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		<thead>
 			<tr>
 				<th style="width:8%">NO</th>
-				<th style="width:20%">수주일</th>
-				<th style="width:30%">수주명</th>
-				<th style="width:12%">수량(Kg)</th>
-				<th style="width:20%">거래처</th>
+				<th style="width:20%">등록일</th>
+				<th style="width:30%">생산정보</th>
+				<th style="width:12%">생산량(Kg)</th>
+				<th style="width:20%">투입원료</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -57,9 +60,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			?>
 					<tr class="headLink">
 						<td class="cen"><?= $no ?></td>
-						<td class="cen"><?= $row->ACT_DATE ?></td>
-						<td class="link_s1" data-idx="<?= $row->IDX ?>"><?= $row->ACT_NAME ?></td>
-						<td class="right"><?= round($row->QTY,2) ?></td>
+						<td class="cen"><?= $row->INSERT_DATE ?></td>
+						<td class="link_s1" data-idx="<?= $row->IDX ?>"><?= $row->REMARK ?></td>
+						<td class="right"><?= round($row->OT_OUT,2) ?></td>
 						<td><?= $row->CUST_NM ?></td>
 					</tr>
 				<?php
@@ -119,7 +122,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		detailData.append('idx', idx);
 
 		$.ajax({
-			url: "<?= base_url('/ORDPLN/detail_order/') ?>",
+			url: "<?= base_url('/ORDPLN/detail_order1/') ?>",
 			type: "post",
 			data: detailData,
 			dataType: "html",

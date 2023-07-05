@@ -905,17 +905,46 @@ SQL;
 	public function ajax_prodmonitor2()
 	{
 		$sql = <<<SQL
-		SELECT
-			TANK,LEVEL,TEMP,PH,CL,PRESS,INSERT_DATE
-		FROM
-			T_PARSING 
-		WHERE
-			( TANK, INSERT_DATE ) IN ( SELECT TANK, MAX( INSERT_DATE ) AS INSERT_DATE FROM T_PARSING GROUP BY TANK ) 
-		ORDER BY
-			TANK
+		select case 
+			when ROUND((MA_LEVEL - 157)*0.625,0) < 0 then 0
+			when ROUND((MA_LEVEL - 157)*0.625,0) between 60 and 63 then 60
+			when ROUND((MA_LEVEL - 157)*0.625,0) between 64 and 67 then 63
+			when ROUND((MA_LEVEL - 157)*0.625,0) between 68 and 70 then 65
+			when ROUND((MA_LEVEL - 157)*0.625,0) between 71 and 74 then 65
+			when ROUND((MA_LEVEL - 157)*0.625,0) > 75 then 75
+		else ROUND((MA_LEVEL - 157)*0.625,0) END AS LEVEL,
+			SLAVE AS TANK,MA_TEMP as TEMP,MA_PH as PH,MA_EC as CL,MA_PRESS as PRESS,INSERT_DATE
+		from T_MODBUS where TANK_NO = 1 and MA_LEVEL > 0  AND INSERT_DATE = (SELECT MAX(INSERT_DATE) FROM T_MODBUS WHERE TANK_NO = 1 and MA_LEVEL > 0)
+		UNION ALL
+		select case 
+			when (MA_LEVEL * 3) < 60 then (MA_LEVEL * 3)
+			when (MA_LEVEL * 3) > 60 then 60
+			when (MA_LEVEL * 3) < 0 then 0
+			else (MA_LEVEL * 3) END AS LEVEL,SLAVE AS TANK,MA_TEMP as TEMP,MA_PH as PH,MA_EC as CL,MA_PRESS as PRESS,INSERT_DATE
+			from T_MODBUS where TANK_NO = 2 AND MA_LEVEL > 0  AND INSERT_DATE = (SELECT MAX(INSERT_DATE) FROM T_MODBUS WHERE TANK_NO = 2 and MA_LEVEL > 0)
+			UNION ALL
+			select CASE 
+				when MA_LEVEL < 429 Then  0
+				when MA_LEVEL < 11500 Then  ROUND((MA_LEVEL - 4123)*0.001970443,0)
+				when MA_LEVEL < 25630 Then  ROUND((MA_LEVEL + 2835)*0.001970443,0)
+				when MA_LEVEL > 25630 Then  65
+				else 0004662005	end  AS LEVEL,SLAVE AS TANK,MA_TEMP as TEMP,MA_PH as PH,MA_EC as CL,MA_PRESS as PRESS,INSERT_DATE
+				from T_MODBUS where TANK_NO = 3 AND INSERT_DATE = (SELECT MAX(INSERT_DATE) FROM T_MODBUS WHERE TANK_NO = 3 )
+			UNION ALL
+			select CASE 
+				WHEN MA_LEVEL > 300 then 90
+				when MA_LEVEL < 300 then ROUND((MA_LEVEL-100)*0.454545455 ,0)
+				when MA_LEVEL < 100 then 0
+				when MA_LEVEL = 0 then 5
+				else 0 end  AS LEVEL,SLAVE AS TANK,MA_TEMP as TEMP,MA_PH as PH,MA_EC as CL,MA_PRESS as PRESS,INSERT_DATE
+				from T_MODBUS where TANK_NO = 4 AND INSERT_DATE = (SELECT MAX(INSERT_DATE) FROM T_MODBUS WHERE TANK_NO = 4)
+			UNION ALL
+			select ROUND((MA_LEVEL-277)*0.004975,0) AS LEVEL,SLAVE AS TANK,MA_TEMP as TEMP,MA_PH as PH,MA_EC as CL,MA_PRESS as PRESS,INSERT_DATE
+			from T_MODBUS where TANK_NO = 5   AND INSERT_DATE = (SELECT MAX(INSERT_DATE) FROM T_MODBUS WHERE TANK_NO = 5)
+
 SQL;
 		$query = $this->db->query($sql);
-		// echo $this->db->last_query();
+		 //echo $this->db->last_query();
 		return $query->result();
 	}
 
@@ -942,6 +971,18 @@ SQL;
 		$sql=<<<SQL
 			INSERT INTO T_BATCH(BATCH_NUM,START_DATE,INSERT_DATE)
 			VALUES("{$batch_num}",NOW(),NOW())
+SQL;
+
+		$this->db->query($sql);
+		return $this->db->affected_rows();
+	}
+
+	public function batch_end($idx)
+	{
+
+		$sql=<<<SQL
+			UPDATE T_BATCH SET FINISH_DATE = NOW()
+			where IDX = "$idx"
 SQL;
 
 		$this->db->query($sql);

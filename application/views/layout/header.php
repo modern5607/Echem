@@ -85,6 +85,25 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         </ul>
                                     </li>
                                 <?php   }
+                                if ($row->MENU_CODE == "ECHEM" && $_SESSION['user_level'] >= $row->MENU_LEVEL) {
+                                    ?>
+                                        <li class="menu01_li">
+                                            <a href="<?= base_url('ECHEM/order1') ?>" class="menu_a <?= ($this->data['pos'] == "ECHEM") ? "on" : ""; ?>">
+                                                <i class="material-icons">add_business</i>ECHEM</a>
+                                            <ul class="menu02" <?= ($this->data['pos'] == "ECHEM") ? "style='display:block'" : ""; ?>>
+                                                <li><a href="<?= base_url('ECHEM/order1') ?>" class="<?= ($this->data['subpos'] == 'order1') ? "on" : ""; ?>">생산일지 등록</a></li>
+                                                <li><a href="<?= base_url('ECHEM/tapact') ?>" class="<?= ($this->data['subpos'] == 'tapact') ? "on" : ""; ?>">생산일지 등록(테블릿)</a></li>
+                                                <li><a href="<?= base_url('ECHEM/prodpln') ?>" class="<?= ($this->data['subpos'] == 'prodpln') ? "on" : ""; ?>">월별 생산일지</a></li>
+                                                <li><a href="<?= base_url('ECHEM/matorder1') ?>" class="<?= ($this->data['subpos'] == 'matorder1') ? "on" : ""; ?>">자재 입출고 등록</a></li>
+                                                <li><a href="<?= base_url('ECHEM/items') ?>" class="<?= ($this->data['subpos'] == "items") ? "on" : ""; ?>">재고현황</a></li>
+                                                <!-- <li><a href="<?= base_url('ECHEM/enter') ?>" class="<?= ($this->data['subpos'] == 'enter') ? "on" : ""; ?>">입고등록</a></li> -->
+                                                <li><a href="<?= base_url('ECHEM/orderenter') ?>" class="<?= ($this->data['subpos'] == 'orderenter') ? "on" : ""; ?>">제품 생산 통계</a></li>
+                                                <li><a href="<?= base_url('ECHEM/chart1') ?>" class="<?= ($this->data['subpos'] == 'chart1') ? "on" : ""; ?>">생산현황 차트</a></li>
+                                                <li><a href="<?= base_url('ECHEM/matorder2') ?>" class="<?= ($this->data['subpos'] == 'matorder2') ? "on" : ""; ?>">제품 출고정보</a></li>
+                                            </ul>
+                                        </li>
+                                    <?php   }
+
                                 if ($row->MENU_CODE == "PURCHASE" && $_SESSION['user_level'] >= $row->MENU_LEVEL) {
                                 ?>
                                     <li class="menu01_li">
@@ -92,8 +111,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                             <i class="material-icons">add_business</i>구매관리</a>
                                         <ul class="menu02" <?= ($this->data['pos'] == "PURCHASE") ? "style='display:block'" : ""; ?>>
                                             <li><a href="<?= base_url('PURCHASE/matorder') ?>" class="<?= ($this->data['subpos'] == 'matorder') ? "on" : ""; ?>">원자재 발주등록</a></li>
+                                            <li><a href="<?= base_url('PURCHASE/matorder1') ?>" class="<?= ($this->data['subpos'] == 'matorder1') ? "on" : ""; ?>">자재 관리</a></li>
                                             <li><a href="<?= base_url('PURCHASE/enter') ?>" class="<?= ($this->data['subpos'] == 'enter') ? "on" : ""; ?>">입고등록</a></li>
                                             <li><a href="<?= base_url('PURCHASE/orderenter') ?>" class="<?= ($this->data['subpos'] == 'orderenter') ? "on" : ""; ?>">발주대비 입고현황</a></li>
+                                            <li><a href="<?= base_url('MDM/itemsSearch') ?>" class="<?= ($this->data['subpos'] == 'itemsSearch') ? "on" : ""; ?>">재고 현황 조회</a></li>
                                         </ul>
                                     </li>
                                 <?php   }
@@ -104,6 +125,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                 <i class="material-icons">add_business</i>주문/계획</a>
                                             <ul class="menu02" <?= ($this->data['pos'] == "ORDPLN") ? "style='display:block'" : ""; ?>>
                                                 <li><a href="<?= base_url('ORDPLN/order') ?>" class="<?= ($this->data['subpos'] == 'order') ? "on" : ""; ?>">주문등록</a></li>
+                                                <li><a href="<?= base_url('ORDPLN/order1') ?>" class="<?= ($this->data['subpos'] == 'order1') ? "on" : ""; ?>">주문등록</a></li>
                                                 <li><a href="<?= base_url('ORDPLN/ordercur') ?>" class="<?= ($this->data['subpos'] == 'ordercur') ? "on" : ""; ?>">주문현황</a></li>
                                                 <li><a href="<?= base_url('ORDPLN/orderprocess') ?>" class="<?= ($this->data['subpos'] == 'orderprocess') ? "on" : ""; ?>">주문대비 진행현황</a></li>
                                                 <li><a href="<?= base_url('ORDPLN/prodpln') ?>" class="<?= ($this->data['subpos'] == 'prodpln') ? "on" : ""; ?>">생산계획 등록</a></li>
@@ -127,7 +149,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                             <li><a href="<?= base_url('PROD/pprodcur') ?>" class="<?= ($this->data['subpos'] == 'pprodcur') ? "on" : ""; ?>">공정별 생산내역</a></li>
                                             <li><a href="<?= base_url('PROD/pharvest') ?>" class="<?= ($this->data['subpos'] == 'pharvest') ? "on" : ""; ?>">공정별 수율</a></li>
                                             <!-- <li><a href="<?= base_url('PROD/dprodperf') ?>" class="<?= ($this->data['subpos'] == 'dprodperf') ? "on" : ""; ?>">기간별 생산실적</a></li> -->
-                                            <li><a href="<?= base_url('PROD/prodmonitor') ?>" class="<?= ($this->data['subpos'] == 'prodmonitor') ? "on" : ""; ?>">생산 모니터링</a></li>
+                                            <li><a href="<?= base_url('Mod2/monitering.php') ?>" class="<?= ($this->data['subpos'] == 'prodmonitor') ? "on" : ""; ?>">생산 모니터링</a></li>
                                             <li><a href="<?= base_url('PROD/prodmonitor2') ?>" class="<?= ($this->data['subpos'] == 'prodmonitor2') ? "on" : ""; ?>">생산 모니터링 - 태블릿</a></li>
                                         </ul>
                                     </li>
@@ -136,15 +158,15 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     ?>
                                         <li class="menu01_li">
                                             <a href="<?= base_url('_INTERFACE/interface/0') ?>" class="menu_a <?= ($this->data['pos'] == "_INTERFACE") ? "on" : ""; ?>">
-                                                <i class="material-icons">add_business</i>생산관리INTERFACE</a>
+                                                <i class="material-icons">add_business</i>Data InterFace</a>
                                             <ul class="menu02" <?= ($this->data['pos'] == "_INTERFACE") ? "style='display:block'" : ""; ?>>
-                                                <li><a href="<?= base_url('_INTERFACE/interface/0') ?>" class="<?= ($this->data['ssubpos'] == '0') ? "on" : ""; ?>">온수탱크</a></li>
-                                                <li><a href="<?= base_url('_INTERFACE/interface/1') ?>" class="<?= ($this->data['ssubpos'] == '1') ? "on" : ""; ?>">탄산나트륨탱크</a></li>
-                                                <li><a href="<?= base_url('_INTERFACE/interface/2') ?>" class="<?= ($this->data['ssubpos'] == '2') ? "on" : ""; ?>">세척탱크</a></li>
-                                                <li><a href="<?= base_url('_INTERFACE/interface/3') ?>" class="<?= ($this->data['ssubpos'] == '3') ? "on" : ""; ?>">반응탱크</a></li>
-                                                <li><a href="<?= base_url('_INTERFACE/interface/4') ?>" class="<?= ($this->data['ssubpos'] == '4') ? "on" : ""; ?>">교반탱크1</a></li>
-                                                <li><a href="<?= base_url('_INTERFACE/interface/5') ?>" class="<?= ($this->data['ssubpos'] == '5') ? "on" : ""; ?>">교반탱크2</a></li>
-                                                <li><a href="<?= base_url('_INTERFACE/interface/6') ?>" class="<?= ($this->data['ssubpos'] == '6') ? "on" : ""; ?>">교반탱크3</a></li>
+                                                <!-- <li><a href="<?= base_url('_INTERFACE/interface/0') ?>" class="<?= ($this->data['ssubpos'] == '0') ? "on" : ""; ?>">온수탱크</a></li> -->
+                                                <li><a href="<?= base_url('_INTERFACE/interface/1') ?>" class="<?= ($this->data['ssubpos'] == '1') ? "on" : ""; ?>">A Tank(2Ton)</a></li>
+                                                <li><a href="<?= base_url('_INTERFACE/interface/2') ?>" class="<?= ($this->data['ssubpos'] == '2') ? "on" : ""; ?>">B Tank(2Ton)</a></li>
+                                                <li><a href="<?= base_url('_INTERFACE/interface/3') ?>" class="<?= ($this->data['ssubpos'] == '3') ? "on" : ""; ?>">C Tank(5Ton)</a></li>
+                                                <li><a href="<?= base_url('_INTERFACE/interface/4') ?>" class="<?= ($this->data['ssubpos'] == '4') ? "on" : ""; ?>">SUS Tank(1Ton)</a></li>
+                                                <li><a href="<?= base_url('_INTERFACE/interface/5') ?>" class="<?= ($this->data['ssubpos'] == '5') ? "on" : ""; ?>">SUS Tank(1Ton)</a></li>
+                                                <!-- <li><a href="<?= base_url('_INTERFACE/interface/6') ?>" class="<?= ($this->data['ssubpos'] == '6') ? "on" : ""; ?>">교반탱크3</a></li> -->
                                             </ul>
                                         </li>
                                     <?php   }
@@ -220,7 +242,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                                         </ul>
                                     </li>
-                            <?php   }
+                             <?php   }
                             }
                         } else {
                             ?>

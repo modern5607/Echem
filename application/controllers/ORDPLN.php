@@ -143,7 +143,7 @@ public function month()
 		
 		$num = $this->offday_model->offday_insert($params);
 
-		echo $num;
+		//echo $num;
 		// if ($num > 0) {
 		// 	echo 1;
 		// }
@@ -180,7 +180,7 @@ public function month()
 		$params['MEMBER_IDX'] = $this->input->post("MEMBER_IDX");
 		$params['REMARK'] = $this->input->post("REMARK");
 		$params['IDX'] = $this->input->post("IDX");	
-		echo var_dump($params);
+		//echo var_dump($params);
 		$data = $this->offday_model->update_offday($params);
 		
 		
@@ -702,7 +702,7 @@ public function month()
 		$List = $this->ordpln_model->calendarInfo_list($year, $month);
 		if (!empty($List)) { 
 			foreach ($List as $i => $row) {
-				$contArray[$row->DAY] = '생산예정량 : '.round($row->QTY,2) . ' (T)<br>' . $row->REMARK;
+				$contArray[$row->DAY] = '생산량 : '.round($row->QTY,2) . ' (T)<br> 원료 : ' . $row->REMARK  . ' <br> 제품색상 : ' . $row->REMARK1;
 			}
 		}else{
 			$contArray='';
@@ -732,6 +732,7 @@ public function month()
 		$params['DATE'] = $this->input->post("date");
 		$params['QTY'] = $this->input->post("qty");
 		$params['REMARK'] = $this->input->post("remark");
+		$params['REMARK1'] = $this->input->post("remark1");
 		$params['GB'] = $this->input->post("gb");
 			
 		$data = $this->ordpln_model->calendar_update($params);
@@ -928,4 +929,157 @@ public function month()
 
 		echo $result;
 	}
+
+
+//-------------------------------------------------------------주문등록 복사본--
+
+	// 	주문등록
+	public function order1()
+	{
+		$data['title']='생산등록';
+		return $this->load->view('main50', $data);
+	}
+	
+	public function head_order1()
+	{
+		$data['str'] = array(); //검색어관련
+		$data['str']['remark'] = trim($this->input->post('remark')); //시작일자
+		$data['str']['sdate'] = $this->input->post('sdate'); //시작일자
+		$data['str']['edate'] = $this->input->post('edate'); //끝일자
+		$data['str']['biz'] = trim($this->input->post('biz')); //거래처
+
+		$params['BIZ_IDX'] = "";
+		$params['REMARK'] = "";
+		$params['SDATE'] = "";
+		$params['EDATE'] = "";
+
+		if (!empty($data['str']['biz']))  $params['BIZ_IDX'] = $data['str']['biz']; 
+		if (!empty($data['str']['remark']))  $params['REMARK'] = $data['str']['remark'];
+		if (!empty($data['str']['sdate']))  $params['SDATE'] = $data['str']['sdate'];
+		if (!empty($data['str']['edate']))  $params['EDATE'] = $data['str']['edate'];
+
+
+		$data['perpage'] = ($this->input->post('perpage') != "") ? $this->input->post('perpage') : 20;
+		//PAGINATION
+		$config['per_page'] = $data['perpage'];
+		$config['page_query_string'] = true;
+		$config['query_string_segment'] = "pageNum";
+		$config['reuse_query_string'] = TRUE;
+		$pageNum = $this->input->post('pageNum') > '' ? $this->input->post('pageNum') : 0;
+		$data['pageNum'] =  $pageNum;
+
+		//list
+		$data['list']=$this->ordpln_model->head_order1($params, $pageNum, $config['per_page']);
+		$this->data['cnt'] = $this->ordpln_model->head_order_cut1($params);
+		$data['BIZ']=$this->sys_model->biz_list1();
+
+
+		/* pagenation start */
+		$this->load->library("pagination");
+		$config['base_url'] = base_url(uri_string());
+		$config['total_rows'] = $this->data['cnt'];
+		$config['full_tag_open'] = "<div>";
+		$config['full_tag_close'] = '</div>';
+		$this->pagination->initialize($config);
+		$this->data['pagenation'] = $this->pagination->create_links();
+
+
+		$this->load->view('/ordpln/head_order1', $data);
+	}
+
+
+	public function detail_order1()
+	{
+		$data['str'] = array(); //검색어관련
+		$data['str']['sdate'] = $this->input->post('sdate'); //시작일자
+		$data['str']['edate'] = $this->input->post('edate'); //끝일자
+		$data['str']['idx'] = $this->input->post('idx'); //끝일자
+
+		$params['SDATE'] = "";
+		$params['EDATE'] = "";
+		$params['IDX'] = "";
+
+		if (!empty($data['str']['sdate'])) { $params['SDATE'] = $data['str']['sdate']; }
+		if (!empty($data['str']['edate'])) { $params['EDATE'] = $data['str']['edate']; }
+		if (!empty($data['str']['idx'])) { $params['IDX'] = $data['str']['idx']; }
+
+		$data['list']=$this->ordpln_model->head_order1($params);
+		$data['BIZ']=$this->sys_model->biz_list1('수출');
+		$data['check']=$this->ordpln_model->act_check1($params);
+
+		$this->load->view('/ordpln/detail_order1', $data);
+	}
+
+	public function order_insert1()
+	{
+		$params['INSERT_DATE'] = $this->input->post("INSERT_DATE");
+		$params['REMARK'] = $this->input->post("REMARK");
+		$params['BIZ_IDX'] = $this->input->post("BIZ");
+		$params['T_TANK'] = $this->input->post("T_TANK");
+		$params['T_SU'] = $this->input->post("T_SU");
+		$params['T_JD'] = $this->input->post("T_JD");
+		$params['NA2CO3'] = $this->input->post("NA2CO3");
+		$params['NA2CO3_IN'] = $this->input->post("NA2CO3_IN");
+		$params['PS_1'] = $this->input->post("PS_1");
+		$params['PS_2'] = $this->input->post("PS_2");
+		$params['PS_3'] = $this->input->post("PS_3");
+		$params['OT_OUT'] = $this->input->post("OT_OUT");
+		$params['OT_COL'] = $this->input->post("OT_COL");
+		$params['USE_WL'] = $this->input->post("USE_WL");
+		$params['REMARK1'] = $this->input->post("REMARK1");
+
+
+
+
+		$num = $this->ordpln_model->order_insert1($params);
+
+		if ($num > 0) {
+			$data['status'] = "ok";
+			$data['msg'] = "주문이 등록되었습니다.";
+		} else {
+			$data['status'] = "";
+			$data['msg'] = "주문 등록에 실패했습니다. 관리자에게 문의하세요";
+		}
+
+		echo json_encode($data);
+	}
+	public function del_order1()
+	{
+		$idx = $this->input->get("idx");
+		$num = $this->ordpln_model->del_order1($idx);
+
+		if ($num > 0) {
+			$data['status'] = "ok";
+			$data['msg'] = "삭제되었습니다.";
+		} else {
+			$data['status'] = "no";
+			$data['msg'] = "삭제에 실패했습니다. 관리자에게 문의하세요";
+		}
+
+		echo json_encode($data);
+	}
+	public function update_order1()
+	{
+		$params['INSERT_DATE'] = $this->input->post("INSERT_DATE");
+		$params['REMARK'] = $this->input->post("REMARK");
+		$params['BIZ_IDX'] = $this->input->post("BIZ");
+		$params['T_TANK'] = $this->input->post("T_TANK");
+		$params['T_SU'] = $this->input->post("T_SU");
+		$params['T_JD'] = $this->input->post("T_JD");
+		$params['NA2CO3'] = $this->input->post("NA2CO3");
+		$params['NA2CO3_IN'] = $this->input->post("NA2CO3_IN");
+		$params['PS_1'] = $this->input->post("PS_1");
+		$params['PS_2'] = $this->input->post("PS_2");
+		$params['PS_3'] = $this->input->post("PS_3");
+		$params['OT_OUT'] = $this->input->post("OT_OUT");
+		$params['OT_COL'] = $this->input->post("OT_COL");
+		$params['USE_WL'] = $this->input->post("USE_WL");
+		$params['REMARK1'] = $this->input->post("REMARK1");
+		$params['IDX'] = $this->input->post("IDX");
+			
+		$data = $this->ordpln_model->update_order1($params);
+
+		echo json_encode($data);
+	}
+
 }

@@ -259,6 +259,42 @@ SQL;
 		return $query->result();
 	}
 
+	public function get_selectInfo2($fild, $set)
+	{
+		$where[$fild] = $set;
+		$this->db->select("tch.IDX, tch.CODE, tch.NAME, tcd.CODE as D_CODE, tcd.NAME as D_NAME");
+		$this->db->from("T_COCD_D as tcd");
+		$this->db->join("T_COCD_H as tch", "tch.IDX = tcd.H_IDX");
+
+		$this->db->where("tcd.USE_YN", "Y");
+		$this->db->where("tch.USE_YN", "Y");
+		$this->db->where("tcd.REMARK", "자재");
+
+		$this->db->where($where);
+		$this->db->order_by("S_NO", "ASC");
+		$query = $this->db->get();
+		// echo $this->db->last_query();
+
+		return $query->result();
+	}
+//공통코드
+public function get_selectInfo1($fild, $set)
+{
+	$where[$fild] = $set;
+	$this->db->select("tch.IDX, tch.CODE, tch.NAME, tcd.CODE as D_CODE, tcd.NAME as D_NAME1");
+	$this->db->from("T_COCD_D as tcd");
+	$this->db->join("T_COCD_H as tch", "tch.IDX = tcd.H_IDX");
+
+	$this->db->where("tcd.USE_YN", "Y");
+	$this->db->where("tch.USE_YN", "Y");
+
+	$this->db->where($where);
+	$this->db->order_by("S_NO", "ASC");
+	$query = $this->db->get();
+	// echo $this->db->last_query();
+
+	return $query->result();
+}
 
 	//멤버리스트, 작업자리스트, 멤버 리스트, 작업자 리스트
 	public function member_list()
@@ -276,6 +312,23 @@ SQL;
 			$this->db->where("CUST_TYPE", $type);
 		$query = $this->db->get("T_BIZ");
 		// echo $this->db->last_query();
+		return $query->result();
+	}
+	//------------------------------------주문등록 복사---- 사용 회사리스트, 업체리스트
+	public function biz_list1($type="")
+	{
+		$this->db->where("USE_YN", "Y");
+		if(!empty($type) && $type!="")
+			$this->db->where("REMARK", "원료");
+		$query = $this->db->get("T_BIZ");
+		//echo $this->db->last_query();
+		return $query->result();
+	}
+	public function biz_list2($type="")
+	{
+		$this->db->where("USE_YN", "Y");
+		$query = $this->db->get("T_ITEMS");
+		//echo $this->db->last_query();
 		return $query->result();
 	}
 

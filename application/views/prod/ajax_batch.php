@@ -29,6 +29,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 						<th>배치 넘버</th>
 						<th>배치 시작</th>
 						<th>배치 종료</th>
+						<th>배치 종료</th>
 						<th>등록일</th>
 					</tr>
 				</thead>
@@ -42,6 +43,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 							<td class="cen"><?= $row->BATCH_NUM; ?></td>
 							<td class="cen"><?= $row->START_DATE; ?></td>
                             <td class="cen"><?= $row->FINISH_DATE; ?></td>			
+							<td class="pHide cen"><button type="button" class="pord endbatch" data-idx="<?= $row->IDX; ?>">종료</button></td>
                             <td class="cen"><?= $row->INSERT_DATE; ?></td>			
 						</tr>
 
@@ -82,5 +84,20 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		);
 	});
 
+ 
+	$(".endbatch").on("click", function() {
+		var idx = $(this).data("idx");
+
+		if (confirm('배치를 종료 하시겠습니까??') !== false) {
+
+			$.get("<?= base_url('PROD/batch_end') ?>", {
+				idx: idx
+			}, function(data) {
+				location.reload();
+			}, "JSON").done(function(jqXHR) {
+				location.reload();
+			})
+		}
+	});
 
 </script>

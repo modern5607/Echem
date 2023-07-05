@@ -186,18 +186,17 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <div class="container">
 
             <ul class="tabs">
-                <li class="tab-link current" data-tab="tab-1">온수탱크</li>
-                <li class="tab-link" data-tab="tab-2">탄산나트륨탱크</li>
-                <li class="tab-link" data-tab="tab-3">세척탱크</li>
-                <li class="tab-link" data-tab="tab-4">반응탱크</li>
-                <li class="tab-link" data-tab="tab-5">교반탱크1</li>
-                <li class="tab-link" data-tab="tab-6">교반탱크2</li>
+                <!-- <li class="tab-link current" data-tab="tab-1">온수탱크</li> -->
+                <li class="tab-link current" data-tab="tab-1">A 탱크(2Ton)</li>
+                <li class="tab-link" data-tab="tab-2">B 탱크(2Ton)</li>
+                <li class="tab-link" data-tab="tab-3">C 탱크(5Ton)</li>
+                <li class="tab-link" data-tab="tab-4">SUS 탱크(1Ton)</li>
+                <li class="tab-link" data-tab="tab-5">SUS 탱크(1Ton)</li>
                 <!-- <li class="tab-link" data-tab="tab-7">교반탱크3</li> -->
             </ul>
 
-            <div id="tab-1" class="tab-content current">
+             <!-- <div id="tab-1" class="tab-content current">
                 <div style="display: block;height: 440px;">
-                    <!-- 온수탱크-->
                     <span class="water_tank" style="float: left;width: 50%;">
                         <table class="tg">
                             <tr>
@@ -215,7 +214,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     </span>
 
 
-                    <!--온수탱크 -->
                     <span class="water_tank" style="float: left; width:50%">
                         <table class="tg">
                             <tr>
@@ -233,6 +231,43 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     </span>
                 </div>
 
+            </div>   -->
+
+            <div id="tab-1" class="tab-content current">
+                <div style="display: block;height: 440px;">
+                    <!--탄산나트륨탱크 -->
+                    <span class="" style="float: left;width:100%">
+                        <table class="tg">
+                            <tr>
+                                <td rowspan="5" class="color">A 탱크(2Ton)<br><br><img src="../_static/img/tank.png" width="270"></td>
+                                <td class="tag"></td>
+                                <td class="column">PH</td>
+                                <td class="datacell right"><?=$list[0]->PH?></td>
+                            </tr>
+                            <tr>
+                                <td class="tag"></td>
+                                <td class="column">CL</td>
+                                <td class="datacell right"><?=$list[0]->CL?></td>
+                            </tr>
+                            <tr>
+                                <td class="tag"></td>
+                                <td class="column">온도(°C)</td>
+                                <td class="datacell right"><?=$list[0]->TEMP?></td>
+                            </tr>
+                            <tr>
+                                <td class="tag"></td>
+                                <td class="column">압력(Pa)</td>
+                                <td class="datacell right"><?=$list[0]->PRESS?></td>
+                            </tr>
+                            <tr>
+                                <td class="tag"></td>
+                                <td class="column">수위(%)</td>
+                                <td class="datacell right"><?=$list[0]->LEVEL?></td>
+                            </tr>
+                        </table>
+                    </span>
+                </div>
+
             </div>
             <div id="tab-2" class="tab-content">
                 <div style="display: block;height: 440px;">
@@ -240,7 +275,43 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <span class="" style="float: left;width:100%">
                         <table class="tg">
                             <tr>
-                                <td rowspan="5" class="color">탄산나트륨탱크1<br><br><img src="../_static/img/tank.png" width="270"></td>
+                                <td rowspan="5" class="color">B 탱크(2Ton)<br><br><img src="../_static/img/tank.png" width="270"></td>
+                                <td class="tag"></td>
+                                <td class="column">PH</td>
+                                <td class="datacell right"><?=$list[1]->PH?></td>
+                            </tr>
+                            <tr>
+                                <td class="tag"></td>
+                                <td class="column">CL</td>
+                                <td class="datacell right"><?=$list[1]->CL?></td>
+                            </tr>
+                            <tr>
+                                <td class="tag"></td>
+                                <td class="column">온도(°C)</td>
+                                <td class="datacell right"><?=$list[1]->TEMP?></td>
+                            </tr>
+                            <tr>
+                                <td class="tag"></td>
+                                <td class="column">압력(Pa)</td>
+                                <td class="datacell right"><?=$list[1]->PRESS?></td>
+                            </tr>
+                            <tr>
+                                <td class="tag"></td>
+                                <td class="column">수위(%)</td>
+                                <td class="datacell right"><?=$list[1]->LEVEL?></td>
+                            </tr>
+                        </table>
+                    </span>
+                </div>
+
+            </div>
+            <div id="tab-3" class="tab-content">
+                <div style="display: block;height: 440px;">
+                    <!--세척탱크 -->
+                    <span class="" style="float: left;width:100%">
+                        <table class="tg">
+                            <tr>
+                                <td rowspan="5" class="color">C 탱크(5Ton)<br><br><img src="../_static/img/tank.png" width="270"></td>
                                 <td class="tag"></td>
                                 <td class="column">PH</td>
                                 <td class="datacell right"><?=$list[2]->PH?></td>
@@ -270,13 +341,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 </div>
 
             </div>
-            <div id="tab-3" class="tab-content">
+            <div id="tab-4" class="tab-content">
                 <div style="display: block;height: 440px;">
-                    <!--세척탱크 -->
+                    <!--반응탱크 -->
                     <span class="" style="float: left;width:100%">
                         <table class="tg">
                             <tr>
-                                <td rowspan="5" class="color">세척탱크<br><br><img src="../_static/img/tank.png" width="270"></td>
+                                <td rowspan="5" class="color">SUS 탱크(1Ton)<br><br><img src="../_static/img/raw-tank.png" width="270"></td>
                                 <td class="tag"></td>
                                 <td class="column">PH</td>
                                 <td class="datacell right"><?=$list[3]->PH?></td>
@@ -306,13 +377,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 </div>
 
             </div>
-            <div id="tab-4" class="tab-content">
+            <div id="tab-5" class="tab-content">
                 <div style="display: block;height: 440px;">
-                    <!--반응탱크 -->
-                    <span class="" style="float: left;width:100%">
+                    <!--교반탱크 -->
+                    <span class="" style=" float: left;width:100%">
                         <table class="tg">
                             <tr>
-                                <td rowspan="5" class="color">반응탱크<br><br><img src="../_static/img/tank.png" width="270"></td>
+                                <td rowspan="5" class="color">SUS 탱크(1Ton)<br><br><img src="../_static/img/raw-tank.png" width="270"></td>
                                 <td class="tag"></td>
                                 <td class="column">PH</td>
                                 <td class="datacell right"><?=$list[4]->PH?></td>
@@ -342,83 +413,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 </div>
 
             </div>
-            <div id="tab-5" class="tab-content">
-                <div style="display: block;height: 440px;">
-                    <!--교반탱크 -->
-                    <span class="" style=" float: left;width:100%">
-                        <table class="tg">
-                            <tr>
-                                <td rowspan="5" class="color">교반탱크1<br><br><img src="../_static/img/raw-tank.png" width="270"></td>
-                                <td class="tag"></td>
-                                <td class="column">PH</td>
-                                <td class="datacell right"><?=$list[5]->PH?></td>
-                            </tr>
-                            <tr>
-                                <td class="tag"></td>
-                                <td class="column">CL</td>
-                                <td class="datacell right"><?=$list[5]->CL?></td>
-                            </tr>
-                            <tr>
-                                <td class="tag"></td>
-                                <td class="column">온도(°C)</td>
-                                <td class="datacell right"><?=$list[5]->TEMP?></td>
-                            </tr>
-                            <tr>
-                                <td class="tag"></td>
-                                <td class="column">압력(Pa)</td>
-                                <td class="datacell right"><?=$list[5]->PRESS?></td>
-                            </tr>
-                            <tr>
-                                <td class="tag"></td>
-                                <td class="column">수위(%)</td>
-                                <td class="datacell right"><?=$list[5]->LEVEL?></td>
-                            </tr>
-                        </table>
-                    </span>
-                </div>
-
-            </div>
-            <div id="tab-6" class="tab-content">
-                <div style="display: block;height: 440px;">
-                    <!--교반탱크 -->
-                    <span class="" style="float: left;width:100%">
-                        <table class="tg">
-                            <tr>
-                                <td rowspan="5" class="color">교반탱크<br><br><img src="../_static/img/raw-tank.png" width="270"></td>
-                                <td class="tag"></td>
-                                <td class="column">PH</td>
-                                <td class="datacell right"><?=$list[6]->PH?></td>
-                            </tr>
-                            <tr>
-                                <td class="tag"></td>
-                                <td class="column">CL</td>
-                                <td class="datacell right"><?=$list[6]->CL?></td>
-                            </tr>
-                            <tr>
-                                <td class="tag"></td>
-                                <td class="column">온도(°C)</td>
-                                <td class="datacell right"><?=$list[6]->TEMP?></td>
-                            </tr>
-                            <tr>
-                                <td class="tag"></td>
-                                <td class="column">압력(Pa)</td>
-                                <td class="datacell right"><?=$list[6]->PRESS?></td>
-                            </tr>
-                            <tr>
-                                <td class="tag"></td>
-                                <td class="column">수위(%)</td>
-                                <td class="datacell right"><?=$list[6]->LEVEL?></td>
-                            </tr>
-                        </table>
-                    </span>
-                </div>
-
-            </div>
-            
-
-        </div>
-
-
 
         <!-- <div style="float: left;">
             <div class="tbl-content" style="max-height: none; overflow-y: auto;">

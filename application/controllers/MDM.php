@@ -853,4 +853,56 @@ class MDM extends CI_Controller
 
 		echo json_encode($data);
 	}
+
+
+
+	// 품목등록
+	public function itemsSearch()
+	{
+		$data['title'] = '자재 재고 현황';
+		$this->load->view('main100', $data);
+	}
+
+	public function ajax_itemsSearch()
+	{
+		$data['str']['ITEM_NAME'] = $this->input->post("ITEM_NAME");
+		$data['str']['USEYN'] = $this->input->post("USEYN");
+
+		$params['ITEM_NAME'] = isset($data['str']['ITEM_NAME']) ? $data['str']['ITEM_NAME'] : "";
+		$params['USEYN'] = isset($data['str']['USEYN']) ? $data['str']['USEYN'] : "";
+
+
+		$data['perpage'] = ($this->input->post('perpage') != "") ? $this->input->post('perpage') : 15;
+		//PAGINATION
+		$config['per_page'] = $data['perpage'];
+		$config['page_query_string'] = true;
+		$config['query_string_segment'] = "pageNum";
+		$config['reuse_query_string'] = TRUE;
+
+		$pageNum = $this->input->post('pageNum') > '' ? $this->input->post('pageNum') : 0;
+		//$start = $config['per_page'] * ($pageNum - 1);
+
+		$start = $pageNum;
+		$data['pageNum'] = $start;
+
+		//모델
+		$data['list'] = $this->mdm_model->ajax_items1($params, $start, $config['per_page']);
+		$this->data['cut'] = $this->mdm_model->ajax_items_cut1($params);
+		// echo var_dump($this->data['cut']);
+
+
+		/* pagenation start */
+		$this->load->library("pagination");
+		$config['base_url'] = base_url(uri_string());
+		$config['total_rows'] = $this->data['cut'];
+		$config['full_tag_open'] = "<div>";
+		$config['full_tag_close'] = '</div>';
+
+		$this->pagination->initialize($config);
+		$this->data['pagenation'] = $this->pagination->create_links();
+
+
+		//뷰
+		$this->load->view('mdm/ajax_itemsSearch', $data);
+	}
 }

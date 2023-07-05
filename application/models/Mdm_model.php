@@ -97,21 +97,20 @@ class Mdm_model extends CI_Model
 		if($params['ITEM_NAME']!="" && isset($params['ITEM_NAME']))
 			$where.="AND ITEM_NAME LIKE '%{$params['ITEM_NAME']}%'";
 
-		if($params['USEYN']!="" && isset($params['USEYN']))
-			$where.="AND USE_YN ='{$params['USEYN']}'";
-
+		
 		$sql=<<<SQL
 			SELECT *
 			FROM T_ITEMS
 			WHERE
 			1
 			{$where}
+			AND USE_YN = 'Y'
 			ORDER BY IDX DESC
 			LIMIT {$start},{$limit}
 
 SQL;		
 		$query = $this->db->query($sql);
-		// echo $this->db->last_query();
+		 //echo $this->db->last_query();
 		return $query->result();
 	}
 
@@ -632,5 +631,51 @@ SQL;
 SQL;		
 		$query = $this->db->query($sql);
 		return $query->result();
+	}
+
+	//자재만 조회
+	public function ajax_items1($params,$start=0,$limit=15)
+	{
+		$where='';
+
+		if($params['ITEM_NAME']!="" && isset($params['ITEM_NAME']))
+			$where.="AND ITEM_NAME LIKE '%{$params['ITEM_NAME']}%'";
+
+		if($params['USEYN']!="" && isset($params['USEYN']))
+			$where.="AND USE_YN ='{$params['USEYN']}'";
+
+		$sql=<<<SQL
+			SELECT *
+			FROM T_ITEMS
+			WHERE
+			1
+			{$where}
+			ORDER BY IDX DESC
+			LIMIT {$start},{$limit}
+
+SQL;		
+		$query = $this->db->query($sql);
+		// echo $this->db->last_query();
+		return $query->result();
+	}
+
+	public function ajax_items_cut1($params)
+	{
+		$where='';
+
+		if($params['ITEM_NAME']!="" && isset($params['ITEM_NAME']))
+			$where.="AND ITEM_NAME = '{$params['ITEM_NAME']}'";
+
+		$sql=<<<SQL
+			SELECT *
+			FROM T_ITEMS
+			WHERE
+			1
+			{$where}
+
+SQL;		
+		$query = $this->db->query($sql);
+		// echo $this->db->last_query();
+		return $query->num_rows();
 	}
 }
