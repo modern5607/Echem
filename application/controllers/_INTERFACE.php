@@ -159,8 +159,6 @@ class _INTERFACE extends CI_Controller
 		// echo var_dump($data['info']);
 		return $this->load->view('interface/detail_interface', $data);
 	}
-	
-
 
 
 	// EC입력
@@ -182,7 +180,7 @@ class _INTERFACE extends CI_Controller
 	public function ajax_ec()
 	{
 		$data['str'] = array();
-		$data['str']['sdate'] = $this->input->GET('sdate');
+		$data['str']['sdate'] = $this->input->post('sdate');
 		$data['str']['edate'] = $this->input->post('edate');
 		$data['str']['slave'] = $this->input->post('slave');
 
