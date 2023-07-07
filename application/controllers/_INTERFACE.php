@@ -160,4 +160,146 @@ class _INTERFACE extends CI_Controller
 		return $this->load->view('interface/detail_interface', $data);
 	}
 	
+
+
+
+	// EC입력
+	public function ec()
+	{
+		$data['title'] = "EC입력";
+
+		$data['str']['slave'] = $this->input->get('slave');
+		if (!empty($data['str']['slave'])){
+			$params['SLAVE'] = $data['str']['slave'];
+			$params['GUBUN'] = "EC";
+			$this->interface_model->sensor_ins($params);
+		}
+
+		return $this->load->view('main100', $data);
+	}
+
+	// EC입력
+	public function ajax_ec()
+	{
+		$data['str'] = array();
+		$data['str']['sdate'] = $this->input->GET('sdate');
+		$data['str']['edate'] = $this->input->post('edate');
+		$data['str']['slave'] = $this->input->post('slave');
+
+		$params['SDATE'] = '';
+		$params['EDATE'] = '';
+		$params['SLAVE'] = '';
+		$params['GUBUN'] = 'EC';
+		if (!empty($data['str']['sdate']))
+			$params['SDATE'] = $data['str']['sdate'];
+
+		if (!empty($data['str']['edate']))
+			$params['EDATE'] = $data['str']['edate'];
+
+		if (!empty($data['str']['slave']))
+			$params['SLAVE'] = $data['str']['slave'];
+
+		$data['perpage'] = ($this->input->post('perpage') != "") ? $this->input->post('perpage') : 20;
+		//PAGINATION
+		$config['per_page'] = $data['perpage'];
+		$config['page_query_string'] = true;
+		$config['query_string_segment'] = "pageNum";
+		$config['reuse_query_string'] = TRUE;
+
+		$pageNum = $this->input->post('pageNum') > '' ? $this->input->post('pageNum') : 0;
+		//$start = $config['per_page'] * ($pageNum - 1);
+
+		$start = $pageNum;
+		$data['pageNum'] = $start;
+
+
+		$data['List'] = $this->interface_model->manual_list($params,$start,$config['per_page']);
+		$this->data['cnt'] = $this->interface_model->manual_list_cut($params);
+
+
+		/* pagenation start */
+		$this->load->library("pagination");
+		$config['base_url'] = base_url(uri_string());
+		$config['total_rows'] = $this->data['cnt'];
+		$config['full_tag_open'] = "<div>";
+		$config['full_tag_close'] = '</div>';
+		$this->pagination->initialize($config);
+		$this->data['pagenation'] = $this->pagination->create_links();
+
+		return $this->load->view('/interface/ajax_sensor', $data);
+	}
+
+	//
+	public function detail_sensor()
+	{
+		$data['str'] = array();
+		$data['str']['idx'] = $this->input->post('idx');
+		$data['str']['slave'] = $this->input->post('slave');
+
+		$data['idx'] = $data['str']['idx'];
+		$data['slave'] = $data['str']['slave'];
+
+		$params['IDX'] = '';
+		$params['SLAVE'] = '';
+		if (!empty($data['str']['idx']))
+			$params['IDX'] = $data['str']['idx'];
+		if (!empty($data['str']['slave']))
+			$params['SLAVE'] = $data['str']['slave'];
+
+		$data['List'] = $this->interface_model->manual_list2($params);
+
+		return $this->load->view('/interface/detail_manual', $data);
+	}
+	//
+	public function detail_sensor_chart()
+	{
+		$data['str'] = array();
+		$data['str']['idx'] = $this->input->post('idx');
+		$data['str']['slave'] = $this->input->post('slave');
+
+
+		$data['idx'] = $data['str']['idx'];
+		$data['slave'] = $data['str']['slave'];
+
+		$params['IDX'] = '';
+		$params['SLAVE'] = '';
+		if (!empty($data['str']['idx']))
+			$params['IDX'] = $data['str']['idx'];
+		if (!empty($data['str']['slave']))
+			$params['SLAVE'] = $data['str']['slave'];
+
+		$data['info'] = $this->interface_model->manual_list2($params);
+
+		return $this->load->view('/interface/manual_chart', $data);
+	}
+
+	
+	public function ec_up()
+	{
+		$params['IDX'] = $this->input->post("IDX");
+
+		$params['SENSORDATE1'] = $this->input->post("SENSORDATE1");
+		$params['SENSOR1'] = $this->input->post("SENSOR1");
+		$params['MANUAL1'] = $this->input->post("MANUAL1");
+
+		$params['SENSORDATE2'] = $this->input->post("SENSORDATE2");
+		$params['SENSOR2'] = $this->input->post("SENSOR2");
+		$params['MANUAL2'] = $this->input->post("MANUAL2");
+
+		$params['SENSORDATE3'] = $this->input->post("SENSORDATE3");
+		$params['SENSOR3'] = $this->input->post("SENSOR3");
+		$params['MANUAL3'] = $this->input->post("MANUAL3");
+
+		$params['SENSORDATE4'] = $this->input->post("SENSORDATE4");
+		$params['SENSOR4'] = $this->input->post("SENSOR4");
+		$params['MANUAL4'] = $this->input->post("MANUAL4");
+
+		$params['SENSORDATE5'] = $this->input->post("SENSORDATE5");
+		$params['SENSOR5'] = $this->input->post("SENSOR5");
+		$params['MANUAL5'] = $this->input->post("MANUAL5");
+			
+		$data['result'] = $this->interface_model->manual_up($params);
+		echo $data['result'];
+
+	}
 }

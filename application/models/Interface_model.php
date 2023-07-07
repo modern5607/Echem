@@ -204,4 +204,133 @@ SQL;
 		 //echo $this->db->last_query();
 		return $query->result();
 	}	
+
+
+
+
+	public function manual_list($params)
+	{
+		$where='';
+
+		if($params['SDATE']!="" && isset($params['SDATE']) && $params['EDATE']!="" && isset($params['EDATE']))
+			$where .= " AND INSERT_DATE BETWEEN '{$params['SDATE']}' AND '{$params['EDATE']}'";
+
+		if($params['SLAVE']!="" && isset($params['SLAVE']))
+			$where .= " AND SLAVE = {$params['SLAVE']} ";
+
+		$sql=<<<SQL
+			SELECT *, DATE_FORMAT(INSERT_DATE,'%Y년%m월%d일 %H시%i분') AS INSERT_BTN
+			FROM T_MODBUS_MANUAL
+			WHERE SLAVE IS NOT NULL
+			AND GUBUN = '{$params['GUBUN']}'
+			{$where}
+			ORDER BY
+				INSERT_DATE DESC
+SQL;
+		$query = $this->db->query($sql);
+		 //echo $this->db->last_query();
+		return $query->result();
+	}	
+
+	public function manual_list_cut($params)
+	{
+		$where='';
+
+		if($params['SDATE']!="" && isset($params['SDATE']) && $params['EDATE']!="" && isset($params['EDATE']))
+			$where .= " AND INSERT_DATE BETWEEN '{$params['SDATE']}' AND '{$params['EDATE']}'";
+
+		if($params['SLAVE']!="" && isset($params['SLAVE']))
+			$where .= " AND SLAVE = {$params['SLAVE']} ";
+
+		$sql=<<<SQL
+			SELECT *
+			FROM T_MODBUS_MANUAL
+			WHERE SLAVE IS NOT NULL 
+			AND GUBUN = '{$params['GUBUN']}'
+			{$where}
+
+SQL;		
+		$query = $this->db->query($sql);
+		// echo $this->db->last_query();
+		return $query->num_rows();
+	}
+
+	public function manual_list2($params)
+	{
+		$where='';
+
+		if($params['IDX']!="" && isset($params['IDX']))
+		{
+			$where.=" AND INSERT_DATE between (select INSERT_DATE FROM T_MODBUS_MANUAL WHERE IDX = {$params['IDX']})";
+			$where.=" AND (select DATE_ADD(INSERT_DATE, INTERVAL 3 MINUTE)  FROM T_MODBUS_MANUAL WHERE IDX = {$params['IDX']}) ";
+		}
+		if($params['SLAVE']!="" && isset($params['SLAVE']))
+			$where.=" AND SLAVE = \"{$params['SLAVE']}\"";
+
+		$sql=<<<SQL
+			select 
+				DATE_FORMAT(SENSOR_DATE,"%Y") AS Y,
+				DATE_FORMAT(SENSOR_DATE,"%m") AS M,
+				DATE_FORMAT(SENSOR_DATE,"%d") AS D,
+				DATE_FORMAT(SENSOR_DATE,"%H") AS H,
+				DATE_FORMAT(SENSOR_DATE,"%i") AS I,
+				DATE_FORMAT(SENSOR_DATE,"%s") AS S,
+				DATE_FORMAT(SENSOR_DATE,'%H시 %i분 %S초') AS INSERT_D,
+				SENSOR_DATE, SENSOR, MANUAL, IDX
+			from T_MODBUS_MANUAL
+			where H_IDX = "{$params['IDX']}"
+			UNION ALL
+			select 
+				DATE_FORMAT(INSERT_DATE,"%Y") AS Y,
+				DATE_FORMAT(INSERT_DATE,"%m") AS M,
+				DATE_FORMAT(INSERT_DATE,"%d") AS D,
+				DATE_FORMAT(INSERT_DATE,"%H") AS H,
+				DATE_FORMAT(INSERT_DATE,"%i") AS I,
+				DATE_FORMAT(INSERT_DATE,"%s") AS S,
+				DATE_FORMAT(INSERT_DATE,'%H시 %i분 %S초') AS INSERT_D,
+				INSERT_DATE, MA_EC AS SENSOR_EC, "" AS MANUAL_EC, IDX
+			from T_MODBUS
+			where NOT EXISTS (select * from T_MODBUS_MANUAL where H_IDX = "{$params['IDX']}")
+				{$where}
+			LIMIT 5
+SQL;
+		$query = $this->db->query($sql);
+		// echo $this->db->last_query();
+		return $query->result();
+	}	
+
+	public function manual_up($params)
+	{
+		$sqlD = "DELETE FROM T_MODBUS_MANUAL WHERE H_IDX = '{$params['IDX']}'";
+		$this->db->query($sqlD);
+	
+		$dateParams = ['SENSORDATE1', 'SENSORDATE2', 'SENSORDATE3', 'SENSORDATE4', 'SENSORDATE5'];
+		$sensorParams = ['SENSOR1', 'SENSOR2', 'SENSOR3', 'SENSOR4', 'SENSOR5'];
+		$manualParams = ['MANUAL1', 'MANUAL2', 'MANUAL3', 'MANUAL4', 'MANUAL5'];
+	
+		foreach ($dateParams as $key => $dateParams) {
+			$date = $params[$dateParams];
+			$sensor = $params[$sensorParams[$key]];
+			$manual = $params[$manualParams[$key]];
+	
+			if (!empty($date)) {
+				$sql = "INSERT INTO T_MODBUS_MANUAL (H_IDX, SENSOR_DATE, SENSOR, MANUAL, UPDATE_DATE)
+						VALUE ( '{$params['IDX']}', '{$date}', '{$sensor}', '{$manual}', NOW())";
+	
+				$this->db->query($sql);
+			}
+		}
+	
+		return $this->db->affected_rows();
+	}
+
+	public function sensor_ins($params){
+		$sql = "INSERT INTO T_MODBUS_MANUAL (INSERT_DATE, SLAVE, GUBUN)
+					VALUES  (NOW(), '{$params['SLAVE']}', '{$params['GUBUN']}')";
+
+		$this->db->query($sql);
+	}
+
+
+
 }

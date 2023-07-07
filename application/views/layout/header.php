@@ -160,13 +160,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                             <a href="<?= base_url('_INTERFACE/interface/0') ?>" class="menu_a <?= ($this->data['pos'] == "_INTERFACE") ? "on" : ""; ?>">
                                                 <i class="material-icons">add_business</i>Data InterFace</a>
                                             <ul class="menu02" <?= ($this->data['pos'] == "_INTERFACE") ? "style='display:block'" : ""; ?>>
-                                                <!-- <li><a href="<?= base_url('_INTERFACE/interface/0') ?>" class="<?= ($this->data['ssubpos'] == '0') ? "on" : ""; ?>">온수탱크</a></li> -->
-                                                <li><a href="<?= base_url('_INTERFACE/interface/1') ?>" class="<?= ($this->data['ssubpos'] == '1') ? "on" : ""; ?>">A Tank(2Ton)</a></li>
-                                                <li><a href="<?= base_url('_INTERFACE/interface/2') ?>" class="<?= ($this->data['ssubpos'] == '2') ? "on" : ""; ?>">B Tank(2Ton)</a></li>
-                                                <li><a href="<?= base_url('_INTERFACE/interface/3') ?>" class="<?= ($this->data['ssubpos'] == '3') ? "on" : ""; ?>">C Tank(5Ton)</a></li>
-                                                <li><a href="<?= base_url('_INTERFACE/interface/4') ?>" class="<?= ($this->data['ssubpos'] == '4') ? "on" : ""; ?>">SUS Tank(1Ton)</a></li>
-                                                <li><a href="<?= base_url('_INTERFACE/interface/5') ?>" class="<?= ($this->data['ssubpos'] == '5') ? "on" : ""; ?>">SUS Tank(1Ton)</a></li>
-                                                <!-- <li><a href="<?= base_url('_INTERFACE/interface/6') ?>" class="<?= ($this->data['ssubpos'] == '6') ? "on" : ""; ?>">교반탱크3</a></li> -->
+                                                <!-- <li><a href="<?= base_url('_INTERFACE/interface/0') ?>" class="<?= ($this->data['subpos'] == 'interface' && $this->data['ssubpos'] == '0') ? "on" : ""; ?>">온수탱크</a></li> -->
+                                                <li><a href="<?= base_url('_INTERFACE/interface/1') ?>" class="<?= ($this->data['subpos'] == 'interface' && $this->data['ssubpos'] == '1') ? "on" : ""; ?>">A Tank(2Ton)</a></li>
+                                                <li><a href="<?= base_url('_INTERFACE/interface/2') ?>" class="<?= ($this->data['subpos'] == 'interface' && $this->data['ssubpos'] == '2') ? "on" : ""; ?>">B Tank(2Ton)</a></li>
+                                                <li><a href="<?= base_url('_INTERFACE/interface/3') ?>" class="<?= ($this->data['subpos'] == 'interface' && $this->data['ssubpos'] == '3') ? "on" : ""; ?>">C Tank(5Ton)</a></li>
+                                                <li><a href="<?= base_url('_INTERFACE/interface/4') ?>" class="<?= ($this->data['subpos'] == 'interface' && $this->data['ssubpos'] == '4') ? "on" : ""; ?>">SUS Tank(1Ton)</a></li>
+                                                <li><a href="<?= base_url('_INTERFACE/interface/5') ?>" class="<?= ($this->data['subpos'] == 'interface' && $this->data['ssubpos'] == '5') ? "on" : ""; ?>">SUS Tank(1Ton)</a></li>
+                                                <!-- <li><a href="<?= base_url('_INTERFACE/interface/6') ?>" class="<?= ($this->data['subpos'] == 'interface' && $this->data['ssubpos'] == '6') ? "on" : ""; ?>">교반탱크3</a></li> -->
+                                                <li><a href="<?= base_url('_INTERFACE/ec') ?>" class="<?= ($this->data['subpos'] == 'ec') ? "on" : ""; ?>">EC입력</a></li>
                                             </ul>
                                         </li>
                                     <?php   }

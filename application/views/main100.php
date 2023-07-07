@@ -60,6 +60,7 @@
 			return;
 		}
         page = 0;
+        console.log(123);
         load();
     });
     //페이지넘김
